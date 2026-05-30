@@ -14,8 +14,11 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
         builder.Property(x => x.Id).ValueGeneratedNever();
         builder.Property(x => x.BucketName).HasMaxLength(255);
         builder.Property(x => x.ObjectName).HasMaxLength(255);
-        builder.Property(x => x.Size).HasMaxLength(255);
+        builder.Property(x => x.Size);
         builder.Property(x => x.Status).HasConversion<int>().HasDefaultValue(DocumentStatus.Active);
         builder.Property(x => x.Extension).HasMaxLength(255);
+
+        builder.HasOne(x => x.Creator).WithMany(x => x.CreatedDocuments).HasForeignKey(x => x.CreatedBy);
+        builder.HasOne(x => x.Updater).WithMany(x => x.UpdateddDocuments).HasForeignKey(x => x.UpdatedBy);
     }
 }

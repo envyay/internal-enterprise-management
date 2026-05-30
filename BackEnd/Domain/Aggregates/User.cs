@@ -12,4 +12,6 @@ public class User : AggregateRoot<Guid>
     public ICollection<Project> Projects { get; set; }
     public ICollection<Department> Departments { get; set; }
     public ICollection<Ticket> Tickets { get; set; }
+    public ICollection<Document> CreatedDocuments { get; set; }
+    public ICollection<Document> UpdateddDocuments { get; set; }
 }
