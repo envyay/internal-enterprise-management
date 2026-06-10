@@ -14,4 +14,15 @@ public class User : AggregateRoot<Guid>
     public ICollection<Ticket> Tickets { get; set; }
     public ICollection<Document> CreatedDocuments { get; set; }
     public ICollection<Document> UpdateddDocuments { get; set; }
+
+    public static User Create(string fullName, string email)
+    {
+        return new User
+        {
+            Id = Guid.CreateVersion7(),
+            FullName = fullName,
+            Email = email,
+            Status = UserStatus.Active
+        };
+    }
 }
