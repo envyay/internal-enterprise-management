@@ -1,4 +1,5 @@
-﻿using SharedKernel.Aggregate;
+﻿using Domain.Events.UserCreated;
+using SharedKernel.Aggregate;
 using SharedKernel.Contants;
 
 namespace Domain.Aggregates;
@@ -24,5 +25,10 @@ public class User : AggregateRoot<Guid>
             Email = email,
             Status = UserStatus.Active
         };
+    }
+
+    public void UserCreated()
+    {
+        AddDomainEvent(new UserCreated());
     }
 }

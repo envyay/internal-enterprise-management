@@ -1,23 +1,36 @@
 ﻿using Infrastructure.Data;
+using MediatR;
+using SharedKernel.Aggregate;
 
 namespace Infrastructure.UnitOfWork;
 
-public class UnitOfWork : IUnitOfWork
+public class UnitOfWork(ApplicationDbContext context, IMediator mediator) : IUnitOfWork
 {
-    private readonly ApplicationDbContext _context;
-
-    public UnitOfWork(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     public void Dispose()
     {
-        _context.Dispose();
+        context.Dispose();
     }
 
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return _context.SaveChangesAsync(cancellationToken);
+        var domainEvents = context.ChangeTracker
+            .Entries<IAggregateRoot>()
+            .Select(x => x.Entity)
+            .SelectMany(x => x.DomainEvents)
+            .ToList();
+
+        var res = await context.SaveChangesAsync(cancellationToken);
+
+        foreach (var domainEvent in domainEvents)
+        {
+            await mediator.Publish(domainEvent, cancellationToken);
+        }
+
+        context.ChangeTracker.Entries<IAggregateRoot>()
+            .Select(x => x.Entity)
+            .ToList()
+            .ForEach(x => x.ClearDomainEvents());
+
+        return res;
     }
 }

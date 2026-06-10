@@ -8,12 +8,15 @@
 
     <ItemGroup>
       <Folder Include="Entities\" />
-      <Folder Include="Events\" />
       <Folder Include="ValueObjects\" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="14.1.0" />
     </ItemGroup>
 
 </Project>

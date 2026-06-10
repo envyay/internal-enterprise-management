@@ -1,4 +1,5 @@
 using Application;
+using Domain;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Data;
@@ -38,6 +39,7 @@ services.AddFluentValidationRulesToSwagger();
 services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMaker).Assembly);
+    config.RegisterServicesFromAssembly(typeof(DomainAssemblyMaker).Assembly);
 });
 
 var app = builder.Build();

@@ -22,6 +22,7 @@ public class CreateUserCommandHandler(
         
         var user = User.Create(request.FullName, request.Email);
         await userRepository.AddAsync(user, cancellationToken);
+        user.UserCreated();
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return user.Id;
     }
