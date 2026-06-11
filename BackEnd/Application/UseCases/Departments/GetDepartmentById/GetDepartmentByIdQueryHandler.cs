@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.UseCases.Departments.GetDepartmentById;
 
-public class GetDepartmentQueryHandler(IRepository<Department, Guid> departmentRepository) : IRequestHandler<GetDepartmentByIdQuery, Department?>
+public class GetDepartmentByIdQueryHandler(IRepository<Department, Guid> departmentRepository) : IRequestHandler<GetDepartmentByIdQuery, Department?>
 {
     public async Task<Department?> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
     {
