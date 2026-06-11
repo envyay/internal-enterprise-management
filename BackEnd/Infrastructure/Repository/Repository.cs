@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data;
+﻿using System.Linq.Expressions;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Aggregate;
 
@@ -18,9 +19,9 @@ public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity 
         return _dbSet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken: cancellationToken);
     }
 
-    public IQueryable<TEntity> Where(Func<TEntity, bool> predicate)
+    public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
     {
-        return _dbSet.Where(predicate).AsQueryable();
+        return _dbSet.Where(predicate);
     }
 
     public Task<List<TEntity>> GetAll(CancellationToken cancellationToken = default)

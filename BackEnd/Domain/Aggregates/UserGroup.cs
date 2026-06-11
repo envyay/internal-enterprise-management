@@ -8,12 +8,14 @@ public class UserGroup : AggregateRoot<Guid>
     public ICollection<User> Users { get; set; }
     public ICollection<UserGroupPolicy> UserGroupPolicies { get; set; }
 
-    public static UserGroup Create(string name)
+    public static UserGroup Create(string name, List<User> users)
     {
         return new UserGroup
         {
             Id = Guid.CreateVersion7(),
-            Name = name
+            Name = name,
+            Users = users
+            
         };
     }
     
