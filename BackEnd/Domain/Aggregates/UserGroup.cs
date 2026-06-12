@@ -19,8 +19,11 @@ public class UserGroup : AggregateRoot<Guid>
         };
     }
     
-    public void Update(string name)
+    public void Update(string name, List<User> users)
     {
         Name = name;
+        Users.Clear();
+        Users = users;
     }
+    
 }

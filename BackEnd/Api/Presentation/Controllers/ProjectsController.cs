@@ -2,6 +2,7 @@
 using Application.UseCases.Projects.DeleteProjectById;
 using Application.UseCases.Projects.GetProjectById;
 using Application.UseCases.Projects.GetProjects;
+using Application.UseCases.Projects.GetTicketStatusesByProjectId;
 using Application.UseCases.Projects.UpdateProject;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,13 @@ public class ProjectsController(ISender sender) : ControllerBase
     {
         var project = await sender.Send(new GetProjectByIdQuery{Id = id});
         return Ok(project);
+    }
+
+    [HttpGet("{id:guid}/TicketStatuses")]
+    public async Task<IActionResult> GetTicketStatusesByProjectId(Guid id)
+    {
+        var ticketStatuses = await sender.Send(new GetTicketStatusesByProjectIdQuery { ProjectId = id });
+        return Ok(ticketStatuses);
     }
 
     [HttpPost("Create")]

@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Departments.GetDepartmentById;
+﻿
 using Application.UseCases.UserGroups.CreateUserGroup;
 using Application.UseCases.UserGroups.DeleteUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroupById;

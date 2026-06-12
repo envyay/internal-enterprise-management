@@ -14,7 +14,7 @@ public class TicketConfiguration : IEntityTypeConfiguration<Ticket>
         
         builder.Property(x => x.Title).HasMaxLength(255);
         builder.Property(x => x.Description).HasMaxLength(500);
-        builder.Property(x => x.Comment).HasMaxLength(500);
+        // builder.Property(x => x.Comment).HasMaxLength(500);
         
         builder.HasMany(x => x.Users).WithMany(x => x.Tickets).UsingEntity(x => x.ToTable("TicketAssignee"));
         builder.HasOne(x => x.TicketStatus).WithMany(x => x.Tickets).HasForeignKey(x => x.TicketStatusId);

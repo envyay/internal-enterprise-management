@@ -12,7 +12,7 @@ public class Department : AggregateRoot<Guid>
     {
         return new Department
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.CreateVersion7(),
             Name = name
         };
     }

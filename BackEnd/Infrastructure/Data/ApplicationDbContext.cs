@@ -13,6 +13,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<TicketStatus> TicketStatuses { get; set; }
     public DbSet<Document> Documents { get; set; }
     public DbSet<Department> Departments { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

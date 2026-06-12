@@ -8,8 +8,10 @@ public class Ticket : AggregateRoot<Guid>
     public Guid TicketStatusId { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-    public string Comment { get; set; }
+    public ICollection<Comment> Comments { get; set; }
     public Project Project { get; set; }
     public TicketStatus TicketStatus { get; set; }
     public ICollection<User> Users { get; set; }
+    
+    
 }
