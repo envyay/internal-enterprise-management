@@ -13,5 +13,24 @@ public class Ticket : AggregateRoot<Guid>
     public TicketStatus TicketStatus { get; set; }
     public ICollection<User> Users { get; set; }
     
+    public static Ticket Create(Guid projectId, Guid ticketStatusId, string title, string description, List<User> users)
+    {
+        return new Ticket
+        {
+            Id = Guid.CreateVersion7(),
+            ProjectId = projectId,
+            TicketStatusId = ticketStatusId,
+            Title = title,
+            Description = description,
+            Users = users
+        };
+    }
+    public void Update(Guid ticketStatusId, string title, string description, List<User> users)
+    {
+        TicketStatusId = ticketStatusId;
+        Title = title;
+        Description = description;
+        Users = users;
+    }
     
 }

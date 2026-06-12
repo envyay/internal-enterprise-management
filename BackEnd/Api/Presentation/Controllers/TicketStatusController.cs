@@ -41,7 +41,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> Delete(Guid id)
+    public async Task<IActionResult> DeleteById(Guid id)
     {
         var success = await sender.Send(new DeleteTicketStatusCommand{Id = id});
         return Ok(success);
