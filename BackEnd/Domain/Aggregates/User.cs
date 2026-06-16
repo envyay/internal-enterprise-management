@@ -15,6 +15,7 @@ public class User : AggregateRoot<Guid>
     public ICollection<Ticket> Tickets { get; set; }
     public ICollection<Document> CreatedDocuments { get; set; }
     public ICollection<Document> UpdateddDocuments { get; set; }
+    public ICollection<Comment> Comments { get; set; }
 
     public static User Create(string fullName, string email)
     {

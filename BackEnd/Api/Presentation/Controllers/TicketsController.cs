@@ -1,5 +1,6 @@
 ﻿using Application.UseCases.Tickets.CreateTicket;
 using Application.UseCases.Tickets.DeleteTicket;
+using Application.UseCases.Tickets.GetCommentByTicketId;
 using Application.UseCases.Tickets.GetTicketById;
 using Application.UseCases.Tickets.GetTicketsQuery;
 using Application.UseCases.Tickets.UpdateTicket;
@@ -24,6 +25,13 @@ public class TicketsController(ISender sender) : ControllerBase
     {
         var ticket = await sender.Send(new GetTicketByIdQuery{Id = id});
         return Ok(ticket);
+    }
+
+    [HttpGet("{id:guid}/Comments")]
+    public async Task<IActionResult> GetCommentsByTicketId(Guid id)
+    {
+        var comments = await sender.Send(new GetCommentByTicketIdQuery { TicketId = id });
+        return Ok(comments);
     }
 
     [HttpPost("Create")]

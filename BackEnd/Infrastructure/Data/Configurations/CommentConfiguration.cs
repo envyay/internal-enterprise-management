@@ -14,5 +14,6 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
         builder.Property(x => x.Id).ValueGeneratedNever();
         builder.Property(x => x.Content).HasMaxLength(500);
         builder.HasOne(x => x.Ticket).WithMany(x => x.Comments).HasForeignKey(x => x.TicketId);
+        builder.HasOne(x => x.User).WithMany(x => x.Comments).HasForeignKey(x => x.UserId);
     }
 }
