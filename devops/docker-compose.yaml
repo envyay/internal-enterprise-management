@@ -20,7 +20,20 @@ services:
       - 6334:6334
     volumes:
       - ./qdrant_data:/qdrant/storage
-  
+    
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio_db
+    ports:
+      - 9000:9000 # S3 API
+      - 9001:9001 # Web Console
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: 123456@An
+    volumes:
+      - ./data:/data
+    command: server /data --console-address ":9001"
 volumes:
   postgres_data:
   qdrant_data:
+  minio_data:
