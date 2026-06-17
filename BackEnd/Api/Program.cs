@@ -4,9 +4,12 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Data;
 using Infrastructure.Repository;
+using Infrastructure.Services;
 using Infrastructure.UnitOfWork;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Minio;
+using SharedKernel.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -16,6 +19,18 @@ services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"));
 });
+
+// minio
+services.Configure<MinioOptions>(builder.Configuration.GetSection("Minio"));
+services.AddSingleton<IMinioClient>(sp =>
+{
+    var options = builder.Configuration.GetSection("Minio").Get<MinioOptions>()!;
+    var client = new MinioClient().WithEndpoint(options.Endpoint).WithCredentials(options.AccessKey, options.SecretKey);
+    if (options.UseSsl) client = client.WithSSL();
+    return client.Build();
+});
+
+services.AddScoped<IStorageService, StorageService>();
 
 // repositories
 services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
