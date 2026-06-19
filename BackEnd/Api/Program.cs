@@ -9,6 +9,7 @@ using Infrastructure.UnitOfWork;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Minio;
+using Qdrant.Client;
 using SharedKernel.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,6 +32,14 @@ services.AddSingleton<IMinioClient>(sp =>
 });
 
 services.AddScoped<IStorageService, StorageService>();
+
+// qdrant
+services.Configure<QdrantOptions>(builder.Configuration.GetSection("Qdrant"));
+var qdrantOptions = builder.Configuration.GetSection("Qdrant").Get<QdrantOptions>()!;
+services.AddSingleton(new QdrantClient(host: qdrantOptions.Host, port: qdrantOptions.GrpcPort));
+
+services.AddScoped<IQdrantService, QdrantService>();
+
 
 // repositories
 services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));

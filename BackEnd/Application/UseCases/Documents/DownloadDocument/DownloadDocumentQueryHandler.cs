@@ -7,6 +7,6 @@ public class DownloadDocumentQueryHandler(IStorageService storageService) : IReq
 {
     public async Task<string> Handle(DownloadDocumentQuery request, CancellationToken cancellationToken)
     {
-        return await storageService.GetPresignedUrlAsync(request.ObjectName, request.ExpiresInSeconds);
+        return await storageService.GetPresignedGetObjectAsync(request.ObjectName, request.ExpiresInSeconds);
     }
 }
