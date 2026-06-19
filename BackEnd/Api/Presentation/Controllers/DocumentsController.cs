@@ -63,7 +63,4 @@ public class DocumentsController(ISender sender) : ControllerBase
         var url = await sender.Send(request);
         return Ok(url);
     }
-    
-    [HttpPost("ConfirmUpload")]
-    public async Task<IActionResult> ConfirmUpload()
 }
