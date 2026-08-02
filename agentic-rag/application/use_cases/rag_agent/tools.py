@@ -55,7 +55,7 @@ class ToolFactory:
         """
         log_tool_start("retrieve_parent_chunks", {"parent_id": parent_id})
         try:
-            # Assuming parent chunks are stored in './local_parent_store' as per test_ingest.py
+            # Assuming parent chunks are stored in './local_parent_store' as per
             parent_store_dir = "./local_parent_store"
             parent_file = os.path.join(parent_store_dir, f"{parent_id}.json")
             if not os.path.exists(parent_file):
