@@ -20,6 +20,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.Status).HasConversion<int>().HasDefaultValue(UserStatus.Active);
         
+        builder.Property(x => x.Type).HasConversion<int>().HasDefaultValue(UserType.User);
+        
         builder.Property(x => x.IsProfileCompleted).HasDefaultValue(false);
         
         builder.HasMany(x => x.UserGroups).WithMany(x => x.Users).UsingEntity(x => x.ToTable("UserUserGroups"));

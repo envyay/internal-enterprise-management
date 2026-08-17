@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Departments.CreateDepartment;
+using Application.UseCases.Departments.CreateDepartment;
 using Application.UseCases.Departments.DeleteDepartment;
 using Application.UseCases.Departments.GetDepartmentById;
 using Application.UseCases.Departments.GetDepartments;
@@ -6,6 +6,7 @@ using Application.UseCases.Departments.UpdateDepartment;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Constants;
 
 namespace Api.Presentation.Controllers;
 
@@ -13,7 +14,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class DepartmentsController(ISender sender) : ControllerBase
 {
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetAllDepartments)]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -21,7 +22,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(departments);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetByIdDepartment)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -29,7 +30,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(department);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.CreateDepartment)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateDepartmentCommand request)
     {
@@ -37,7 +38,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(departmentId);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.UpdateDepartment)]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateDepartmentCommand request)
     {
@@ -45,7 +46,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.DeleteDepartment)]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Domain.Aggregates;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using SharedKernel.Constants;
 using SharedKernel.Options;
 
 namespace Infrastructure.Services;
@@ -17,9 +18,14 @@ public class JwtService(IOptions<JwtOptions> options) : IJwtService
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Email, user.Email),
         };
+
+        if (user.Type == UserType.Admin)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+        }
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.Key));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
         var token = new JwtSecurityToken(
             issuer: options.Value.Issuer,
             audience: options.Value.Audience,

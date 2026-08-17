@@ -1,10 +1,11 @@
-﻿using Application.UseCases.Users.CreateUser;
+using Application.UseCases.Users.CreateUser;
 using Application.UseCases.Users.GetUsers;
 using Application.UseCases.Users.LoginRequest;
 using Application.UseCases.Users.LoginVerify;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Constants;
 
 namespace Api.Presentation.Controllers;
 
@@ -12,7 +13,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class UsersController(ISender sender) : ControllerBase
 {
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetAllUsers)]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -20,7 +21,7 @@ public class UsersController(ISender sender) : ControllerBase
         return Ok(users);
     }
     
-    [Authorize]
+    [Authorize(Policy = AppPolicy.CreateUser)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateUserCommand request)
     {

@@ -68,7 +68,7 @@ services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Enter your JWT token"
+        Description = "Enter your JWT token (without 'Bearer ' prefix)"
     });
 
     options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
@@ -116,10 +116,12 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
     };
 });
 
-
+// Authorization
 services.AddAuthorization();
 
 var app = builder.Build();
+
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

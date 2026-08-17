@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Comments.CreateComment;
+using Application.UseCases.Comments.CreateComment;
 using Application.UseCases.Comments.DeleteCommentById;
 using Application.UseCases.Comments.GetCommentById;
 using Application.UseCases.Comments.GetComments;
@@ -6,6 +6,7 @@ using Application.UseCases.Comments.UpdateComment;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Constants;
 
 namespace Api.Presentation.Controllers;
 
@@ -13,7 +14,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class CommentsController(ISender sender) : ControllerBase
 {
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetAllComments)]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -21,7 +22,7 @@ public class CommentsController(ISender sender) : ControllerBase
         return Ok(comments);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetByIdComment)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -29,7 +30,7 @@ public class CommentsController(ISender sender) : ControllerBase
         return Ok(comment);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.CreateComment)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateCommentCommand request)
     {
@@ -37,7 +38,7 @@ public class CommentsController(ISender sender) : ControllerBase
         return Ok(commentId);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.UpdateComment)]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateCommentCommand request)
     {
@@ -45,7 +46,7 @@ public class CommentsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.DeleteComment)]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

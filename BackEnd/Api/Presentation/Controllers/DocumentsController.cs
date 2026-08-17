@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Documents;
+using Application.UseCases.Documents;
 using Application.UseCases.Documents.CreateDocument;
 using Application.UseCases.Documents.DeleteDocument;
 using Application.UseCases.Documents.DownloadDocument;
@@ -9,6 +9,7 @@ using Application.UseCases.Documents.UploadDocument;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Constants;
 
 namespace Api.Presentation.Controllers;
 
@@ -16,7 +17,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class DocumentsController(ISender sender) : ControllerBase
 {
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetAllDocuments)]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -24,7 +25,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(documents);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetByIdDocument)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -32,7 +33,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(document);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.CreateDocument)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateDocumentCommand request)
     {
@@ -40,7 +41,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(documentId);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.UpdateDocument)]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateDocumentCommand request)
     {
@@ -48,7 +49,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.DeleteDocument)]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {
@@ -56,7 +57,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(success);
     }
     
-    [Authorize]
+    [Authorize(Policy = AppPolicy.DownloadDocument)]
     [HttpGet("Download")]
     public async Task<IActionResult> Download([FromQuery] DownloadDocumentQuery request)
     {
@@ -64,7 +65,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(url);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.UploadDocument)]
     [HttpGet("Upload")]
     public async Task<IActionResult> Upload([FromQuery] UploadDocumentQuery request)
     {

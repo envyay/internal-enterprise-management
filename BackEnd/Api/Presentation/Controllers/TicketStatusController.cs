@@ -1,4 +1,4 @@
-﻿using Application.UseCases.TicketStatuses.CreateTicketStatus;
+using Application.UseCases.TicketStatuses.CreateTicketStatus;
 using Application.UseCases.TicketStatuses.DeleteTicketStatus;
 using Application.UseCases.TicketStatuses.GetTicketStatusById;
 using Application.UseCases.ticketStatuses.GetTicketStatuses;
@@ -6,6 +6,7 @@ using Application.UseCases.TicketStatuses.UpdateTicketStatus;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Constants;
 
 namespace Api.Presentation.Controllers;
 
@@ -13,7 +14,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class TicketStatusController(ISender sender) : ControllerBase
 {
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetAllTicketStatuses)]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -21,15 +22,15 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(ticketStatuses);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetByIdTicketStatus)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var ticketStatus = await sender.Send(new GetTicketStatusByIdQuery());
+        var ticketStatus = await sender.Send(new GetTicketStatusByIdQuery { Id = id });
         return Ok(ticketStatus);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.CreateTicketStatus)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateTicketStatusCommand request)
     {
@@ -37,7 +38,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(ticketStatusId);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.UpdateTicketStatus)]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateTicketStatusCommand request)
     {
@@ -45,7 +46,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.DeleteTicketStatus)]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

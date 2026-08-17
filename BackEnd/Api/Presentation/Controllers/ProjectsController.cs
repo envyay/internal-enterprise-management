@@ -1,4 +1,4 @@
-﻿using Application.UseCases.Projects.CreateProject;
+using Application.UseCases.Projects.CreateProject;
 using Application.UseCases.Projects.DeleteProjectById;
 using Application.UseCases.Projects.GetProjectById;
 using Application.UseCases.Projects.GetProjects;
@@ -7,6 +7,7 @@ using Application.UseCases.Projects.UpdateProject;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Constants;
 
 namespace Api.Presentation.Controllers;
 
@@ -14,7 +15,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class ProjectsController(ISender sender) : ControllerBase
 {
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetAllProjects)]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -22,7 +23,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(projects);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetByIdProject)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -30,7 +31,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(project);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.GetTicketStatusesByProjectId)]
     [HttpGet("{id:guid}/TicketStatuses")]
     public async Task<IActionResult> GetTicketStatusesByProjectId(Guid id)
     {
@@ -38,7 +39,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(ticketStatuses);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.CreateProject)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateProjectCommand request)
     {
@@ -46,7 +47,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(projectId);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.UpdateProject)]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateProjectCommand request)
     {
@@ -54,7 +55,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.DeleteProject)]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

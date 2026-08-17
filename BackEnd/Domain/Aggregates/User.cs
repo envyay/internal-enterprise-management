@@ -9,6 +9,7 @@ public class User : AggregateRoot<Guid>
     public string FullName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public UserStatus Status { get; set; } = UserStatus.Active;
+    public UserType Type { get; set; } = UserType.User;
     public bool IsProfileCompleted { get; set; } = false;
     public ICollection<UserGroup> UserGroups { get; set; } = new List<UserGroup>();
     public ICollection<Project> Projects { get; set; } = new List<Project>();

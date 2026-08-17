@@ -1,4 +1,4 @@
-﻿
+
 using Application.UseCases.UserGroups.CreateUserGroup;
 using Application.UseCases.UserGroups.DeleteUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroupById;
@@ -31,7 +31,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(userGroup);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.CreateUserGroup)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateUserGroupCommand request)
     {
@@ -39,7 +39,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(userGroupId);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.UpdateUserGroup)]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateUserGroupCommand request)
     {
@@ -47,7 +47,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize]
+    [Authorize(Policy = AppPolicy.DeleteUserGroup)]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {
