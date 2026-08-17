@@ -5,6 +5,7 @@ using Application.UseCases.Projects.GetProjects;
 using Application.UseCases.Projects.GetTicketStatusesByProjectId;
 using Application.UseCases.Projects.UpdateProject;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Presentation.Controllers;
@@ -13,6 +14,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class ProjectsController(ISender sender) : ControllerBase
 {
+    [Authorize]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -20,6 +22,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(projects);
     }
 
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -27,6 +30,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(project);
     }
 
+    [Authorize]
     [HttpGet("{id:guid}/TicketStatuses")]
     public async Task<IActionResult> GetTicketStatusesByProjectId(Guid id)
     {
@@ -34,6 +38,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(ticketStatuses);
     }
 
+    [Authorize]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateProjectCommand request)
     {
@@ -41,6 +46,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(projectId);
     }
 
+    [Authorize]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateProjectCommand request)
     {
@@ -48,6 +54,7 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
+    [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

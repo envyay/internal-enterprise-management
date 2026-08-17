@@ -2,7 +2,7 @@
 using Infrastructure.Repository;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel.Contants;
+using SharedKernel.Constants;
 
 namespace Application.UseCases.Documents.GetDocuments;
 

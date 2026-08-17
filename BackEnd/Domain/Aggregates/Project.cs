@@ -1,5 +1,5 @@
 ﻿using SharedKernel.Aggregate;
-using SharedKernel.Contants;
+using SharedKernel.Constants;
 
 namespace Domain.Aggregates;
 

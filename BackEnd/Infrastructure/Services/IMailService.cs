@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Services;
 
-public class IMailService
+public interface IMailService
 {
-    
+    Task SendEmailAsync(string to, string subject, string htmlContent);
 }

@@ -1,7 +1,7 @@
 ﻿using Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SharedKernel.Contants;
+using SharedKernel.Constants;
 
 namespace Infrastructure.Data.Configurations;
 
@@ -19,10 +19,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Email).HasMaxLength(255);
 
         builder.Property(x => x.Status).HasConversion<int>().HasDefaultValue(UserStatus.Active);
-
+        
+        builder.Property(x => x.IsProfileCompleted).HasDefaultValue(false);
+        
         builder.HasMany(x => x.UserGroups).WithMany(x => x.Users).UsingEntity(x => x.ToTable("UserUserGroups"));
         
         builder.HasIndex(x => x.Email).IsUnique();
-        builder.HasIndex(x => x.FullName);
     }
 }

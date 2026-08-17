@@ -1,7 +1,7 @@
 ﻿using Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SharedKernel.Contants;
+using SharedKernel.Constants;
 
 namespace Infrastructure.Data.Configurations;
 

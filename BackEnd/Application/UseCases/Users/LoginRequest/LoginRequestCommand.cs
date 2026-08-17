@@ -1,7 +1,6 @@
-﻿using Domain.Aggregates;
-using MediatR;
+﻿using MediatR;
 
-namespace Application.UseCases.Users.Authenticate;
+namespace Application.UseCases.Users.LoginRequest;
 
 public class LoginRequestCommand : IRequest<bool>
 {

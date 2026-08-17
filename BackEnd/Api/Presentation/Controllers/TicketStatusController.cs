@@ -4,6 +4,7 @@ using Application.UseCases.TicketStatuses.GetTicketStatusById;
 using Application.UseCases.ticketStatuses.GetTicketStatuses;
 using Application.UseCases.TicketStatuses.UpdateTicketStatus;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Presentation.Controllers;
@@ -12,6 +13,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class TicketStatusController(ISender sender) : ControllerBase
 {
+    [Authorize]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -19,6 +21,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(ticketStatuses);
     }
 
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -26,6 +29,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(ticketStatus);
     }
 
+    [Authorize]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateTicketStatusCommand request)
     {
@@ -33,6 +37,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(ticketStatusId);
     }
 
+    [Authorize]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateTicketStatusCommand request)
     {
@@ -40,6 +45,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
+    [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

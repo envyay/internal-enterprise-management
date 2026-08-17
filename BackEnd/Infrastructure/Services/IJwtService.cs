@@ -1,6 +1,8 @@
-﻿namespace Infrastructure.Services;
+﻿using Domain.Aggregates;
 
-public class IJwtService
+namespace Infrastructure.Services;
+
+public interface IJwtService
 {
-    
+    public Task<string> GenerateTokenAsync(User user);
 }

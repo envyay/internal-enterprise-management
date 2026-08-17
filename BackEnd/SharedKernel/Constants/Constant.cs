@@ -1,4 +1,4 @@
-﻿namespace SharedKernel.Contants;
+﻿namespace SharedKernel.Constants;
 
 public class Constant
 {
@@ -23,4 +23,11 @@ public enum DocumentStatus
 {
     InActive = 0,
     Active = 1
+}
+
+public static class AppPolicy
+{
+    // User Group
+    public const string GetAllUserGroups = nameof(GetAllUserGroups);
+    public const string GetByIdUserGroup = nameof(GetByIdUserGroup);
 }

@@ -5,7 +5,9 @@ using Application.UseCases.UserGroups.GetUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroups;
 using Application.UseCases.UserGroups.UpdateUserGroup;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Constants;
 
 namespace Api.Presentation.Controllers;
 
@@ -13,6 +15,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class UserGroupsController(ISender sender) : ControllerBase
 {
+    [Authorize(Policy = AppPolicy.GetAllUserGroups)]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -20,6 +23,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(userGroups);
     }
 
+    [Authorize(Policy = AppPolicy.GetByIdUserGroup)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -27,6 +31,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(userGroup);
     }
 
+    [Authorize]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateUserGroupCommand request)
     {
@@ -34,6 +39,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(userGroupId);
     }
 
+    [Authorize]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateUserGroupCommand request)
     {
@@ -41,6 +47,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
+    [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

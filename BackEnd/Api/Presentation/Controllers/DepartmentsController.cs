@@ -4,6 +4,7 @@ using Application.UseCases.Departments.GetDepartmentById;
 using Application.UseCases.Departments.GetDepartments;
 using Application.UseCases.Departments.UpdateDepartment;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Presentation.Controllers;
@@ -12,6 +13,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class DepartmentsController(ISender sender) : ControllerBase
 {
+    [Authorize]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -19,6 +21,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(departments);
     }
 
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -26,6 +29,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(department);
     }
 
+    [Authorize]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateDepartmentCommand request)
     {
@@ -33,6 +37,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(departmentId);
     }
 
+    [Authorize]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateDepartmentCommand request)
     {
@@ -40,6 +45,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
+    [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {

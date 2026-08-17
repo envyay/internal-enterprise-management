@@ -7,6 +7,7 @@ using Application.UseCases.Documents.GetDocuments;
 using Application.UseCases.Documents.UpdateDocument;
 using Application.UseCases.Documents.UploadDocument;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Presentation.Controllers;
@@ -15,6 +16,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class DocumentsController(ISender sender) : ControllerBase
 {
+    [Authorize]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -22,6 +24,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(documents);
     }
 
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -29,6 +32,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(document);
     }
 
+    [Authorize]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateDocumentCommand request)
     {
@@ -36,6 +40,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(documentId);
     }
 
+    [Authorize]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateDocumentCommand request)
     {
@@ -43,6 +48,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
+    [Authorize]
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {
@@ -50,6 +56,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(success);
     }
     
+    [Authorize]
     [HttpGet("Download")]
     public async Task<IActionResult> Download([FromQuery] DownloadDocumentQuery request)
     {
@@ -57,6 +64,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(url);
     }
 
+    [Authorize]
     [HttpGet("Upload")]
     public async Task<IActionResult> Upload([FromQuery] UploadDocumentQuery request)
     {
