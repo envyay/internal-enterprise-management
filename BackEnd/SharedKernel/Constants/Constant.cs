@@ -89,4 +89,53 @@ public static class AppPolicy
     public const string CreateComment = nameof(CreateComment);
     public const string UpdateComment = nameof(UpdateComment);
     public const string DeleteComment = nameof(DeleteComment);
+
+    public static readonly string[] Policies =
+    [
+        // Department
+        GetAllDepartments,
+        GetByIdDepartment,
+        CreateDepartment,
+        UpdateDepartment,
+        DeleteDepartment,
+
+        // Project
+        GetAllProjects,
+        GetByIdProject,
+        GetTicketStatusesByProjectId,
+        CreateProject,
+        UpdateProject,
+        DeleteProject,
+
+        // Document
+        GetAllDocuments,
+        GetByIdDocument,
+        CreateDocument,
+        UpdateDocument,
+        DeleteDocument,
+        DownloadDocument,
+        UploadDocument,
+
+        // Ticket
+        GetAllTickets,
+        GetByIdTicket,
+        GetCommentsByTicketId,
+        CreateTicket,
+        UpdateTicket,
+        DeleteTicket,
+
+        // Ticket Status
+        GetAllTicketStatuses,
+        GetByIdTicketStatus,
+        CreateTicketStatus,
+        UpdateTicketStatus,
+        DeleteTicketStatus,
+
+        // Comment
+        GetAllComments,
+        GetByIdComment,
+        CreateComment,
+        UpdateComment,
+        DeleteComment,
+    ];
 }

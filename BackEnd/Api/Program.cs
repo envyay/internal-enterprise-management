@@ -1,4 +1,6 @@
 using System.Text;
+using Api.Presentation.Filters;
+using Api.Presentation.MiddleWare;
 using Application;
 using Domain;
 using FluentValidation;
@@ -13,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Minio;
+using SharedKernel.Constants;
 using SharedKernel.Options;
 using StackExchange.Redis;
 
@@ -50,7 +53,7 @@ services.AddScoped<IOtpService, OtpService>();
 services.AddScoped<IMailService, MailService>();
 
 // controllers
-services.AddControllers();
+services.AddControllers(options => options.Filters.Add<ApiResponseFilter>());
 
 // validation
 services.AddFluentValidationAutoValidation();
@@ -117,7 +120,18 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
 });
 
 // Authorization
-services.AddAuthorization();
+services.AddAuthorization(options =>
+{
+    foreach (var policy in AppPolicy.Policies)
+    {
+        options.AddPolicy(policy,
+            policyBuilder =>
+            {
+                policyBuilder.RequireAssertion(context =>
+                    context.User.IsInRole("Admin") || context.User.HasClaim("policy", policy));
+            });
+    }
+});
 
 var app = builder.Build();
 
@@ -126,6 +140,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+//MiddleWare
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseSwagger();
 app.UseSwaggerUI();
