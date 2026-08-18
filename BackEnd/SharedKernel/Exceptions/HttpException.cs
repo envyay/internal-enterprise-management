@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Api.Presentation.Exceptions;
+namespace SharedKernel.Exceptions;
 
 public class HttpException(string message, HttpStatusCode statusCode, string errorCode) : Exception(message)
 {

@@ -92,6 +92,17 @@ public static class AppPolicy
 
     public static readonly string[] Policies =
     [
+        // User Group
+        GetAllUserGroups,
+        GetByIdUserGroup,
+        CreateUserGroup,
+        UpdateUserGroup,
+        DeleteUserGroup,
+
+        // User
+        GetAllUsers,
+        CreateUser,
+
         // Department
         GetAllDepartments,
         GetByIdDepartment,

@@ -1,6 +1,6 @@
 using Api.Presentation.DTOs;
-using Api.Presentation.Exceptions;
 using FluentValidation;
+using SharedKernel.Exceptions;
 using ForbiddenException = Minio.Exceptions.ForbiddenException;
 
 namespace Api.Presentation.MiddleWare;

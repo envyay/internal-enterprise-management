@@ -11,7 +11,7 @@ namespace Infrastructure.Services;
 
 public class JwtService(IOptions<JwtOptions> options) : IJwtService
 {
-    public Task<string> GenerateTokenAsync(User user)
+    public Task<string> GenerateTokenAsync(User user, List<string> policies)
     {
         var claims = new List<Claim>
         {
@@ -24,13 +24,18 @@ public class JwtService(IOptions<JwtOptions> options) : IJwtService
             claims.Add(new Claim(ClaimTypes.Role, "Admin"));
         }
 
+        foreach (var policy in policies)
+        {
+            claims.Add(new Claim("policy", policy));
+        }
+
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(options.Value.Key));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
             issuer: options.Value.Issuer,
             audience: options.Value.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(options.Value.ExpirationInMinutes),
+            expires: DateTime.UtcNow.AddMinutes(options.Value.ExpiresInMinutes),
             signingCredentials: credentials
         );
         return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));

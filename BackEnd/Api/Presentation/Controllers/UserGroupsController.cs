@@ -1,8 +1,12 @@
 
+using Application.UseCases.UserGroups.AddPolicies;
+using Application.UseCases.UserGroups.AddUsers;
 using Application.UseCases.UserGroups.CreateUserGroup;
 using Application.UseCases.UserGroups.DeleteUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroups;
+using Application.UseCases.UserGroups.RemovePolicy;
+using Application.UseCases.UserGroups.RemoveUser;
 using Application.UseCases.UserGroups.UpdateUserGroup;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -53,5 +57,35 @@ public class UserGroupsController(ISender sender) : ControllerBase
     {
         var success = await sender.Send(new DeleteUserGroupByIdCommand{Id = id});
         return Ok(success);
+    }
+    
+    // THêm, xóa users vào usergroup
+    [HttpPost("AddUsers")]
+    public async Task<IActionResult> AddUsers(AddUsersCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);
+    }
+
+    [HttpDelete("RemoveUser")]
+    public async Task<IActionResult> RemoveUser(RemoveUserCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);
+    }
+    
+    // THêm, xóa Policies vào usergroup
+    [HttpPost("AddPolicies")]
+    public async Task<IActionResult> AddPolicies(AddPoliciesCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);
+    }
+
+    [HttpDelete("RemovePolicy")]
+    public async Task<IActionResult> RemovePolicy(RemovePolicyCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);       
     }
 }

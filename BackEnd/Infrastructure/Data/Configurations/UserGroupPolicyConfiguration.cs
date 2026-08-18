@@ -14,7 +14,5 @@ public class UserGroupPolicyConfiguration : IEntityTypeConfiguration<UserGroupPo
         builder.Property(x => x.Id).ValueGeneratedNever();
         
         builder.Property(x => x.Policy).HasMaxLength(255);
-        
-        builder.HasIndex(x => x.UserGroupId).IsUnique();
     }
 }

@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Presentation\DTOs\" />
-      <Folder Include="Presentation\Exceptions\" />
       <Folder Include="Presentation\Filters\" />
       <Folder Include="Presentation\MiddleWare\" />
     </ItemGroup>

@@ -100,19 +100,19 @@ services.AddSingleton<IConnectionMultiplexer>(
 services.AddSingleton<ICacheService, CacheService>();
 
 //JWT
-var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtSettings = builder.Configuration.GetSection("Jwt");
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!)),
         
         ValidateIssuer = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidIssuer = jwtSettings["Issuer"]!,
         
         ValidateAudience = true,
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidAudience = jwtSettings["Audience"]!,
         
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero
