@@ -5,13 +5,13 @@ using MediatR;
 
 namespace Application.UseCases.UserGroups.AddPolicies;
 
-public class AddPoliciesCommandHandler(
+public class AddPoliciesToUserGroupCommandHandler(
     IRepository<UserGroup, Guid> userGroupRepository,
     IRepository<UserGroupPolicy, Guid> userGroupPolicyRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<AddPoliciesCommand, bool>
+    : IRequestHandler<AddPoliciesToUserGroupCommand, bool>
 {
-    public async Task<bool> Handle(AddPoliciesCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(AddPoliciesToUserGroupCommand request, CancellationToken cancellationToken)
     {
         var userGroup = await userGroupRepository.GetByIdAsync(request.Id, cancellationToken);
         if (userGroup == null) return false;

@@ -7,9 +7,9 @@ using SharedKernel.Exceptions;
 
 namespace Application.UseCases.UserGroups.RemovePolicy;
 
-public class RemovePolicyCommandHandler(IRepository<UserGroup, Guid> userGroupRepository, IUnitOfWork unitOfWork) : IRequestHandler<RemovePolicyCommand, bool>
+public class RemovePolicyFromUserGroupCommandHandler(IRepository<UserGroup, Guid> userGroupRepository, IUnitOfWork unitOfWork) : IRequestHandler<RemovePolicyFromUserGroupCommand, bool>
 {
-    public async Task<bool> Handle(RemovePolicyCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(RemovePolicyFromUserGroupCommand request, CancellationToken cancellationToken)
     {
         var userGroup = await userGroupRepository
             .Where(x => x.Id.Equals(request.Id))

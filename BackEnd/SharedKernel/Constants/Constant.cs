@@ -39,6 +39,10 @@ public static class AppPolicy
     public const string CreateUserGroup = nameof(CreateUserGroup);
     public const string UpdateUserGroup = nameof(UpdateUserGroup);
     public const string DeleteUserGroup = nameof(DeleteUserGroup);
+    public const string AddPoliciesToUserGroup = nameof(AddPoliciesToUserGroup);
+    public const string RemovePolicyFromUserGroup = nameof(RemovePolicyFromUserGroup);
+    public const string AddUsersToUserGroup = nameof(AddUsersToUserGroup);
+    public const string RemoveUserFromUserGroup = nameof(RemoveUserFromUserGroup);
 
     // User
     public const string GetAllUsers = nameof(GetAllUsers);

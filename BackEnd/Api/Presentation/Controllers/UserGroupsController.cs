@@ -59,31 +59,33 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(success);
     }
     
-    // THêm, xóa users vào usergroup
+    [Authorize(Policy = AppPolicy.AddUsersToUserGroup)]
     [HttpPost("AddUsers")]
-    public async Task<IActionResult> AddUsers(AddUsersCommand request)
+    public async Task<IActionResult> AddUsers(AddUsersToUserGroup request)
     {
         var success = await sender.Send(request);
         return Ok(success);
     }
 
+    [Authorize(Policy = AppPolicy.RemoveUserFromUserGroup)]
     [HttpDelete("RemoveUser")]
-    public async Task<IActionResult> RemoveUser(RemoveUserCommand request)
+    public async Task<IActionResult> RemoveUser(RemoveUserFromUserGroupCommand request)
     {
         var success = await sender.Send(request);
         return Ok(success);
     }
     
-    // THêm, xóa Policies vào usergroup
+    [Authorize(Policy = AppPolicy.AddPoliciesToUserGroup)]
     [HttpPost("AddPolicies")]
-    public async Task<IActionResult> AddPolicies(AddPoliciesCommand request)
+    public async Task<IActionResult> AddPolicies(AddPoliciesToUserGroupCommand request)
     {
         var success = await sender.Send(request);
         return Ok(success);
     }
 
+    [Authorize(Policy = AppPolicy.RemovePolicyFromUserGroup)]
     [HttpDelete("RemovePolicy")]
-    public async Task<IActionResult> RemovePolicy(RemovePolicyCommand request)
+    public async Task<IActionResult> RemovePolicy(RemovePolicyFromUserGroupCommand request)
     {
         var success = await sender.Send(request);
         return Ok(success);       

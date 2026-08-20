@@ -7,13 +7,12 @@ using SharedKernel.Exceptions;
 
 namespace Application.UseCases.UserGroups.RemoveUser;
 
-public class RemoveUserCommandHandler(
+public class RemoveUserFromUserGroupCommandHandler(
     IRepository<UserGroup, Guid> userGroupRepository,
-    IRepository<User, Guid> userRepository,
     IUnitOfWork unitOfWork)
-    : IRequestHandler<RemoveUserCommand, bool>
+    : IRequestHandler<RemoveUserFromUserGroupCommand, bool>
 {
-    public async Task<bool> Handle(RemoveUserCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(RemoveUserFromUserGroupCommand request, CancellationToken cancellationToken)
     {
         var userGroup = await userGroupRepository
             .Where(x => x.Id.Equals(request.Id))
