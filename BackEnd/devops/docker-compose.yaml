@@ -1,0 +1,92 @@
+services:
+  # --- Service Web API .NET ---
+  api:
+    build:
+      context: ..
+      dockerfile: devops/Dockerfile
+    container_name: backend_api
+    ports:
+      - "5000:8080" # Truy cập Swagger tại http://localhost:5000/swagger
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__PostgreSQL=Host=postgres;Port=5432;Database=iem;Username=admin;Password=123456@An
+      - Minio__Endpoint=minio:9000
+      - Minio__AccessKey=admin
+      - Minio__SecretKey=123456@An
+      - Minio__BucketName=iem
+      - Minio__UseSSL=false
+      - Valkey__ConnectionStrings=valkey:6379
+      - Jwt__Key=RWkM9SHJ%ePH#qv7y7trwsX5S@*d$$K$$A
+      - Jwt__Issuer=iem
+      - Jwt__Audience=iem
+      - Jwt__ExpiresInMinutes=60
+    depends_on:
+      - postgres
+      - valkey
+      - minio
+      - qdrant
+    networks:
+      - backend-network
+
+  # --- Database & Services ---
+  postgres:
+    image: postgres:18
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: iem
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 123456@An
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    networks:
+      - backend-network
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant_db
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks:
+      - backend-network
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio_db
+    ports:
+      - "9000:9000" # S3 API
+      - "9001:9001" # Web Console
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: 123456@An
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - backend-network
+
+  valkey:
+    image: valkey/valkey:latest
+    container_name: valkey
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkey_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - backend-network
+
+volumes:
+  postgres_data:
+  qdrant_data:
+  minio_data:
+  valkey_data:
+
+networks:
+  backend-network:
+    driver: bridge
