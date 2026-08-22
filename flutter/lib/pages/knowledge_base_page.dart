@@ -1,9 +1,12 @@
+import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/widgets/base_page.dart';
 import 'package:enterprise_management/widgets/overview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../gen/assets.gen.dart';
+
+@RoutePage()
 class KnowledgeBasePage extends StatelessWidget {
   const KnowledgeBasePage({super.key});
 
@@ -115,9 +118,7 @@ class KnowledgeBasePage extends StatelessWidget {
                                           child: Row(
                                             spacing: 12,
                                             children: [
-                                              SvgPicture.asset(
-                                                'assets/pdf.svg',
-                                              ),
+                                              Assets.icons.pdf.svg(),
                                               Column(
                                                 crossAxisAlignment: .start,
                                                 children: [
@@ -339,9 +340,7 @@ class KnowledgeBasePage extends StatelessWidget {
                                     margin: .only(left: 8, right: 4),
                                     height: 32,
                                     width: 38,
-                                    child: SvgPicture.asset(
-                                      'assets/attachment.svg',
-                                    ),
+                                    child: Assets.icons.attachment.svg(),
                                   ),
                                   suffixIcon: Container(
                                     padding: .all(8),
@@ -358,7 +357,7 @@ class KnowledgeBasePage extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(4),
                                     ),
 
-                                    child: SvgPicture.asset('assets/send.svg'),
+                                    child: Assets.icons.send.svg(),
                                   ),
                                 ),
                               ),

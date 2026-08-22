@@ -1,7 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:enterprise_management/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
+import '../gen/assets.gen.dart';
 import 'navigation_item.dart';
 
 class NavigationSideBar extends StatelessWidget {
@@ -9,9 +10,11 @@ class NavigationSideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tabsRouter = AutoTabsRouter.of(context);
+
     return Container(
       width: 280,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         border: Border(right: BorderSide(width: 2, color: Color(0xffD9D9D9))),
       ),
       child: Column(
@@ -19,14 +22,17 @@ class NavigationSideBar extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: .start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: .symmetric(horizontal: 24, vertical: 24),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 24,
+                    ),
                     child: Column(
-                      crossAxisAlignment: .start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Enterprise Management',
                           style: TextStyle(
                             color: Color(0xff001E40),
@@ -34,18 +40,18 @@ class NavigationSideBar extends StatelessWidget {
                             fontSize: 20,
                           ),
                         ),
-                        Text(
+                        const Text(
                           'Enterprise Suite',
                           style: TextStyle(
                             color: Color(0xff43474F),
                             fontSize: 12,
-                            fontWeight: .w600,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         SolidButton(
-                          margin: .only(top: 24, bottom: 24),
+                          margin: const EdgeInsets.only(top: 24, bottom: 24),
                           title: 'New Project',
-                          assetsPath: 'plus.svg',
+                          prefix: Assets.icons.plus,
                           onTap: () {},
                         ),
                       ],
@@ -53,39 +59,35 @@ class NavigationSideBar extends StatelessWidget {
                   ),
                   NavigationItem(
                     title: 'Dashboard',
-                    assetsPath: 'grid.svg',
-                    active: true,
-                    onTap: () {},
+                    icon: Assets.icons.grid,
+                    active: tabsRouter.activeIndex == 0,
+                    onTap: () {
+                      tabsRouter.setActiveIndex(0);
+                    },
                   ),
                   NavigationItem(
                     title: 'Admin Panel',
-                    assetsPath: 'admin_panel.svg',
-                    active: false,
-                    onTap: () {},
+                    icon: Assets.icons.adminPanel,
+                    active: tabsRouter.activeIndex == 1,
+                    onTap: () {
+                      tabsRouter.setActiveIndex(1);
+                    },
                   ),
                   NavigationItem(
                     title: 'Knowledge Base',
-                    assetsPath: 'book.svg',
-                    active: false,
-                    onTap: () {},
+                    icon: Assets.icons.book,
+                    active: tabsRouter.activeIndex == 2,
+                    onTap: () {
+                      tabsRouter.setActiveIndex(2);
+                    },
                   ),
                   NavigationItem(
                     title: 'Tasks',
-                    assetsPath: 'tick.svg',
-                    active: false,
-                    onTap: () {},
-                  ),
-                  NavigationItem(
-                    title: 'Timeline',
-                    assetsPath: 'timeline.svg',
-                    active: false,
-                    onTap: () {},
-                  ),
-                  NavigationItem(
-                    title: 'Communication',
-                    assetsPath: 'communication.svg',
-                    active: false,
-                    onTap: () {},
+                    icon: Assets.icons.tick,
+                    active: tabsRouter.activeIndex == 3,
+                    onTap: () {
+                      tabsRouter.setActiveIndex(3);
+                    },
                   ),
                 ],
               ),
@@ -95,42 +97,47 @@ class NavigationSideBar extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin: .only(left: 24, right: 24),
+                  margin: const EdgeInsets.only(left: 24, right: 24),
                   height: 1,
-                  decoration: BoxDecoration(color: Color(0xffD9D9D9)),
+                  decoration: const BoxDecoration(color: Color(0xffD9D9D9)),
                 ),
               ],
             ),
           ),
           Container(
-            padding: .only(left: 32, top: 32, right: 32, bottom: 20),
+            padding: const EdgeInsets.only(
+              left: 32,
+              top: 32,
+              right: 32,
+              bottom: 20,
+            ),
             child: Row(
               spacing: 12,
               children: [
-                SvgPicture.asset('assets/settings.svg', width: 20, height: 20),
-                Text(
+                Assets.icons.settings.svg(width: 20, height: 20),
+                const Text(
                   'Settings',
                   style: TextStyle(
                     color: Color(0xff43474F),
                     fontSize: 14,
-                    fontWeight: .w600,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            padding: .only(left: 32, right: 32, bottom: 32),
+            padding: const EdgeInsets.only(left: 32, right: 32, bottom: 32),
             child: Row(
               spacing: 12,
               children: [
-                SvgPicture.asset('assets/support.svg', width: 20, height: 20),
-                Text(
+                Assets.icons.support.svg(width: 20, height: 20),
+                const Text(
                   'Support',
                   style: TextStyle(
                     color: Color(0xff43474F),
                     fontSize: 14,
-                    fontWeight: .w600,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ],

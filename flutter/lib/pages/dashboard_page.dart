@@ -1,13 +1,15 @@
+import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/widgets/base_page.dart';
 import 'package:enterprise_management/widgets/outline_icon_button.dart';
 import 'package:enterprise_management/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../gen/assets.gen.dart';
 import '../widgets/overview_container.dart';
 import '../widgets/task_tile.dart';
 
+@RoutePage()
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
@@ -96,7 +98,7 @@ class AIInsightSummary extends StatelessWidget {
                       color: Color(0xff003366),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: SvgPicture.asset('assets/light_bulb.svg'),
+                    child: Assets.icons.lightBulb.svg(),
                   ),
                   Text(
                     title,

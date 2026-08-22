@@ -1,9 +1,12 @@
+import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/widgets/base_page.dart';
 import 'package:enterprise_management/widgets/overview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../gen/assets.gen.dart';
+
+@RoutePage()
 class ProjectTrackerPage extends StatelessWidget {
   const ProjectTrackerPage({super.key});
 
@@ -83,18 +86,18 @@ class ProjectTrackerPage extends StatelessWidget {
                                   padding: .symmetric(vertical: 8),
                                   decoration: BoxDecoration(border: Border(top: BorderSide(width: 1, color: Color(0xffE5EEFF)))),
                                   child: Row(
-                                    mainAxisAlignment: .spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
-                                          SvgPicture.asset('assets/light_bulb.svg'),
+                                          Assets.icons.lightBulb.svg(),
                                         ],
                                       ),
                                       Row(
                                         spacing: 12,
                                         children: [
-                                          SvgPicture.asset('assets/message.svg'),
-                                          SvgPicture.asset('assets/attachment.svg'),
+                                          Assets.icons.message.svg(),
+                                          Assets.icons.attachment.svg(),
                                         ],
                                       )
                                     ],

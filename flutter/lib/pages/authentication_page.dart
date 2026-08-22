@@ -1,9 +1,11 @@
+import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/widgets/outline_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
+import '../gen/assets.gen.dart';
 import '../widgets/solid_button.dart';
 
+@RoutePage()
 class AuthenticationPage extends StatelessWidget {
   const AuthenticationPage({super.key});
 
@@ -70,8 +72,7 @@ class AuthenticationPage extends StatelessWidget {
                         ),
                         margin: .only(bottom: 20),
                         padding: .all(12),
-                        child: SvgPicture.asset(
-                          'assets/logo.svg',
+                        child: Assets.icons.logo.svg(
                           width: 32,
                           height: 32,
                         ),
@@ -101,8 +102,7 @@ class AuthenticationPage extends StatelessWidget {
                           border: OutlineInputBorder(),
                           prefixIcon: Container(
                             padding: .only(left: 18, right: 12),
-                            child: SvgPicture.asset(
-                              'assets/email.svg',
+                            child: Assets.icons.email.svg(
                               height: 16,
                               width: 16,
                             ),
@@ -127,7 +127,7 @@ class AuthenticationPage extends StatelessWidget {
                       OutlineIconButton(
                         margin: .only(bottom: 12),
                         title: 'Google',
-                        assetsPath: 'website.svg',
+                        prefix: Assets.icons.website,
                         onTap: () {
                           /// TODO: Login by google ///
                           print('google');
@@ -136,7 +136,7 @@ class AuthenticationPage extends StatelessWidget {
                       OutlineIconButton(
                         margin: .only(bottom: 12),
                         title: 'Microsoft SharePoint',
-                        assetsPath: 'window.svg',
+                        prefix: Assets.icons.window,
                         onTap: () {
                           /// TODO: Login by microsoft sharepoint ///
                           print('microsoft');

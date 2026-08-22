@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import '../gen/assets.gen.dart';
 
 class SolidButton extends StatelessWidget {
   const SolidButton({
@@ -7,12 +8,12 @@ class SolidButton extends StatelessWidget {
     this.margin,
     this.onTap,
     required this.title,
-    this.assetsPath,
+    this.prefix,
   });
 
   final EdgeInsetsGeometry? margin;
   final void Function()? onTap;
-  final String? assetsPath;
+  final SvgGenImage? prefix;
   final String title;
 
   @override
@@ -34,14 +35,13 @@ class SolidButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: .center,
               children: [
-                (assetsPath ?? '').isEmpty
+                (prefix == null)
                     ? const SizedBox()
                     : Container(
                         margin: .only(right: 8),
-                        child: SvgPicture.asset(
-                          'assets/$assetsPath',
-                          width: 16,
+                        child: prefix!.svg(
                           height: 16,
+                          width: 16,
                           colorFilter: .mode(Color(0xffFFFFFF), .srcIn),
                         ),
                       ),

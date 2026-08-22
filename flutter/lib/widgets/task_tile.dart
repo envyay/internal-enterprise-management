@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import '../gen/assets.gen.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({super.key});
@@ -7,31 +8,33 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: .all(16),
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: Color(0xffC3C6D1)))),
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(width: 1, color: Color(0xffC3C6D1))),
+      ),
       child: Row(
-        crossAxisAlignment: .start,
-        mainAxisAlignment: .start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         spacing: 16,
         children: [
           Container(
             height: 20,
             width: 20,
             decoration: BoxDecoration(
-              border: Border.all(width: 1.5, color: Color(0xff737780)),
+              border: Border.all(width: 1.5, color: const Color(0xff737780)),
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           Expanded(
             child: Column(
               spacing: 8,
-              crossAxisAlignment: .start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Review Q3 Financial Disclosures',
                   style: TextStyle(
                     fontSize: 14,
-                    fontWeight: .w500,
+                    fontWeight: FontWeight.w500,
                     height: 1,
                     color: Color(0xff0B1C30),
                   ),
@@ -39,16 +42,15 @@ class TaskTile extends StatelessWidget {
                 Row(
                   spacing: 8,
                   children: [
-                    SizedBox(
+                    Assets.icons.clock.svg(
                       height: 20,
                       width: 20,
-                      child: SvgPicture.asset('assets/clock.svg'),
                     ),
-                    Text(
+                    const Text(
                       'Due Today',
                       style: TextStyle(
                         color: Color(0xff43474F),
-                        fontWeight: .w400,
+                        fontWeight: FontWeight.w400,
                         fontSize: 12,
                       ),
                     ),
@@ -58,14 +60,17 @@ class TaskTile extends StatelessWidget {
             ),
           ),
           Container(
-            padding: .symmetric(horizontal: 8, vertical: 2),
-            decoration: BoxDecoration(color: Color(0xffFFDAD6), borderRadius: .circular(2)),
-            child: Text(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+            decoration: BoxDecoration(
+              color: const Color(0xffFFDAD6),
+              borderRadius: BorderRadius.circular(2),
+            ),
+            child: const Text(
               'High',
               style: TextStyle(
                 color: Color(0xff93000A),
                 fontSize: 12,
-                fontWeight: .w600,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

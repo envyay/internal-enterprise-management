@@ -1,10 +1,10 @@
+import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/widgets/base_page.dart';
 import 'package:enterprise_management/widgets/overview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import 'dashboard_page.dart';
-
+@RoutePage()
 class AdminPanelPage extends StatelessWidget {
   const AdminPanelPage({super.key});
 

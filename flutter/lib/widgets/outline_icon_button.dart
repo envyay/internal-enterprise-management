@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
+import '../gen/assets.gen.dart';
 
 class OutlineIconButton extends StatelessWidget {
   const OutlineIconButton({
     super.key,
     required this.title,
-    this.assetsPath,
+    this.prefix,
     this.margin,
     this.onTap,
   });
 
   final String title;
-  final String? assetsPath;
+  final SvgGenImage? prefix;
   final EdgeInsetsGeometry? margin;
   final void Function()? onTap;
 
@@ -20,9 +21,9 @@ class OutlineIconButton extends StatelessWidget {
     return Container(
       margin: margin,
       decoration: BoxDecoration(
-        color: Color(0xffFFFFFF),
+        color: const Color(0xffFFFFFF),
         borderRadius: .all(.circular(4)),
-        border: .all(color: Color(0xffC3C6D1)),
+        border: .all(color: const Color(0xffC3C6D1)),
       ),
       child: Material(
         type: .transparency,
@@ -34,17 +35,16 @@ class OutlineIconButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: .center,
               children: [
-                (assetsPath ?? '').isEmpty
+                (prefix == null)
                     ? const SizedBox()
                     : Container(
                         margin: .only(right: 12),
-                        child: SvgPicture.asset(
-                          'assets/$assetsPath',
+                        child: prefix!.svg(
                           width: 16,
                           height: 16,
                         ),
                       ),
-                Text(title, style: TextStyle(fontWeight: FontWeight.w500)),
+                Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
               ],
             ),
           ),
