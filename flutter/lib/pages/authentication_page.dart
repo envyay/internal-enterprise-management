@@ -3,6 +3,7 @@ import 'package:enterprise_management/widgets/outline_icon_button.dart';
 import 'package:flutter/material.dart';
 
 import '../gen/assets.gen.dart';
+import '../widgets/otp_verification_dialog.dart';
 import '../widgets/solid_button.dart';
 
 @RoutePage()
@@ -72,10 +73,7 @@ class AuthenticationPage extends StatelessWidget {
                         ),
                         margin: .only(bottom: 20),
                         padding: .all(12),
-                        child: Assets.icons.logo.svg(
-                          width: 32,
-                          height: 32,
-                        ),
+                        child: Assets.icons.logo.svg(width: 32, height: 32),
                       ),
                       Text(
                         "Enterprise Management",
@@ -109,7 +107,25 @@ class AuthenticationPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SolidButton(title: 'Login', margin: .only(bottom: 16, top: 20), onTap: () {},),
+                      SolidButton(
+                        title: 'Login',
+                        margin: .only(bottom: 16, top: 20),
+                        onTap: () {
+
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (context) => OtpVerificationDialog(
+                              phoneNumber: '93****261',
+                              onConfirm: (otp) {
+                                Navigator.pop(context);
+                                print('Mã OTP nhập vào: $otp');
+                                // TODO: Gọi API xác thực OTP
+                              },
+                            ),
+                          );
+                        },
+                      ),
                       Container(
                         margin: .symmetric(vertical: 32),
                         child: Row(

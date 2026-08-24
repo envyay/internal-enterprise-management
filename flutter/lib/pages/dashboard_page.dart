@@ -1,4 +1,6 @@
 import 'package:auto_route/annotations.dart';
+import 'package:dio/dio.dart';
+import 'package:enterprise_management/services/user_service.dart';
 import 'package:enterprise_management/widgets/base_page.dart';
 import 'package:enterprise_management/widgets/outline_icon_button.dart';
 import 'package:enterprise_management/widgets/solid_button.dart';
@@ -127,7 +129,14 @@ class AIInsightSummary extends StatelessWidget {
                 child: Row(
                   spacing: 12,
                   children: [
-                    SolidButton(title: 'View Full Report', onTap: () {}),
+                    SolidButton(title: 'View Full Report', onTap: ()  async{
+                      final dio = Dio();
+                      final client = RestClient(dio);
+                      final res = await client.login({
+                        'email': 'viannguyen119@gmail.com'
+                      });
+                      print(res);
+                    }),
                     OutlineIconButton(title: 'Dismiss', onTap: () {}),
                   ],
                 ),
