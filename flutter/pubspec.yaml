@@ -36,8 +36,11 @@ dependencies:
   auto_route: ^11.1.0
   freezed_annotation: ^3.1.0
   retrofit: ^4.10.0
+  flutter_riverpod: ^3.4.2
+  riverpod_annotation: ^4.0.6
   logger: ^2.7.0
   dio: ^5.11.0
+  pinput: ^6.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -55,6 +58,8 @@ dev_dependencies:
   freezed: ^4.0.0
 
   retrofit_generator: ^10.2.9
+
+  riverpod_generator: ^4.0.8
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,7 +81,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/icons/
+    - lib/infrastructure/assets/icons/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -107,7 +112,7 @@ flutter:
   # see https://flutter.dev/to/font-from-package
 
 flutter_gen:
-  output: lib/gen/
+  output: lib/infrastructure/assets/gen
 
   integrations:
     flutter_svg: true
