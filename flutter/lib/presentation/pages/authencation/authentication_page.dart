@@ -1,17 +1,22 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:enterprise_management/presentation/pages/authencation/controllers/authentication_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../infrastructure/assets/gen/assets.gen.dart';
-import '../widgets/otp_verification_dialog.dart';
-import '../widgets/outline_icon_button.dart';
-import '../widgets/solid_button.dart';
+import '../../../infrastructure/assets/gen/assets.gen.dart';
+import '../../widgets/otp_verification_dialog.dart';
+import '../../widgets/outline_icon_button.dart';
+import '../../widgets/solid_button.dart';
 
 @RoutePage()
-class AuthenticationPage extends StatelessWidget {
+class AuthenticationPage extends ConsumerWidget {
   const AuthenticationPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(authenticationControllerProvider.notifier);
+
     return Scaffold(
       body: Container(
         color: Color(0xffF8F9FF),
@@ -111,14 +116,15 @@ class AuthenticationPage extends StatelessWidget {
                         title: 'Login',
                         margin: const EdgeInsets.only(bottom: 16, top: 20),
                         onTap: () {
+                          controller.login();
                           showOtpVerificationDialog(
                             context: context,
                             email: 'user@example.com',
                             length: 6, // Hoặc 4 tùy backend
-                            onVerify: (pin) {
+                            onVerify: (otp) {
                               // Xử lý xác thực mã PIN với API
-                              print('Entered OTP: $pin');
-                              Navigator.of(context).pop(); // Đóng dialog sau khi thành công
+                              controller.loginVerify(otp);
+                              context.router.pop();
                             },
                             onResend: () {
                               // Gửi lại mã OTP

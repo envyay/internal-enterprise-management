@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app_router.gr.dart';
 
@@ -21,3 +22,8 @@ class AppRouter extends RootStackRouter {
     ),
   ];
 }
+
+
+final appRouterProvider = Provider<AppRouter>((ref) {
+  return AppRouter();
+});
