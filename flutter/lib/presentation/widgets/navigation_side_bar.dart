@@ -6,12 +6,12 @@ import '../../infrastructure/assets/gen/assets.gen.dart';
 import 'navigation_item.dart';
 
 class NavigationSideBar extends StatelessWidget {
-  const NavigationSideBar({super.key});
+  const NavigationSideBar({super.key, required this.tabsRouter});
+
+  final TabsRouter tabsRouter;
 
   @override
   Widget build(BuildContext context) {
-    final tabsRouter = AutoTabsRouter.of(context);
-
     return Container(
       width: 280,
       decoration: const BoxDecoration(
@@ -93,16 +93,14 @@ class NavigationSideBar extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 24, right: 24),
-                  height: 1,
-                  decoration: const BoxDecoration(color: Color(0xffD9D9D9)),
-                ),
-              ],
-            ),
+          Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.only(left: 24, right: 24),
+                height: 1,
+                decoration: const BoxDecoration(color: Color(0xffD9D9D9)),
+              ),
+            ],
           ),
           Container(
             padding: const EdgeInsets.only(

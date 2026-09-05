@@ -1,5 +1,5 @@
 import 'package:enterprise_management/application/use_cases/users/user_sign_in/user_sign_in_command.dart';
-import 'package:enterprise_management/infrastructure/repositories/users_repository.dart';
+import 'package:enterprise_management/infrastructure/repositories/user_repository.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command_handler.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 

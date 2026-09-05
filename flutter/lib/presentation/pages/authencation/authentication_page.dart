@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:enterprise_management/presentation/forms/inputs/email_input.dart';
 import 'package:enterprise_management/presentation/pages/authencation/controllers/authentication_controller.dart';
+import 'package:enterprise_management/presentation/pages/authencation/controllers/sign_in_form_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -78,7 +80,10 @@ class AuthenticationPage extends ConsumerWidget {
                         ),
                         margin: .only(bottom: 20),
                         padding: .all(12),
-                        child: Assets.lib.infrastructure.assets.icons.logo.svg(width: 32, height: 32),
+                        child: Assets.lib.infrastructure.assets.icons.logo.svg(
+                          width: 32,
+                          height: 32,
+                        ),
                       ),
                       Text(
                         "Enterprise Management",
@@ -99,37 +104,50 @@ class AuthenticationPage extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          label: Text('Work Email'),
-                          border: OutlineInputBorder(),
-                          prefixIcon: Container(
-                            padding: .only(left: 18, right: 12),
-                            child: Assets.lib.infrastructure.assets.icons.email.svg(
-                              height: 16,
-                              width: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SolidButton(
-                        title: 'Login',
-                        margin: const EdgeInsets.only(bottom: 16, top: 20),
-                        onTap: () {
-                          controller.login();
-                          showOtpVerificationDialog(
-                            context: context,
-                            email: 'user@example.com',
-                            length: 6, // Hoặc 4 tùy backend
-                            onVerify: (otp) {
-                              // Xử lý xác thực mã PIN với API
-                              controller.loginVerify(otp);
-                              context.router.pop();
-                            },
-                            onResend: () {
-                              // Gửi lại mã OTP
-                              print('Resending OTP...');
-                            },
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final form = ref.watch(signInFormControllerProvider.notifier);
+                          final state = ref.watch(signInFormControllerProvider);
+                          final error = state.email.error?.errorMessage;
+                          final email = state.email.value;
+                          return Column(
+                            children: [
+                              TextField(
+                                onChanged: (value) {
+                                  form.setEmail(value);
+                                },
+                                decoration: InputDecoration(
+                                  label: Text('Work Email'),
+                                  border: OutlineInputBorder(),
+                                  errorText: error,
+                                  prefixIcon: Container(
+                                    padding: .only(left: 18, right: 12),
+                                    child: Assets.lib.infrastructure.assets.icons.email.svg(height: 16, width: 16),
+                                  ),
+                                ),
+                              ),
+                              SolidButton(
+                                title: 'Login',
+                                margin: const EdgeInsets.only(bottom: 16, top: 20),
+                                onTap: () {
+                                  if (!state.isValid) return;
+
+                                  controller.login(email);
+                                  showOtpVerificationDialog(
+                                    context: context,
+                                    email: email,
+                                    length: 6,
+                                    onVerify: (otp) {
+                                      controller.loginVerify(email, otp);
+                                      context.router.pop();
+                                    },
+                                    onResend: () {
+                                      print('Resending OTP...');
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
                           );
                         },
                       ),

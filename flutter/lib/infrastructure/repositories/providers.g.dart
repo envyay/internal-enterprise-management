@@ -50,3 +50,51 @@ final class UserRepositoryProvider
 }
 
 String _$userRepositoryHash() => r'65b41b75578194bbd49bab687342a5c915958ac6';
+
+@ProviderFor(departmentRepository)
+final departmentRepositoryProvider = DepartmentRepositoryProvider._();
+
+final class DepartmentRepositoryProvider
+    extends
+        $FunctionalProvider<
+          IDepartmentRepository,
+          IDepartmentRepository,
+          IDepartmentRepository
+        >
+    with $Provider<IDepartmentRepository> {
+  DepartmentRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'departmentRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$departmentRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<IDepartmentRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  IDepartmentRepository create(Ref ref) {
+    return departmentRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IDepartmentRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IDepartmentRepository>(value),
+    );
+  }
+}
+
+String _$departmentRepositoryHash() =>
+    r'b5e589b17301e6b3f6988f7830e8920826b2f335';

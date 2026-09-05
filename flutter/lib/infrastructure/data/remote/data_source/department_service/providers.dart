@@ -1,5 +1,5 @@
 
-import 'package:enterprise_management/infrastructure/data/remote/data_source/user_service/user_remote_data_source.dart';
+import 'package:enterprise_management/infrastructure/data/remote/data_source/department_service/department_remote_data_source.dart';
 import 'package:enterprise_management/infrastructure/data/remote/http_clients/app_dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,7 +10,7 @@ String _baseUrl(String path) {
 }
 
 @Riverpod(keepAlive: true)
-UserRemoteDataSource userRemote(Ref ref) {
+DepartmentRemoteDataSource departmentRemote(Ref ref) {
   final dio = ref.watch(appDioProvider);
-  return UserRemoteDataSource(dio, baseUrl: _baseUrl('Users'));
+  return DepartmentRemoteDataSource(dio, baseUrl: _baseUrl('Departments'));
 }
