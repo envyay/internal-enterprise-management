@@ -1,10 +1,19 @@
+import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class OverviewContainer extends StatelessWidget {
-  const OverviewContainer({super.key, required this.title, required this.child});
+  const OverviewContainer({
+    super.key,
+    required this.title,
+    required this.child,
+    this.icon,
+    this.onTap,
+  });
 
   final String title;
   final Widget child;
+  final SvgGenImage? icon;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +31,11 @@ class OverviewContainer extends StatelessWidget {
               border: Border(
                 bottom: BorderSide(width: 1, color: Color(0xffC3C6D1)),
               ),
+              borderRadius: BorderRadius.circular(8)
             ),
             padding: .symmetric(vertical: 20, horizontal: 20),
             child: Row(
+              mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
                   title,
@@ -34,10 +45,15 @@ class OverviewContainer extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
+
+                InkWell(
+                  onTap: onTap,
+                  child: Container(child: icon?.svg(width: 16, height: 16)),
+                ),
               ],
             ),
           ),
-          Expanded(child: child)
+          Expanded(child: child),
         ],
       ),
     );

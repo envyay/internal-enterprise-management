@@ -63,9 +63,17 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get clock =>
       const SvgGenImage('lib/infrastructure/assets/icons/clock.svg');
 
+  /// File path: lib/infrastructure/assets/icons/close.svg
+  SvgGenImage get close =>
+      const SvgGenImage('lib/infrastructure/assets/icons/close.svg');
+
   /// File path: lib/infrastructure/assets/icons/communication.svg
   SvgGenImage get communication =>
       const SvgGenImage('lib/infrastructure/assets/icons/communication.svg');
+
+  /// File path: lib/infrastructure/assets/icons/createDepartment.svg
+  SvgGenImage get createDepartment =>
+      const SvgGenImage('lib/infrastructure/assets/icons/createDepartment.svg');
 
   /// File path: lib/infrastructure/assets/icons/email.svg
   SvgGenImage get email =>
@@ -147,7 +155,9 @@ class $LibInfrastructureAssetsIconsGen {
     book,
     calendar,
     clock,
+    close,
     communication,
+    createDepartment,
     email,
     grid,
     history,
