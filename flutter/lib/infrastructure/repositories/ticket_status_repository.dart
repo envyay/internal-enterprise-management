@@ -1,4 +1,5 @@
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_ticket_status_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
@@ -23,7 +24,8 @@ class TicketStatusRepository implements ITicketStatusRepository {
 
   @override
   Future<bool> deleteTicketStatus({required String id}) async {
-    final res = await _ticketStatusRemoteDataSource.
+    final res = await _ticketStatusRemoteDataSource.deleteTicketStatus(DeleteTicketStatusDto(id: id));
+    return res.data;
   }
 
   @override

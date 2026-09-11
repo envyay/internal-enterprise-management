@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_ticket_status_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';

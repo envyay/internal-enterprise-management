@@ -1,11 +1,15 @@
 import 'package:enterprise_management/infrastructure/data/local/data_source/providers.dart';
+import 'package:enterprise_management/infrastructure/data/remote/data_source/comment_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/department_service/providers.dart';
+import 'package:enterprise_management/infrastructure/data/remote/data_source/documentRemoteDataSource/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/project_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/ticket_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/ticket_status_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_group_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_service/providers.dart';
+import 'package:enterprise_management/infrastructure/repositories/comment_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/department_repository.dart';
+import 'package:enterprise_management/infrastructure/repositories/document_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/project_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/ticket_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/ticket_status_repository.dart';
@@ -52,4 +56,16 @@ IUserGroupRepository userGroupRepository(Ref ref){
 ITicketStatusRepository ticketStatusRepository(Ref ref){
   final ticketStatusRemoteDataSource = ref.watch(ticketStatusRemoteProvider);
   return TicketStatusRepository(ticketStatusRemoteDataSource: ticketStatusRemoteDataSource);
+}
+
+@Riverpod(keepAlive: true)
+ICommentRepository commentRepository(Ref ref){
+  final commentRemoteDataSource = ref.watch(commentRemoteProvider);
+  return CommentRepository(commentRemoteDataSource: commentRemoteDataSource);
+}
+
+@Riverpod(keepAlive: true)
+IDocumentRepository documentRepository(Ref ref){
+  final documentRemoteDataSource = ref.watch(documentRemoteProvider);
+  return DocumentRepository(documentRemoteDataSource: documentRemoteDataSource);
 }

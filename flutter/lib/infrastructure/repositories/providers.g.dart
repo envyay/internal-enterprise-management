@@ -288,3 +288,98 @@ final class TicketStatusRepositoryProvider
 
 String _$ticketStatusRepositoryHash() =>
     r'e5a1f6bfb370f67a853083232fa478f1f73c48fe';
+
+@ProviderFor(commentRepository)
+final commentRepositoryProvider = CommentRepositoryProvider._();
+
+final class CommentRepositoryProvider
+    extends
+        $FunctionalProvider<
+          ICommentRepository,
+          ICommentRepository,
+          ICommentRepository
+        >
+    with $Provider<ICommentRepository> {
+  CommentRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'commentRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$commentRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<ICommentRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  ICommentRepository create(Ref ref) {
+    return commentRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(ICommentRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<ICommentRepository>(value),
+    );
+  }
+}
+
+String _$commentRepositoryHash() => r'05cf70c65bc6421b099e80e444431197fe37c53f';
+
+@ProviderFor(documentRepository)
+final documentRepositoryProvider = DocumentRepositoryProvider._();
+
+final class DocumentRepositoryProvider
+    extends
+        $FunctionalProvider<
+          IDocumentRepository,
+          IDocumentRepository,
+          IDocumentRepository
+        >
+    with $Provider<IDocumentRepository> {
+  DocumentRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'documentRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$documentRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<IDocumentRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  IDocumentRepository create(Ref ref) {
+    return documentRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IDocumentRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IDocumentRepository>(value),
+    );
+  }
+}
+
+String _$documentRepositoryHash() =>
+    r'7ffd3e7735cf2da1b3e09e1697f7dbd1f48d2166';
