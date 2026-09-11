@@ -2,7 +2,7 @@ import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'get_comments_command.freezed.dart';
+part 'get_comments_query.freezed.dart';
 @freezed
 abstract class GetCommentsQuery with _$GetCommentsQuery implements IQuery<List<CommentDto>> {
   const factory GetCommentsQuery() = _GetCommentsQuery;
