@@ -44,11 +44,19 @@ class DepartmentsTable extends ConsumerWidget {
                               ),
                             ),
                             Text(
-                              item.name ?? "",
+                              item.name,
                               style: TextStyle(
                                 color: Color(0xff0B1C30),
                                 fontSize: 12,
                                 fontWeight: .w500,
+                              ),
+                            ),
+                            Container(
+                              height: 8,
+                              width: 8,
+                              decoration: BoxDecoration(
+                                color: Color(0xff006C49),
+                                borderRadius: .circular(12),
                               ),
                             ),
                           ],

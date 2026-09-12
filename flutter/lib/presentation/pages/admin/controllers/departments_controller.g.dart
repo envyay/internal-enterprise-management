@@ -13,7 +13,7 @@ part of 'departments_controller.dart';
 final departmentsControllerProvider = DepartmentsControllerProvider._();
 
 final class DepartmentsControllerProvider
-    extends $AsyncNotifierProvider<DepartmentsController, List<DepartmentDto>> {
+    extends $AsyncNotifierProvider<DepartmentsController, List<Department>> {
   DepartmentsControllerProvider._()
     : super(
         from: null,
@@ -34,21 +34,21 @@ final class DepartmentsControllerProvider
 }
 
 String _$departmentsControllerHash() =>
-    r'92da86aefadd3170257b501c5cb89abb5a3fdf47';
+    r'872be9b79fbfd5696e11fabb03bf44bf9b51126f';
 
 abstract class _$DepartmentsController
-    extends $AsyncNotifier<List<DepartmentDto>> {
-  FutureOr<List<DepartmentDto>> build();
+    extends $AsyncNotifier<List<Department>> {
+  FutureOr<List<Department>> build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
     final ref =
-        this.ref as $Ref<AsyncValue<List<DepartmentDto>>, List<DepartmentDto>>;
+        this.ref as $Ref<AsyncValue<List<Department>>, List<Department>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<DepartmentDto>>, List<DepartmentDto>>,
-              AsyncValue<List<DepartmentDto>>,
+              AnyNotifier<AsyncValue<List<Department>>, List<Department>>,
+              AsyncValue<List<Department>>,
               Object?,
               Object?
             >;

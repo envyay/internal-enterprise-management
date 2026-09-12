@@ -1,3 +1,4 @@
+import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_department_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_department_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_department_dto.dart';
@@ -5,11 +6,11 @@ import 'package:enterprise_management/infrastructure/data/dtos/departments/depar
 import 'package:enterprise_management/infrastructure/data/remote/data_source/department_service/department_remote_data_source.dart';
 
 abstract interface class IDepartmentRepository {
-  Future<List<DepartmentDto>> getDepartments();
+  Future<List<Department>> getDepartments();
 
   Future<DepartmentDto?> getDepartmentById({required String id});
 
-  Future<DepartmentDto> createDepartment({required String name});
+  Future<String> createDepartment({required String name});
 
   Future<bool> updateDepartmentById({required String id, required String name});
 
@@ -22,9 +23,9 @@ class DepartmentRepository implements IDepartmentRepository {
   final DepartmentRemoteDataSource _departmentRemoteDataSource;
 
   @override
-  Future<List<DepartmentDto>> getDepartments() async {
+  Future<List<Department>> getDepartments() async {
     final res = await _departmentRemoteDataSource.getDepartments();
-    return res.data;
+    return res.data.map((item) => item.toAggregate()).toList();
   }
 
   @override
@@ -34,7 +35,7 @@ class DepartmentRepository implements IDepartmentRepository {
   }
 
   @override
-  Future<DepartmentDto> createDepartment({required String name}) async {
+  Future<String> createDepartment({required String name}) async {
     final res = await _departmentRemoteDataSource.createDepartment(CreateDepartmentDto(name: name));
     return res.data;
   }

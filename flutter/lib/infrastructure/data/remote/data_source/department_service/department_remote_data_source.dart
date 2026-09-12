@@ -16,7 +16,7 @@ abstract class DepartmentRemoteDataSource {
   Future<ApiResponse<List<DepartmentDto>>> getDepartments();
 
   @POST('Create')
-  Future<ApiResponse<DepartmentDto>> createDepartment(@Body() CreateDepartmentDto body);
+  Future<ApiResponse<String>> createDepartment(@Body() CreateDepartmentDto body);
 
   @PUT('Update')
   Future<ApiResponse<bool>> updateDepartmentById(@Body() UpdateDepartmentDto body);

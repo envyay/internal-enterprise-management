@@ -4,12 +4,12 @@ import 'package:enterprise_management/infrastructure/repositories/department_rep
 import 'package:enterprise_management/shared_kernel/cqrs/command_handler.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 
-class CreateDepartmentCommandHandler extends ICommandHandler<CreateDepartmentCommand, DepartmentDto> {
+class CreateDepartmentCommandHandler extends ICommandHandler<CreateDepartmentCommand, String> {
   const CreateDepartmentCommandHandler({required this._departmentRepository});
   final IDepartmentRepository _departmentRepository;
 
   @override
-  Future<Result<DepartmentDto>> handle(CreateDepartmentCommand command) async {
+  Future<Result<String>> handle(CreateDepartmentCommand command) async {
     final res = await _departmentRepository.createDepartment(name: command.name);
     return Result.success(res);
   }

@@ -3,7 +3,7 @@ import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart'
 import 'package:enterprise_management/presentation/pages/admin/controllers/create_department_form_controller.dart';
 import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
 import 'package:enterprise_management/presentation/pages/admin/widgets/departments_table.dart';
-import 'package:enterprise_management/presentation/widgets/create_department_form.dart';
+import 'package:enterprise_management/presentation/widgets/create_department_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -17,7 +17,6 @@ class AdminPanelPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(departmentsControllerProvider.notifier);
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -45,19 +44,7 @@ class AdminPanelPage extends ConsumerWidget {
                         builder: (BuildContext context) {
                           return Consumer(
                             builder: (context, ref, child) {
-                              // final form = ref.watch(CreateDepartmentFormControllerProvider.notifier);
-                              // final state = ref.watch(CreateDepartmentFormControllerProvider);
-                              // final error = state.name.error?.errorMessage;
-                              // final name = state.name.value;
-                              return CreateDepartmentForm(
-                                title: 'Create Department',
-                                icon: Assets
-                                    .lib
-                                    .infrastructure
-                                    .assets
-                                    .icons
-                                    .close,
-                              );
+                              return CreateDepartmentDialog();
                             },
                           );
                         },
