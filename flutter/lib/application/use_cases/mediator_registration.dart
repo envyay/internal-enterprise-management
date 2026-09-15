@@ -70,8 +70,8 @@ import 'package:enterprise_management/application/use_cases/users/user_sign_in_v
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
+import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/departments/department_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/documents/document_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
@@ -97,7 +97,7 @@ extension MediatorRegistrationX on Mediator {
     );
 
     //UserGroup
-    registerQueryHandler<GetUserGroupsQuery, List<UserGroupDto>>(
+    registerQueryHandler<GetUserGroupsQuery, List<UserGroup>>(
       GetUserGroupsQueryHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
     );
 

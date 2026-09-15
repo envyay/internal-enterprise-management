@@ -71,9 +71,9 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get communication =>
       const SvgGenImage('lib/infrastructure/assets/icons/communication.svg');
 
-  /// File path: lib/infrastructure/assets/icons/createDepartment.svg
-  SvgGenImage get createDepartment =>
-      const SvgGenImage('lib/infrastructure/assets/icons/createDepartment.svg');
+  /// File path: lib/infrastructure/assets/icons/create.svg
+  SvgGenImage get create =>
+      const SvgGenImage('lib/infrastructure/assets/icons/create.svg');
 
   /// File path: lib/infrastructure/assets/icons/delete.svg
   SvgGenImage get delete =>
@@ -169,7 +169,7 @@ class $LibInfrastructureAssetsIconsGen {
     clock,
     close,
     communication,
-    createDepartment,
+    create,
     delete,
     edit,
     email,

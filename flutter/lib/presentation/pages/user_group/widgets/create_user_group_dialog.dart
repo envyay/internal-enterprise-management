@@ -1,0 +1,92 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
+import 'package:enterprise_management/presentation/pages/admin/controllers/create_department_form_controller.dart';
+import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
+import 'package:enterprise_management/presentation/pages/user_group/controllers/create_user_group_form_controller.dart';
+import 'package:enterprise_management/presentation/pages/user_group/controllers/user_groups_controller.dart';
+import 'package:enterprise_management/presentation/widgets/solid_button.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class CreateUserGroupDialog extends ConsumerWidget {
+  const CreateUserGroupDialog({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final userGroupsController = ref.watch(
+      userGroupsControllerProvider.notifier,
+    );
+    final form = ref.watch(createUserGroupFormControllerProvider.notifier);
+    final state = ref.watch(createUserGroupFormControllerProvider);
+    final error = state.name.error?.errorMessage;
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Container(
+        width: 500,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(width: 1),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            Container(
+              width: .infinity,
+              decoration: BoxDecoration(
+                color: Color(0xffF8F9FF),
+                border: Border(
+                  bottom: BorderSide(width: 1, color: Color(0xffC3C6D1)),
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: .symmetric(vertical: 20, horizontal: 20),
+              child: Row(
+                mainAxisSize: .min,
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  Text(
+                    'Create UserGroup',
+                    style: TextStyle(
+                      color: Color(0xff0B1C30),
+                      fontWeight: .w600,
+                      fontSize: 18,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      context.router.pop();
+                    },
+                    child: Container(
+                      child: Assets.lib.infrastructure.assets.icons.close.svg(
+                        width: 16,
+                        height: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            TextField(
+              onChanged: (value) {
+                form.setName(value);
+              },
+              decoration: InputDecoration(
+                label: Text('Name'),
+                errorText: error,
+              ),
+            ),
+            SolidButton(
+              title: 'Create',
+              onTap: () async {
+                await form.submit();
+                userGroupsController.refresh();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

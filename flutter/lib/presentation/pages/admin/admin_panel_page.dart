@@ -4,7 +4,7 @@ import 'package:enterprise_management/presentation/pages/admin/controllers/creat
 import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
 import 'package:enterprise_management/presentation/pages/admin/widgets/departments_table.dart';
 import 'package:enterprise_management/presentation/pages/admin/widgets/list_unassigned_users.dart';
-import 'package:enterprise_management/presentation/widgets/create_department_dialog.dart';
+import 'package:enterprise_management/presentation/pages/admin/widgets/create_department_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -39,7 +39,7 @@ class AdminPanelPage extends ConsumerWidget {
                   child: OverviewContainer(
                     title: 'Departments',
                     icon:
-                        Assets.lib.infrastructure.assets.icons.createDepartment,
+                        Assets.lib.infrastructure.assets.icons.create,
                     onTap: () {
                       showDialog(
                         context: context,

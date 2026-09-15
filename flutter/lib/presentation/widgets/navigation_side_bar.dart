@@ -89,6 +89,14 @@ class NavigationSideBar extends StatelessWidget {
                       tabsRouter.setActiveIndex(3);
                     },
                   ),
+                  NavigationItem(
+                    title: 'User Groups',
+                    icon: Assets.lib.infrastructure.assets.icons.tick,
+                    active: tabsRouter.activeIndex == 4,
+                    onTap: () {
+                      tabsRouter.setActiveIndex(4);
+                    },
+                  ),
                 ],
               ),
             ),

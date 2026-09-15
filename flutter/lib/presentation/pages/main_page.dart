@@ -17,6 +17,7 @@ class MainPage extends StatelessWidget {
         AdminPanelRoute(),
         KnowledgeBaseRoute(),
         ProjectTrackerRoute(),
+        UserGroupRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);

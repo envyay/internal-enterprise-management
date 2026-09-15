@@ -1,3 +1,4 @@
+import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/add_users_to_user_group_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_user_group_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_user_group_dto.dart';
@@ -8,7 +9,7 @@ import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.da
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_group_service/user_group_remote_data_source.dart';
 
 abstract interface class IUserGroupRepository {
-  Future<List<UserGroupDto>> getUserGroups();
+  Future<List<UserGroup>> getUserGroups();
   Future<UserGroupDto> getUserGroupsById({required String id});
   Future<UserGroupDto> createUserGroups({required String name, required List<UserDto> userIds});
   Future<bool> updateUserGroupById({required String id, required String name, required List<UserDto> userIds});
@@ -34,9 +35,9 @@ class UserGroupRepository implements IUserGroupRepository {
   }
 
   @override
-  Future<List<UserGroupDto>> getUserGroups() async {
+  Future<List<UserGroup>> getUserGroups() async {
     final res = await _userGroupRemoteDataSource.getUserGroups();
-    return res.data;
+    return res.data.map((item) => item.toAggregate()).toList();
   }
 
   @override
