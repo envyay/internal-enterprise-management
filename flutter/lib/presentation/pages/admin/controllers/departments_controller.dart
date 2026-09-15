@@ -1,3 +1,4 @@
+import 'package:enterprise_management/application/use_cases/departments/delete_department/delete_department_command.dart';
 import 'package:enterprise_management/application/use_cases/departments/get_departments/get_departments_query.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
@@ -34,8 +35,10 @@ class DepartmentsController extends _$DepartmentsController {
     state = AsyncValue.data(data);
   }
 
-  void delete() async {
-
+  Future<void> delete(String id) async {
+    final mediator = ref.read(mediatorProvider);
+    await mediator.send(DeleteDepartmentCommand(id: id));
+    refresh();
   }
 
   void edit() async {

@@ -21,7 +21,6 @@ abstract class DepartmentRemoteDataSource {
   @PUT('Update')
   Future<ApiResponse<bool>> updateDepartmentById(@Body() UpdateDepartmentDto body);
 
-  @DELETE('Delete/{id}')
-  Future<ApiResponse<bool>> deleteDepartmentById(@Body() DeleteDepartmentDto body);
-
+  @DELETE('{id}')
+  Future<ApiResponse<bool?>> deleteDepartmentById(@Path('id') String id);
 }

@@ -62,11 +62,14 @@ import 'package:enterprise_management/application/use_cases/user_groups/remove_u
 import 'package:enterprise_management/application/use_cases/user_groups/remove_user_from_user_group/remove_user_from_user_group_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/update_user_group/update_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/update_user_group/update_user_group_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query.dart';
+import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in/user_sign_in_command.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in/user_sign_in_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
+import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/departments/department_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/documents/document_dto.dart';
@@ -81,6 +84,10 @@ extension MediatorRegistrationX on Mediator {
   void registerApplicationHandlers() {
     // Commands & Handlers
     //User
+    registerQueryHandler<GetUserQuery, List<User>>(
+        GetUserQueryHandler(userRepository: ref.read(userRepositoryProvider)),
+    );
+
     registerCommandHandler<UserSignInCommand, bool>(
       UserSignInCommandHandler(userRepository: ref.read(userRepositoryProvider)),
     );
@@ -127,7 +134,7 @@ extension MediatorRegistrationX on Mediator {
       UpdateDepartmentCommandHandler(departmentRepository: ref.read(departmentRepositoryProvider)),
     );
 
-    registerCommandHandler<DeleteDepartmentCommand, bool>(
+    registerCommandHandler<DeleteDepartmentCommand, bool?>(
       DeleteDepartmentCommandHandler(departmentRepository: ref.read(departmentRepositoryProvider)),
     );
 

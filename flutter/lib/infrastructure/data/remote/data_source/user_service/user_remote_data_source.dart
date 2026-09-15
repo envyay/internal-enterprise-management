@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_request_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_verify_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
@@ -13,7 +14,7 @@ abstract class UserRemoteDataSource {
   factory UserRemoteDataSource(Dio dio, {String? baseUrl}) = _UserRemoteDataSource;
   
   @GET('GetAll')
-  Future<ApiResponse<List<UserDto?>>> getUsers();
+  Future<ApiResponse<List<UserDto>>> getUsers();
   //
   // @POST('Create')
   // Future<ApiResponse<UserDto?>> createUser(@Body() CreateUser body);

@@ -19,7 +19,7 @@ class CreateDepartmentFormController extends _$CreateDepartmentFormController {
     state = state.copyWith(name: NameInput.dirty(value));
   }
 
-  void submit() async {
+  Future<void> submit() async {
     if(state.isNotValid) return;
 
     final name = state.name.value;

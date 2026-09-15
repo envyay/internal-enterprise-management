@@ -1,3 +1,4 @@
+import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_request_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_verify_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_service/user_remote_data_source.dart';
@@ -6,7 +7,7 @@ import '../data/dtos/users/user_dto.dart';
 import '../data/local/data_source/auth_local_data_source.dart';
 
 abstract interface class IUserRepository {
-  Future<List<UserDto>> getUsers();
+  Future<List<User>> getUsers();
 
   Future<UserDto> createUser({required String fullName, required String email});
 
@@ -41,9 +42,9 @@ class UsersRepository implements IUserRepository {
   }
 
   @override
-  Future<List<UserDto>> getUsers() {
-    // TODO: implement getUsers
-    throw UnimplementedError();
+  Future<List<User>> getUsers() async {
+    final res = await _userRemoteDataSource.getUsers();
+    return res.data.map((item) => item.toAggregate()).toList();
   }
 
   @override

@@ -30,7 +30,7 @@ class DepartmentRepository implements IDepartmentRepository {
 
   @override
   Future<bool?> deleteDepartmentById({required String id}) async {
-    final res = await _departmentRemoteDataSource.deleteDepartmentById(DeleteDepartmentDto(id: id));
+    final res = await _departmentRemoteDataSource.deleteDepartmentById(id);
     return res.data;
   }
 

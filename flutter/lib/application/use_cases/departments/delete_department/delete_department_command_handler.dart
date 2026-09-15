@@ -3,11 +3,11 @@ import 'package:enterprise_management/infrastructure/repositories/department_rep
 import 'package:enterprise_management/shared_kernel/cqrs/command_handler.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 
-class DeleteDepartmentCommandHandler extends ICommandHandler<DeleteDepartmentCommand, bool> {
+class DeleteDepartmentCommandHandler extends ICommandHandler<DeleteDepartmentCommand, bool?> {
   const DeleteDepartmentCommandHandler({required this._departmentRepository});
   final IDepartmentRepository _departmentRepository;
   @override
-  Future<Result<bool>> handle(DeleteDepartmentCommand command) async {
+  Future<Result<bool?>> handle(DeleteDepartmentCommand command) async {
     final res = await _departmentRepository.deleteDepartmentById(id: command.id);
     return Result.success(res ?? false);
   }

@@ -75,6 +75,14 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get createDepartment =>
       const SvgGenImage('lib/infrastructure/assets/icons/createDepartment.svg');
 
+  /// File path: lib/infrastructure/assets/icons/delete.svg
+  SvgGenImage get delete =>
+      const SvgGenImage('lib/infrastructure/assets/icons/delete.svg');
+
+  /// File path: lib/infrastructure/assets/icons/edit.svg
+  SvgGenImage get edit =>
+      const SvgGenImage('lib/infrastructure/assets/icons/edit.svg');
+
   /// File path: lib/infrastructure/assets/icons/email.svg
   SvgGenImage get email =>
       const SvgGenImage('lib/infrastructure/assets/icons/email.svg');
@@ -110,6 +118,10 @@ class $LibInfrastructureAssetsIconsGen {
   /// File path: lib/infrastructure/assets/icons/profile.svg
   SvgGenImage get profile =>
       const SvgGenImage('lib/infrastructure/assets/icons/profile.svg');
+
+  /// File path: lib/infrastructure/assets/icons/search.svg
+  SvgGenImage get search =>
+      const SvgGenImage('lib/infrastructure/assets/icons/search.svg');
 
   /// File path: lib/infrastructure/assets/icons/send.svg
   SvgGenImage get send =>
@@ -158,6 +170,8 @@ class $LibInfrastructureAssetsIconsGen {
     close,
     communication,
     createDepartment,
+    delete,
+    edit,
     email,
     grid,
     history,
@@ -167,6 +181,7 @@ class $LibInfrastructureAssetsIconsGen {
     pdf,
     plus,
     profile,
+    search,
     send,
     settings,
     support,

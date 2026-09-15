@@ -12,7 +12,9 @@ class CreateDepartmentDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final departmentsController = ref.watch(departmentsControllerProvider.notifier);
+    final departmentsController = ref.watch(
+      departmentsControllerProvider.notifier,
+    );
     final form = ref.watch(createDepartmentFormControllerProvider.notifier);
     final state = ref.watch(createDepartmentFormControllerProvider);
     final error = state.name.error?.errorMessage;
@@ -73,10 +75,13 @@ class CreateDepartmentDialog extends ConsumerWidget {
                 errorText: error,
               ),
             ),
-            SolidButton(title: 'Create', onTap: () {
-              form.submit();
-              departmentsController.refresh();
-            }),
+            SolidButton(
+              title: 'Create',
+              onTap: () async {
+                await form.submit();
+                departmentsController.refresh();
+              },
+            ),
           ],
         ),
       ),

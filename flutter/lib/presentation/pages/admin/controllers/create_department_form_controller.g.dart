@@ -47,7 +47,7 @@ final class CreateDepartmentFormControllerProvider
 }
 
 String _$createDepartmentFormControllerHash() =>
-    r'1b5ff5a6ae0238cc925fcff4b8cf37f3b2636c98';
+    r'c14fcee4f6abfc75208a14f67e0a8c691fedc57f';
 
 abstract class _$CreateDepartmentFormController
     extends $Notifier<CreateDepartmentForm> {

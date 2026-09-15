@@ -120,30 +120,27 @@ class _DepartmentRemoteDataSource implements DepartmentRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<bool>> deleteDepartmentById(
-    DeleteDepartmentDto body,
-  ) async {
+  Future<ApiResponse<bool?>> deleteDepartmentById(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
-    final _options = _setStreamType<ApiResponse<bool>>(
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<bool?>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Delete/{id}',
+            '${id}',
             queryParameters: queryParameters,
             data: _data,
           )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<bool> _value;
+    late ApiResponse<bool?> _value;
     try {
-      _value = ApiResponse<bool>.fromJson(
+      _value = ApiResponse<bool?>.fromJson(
         _result.data!,
-        (json) => json as bool,
+        (json) => json as bool?,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);

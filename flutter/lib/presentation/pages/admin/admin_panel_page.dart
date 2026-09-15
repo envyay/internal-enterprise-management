@@ -3,10 +3,12 @@ import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart'
 import 'package:enterprise_management/presentation/pages/admin/controllers/create_department_form_controller.dart';
 import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
 import 'package:enterprise_management/presentation/pages/admin/widgets/departments_table.dart';
+import 'package:enterprise_management/presentation/pages/admin/widgets/list_unassigned_users.dart';
 import 'package:enterprise_management/presentation/widgets/create_department_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../widgets/base_page.dart';
 import '../../widgets/overview_container.dart';
@@ -130,10 +132,52 @@ class AdminPanelPage extends ConsumerWidget {
                   mainAxisCellCount: 3,
                   child: OverviewContainer(
                     title: 'Assign Users',
-                    child: Container(
-                      color: Colors.blue,
-                      // width: .maxFinite,
-                      child: Text('Search...'),
+                    child: Column(
+                      crossAxisAlignment: .start,
+                      children: [
+                        Container(
+                          margin: .symmetric(vertical: 16, horizontal: 16),
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 1.0),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          width: .maxFinite,
+                          child: Row(
+                            spacing: 10,
+                            children: [
+                              Container(
+                                margin: .symmetric(horizontal: 16),
+                                child: Assets
+                                    .lib
+                                    .infrastructure
+                                    .assets
+                                    .icons
+                                    .search
+                                    .svg(),
+                              ),
+                              Expanded(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Search...',
+                                    border: InputBorder.none,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        Container(
+                          margin: .symmetric(horizontal: 16),
+                          child: Text(
+                            'Unassigned Users',
+                            style: TextStyle(fontWeight: .w500, fontSize: 16),
+                          ),
+                        ),
+
+                        ListUnassignedUsers()
+
+                      ],
                     ),
                   ),
                 ),
