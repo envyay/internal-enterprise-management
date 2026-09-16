@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UpdateUserGroupDto {
 
- String get id; String get name; List<UserDto> get userIds;
+ String get id; String get name; List<String?> get userIds;
 /// Create a copy of UpdateUserGroupDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $UpdateUserGroupDtoCopyWith<$Res>  {
   factory $UpdateUserGroupDtoCopyWith(UpdateUserGroupDto value, $Res Function(UpdateUserGroupDto) _then) = _$UpdateUserGroupDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, List<UserDto> userIds
+ String id, String name, List<String?> userIds
 });
 
 
@@ -71,7 +71,7 @@ class _$UpdateUserGroupDtoCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,userIds: null == userIds ? _self.userIds : userIds // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,
+as List<String?>,
   ));
 }
 
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  List<UserDto> userIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  List<String?> userIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateUserGroupDto() when $default != null:
 return $default(_that.id,_that.name,_that.userIds);case _:
@@ -177,7 +177,7 @@ return $default(_that.id,_that.name,_that.userIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  List<UserDto> userIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  List<String?> userIds)  $default,) {final _that = this;
 switch (_that) {
 case _UpdateUserGroupDto():
 return $default(_that.id,_that.name,_that.userIds);case _:
@@ -197,7 +197,7 @@ return $default(_that.id,_that.name,_that.userIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  List<UserDto> userIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  List<String?> userIds)?  $default,) {final _that = this;
 switch (_that) {
 case _UpdateUserGroupDto() when $default != null:
 return $default(_that.id,_that.name,_that.userIds);case _:
@@ -212,13 +212,13 @@ return $default(_that.id,_that.name,_that.userIds);case _:
 @JsonSerializable()
 
 class _UpdateUserGroupDto implements UpdateUserGroupDto {
-  const _UpdateUserGroupDto({required this.id, required this.name, required  List<UserDto> userIds}): _userIds = userIds;
+  const _UpdateUserGroupDto({required this.id, required this.name, required  List<String?> userIds}): _userIds = userIds;
   factory _UpdateUserGroupDto.fromJson(Map<String, dynamic> json) => _$UpdateUserGroupDtoFromJson(json);
 
 @override final  String id;
 @override final  String name;
- final  List<UserDto> _userIds;
-@override List<UserDto> get userIds {
+ final  List<String?> _userIds;
+@override List<String?> get userIds {
   if (_userIds is EqualUnmodifiableListView) return _userIds;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_userIds);
@@ -258,7 +258,7 @@ abstract mixin class _$UpdateUserGroupDtoCopyWith<$Res> implements $UpdateUserGr
   factory _$UpdateUserGroupDtoCopyWith(_UpdateUserGroupDto value, $Res Function(_UpdateUserGroupDto) _then) = __$UpdateUserGroupDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, List<UserDto> userIds
+ String id, String name, List<String?> userIds
 });
 
 
@@ -280,7 +280,7 @@ class __$UpdateUserGroupDtoCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,userIds: null == userIds ? _self._userIds : userIds // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,
+as List<String?>,
   ));
 }
 

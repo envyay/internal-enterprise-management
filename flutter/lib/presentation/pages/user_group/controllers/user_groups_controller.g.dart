@@ -34,7 +34,7 @@ final class UserGroupsControllerProvider
 }
 
 String _$userGroupsControllerHash() =>
-    r'b60fc5932143acefcc2b60b14c79c1d34769997e';
+    r'03e6355a50040c0631ce3c72f65b55ba0948f360';
 
 abstract class _$UserGroupsController extends $AsyncNotifier<List<UserGroup>> {
   FutureOr<List<UserGroup>> build();

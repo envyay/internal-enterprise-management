@@ -5,7 +5,7 @@ part 'update_user_group_dto.freezed.dart';
 part 'update_user_group_dto.g.dart';
 @freezed
 abstract class UpdateUserGroupDto with _$UpdateUserGroupDto {
-  const factory UpdateUserGroupDto({required String id, required String name, required List<UserDto> userIds}) = _UpdateUserGroupDto;
+  const factory UpdateUserGroupDto({required String id, required String name, required List<String?> userIds}) = _UpdateUserGroupDto;
 
   factory UpdateUserGroupDto.fromJson(Map<String, dynamic> json) => _$UpdateUserGroupDtoFromJson(json);
 }

@@ -60,7 +60,7 @@ class UserGroupPage extends ConsumerWidget {
                               isActive: item.isActive,
                               onTap: () {
                                 controller.onSelect(item.id);
-                              },
+                              }, userGroup: item,
                             );
                           },
                         );

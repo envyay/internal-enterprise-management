@@ -12,7 +12,7 @@ abstract interface class IUserGroupRepository {
   Future<List<UserGroup>> getUserGroups();
   Future<UserGroupDto> getUserGroupsById({required String id});
   Future<UserGroupDto> createUserGroups({required String name, required List<UserDto> userIds});
-  Future<bool> updateUserGroupById({required String id, required String name, required List<UserDto> userIds});
+  Future<bool> updateUserGroupById({required String id, required String name, required List<String?> userIds});
   Future<bool> deleteUserGroupById({required String id});
 
   Future<bool> addUsersToUserGroup({required String id, required List<UserDto> userIds});
@@ -30,7 +30,7 @@ class UserGroupRepository implements IUserGroupRepository {
 
   @override
   Future<bool> deleteUserGroupById({required String id}) async {
-    final res = await _userGroupRemoteDataSource.deleteUserGroupById(DeleteUserGroupDto(id: id));
+    final res = await _userGroupRemoteDataSource.deleteUserGroupById(id);
     return res.data;
   }
 
@@ -47,7 +47,7 @@ class UserGroupRepository implements IUserGroupRepository {
   }
 
   @override
-  Future<bool> updateUserGroupById({required String id, required String name, required List<UserDto> userIds}) async {
+  Future<bool> updateUserGroupById({required String id, required String name, required List<String?> userIds}) async {
     final res = await _userGroupRemoteDataSource.updateUserGroupById(UpdateUserGroupDto(id: id, name: name, userIds: userIds));
     return res.data;
   }

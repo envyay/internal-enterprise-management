@@ -1,22 +1,24 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:enterprise_management/domain/aggregates/department/department.dart';
+import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
-import 'package:enterprise_management/presentation/pages/admin/controllers/edit_department_form_controller.dart';
+import 'package:enterprise_management/presentation/pages/user_group/controllers/edit_user_group_form_controller.dart';
+import 'package:enterprise_management/presentation/pages/user_group/controllers/user_groups_controller.dart';
 import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EditDepartmentDialog extends ConsumerWidget {
-  const EditDepartmentDialog({super.key, required this.department});
+class EditUserGroupDialog extends ConsumerWidget {
+  const EditUserGroupDialog({super.key, required this.userGroup});
 
-  final Department department;
+  final UserGroup userGroup;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formState = ref.watch(editDepartmentFormControllerProvider(department));
-    final formNotifier = ref.watch(editDepartmentFormControllerProvider(department).notifier);
-    final error = formState.name.error?.errorMessage;
+    final controller = ref.watch(editUserGroupFormControllerProvider(userGroup).notifier);
+    final state = ref.watch(editUserGroupFormControllerProvider(userGroup));
+    final error = state.name.error?.errorMessage;
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -44,7 +46,7 @@ class EditDepartmentDialog extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Edit Department',
+                    'Edit User Group',
                     style: TextStyle(
                       color: Color(0xff0B1C30),
                       fontWeight: FontWeight.w600,
@@ -68,34 +70,12 @@ class EditDepartmentDialog extends ConsumerWidget {
             Column(
               children: [
                 TextFormField(
-                  initialValue: formState.name.value,
+                  initialValue: state.name.value,
                   onChanged: (value) {
-                    formNotifier.setName(value);
+                    controller.setName(value);
                   },
                   decoration: InputDecoration(
                     label: const Text('Name'),
-                    errorText: error,
-                  ),
-                ),
-
-                TextFormField(
-                  initialValue: formState.name.value,
-                  onChanged: (value) {
-                    formNotifier.setName(value);
-                  },
-                  decoration: InputDecoration(
-                    label: const Text('Head'),
-                    errorText: error,
-                  ),
-                ),
-
-                TextFormField(
-                  initialValue: formState.name.value,
-                  onChanged: (value) {
-                    formNotifier.setName(value);
-                  },
-                  decoration: InputDecoration(
-                    label: const Text('Members'),
                     errorText: error,
                   ),
                 ),
@@ -103,11 +83,12 @@ class EditDepartmentDialog extends ConsumerWidget {
             ),
 
             SolidButton(title: 'Edit', onTap: () {
-              formNotifier.edit();
+              controller.edit();
             }),
           ],
         ),
       ),
     );
   }
+
 }

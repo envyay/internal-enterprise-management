@@ -22,8 +22,8 @@ abstract class UserGroupRemoteDataSource {
   @PUT('Update')
   Future<ApiResponse<bool>> updateUserGroupById(@Body() UpdateUserGroupDto body);
 
-  @DELETE('Delete/{id}')
-  Future<ApiResponse<bool>> deleteUserGroupById(@Body() DeleteUserGroupDto body);
+  @DELETE('{id}')
+  Future<ApiResponse<bool>> deleteUserGroupById(@Path('id') String id);
 
   @POST('AddUsers')
   Future<ApiResponse<bool>> addUsersToUserGroup(@Body() AddUsersToUserGroupDto body);

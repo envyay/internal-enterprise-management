@@ -11,7 +11,7 @@ _UpdateUserGroupDto _$UpdateUserGroupDtoFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       name: json['name'] as String,
       userIds: (json['userIds'] as List<dynamic>)
-          .map((e) => UserDto.fromJson(e as Map<String, dynamic>))
+          .map((e) => e as String?)
           .toList(),
     );
 

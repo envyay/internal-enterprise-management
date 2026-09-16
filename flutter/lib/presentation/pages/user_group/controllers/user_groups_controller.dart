@@ -1,3 +1,4 @@
+import 'package:enterprise_management/application/use_cases/user_groups/delete_user_group/delete_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/get_user_groups/get_user_groups_query.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
@@ -46,5 +47,11 @@ class UserGroupsController extends _$UserGroupsController {
     }).toList();
 
     state = AsyncData(newItems);
+  }
+
+  Future<void> delete(String id) async {
+    final mediator = ref.read(mediatorProvider);
+    await mediator.send(DeleteUserGroupCommand(id: id));
+    refresh();
   }
 }
