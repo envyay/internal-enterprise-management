@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_request_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_verify_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:retrofit/error_logger.dart';
@@ -15,10 +17,16 @@ abstract class UserRemoteDataSource {
   
   @GET('GetAll')
   Future<ApiResponse<List<UserDto>>> getUsers();
-  //
-  // @POST('Create')
-  // Future<ApiResponse<UserDto?>> createUser(@Body() CreateUser body);
-  //
+
+  @POST('Create')
+  Future<ApiResponse<String>> createUser(@Body() CreateUserDto body);
+
+  @PUT('Update')
+  Future<ApiResponse<bool>> updateUser(@Body() UpdateUserDto body);
+
+  @DELETE('{id}')
+  Future<ApiResponse<bool>> deleteUser(@Path('id') String id);
+
   @POST('LoginRequest')
   Future<ApiResponse<bool?>> loginRequest(@Body() LoginRequestDto body);
 

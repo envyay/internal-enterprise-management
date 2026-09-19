@@ -47,6 +47,8 @@ public static class AppPolicy
     // User
     public const string GetAllUsers = nameof(GetAllUsers);
     public const string CreateUser = nameof(CreateUser);
+    public const string UpdateUser = nameof(UpdateUser);
+    public const string DeleteUser = nameof(DeleteUser);
 
     // Department
     public const string GetAllDepartments = nameof(GetAllDepartments);
@@ -106,6 +108,8 @@ public static class AppPolicy
         // User
         GetAllUsers,
         CreateUser,
+        UpdateUser,
+        DeleteUser,
 
         // Department
         GetAllDepartments,

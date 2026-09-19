@@ -1,41 +1,38 @@
 import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
-import 'package:enterprise_management/presentation/pages/admin/controllers/create_department_form_controller.dart';
-import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
-import 'package:enterprise_management/presentation/pages/admin/widgets/departments_table.dart';
-import 'package:enterprise_management/presentation/pages/admin/widgets/list_unassigned_users.dart';
-import 'package:enterprise_management/presentation/pages/admin/widgets/create_department_dialog.dart';
+import 'package:enterprise_management/presentation/pages/department/widgets/create_department_dialog.dart';
+import 'package:enterprise_management/presentation/pages/department/widgets/departments_table.dart';
+import 'package:enterprise_management/presentation/pages/department/widgets/list_unassigned_users.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../widgets/base_page.dart';
 import '../../widgets/overview_container.dart';
 
 @RoutePage()
-class AdminPanelPage extends ConsumerWidget {
-  const AdminPanelPage({super.key});
+class DepartmentPage extends ConsumerWidget {
+  const DepartmentPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
-        title: 'Admin Panel',
+        title: 'Departments',
         description:
             'Manage departments, users, and organizational permissions.',
         child: Container(
           color: Colors.transparent,
           child: SingleChildScrollView(
             child: StaggeredGrid.count(
-              crossAxisCount: 12,
-              mainAxisSpacing: 24,
-              crossAxisSpacing: 24,
+              crossAxisCount: 4,
+              mainAxisSpacing: 4,
+              crossAxisSpacing: 4,
               children: [
                 StaggeredGridTile.count(
-                  crossAxisCellCount: 7,
-                  mainAxisCellCount: 3,
+                  crossAxisCellCount: 3,
+                  mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Departments',
                     icon:
@@ -128,8 +125,8 @@ class AdminPanelPage extends ConsumerWidget {
                   ),
                 ),
                 StaggeredGridTile.count(
-                  crossAxisCellCount: 5,
-                  mainAxisCellCount: 3,
+                  crossAxisCellCount: 1,
+                  mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Assign Users',
                     child: Column(
@@ -179,14 +176,6 @@ class AdminPanelPage extends ConsumerWidget {
 
                       ],
                     ),
-                  ),
-                ),
-                StaggeredGridTile.count(
-                  crossAxisCellCount: 12,
-                  mainAxisCellCount: 3,
-                  child: OverviewContainer(
-                    title: 'Role-Based Access Control (RBAC)',
-                    child: Column(children: [Text('data')]),
                   ),
                 ),
               ],

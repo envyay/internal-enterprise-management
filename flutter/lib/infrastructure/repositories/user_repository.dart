@@ -1,6 +1,8 @@
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_request_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_verify_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_service/user_remote_data_source.dart';
 
 import '../data/dtos/users/user_dto.dart';
@@ -9,7 +11,11 @@ import '../data/local/data_source/auth_local_data_source.dart';
 abstract interface class IUserRepository {
   Future<List<User>> getUsers();
 
-  Future<UserDto> createUser({required String fullName, required String email});
+  Future<String> createUser({required String fullName, required String email});
+
+  Future<bool> updateUser({required String id, required String fullName, required String email});
+
+  Future<bool> deleteUser({required String id});
 
   Future<bool?> loginRequest({required String email});
 
@@ -28,12 +34,12 @@ class UsersRepository implements IUserRepository {
   final AuthLocalDataSource _authLocalDataSource;
 
   @override
-  Future<UserDto> createUser({
+  Future<String> createUser({
     required String fullName,
     required String email,
-  }) {
-    // TODO: implement createUser
-    throw UnimplementedError();
+  }) async {
+    final res = await _userRemoteDataSource.createUser(CreateUserDto(fullName: fullName, email: email));
+    return res.data;
   }
 
   @override
@@ -63,5 +69,17 @@ class UsersRepository implements IUserRepository {
     var accessToken = res.data;
     await _authLocalDataSource.saveTokens(accessToken: accessToken ?? "");
     return true;
+  }
+
+  @override
+  Future<bool> deleteUser({required String id}) async {
+    final res = await _userRemoteDataSource.deleteUser(id);
+    return res.data;
+  }
+
+  @override
+  Future<bool> updateUser({required String id, required String fullName, required String email}) async {
+    final res = await _userRemoteDataSource.updateUser(UpdateUserDto(id: id, fullName: fullName, email: email));
+    return res.data;
   }
 }

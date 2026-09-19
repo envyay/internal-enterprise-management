@@ -8,7 +8,7 @@ class UpdateProjectCommandHandler extends ICommandHandler<UpdateProjectCommand, 
   final IProjectRepository _projectRepository;
   @override
   Future<Result<bool>> handle(UpdateProjectCommand command) async {
-    final res = await _projectRepository.updateProject(id: command.id, name: command.name);
+    final res = await _projectRepository.updateProject(id: command.id, name: command.name, description: command.description ,code: command.code);
     return Result.success(res);
   }
 

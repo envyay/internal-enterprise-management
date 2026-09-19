@@ -1,4 +1,5 @@
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
+import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:enterprise_management/presentation/pages/user_group/controllers/user_groups_controller.dart';
 import 'package:enterprise_management/presentation/pages/user_group/widgets/edit_user_group_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
@@ -40,26 +41,40 @@ class UserGroupItem extends ConsumerWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    userGroup.name,
-                    style: TextStyle(
-                      color: isActive
-                          ? const Color(0xff001E40)
-                          : const Color(0xff43474F),
-                      fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  child: Row(
+                    children: [
+                      Text(
+                        userGroup.name,
+                        style: TextStyle(
+                          color: isActive
+                              ? const Color(0xff001E40)
+                              : const Color(0xff43474F),
+                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
                   ),
                 ),
 
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  padding: EdgeInsets.symmetric(vertical: 4),
                   alignment: Alignment.centerRight,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      Row(
+                        spacing: 12,
+                        children: [
+                          Text('0'),
+                          Container(
+                            child: Assets.lib.infrastructure.assets.icons.profile.svg(),
+                          )
+                        ],
+                      ),
+
                       IconButton(
                         icon: const Icon(
                           Icons.edit_outlined,

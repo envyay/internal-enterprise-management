@@ -1,4 +1,4 @@
-import 'package:enterprise_management/presentation/pages/admin/controllers/users_controller.dart';
+import 'package:enterprise_management/presentation/pages/user/controllers/users_controller.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';

@@ -62,18 +62,24 @@ import 'package:enterprise_management/application/use_cases/user_groups/remove_u
 import 'package:enterprise_management/application/use_cases/user_groups/remove_user_from_user_group/remove_user_from_user_group_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/update_user_group/update_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/update_user_group/update_user_group_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/users/create_user/create_user_command.dart';
+import 'package:enterprise_management/application/use_cases/users/create_user/create_user_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/users/delete_user/delete_user_command.dart';
+import 'package:enterprise_management/application/use_cases/users/delete_user/delete_user_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query.dart';
 import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/users/update_user/update_user_command.dart';
+import 'package:enterprise_management/application/use_cases/users/update_user/update_user_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in/user_sign_in_command.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in/user_sign_in_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
+import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/documents/document_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/user_groups/user_groups_dto.dart';
@@ -86,6 +92,18 @@ extension MediatorRegistrationX on Mediator {
     //User
     registerQueryHandler<GetUserQuery, List<User>>(
         GetUserQueryHandler(userRepository: ref.read(userRepositoryProvider)),
+    );
+
+    registerCommandHandler<CreateUserCommand, String>(
+      CreateUserCommandHandler(userRepository: ref.read(userRepositoryProvider)),
+    );
+
+    registerCommandHandler<UpdateUserCommand, bool>(
+      UpdateUserCommandHandler(userRepository: ref.read(userRepositoryProvider)),
+    );
+
+    registerCommandHandler<DeleteUserCommand, bool>(
+      DeleteUserCommandHandler(userRepository: ref.read(userRepositoryProvider)),
     );
 
     registerCommandHandler<UserSignInCommand, bool>(
@@ -139,11 +157,11 @@ extension MediatorRegistrationX on Mediator {
     );
 
     //Project
-    registerQueryHandler<GetProjectsQuery, List<ProjectDto?>>(
+    registerQueryHandler<GetProjectsQuery, List<Project?>>(
         GetProjectsQueryHandler(projectRepository: ref.read(projectRepositoryProvider))
     );
 
-    registerCommandHandler<CreateProjectCommand, ProjectDto>(
+    registerCommandHandler<CreateProjectCommand, String>(
       CreateProjectCommandHandler(projectRepository: ref.read(projectRepositoryProvider)),
     );
 

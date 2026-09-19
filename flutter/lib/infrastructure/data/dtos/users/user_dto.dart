@@ -14,6 +14,6 @@ abstract class UserDto with _$UserDto {
 
 extension DUserDtoX on UserDto {
   User toAggregate() {
-    return User(id: id ?? '', fullName: fullName ?? '');
+    return User(id: id ?? '', fullName: fullName ?? '', email: email ?? '');
   }
 }

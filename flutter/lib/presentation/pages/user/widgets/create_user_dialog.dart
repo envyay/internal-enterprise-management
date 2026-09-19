@@ -1,23 +1,25 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/forms/inputs/email_input.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
-import 'package:enterprise_management/presentation/pages/admin/controllers/create_department_form_controller.dart';
-import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
+import 'package:enterprise_management/presentation/pages/user/controllers/create_user_form_controller.dart';
+import 'package:enterprise_management/presentation/pages/user/controllers/users_controller.dart';
 import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateDepartmentDialog extends ConsumerWidget {
-  const CreateDepartmentDialog({super.key});
+class CreateUserDialog extends ConsumerWidget {
+  const CreateUserDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final departmentsController = ref.watch(
-      departmentsControllerProvider.notifier,
+    final controller = ref.watch(
+      usersControllerProvider.notifier,
     );
-    final form = ref.watch(createDepartmentFormControllerProvider.notifier);
-    final state = ref.watch(createDepartmentFormControllerProvider);
-    final error = state.name.error?.errorMessage;
+    final form = ref.watch(createUserFormControllerProvider.notifier);
+    final state = ref.watch(createUserFormControllerProvider);
+    final errorFullName = state.fullName.error?.errorMessage;
+    final errorEmail = state.email.error?.errorMessage;
     return Dialog(
       backgroundColor: Colors.transparent,
       child: Container(
@@ -45,7 +47,7 @@ class CreateDepartmentDialog extends ConsumerWidget {
                 mainAxisAlignment: .spaceBetween,
                 children: [
                   Text(
-                    'Create Department',
+                    'Create User',
                     style: TextStyle(
                       color: Color(0xff0B1C30),
                       fontWeight: .w600,
@@ -68,18 +70,27 @@ class CreateDepartmentDialog extends ConsumerWidget {
             ),
             TextField(
               onChanged: (value) {
-                form.setName(value);
+                form.setFullName(value);
               },
               decoration: InputDecoration(
                 label: Text('Name'),
-                errorText: error,
+                errorText: errorFullName,
+              ),
+            ),
+            TextField(
+              onChanged: (value) {
+                form.setEmail(value);
+              },
+              decoration: InputDecoration(
+                label: Text('Email'),
+                errorText: errorEmail,
               ),
             ),
             SolidButton(
               title: 'Create',
               onTap: () async {
                 await form.submit();
-                departmentsController.refresh();
+                controller.refresh();
               },
             ),
           ],

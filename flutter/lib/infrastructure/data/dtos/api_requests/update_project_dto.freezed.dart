@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UpdateProjectDto {
 
- String get id; String get name;
+ String get id; String get name; String get description; String get code;
 /// Create a copy of UpdateProjectDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UpdateProjectDtoCopyWith<UpdateProjectDto> get copyWith => _$UpdateProjectDtoCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateProjectDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateProjectDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,description,code);
 
 @override
 String toString() {
-  return 'UpdateProjectDto(id: $id, name: $name)';
+  return 'UpdateProjectDto(id: $id, name: $name, description: $description, code: $code)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $UpdateProjectDtoCopyWith<$Res>  {
   factory $UpdateProjectDtoCopyWith(UpdateProjectDto value, $Res Function(UpdateProjectDto) _then) = _$UpdateProjectDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String name
+ String id, String name, String description, String code
 });
 
 
@@ -66,10 +66,12 @@ class _$UpdateProjectDtoCopyWithImpl<$Res>
 
 /// Create a copy of UpdateProjectDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? code = null,}) {
   return _then(UpdateProjectDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -155,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String code)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateProjectDto() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description,_that.code);case _:
   return orElse();
 
 }
@@ -176,10 +178,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String code)  $default,) {final _that = this;
 switch (_that) {
 case _UpdateProjectDto():
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description,_that.code);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +198,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  String code)?  $default,) {final _that = this;
 switch (_that) {
 case _UpdateProjectDto() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description,_that.code);case _:
   return null;
 
 }
@@ -211,11 +213,13 @@ return $default(_that.id,_that.name);case _:
 @JsonSerializable()
 
 class _UpdateProjectDto implements UpdateProjectDto {
-  const _UpdateProjectDto({required this.id, required this.name});
+  const _UpdateProjectDto({required this.id, required this.name, required this.description, required this.code});
   factory _UpdateProjectDto.fromJson(Map<String, dynamic> json) => _$UpdateProjectDtoFromJson(json);
 
 @override final  String id;
 @override final  String name;
+@override final  String description;
+@override final  String code;
 
 /// Create a copy of UpdateProjectDto
 /// with the given fields replaced by the non-null parameter values.
@@ -230,16 +234,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateProjectDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateProjectDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,description,code);
 
 @override
 String toString() {
-  return 'UpdateProjectDto(id: $id, name: $name)';
+  return 'UpdateProjectDto(id: $id, name: $name, description: $description, code: $code)';
 }
 
 
@@ -250,7 +254,7 @@ abstract mixin class _$UpdateProjectDtoCopyWith<$Res> implements $UpdateProjectD
   factory _$UpdateProjectDtoCopyWith(_UpdateProjectDto value, $Res Function(_UpdateProjectDto) _then) = __$UpdateProjectDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name
+ String id, String name, String description, String code
 });
 
 
@@ -267,10 +271,12 @@ class __$UpdateProjectDtoCopyWithImpl<$Res>
 
 /// Create a copy of UpdateProjectDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? code = null,}) {
   return _then(_UpdateProjectDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

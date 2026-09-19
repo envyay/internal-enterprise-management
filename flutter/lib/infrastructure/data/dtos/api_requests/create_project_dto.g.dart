@@ -7,7 +7,15 @@ part of 'create_project_dto.dart';
 // **************************************************************************
 
 _CreateProjectDto _$CreateProjectDtoFromJson(Map<String, dynamic> json) =>
-    _CreateProjectDto(name: json['name'] as String);
+    _CreateProjectDto(
+      name: json['name'] as String,
+      description: json['description'] as String,
+      code: json['code'] as String,
+    );
 
 Map<String, dynamic> _$CreateProjectDtoToJson(_CreateProjectDto instance) =>
-    <String, dynamic>{'name': instance.name};
+    <String, dynamic>{
+      'name': instance.name,
+      'description': instance.description,
+      'code': instance.code,
+    };

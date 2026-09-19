@@ -20,12 +20,12 @@ class _ProjectRemoteDataSource implements ProjectRemoteDataSource {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<List<ProjectDto?>>> getProjects() async {
+  Future<ApiResponse<List<ProjectDto>>> getProjects() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<ApiResponse<List<ProjectDto?>>>(
+    final _options = _setStreamType<ApiResponse<List<ProjectDto>>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -36,9 +36,9 @@ class _ProjectRemoteDataSource implements ProjectRemoteDataSource {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<List<ProjectDto?>> _value;
+    late ApiResponse<List<ProjectDto>> _value;
     try {
-      _value = ApiResponse<List<ProjectDto?>>.fromJson(
+      _value = ApiResponse<List<ProjectDto>>.fromJson(
         _result.data!,
         (json) => json is List<dynamic>
             ? json
@@ -56,13 +56,13 @@ class _ProjectRemoteDataSource implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<ProjectDto>> createProject(CreateProjectDto body) async {
+  Future<ApiResponse<String>> createProject(CreateProjectDto body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _options = _setStreamType<ApiResponse<ProjectDto>>(
+    final _options = _setStreamType<ApiResponse<String>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -73,11 +73,11 @@ class _ProjectRemoteDataSource implements ProjectRemoteDataSource {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<ProjectDto> _value;
+    late ApiResponse<String> _value;
     try {
-      _value = ApiResponse<ProjectDto>.fromJson(
+      _value = ApiResponse<String>.fromJson(
         _result.data!,
-        (json) => ProjectDto.fromJson(json as Map<String, dynamic>),
+        (json) => json as String,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -118,17 +118,16 @@ class _ProjectRemoteDataSource implements ProjectRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<bool>> deleteProject(DeleteProjectDto body) async {
+  Future<ApiResponse<bool>> deleteProject(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ApiResponse<bool>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Delete/{id}',
+            '${id}',
             queryParameters: queryParameters,
             data: _data,
           )

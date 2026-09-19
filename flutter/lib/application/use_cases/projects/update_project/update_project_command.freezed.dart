@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UpdateProjectCommand {
 
- String get id; String get name;
+ String get id; String get name; String get description; String get code;
 /// Create a copy of UpdateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $UpdateProjectCommandCopyWith<UpdateProjectCommand> get copyWith => _$UpdateProj
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateProjectCommand&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateProjectCommand&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,description,code);
 
 @override
 String toString() {
-  return 'UpdateProjectCommand(id: $id, name: $name)';
+  return 'UpdateProjectCommand(id: $id, name: $name, description: $description, code: $code)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $UpdateProjectCommandCopyWith<$Res>  {
   factory $UpdateProjectCommandCopyWith(UpdateProjectCommand value, $Res Function(UpdateProjectCommand) _then) = _$UpdateProjectCommandCopyWithImpl;
 @useResult
 $Res call({
- String id, String name
+ String id, String name, String description, String code
 });
 
 
@@ -63,10 +63,12 @@ class _$UpdateProjectCommandCopyWithImpl<$Res>
 
 /// Create a copy of UpdateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = null,Object? code = null,}) {
   return _then(UpdateProjectCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -152,10 +154,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String code)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateProjectCommand() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description,_that.code);case _:
   return orElse();
 
 }
@@ -173,10 +175,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String description,  String code)  $default,) {final _that = this;
 switch (_that) {
 case _UpdateProjectCommand():
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description,_that.code);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +195,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String description,  String code)?  $default,) {final _that = this;
 switch (_that) {
 case _UpdateProjectCommand() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.description,_that.code);case _:
   return null;
 
 }
@@ -208,11 +210,13 @@ return $default(_that.id,_that.name);case _:
 
 
 class _UpdateProjectCommand implements UpdateProjectCommand {
-  const _UpdateProjectCommand({required this.id, required this.name});
+  const _UpdateProjectCommand({required this.id, required this.name, required this.description, required this.code});
   
 
 @override final  String id;
 @override final  String name;
+@override final  String description;
+@override final  String code;
 
 /// Create a copy of UpdateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -224,16 +228,16 @@ _$UpdateProjectCommandCopyWith<_UpdateProjectCommand> get copyWith => __$UpdateP
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateProjectCommand&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateProjectCommand&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,description,code);
 
 @override
 String toString() {
-  return 'UpdateProjectCommand(id: $id, name: $name)';
+  return 'UpdateProjectCommand(id: $id, name: $name, description: $description, code: $code)';
 }
 
 
@@ -244,7 +248,7 @@ abstract mixin class _$UpdateProjectCommandCopyWith<$Res> implements $UpdateProj
   factory _$UpdateProjectCommandCopyWith(_UpdateProjectCommand value, $Res Function(_UpdateProjectCommand) _then) = __$UpdateProjectCommandCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name
+ String id, String name, String description, String code
 });
 
 
@@ -261,10 +265,12 @@ class __$UpdateProjectCommandCopyWithImpl<$Res>
 
 /// Create a copy of UpdateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = null,Object? code = null,}) {
   return _then(_UpdateProjectCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
+as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

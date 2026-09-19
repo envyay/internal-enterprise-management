@@ -48,12 +48,6 @@ class NavigationSideBar extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SolidButton(
-                          margin: const EdgeInsets.only(top: 24, bottom: 24),
-                          title: 'New Project',
-                          prefix: Assets.lib.infrastructure.assets.icons.plus,
-                          onTap: () {},
-                        ),
                       ],
                     ),
                   ),
@@ -66,7 +60,7 @@ class NavigationSideBar extends StatelessWidget {
                     },
                   ),
                   NavigationItem(
-                    title: 'Admin Panel',
+                    title: 'Departments',
                     icon: Assets.lib.infrastructure.assets.icons.adminPanel,
                     active: tabsRouter.activeIndex == 1,
                     onTap: () {
@@ -97,56 +91,24 @@ class NavigationSideBar extends StatelessWidget {
                       tabsRouter.setActiveIndex(4);
                     },
                   ),
+                  NavigationItem(
+                    title: 'Projects',
+                    icon: Assets.lib.infrastructure.assets.icons.tick,
+                    active: tabsRouter.activeIndex == 5,
+                    onTap: () {
+                      tabsRouter.setActiveIndex(5);
+                    },
+                  ),
+                  NavigationItem(
+                    title: 'Users',
+                    icon: Assets.lib.infrastructure.assets.icons.tick,
+                    active: tabsRouter.activeIndex == 6,
+                    onTap: () {
+                      tabsRouter.setActiveIndex(6);
+                    },
+                  ),
                 ],
               ),
-            ),
-          ),
-          Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.only(left: 24, right: 24),
-                height: 1,
-                decoration: const BoxDecoration(color: Color(0xffD9D9D9)),
-              ),
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.only(
-              left: 32,
-              top: 32,
-              right: 32,
-              bottom: 20,
-            ),
-            child: Row(
-              spacing: 12,
-              children: [
-                Assets.lib.infrastructure.assets.icons.settings.svg(width: 20, height: 20),
-                const Text(
-                  'Settings',
-                  style: TextStyle(
-                    color: Color(0xff43474F),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(left: 32, right: 32, bottom: 32),
-            child: Row(
-              spacing: 12,
-              children: [
-                Assets.lib.infrastructure.assets.icons.support.svg(width: 20, height: 20),
-                const Text(
-                  'Support',
-                  style: TextStyle(
-                    color: Color(0xff43474F),
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
             ),
           ),
         ],

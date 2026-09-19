@@ -1,7 +1,9 @@
 using Application.UseCases.Users.CreateUser;
+using Application.UseCases.Users.DeleteUser;
 using Application.UseCases.Users.GetUsers;
 using Application.UseCases.Users.LoginRequest;
 using Application.UseCases.Users.LoginVerify;
+using Application.UseCases.Users.UpdateUser;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,22 @@ public class UsersController(ISender sender) : ControllerBase
     {
         var userId = await sender.Send(request);
         return Ok(userId);
+    }
+
+    [Authorize(Policy = AppPolicy.UpdateUser)]
+    [HttpPut("Update")]
+    public async Task<IActionResult> Update(UpdateUserCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);
+    }
+
+    [Authorize(Policy = AppPolicy.DeleteUser)]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var success = await sender.Send(new DeleteUserCommand{Id = id});
+        return Ok(success);
     }
 
     [AllowAnonymous]

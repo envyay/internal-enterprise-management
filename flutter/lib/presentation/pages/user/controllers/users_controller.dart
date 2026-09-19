@@ -1,3 +1,4 @@
+import 'package:enterprise_management/application/use_cases/users/delete_user/delete_user_command.dart';
 import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
@@ -27,5 +28,30 @@ class UsersController extends _$UsersController {
         return [];
       },
     );
+  }
+
+  void refresh() async {
+    final data = await getUsers();
+    state = AsyncValue.data(data);
+  }
+
+  void onSelect(String id) {
+    final items = state.value;
+    if (items == null) return;
+
+    final newItems = items.map((item) {
+      if (item.id == id) {
+        return item.copyWith.call(isActive: true);
+      }
+      return item.copyWith.call(isActive: false);
+    }).toList();
+
+    state = AsyncData(newItems);
+  }
+
+  Future<void> delete(String id) async {
+    final mediator = ref.read(mediatorProvider);
+    await mediator.send(DeleteUserCommand(id: id));
+    refresh();
   }
 }

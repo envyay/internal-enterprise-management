@@ -2,7 +2,7 @@ import 'package:enterprise_management/application/use_cases/departments/update_d
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/presentation/forms/edit_department_form.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
-import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
+import 'package:enterprise_management/presentation/pages/department/controllers/departments_controller.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

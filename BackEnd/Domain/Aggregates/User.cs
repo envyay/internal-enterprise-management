@@ -29,6 +29,12 @@ public class User : AggregateRoot<Guid>
             Status = UserStatus.Active
         };
     }
+    
+    public void Update(string fullName, string email)
+    {
+        FullName = fullName;
+        Email = email;
+    }
 
     public static User Register(string email)
     {

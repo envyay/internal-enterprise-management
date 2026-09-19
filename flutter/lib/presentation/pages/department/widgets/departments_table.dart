@@ -1,6 +1,6 @@
-import 'package:enterprise_management/presentation/pages/admin/controllers/departments_controller.dart';
+import 'package:enterprise_management/presentation/pages/department/controllers/departments_controller.dart';
+import 'package:enterprise_management/presentation/pages/department/widgets/edit_department_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
-import 'package:enterprise_management/presentation/pages/admin/widgets/edit_department_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

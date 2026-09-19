@@ -14,14 +14,14 @@ abstract class ProjectRemoteDataSource {
       _ProjectRemoteDataSource;
 
   @GET('GetAll')
-  Future<ApiResponse<List<ProjectDto?>>> getProjects();
+  Future<ApiResponse<List<ProjectDto>>> getProjects();
 
   @POST('Create')
-  Future<ApiResponse<ProjectDto>> createProject(@Body() CreateProjectDto body);
+  Future<ApiResponse<String>> createProject(@Body() CreateProjectDto body);
 
   @PUT('Update')
   Future<ApiResponse<bool>> updateProject(@Body() UpdateProjectDto body);
 
-  @DELETE('Delete/{id}')
-  Future<ApiResponse<bool>> deleteProject(@Body() DeleteProjectDto body);
+  @DELETE('{id}')
+  Future<ApiResponse<bool>> deleteProject(@Path('id') String id);
 }

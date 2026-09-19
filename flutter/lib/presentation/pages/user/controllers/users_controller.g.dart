@@ -33,7 +33,7 @@ final class UsersControllerProvider
   UsersController create() => UsersController();
 }
 
-String _$usersControllerHash() => r'7f860550f7fbcccff0786521c3c661fc93dce3b4';
+String _$usersControllerHash() => r'a9cbc30011f1179b0df7764efcc5fd5bf2a0c310';
 
 abstract class _$UsersController extends $AsyncNotifier<List<User>> {
   FutureOr<List<User>> build();

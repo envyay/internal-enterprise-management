@@ -14,10 +14,12 @@ class MainPage extends StatelessWidget {
     return AutoTabsRouter(
       routes: const [
         DashboardRoute(),
-        AdminPanelRoute(),
+        DepartmentRoute(),
         KnowledgeBaseRoute(),
         ProjectTrackerRoute(),
         UserGroupRoute(),
+        ProjectRoute(),
+        UserRoute(),
       ],
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
