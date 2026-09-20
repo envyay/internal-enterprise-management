@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AddUsersToUserGroupCommand {
 
- String get id; List<UserDto> get usersIds;
+ String get id; List<String> get usersIds;
 /// Create a copy of AddUsersToUserGroupCommand
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $AddUsersToUserGroupCommandCopyWith<$Res>  {
   factory $AddUsersToUserGroupCommandCopyWith(AddUsersToUserGroupCommand value, $Res Function(AddUsersToUserGroupCommand) _then) = _$AddUsersToUserGroupCommandCopyWithImpl;
 @useResult
 $Res call({
- String id, List<UserDto> usersIds
+ String id, List<String> usersIds
 });
 
 
@@ -67,7 +67,7 @@ class _$AddUsersToUserGroupCommandCopyWithImpl<$Res>
   return _then(AddUsersToUserGroupCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,usersIds: null == usersIds ? _self.usersIds : usersIds // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,
+as List<String>,
   ));
 }
 
@@ -152,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<UserDto> usersIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<String> usersIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AddUsersToUserGroupCommand() when $default != null:
 return $default(_that.id,_that.usersIds);case _:
@@ -173,7 +173,7 @@ return $default(_that.id,_that.usersIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<UserDto> usersIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<String> usersIds)  $default,) {final _that = this;
 switch (_that) {
 case _AddUsersToUserGroupCommand():
 return $default(_that.id,_that.usersIds);case _:
@@ -193,7 +193,7 @@ return $default(_that.id,_that.usersIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<UserDto> usersIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<String> usersIds)?  $default,) {final _that = this;
 switch (_that) {
 case _AddUsersToUserGroupCommand() when $default != null:
 return $default(_that.id,_that.usersIds);case _:
@@ -208,12 +208,12 @@ return $default(_that.id,_that.usersIds);case _:
 
 
 class _AddUsersToUserGroupCommand implements AddUsersToUserGroupCommand {
-  const _AddUsersToUserGroupCommand({required this.id, required  List<UserDto> usersIds}): _usersIds = usersIds;
+  const _AddUsersToUserGroupCommand({required this.id, required  List<String> usersIds}): _usersIds = usersIds;
   
 
 @override final  String id;
- final  List<UserDto> _usersIds;
-@override List<UserDto> get usersIds {
+ final  List<String> _usersIds;
+@override List<String> get usersIds {
   if (_usersIds is EqualUnmodifiableListView) return _usersIds;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_usersIds);
@@ -250,7 +250,7 @@ abstract mixin class _$AddUsersToUserGroupCommandCopyWith<$Res> implements $AddU
   factory _$AddUsersToUserGroupCommandCopyWith(_AddUsersToUserGroupCommand value, $Res Function(_AddUsersToUserGroupCommand) _then) = __$AddUsersToUserGroupCommandCopyWithImpl;
 @override @useResult
 $Res call({
- String id, List<UserDto> usersIds
+ String id, List<String> usersIds
 });
 
 
@@ -271,7 +271,7 @@ class __$AddUsersToUserGroupCommandCopyWithImpl<$Res>
   return _then(_AddUsersToUserGroupCommand(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,usersIds: null == usersIds ? _self._usersIds : usersIds // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,
+as List<String>,
   ));
 }
 

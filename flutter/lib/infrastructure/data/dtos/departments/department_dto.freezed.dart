@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DepartmentDto {
 
- String? get id; String? get name;
+ String? get id; String? get name; List<UserDto>? get users;
 /// Create a copy of DepartmentDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $DepartmentDtoCopyWith<DepartmentDto> get copyWith => _$DepartmentDtoCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DepartmentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DepartmentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.users, users));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(users));
 
 @override
 String toString() {
-  return 'DepartmentDto(id: $id, name: $name)';
+  return 'DepartmentDto(id: $id, name: $name, users: $users)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $DepartmentDtoCopyWith<$Res>  {
   factory $DepartmentDtoCopyWith(DepartmentDto value, $Res Function(DepartmentDto) _then) = _$DepartmentDtoCopyWithImpl;
 @useResult
 $Res call({
- String? id, String? name
+ String? id, String? name, List<UserDto>? users
 });
 
 
@@ -66,11 +66,12 @@ class _$DepartmentDtoCopyWithImpl<$Res>
 
 /// Create a copy of DepartmentDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? name = freezed,Object? users = freezed,}) {
   return _then(DepartmentDto(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,users: freezed == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>?,
   ));
 }
 
@@ -155,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String? name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? id,  String? name,  List<UserDto>? users)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DepartmentDto() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.users);case _:
   return orElse();
 
 }
@@ -176,10 +177,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String? name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? id,  String? name,  List<UserDto>? users)  $default,) {final _that = this;
 switch (_that) {
 case _DepartmentDto():
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.users);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +197,10 @@ return $default(_that.id,_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String? name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? id,  String? name,  List<UserDto>? users)?  $default,) {final _that = this;
 switch (_that) {
 case _DepartmentDto() when $default != null:
-return $default(_that.id,_that.name);case _:
+return $default(_that.id,_that.name,_that.users);case _:
   return null;
 
 }
@@ -211,11 +212,20 @@ return $default(_that.id,_that.name);case _:
 @JsonSerializable()
 
 class _DepartmentDto implements DepartmentDto {
-  const _DepartmentDto({this.id, this.name});
+  const _DepartmentDto({this.id, this.name,  List<UserDto>? users}): _users = users;
   factory _DepartmentDto.fromJson(Map<String, dynamic> json) => _$DepartmentDtoFromJson(json);
 
 @override final  String? id;
 @override final  String? name;
+ final  List<UserDto>? _users;
+@override List<UserDto>? get users {
+  final value = _users;
+  if (value == null) return null;
+  if (_users is EqualUnmodifiableListView) return _users;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
+}
+
 
 /// Create a copy of DepartmentDto
 /// with the given fields replaced by the non-null parameter values.
@@ -230,16 +240,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DepartmentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DepartmentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._users, _users));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name);
+int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(_users));
 
 @override
 String toString() {
-  return 'DepartmentDto(id: $id, name: $name)';
+  return 'DepartmentDto(id: $id, name: $name, users: $users)';
 }
 
 
@@ -250,7 +260,7 @@ abstract mixin class _$DepartmentDtoCopyWith<$Res> implements $DepartmentDtoCopy
   factory _$DepartmentDtoCopyWith(_DepartmentDto value, $Res Function(_DepartmentDto) _then) = __$DepartmentDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String? id, String? name
+ String? id, String? name, List<UserDto>? users
 });
 
 
@@ -267,11 +277,12 @@ class __$DepartmentDtoCopyWithImpl<$Res>
 
 /// Create a copy of DepartmentDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? name = freezed,Object? users = freezed,}) {
   return _then(_DepartmentDto(
 id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,users: freezed == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>?,
   ));
 }
 

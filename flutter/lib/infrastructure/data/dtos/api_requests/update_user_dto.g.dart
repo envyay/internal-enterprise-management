@@ -11,6 +11,7 @@ _UpdateUserDto _$UpdateUserDtoFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       fullName: json['fullName'] as String,
       email: json['email'] as String,
+      status: (json['status'] as num).toInt(),
     );
 
 Map<String, dynamic> _$UpdateUserDtoToJson(_UpdateUserDto instance) =>
@@ -18,4 +19,5 @@ Map<String, dynamic> _$UpdateUserDtoToJson(_UpdateUserDto instance) =>
       'id': instance.id,
       'fullName': instance.fullName,
       'email': instance.email,
+      'status': instance.status,
     };

@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using MediatR;
@@ -11,7 +11,7 @@ public class UpdateUserCommandHandler(IRepository<User, Guid> userRepository, IU
     {
         var user = await userRepository.GetByIdAsync(request.Id, cancellationToken);
         if (user == null) return false;
-        user.Update(request.FullName, request.Email);
+        user.Update(request.FullName, request.Email, request.Status);
         await userRepository.UpdateAsync(user);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return true;

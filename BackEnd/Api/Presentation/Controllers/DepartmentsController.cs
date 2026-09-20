@@ -1,7 +1,9 @@
+using Application.UseCases.Departments.AddUsersToDepartment;
 using Application.UseCases.Departments.CreateDepartment;
 using Application.UseCases.Departments.DeleteDepartment;
 using Application.UseCases.Departments.GetDepartmentById;
 using Application.UseCases.Departments.GetDepartments;
+using Application.UseCases.Departments.RemoveUserFromDepartment;
 using Application.UseCases.Departments.UpdateDepartment;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -51,6 +53,14 @@ public class DepartmentsController(ISender sender) : ControllerBase
     public async Task<IActionResult> DeleteById(Guid id)
     {
         var success = await sender.Send(new DeleteDepartmentByIdCommand { Id = id });
+        return Ok(success);
+    }
+
+    [Authorize(Policy = AppPolicy.SetUsersInDepartment)]
+    [HttpPut("SetUsers")]
+    public async Task<IActionResult> AddUsers(SetUsersInDepartmentCommand request)
+    {
+        var success = await sender.Send(request);
         return Ok(success);
     }
 }

@@ -5,8 +5,8 @@ namespace Domain.Aggregates;
 
 public class Department : AggregateRoot<Guid>
 {
-    public string Name { get; set; }
-    public ICollection<User> Users { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public ICollection<User> Users { get; set; } = new List<User>();
 
     public static Department Create(string name)
     {
@@ -17,6 +17,11 @@ public class Department : AggregateRoot<Guid>
         };
     }
 
+    public void SetUsers(List<User> users)
+    {
+        Users = users;
+    }
+
     public void DepartmentCreated()
     {
         AddDomainEvent(new DepartmentCreated
@@ -24,7 +29,7 @@ public class Department : AggregateRoot<Guid>
             DepartmentId = Id
         });
     }
-    
+
     public void Update(string name)
     {
         Name = name;

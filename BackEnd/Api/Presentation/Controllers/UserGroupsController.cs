@@ -61,7 +61,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
     
     [Authorize(Policy = AppPolicy.AddUsersToUserGroup)]
     [HttpPost("AddUsers")]
-    public async Task<IActionResult> AddUsers(AddUsersToUserGroup request)
+    public async Task<IActionResult> AddUsers(AddUsersToUserGroupCommand request)
     {
         var success = await sender.Send(request);
         return Ok(success);

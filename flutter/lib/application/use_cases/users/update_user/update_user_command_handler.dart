@@ -9,7 +9,7 @@ class UpdateUserCommandHandler extends ICommandHandler<UpdateUserCommand, bool> 
 
   @override
   Future<Result<bool>> handle(UpdateUserCommand command) async {
-    final res = await _userRepository.updateUser(id: command.id, fullName: command.fullName, email: command.email);
+    final res = await _userRepository.updateUser(id: command.id, fullName: command.fullName, email: command.email, status: command.status);
     return Result.success(res);
   }
 

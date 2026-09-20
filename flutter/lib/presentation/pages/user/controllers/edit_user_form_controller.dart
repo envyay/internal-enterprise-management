@@ -17,6 +17,7 @@ class EditUserFormController extends _$EditUserFormController {
     return EditUserForm(
       fullName: NameInput.dirty(user.fullName),
       email: EmailInput.dirty(user.email),
+      userStatus: user.status,
     );
   }
 
@@ -28,14 +29,19 @@ class EditUserFormController extends _$EditUserFormController {
     state = state.copyWith(email: EmailInput.dirty(value));
   }
 
+  void setUserStatus(int value) {
+    state = state.copyWith(userStatus: value);
+  }
+
   Future<void> edit() async {
     if (state.isNotValid) return;
 
     final fullName = state.fullName.value;
     final email = state.email.value;
+    final status = state.userStatus;
 
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(UpdateUserCommand(id: user.id, fullName: fullName, email: email));
+    await mediator.send(UpdateUserCommand(id: user.id, fullName: fullName, email: email, status: status));
 
     ref.invalidate(usersControllerProvider);
 

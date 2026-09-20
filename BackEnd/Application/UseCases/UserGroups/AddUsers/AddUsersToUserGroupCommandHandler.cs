@@ -10,18 +10,16 @@ public class AddUsersToUserGroupCommandHandler(
     IRepository<UserGroup, Guid> userGroupRepository,
     IUnitOfWork unitOfWork,
     IRepository<User, Guid> userRepository)
-    : IRequestHandler<AddUsersToUserGroup, bool>
+    : IRequestHandler<AddUsersToUserGroupCommand, bool>
 {
-    public async Task<bool> Handle(AddUsersToUserGroup request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(AddUsersToUserGroupCommand request, CancellationToken cancellationToken)
     {
         var users = await userRepository
             .Where(x => request.UserIds.Contains(x.Id))
             .ToListAsync(cancellationToken);
-        var userGroup = await userGroupRepository.GetByIdAsync(request.Id, cancellationToken);
+        var userGroup = await userGroupRepository.Where(x => x.Id.Equals(request.Id)).Include(x => x.Users).FirstOrDefaultAsync(cancellationToken);
         if (userGroup == null) return false;
         userGroup.AddUsers(users);
-
-        await userGroupRepository.UpdateAsync(userGroup);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return true;
     }

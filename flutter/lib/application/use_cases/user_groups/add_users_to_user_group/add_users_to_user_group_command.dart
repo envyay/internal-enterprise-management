@@ -5,5 +5,5 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'add_users_to_user_group_command.freezed.dart';
 @freezed
 abstract class AddUsersToUserGroupCommand with _$AddUsersToUserGroupCommand implements ICommand<bool> {
-  const factory AddUsersToUserGroupCommand({required String id, required List<UserDto> usersIds}) = _AddUsersToUserGroupCommand;
+  const factory AddUsersToUserGroupCommand({required String id, required List<String> usersIds}) = _AddUsersToUserGroupCommand;
 }

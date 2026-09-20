@@ -56,6 +56,7 @@ public static class AppPolicy
     public const string CreateDepartment = nameof(CreateDepartment);
     public const string UpdateDepartment = nameof(UpdateDepartment);
     public const string DeleteDepartment = nameof(DeleteDepartment);
+    public const string SetUsersInDepartment = nameof(SetUsersInDepartment);
 
     // Project
     public const string GetAllProjects = nameof(GetAllProjects);
@@ -104,6 +105,10 @@ public static class AppPolicy
         CreateUserGroup,
         UpdateUserGroup,
         DeleteUserGroup,
+        AddPoliciesToUserGroup,
+        RemovePolicyFromUserGroup,
+        AddUsersToUserGroup,
+        RemoveUserFromUserGroup,
 
         // User
         GetAllUsers,
@@ -117,6 +122,7 @@ public static class AppPolicy
         CreateDepartment,
         UpdateDepartment,
         DeleteDepartment,
+        SetUsersInDepartment,
 
         // Project
         GetAllProjects,

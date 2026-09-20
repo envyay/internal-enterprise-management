@@ -15,7 +15,7 @@ abstract interface class IUserGroupRepository {
   Future<bool> updateUserGroupById({required String id, required String name, required List<String?> userIds});
   Future<bool> deleteUserGroupById({required String id});
 
-  Future<bool> addUsersToUserGroup({required String id, required List<UserDto> userIds});
+  Future<bool> addUsersToUserGroup({required String id, required List<String> userIds});
   Future<bool> removeUsersFromUserGroup({required String id, required UserDto userId});
 }
 
@@ -53,7 +53,7 @@ class UserGroupRepository implements IUserGroupRepository {
   }
 
   @override
-  Future<bool> addUsersToUserGroup({required String id, required List<UserDto> userIds}) async {
+  Future<bool> addUsersToUserGroup({required String id, required List<String> userIds}) async {
     final res = await _userGroupRemoteDataSource.addUsersToUserGroup(AddUsersToUserGroupDto(id: id, userIds: userIds));
     return res.data;
   }

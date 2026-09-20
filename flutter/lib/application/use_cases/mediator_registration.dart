@@ -10,8 +10,12 @@ import 'package:enterprise_management/application/use_cases/departments/create_d
 import 'package:enterprise_management/application/use_cases/departments/create_department/create_department_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/departments/delete_department/delete_department_command.dart';
 import 'package:enterprise_management/application/use_cases/departments/delete_department/delete_department_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/departments/get_department/get_department_query.dart';
+import 'package:enterprise_management/application/use_cases/departments/get_department/get_department_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/departments/get_departments/get_departments_query.dart';
 import 'package:enterprise_management/application/use_cases/departments/get_departments/get_departments_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/departments/set_users_in_department/set_users_in_department_command.dart';
+import 'package:enterprise_management/application/use_cases/departments/set_users_in_department/set_users_in_department_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/departments/update_department/update_department_command.dart';
 import 'package:enterprise_management/application/use_cases/departments/update_department/update_department_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/create_document/create_document_command.dart';
@@ -144,6 +148,10 @@ extension MediatorRegistrationX on Mediator {
       GetDepartmentsQueryHandler(departmentRepository: ref.read(departmentRepositoryProvider))
     );
 
+    registerQueryHandler<GetDepartmentQuery, Department?>(
+        GetDepartmentQueryHandler(departmentRepository: ref.read(departmentRepositoryProvider))
+    );
+
     registerCommandHandler<CreateDepartmentCommand, String>(
       CreateDepartmentCommandHandler(departmentRepository: ref.read(departmentRepositoryProvider)),
     );
@@ -154,6 +162,10 @@ extension MediatorRegistrationX on Mediator {
 
     registerCommandHandler<DeleteDepartmentCommand, bool?>(
       DeleteDepartmentCommandHandler(departmentRepository: ref.read(departmentRepositoryProvider)),
+    );
+
+    registerCommandHandler<SetUsersInDepartmentCommand, bool>(
+      SetUsersInDepartmentCommandHandler(departmentRepository: ref.read(departmentRepositoryProvider)),
     );
 
     //Project

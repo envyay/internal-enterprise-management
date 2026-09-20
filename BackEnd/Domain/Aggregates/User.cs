@@ -1,4 +1,4 @@
-﻿using Domain.Events.UserCreated;
+using Domain.Events.UserCreated;
 using SharedKernel.Aggregate;
 using SharedKernel.Constants;
 
@@ -30,10 +30,11 @@ public class User : AggregateRoot<Guid>
         };
     }
     
-    public void Update(string fullName, string email)
+    public void Update(string fullName, string email, UserStatus status)
     {
         FullName = fullName;
         Email = email;
+        Status = status;
     }
 
     public static User Register(string email)

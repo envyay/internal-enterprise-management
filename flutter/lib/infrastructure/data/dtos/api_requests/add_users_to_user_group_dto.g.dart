@@ -10,9 +10,7 @@ _AddUsersToUserGroupDto _$AddUsersToUserGroupDtoFromJson(
   Map<String, dynamic> json,
 ) => _AddUsersToUserGroupDto(
   id: json['id'] as String,
-  userIds: (json['userIds'] as List<dynamic>)
-      .map((e) => UserDto.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  userIds: (json['userIds'] as List<dynamic>).map((e) => e as String).toList(),
 );
 
 Map<String, dynamic> _$AddUsersToUserGroupDtoToJson(

@@ -1,8 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/pages/department/controllers/users_in_department_controller.dart';
+import 'package:enterprise_management/presentation/pages/department/widgets/add_users_dialog.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/create_department_dialog.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/departments_table.dart';
-import 'package:enterprise_management/presentation/pages/department/widgets/list_unassigned_users.dart';
+import 'package:enterprise_management/presentation/pages/department/widgets/users_in_department.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -35,8 +37,7 @@ class DepartmentPage extends ConsumerWidget {
                   mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Departments',
-                    icon:
-                        Assets.lib.infrastructure.assets.icons.create,
+                    icon: Assets.lib.infrastructure.assets.icons.create,
                     onTap: () {
                       showDialog(
                         context: context,
@@ -128,54 +129,30 @@ class DepartmentPage extends ConsumerWidget {
                   crossAxisCellCount: 1,
                   mainAxisCellCount: 2,
                   child: OverviewContainer(
-                    title: 'Assign Users',
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      children: [
-                        Container(
-                          margin: .symmetric(vertical: 16, horizontal: 16),
-                          decoration: BoxDecoration(
-                            border: Border.all(width: 1.0),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          width: .maxFinite,
-                          child: Row(
-                            spacing: 10,
-                            children: [
-                              Container(
-                                margin: .symmetric(horizontal: 16),
-                                child: Assets
-                                    .lib
-                                    .infrastructure
-                                    .assets
-                                    .icons
-                                    .search
-                                    .svg(),
-                              ),
-                              Expanded(
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Search...',
-                                    border: InputBorder.none,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                        Container(
-                          margin: .symmetric(horizontal: 16),
-                          child: Text(
-                            'Unassigned Users',
-                            style: TextStyle(fontWeight: .w500, fontSize: 16),
-                          ),
-                        ),
-
-                        ListUnassignedUsers()
-
-                      ],
-                    ),
+                    title: 'Users In Department',
+                    icon: Assets.lib.infrastructure.assets.icons.plus,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Consumer(
+                            builder: (context, ref, child) {
+                              final state = ref.watch(usersInDepartmentControllerProvider);
+                              final controller = ref.watch(usersInDepartmentControllerProvider.notifier);
+                              final department = state.value;
+                              return AddUsersDialog(
+                                initialSelectedUserIds: department?.users.map((item) => item.id).toSet() ?? {},
+                                onSave: (users) {
+                                  if (department == null) return;
+                                  controller.setUsersInDepartment(id: department.id, userIds: users.map((item) => item.id).toList());
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    child: UsersInDepartment(),
                   ),
                 ),
               ],

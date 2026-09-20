@@ -28,6 +28,13 @@ class UserMapper extends ClassMapperBase<User> {
   static const Field<User, String> _f$fullName = Field('fullName', _$fullName);
   static String _$email(User v) => v.email;
   static const Field<User, String> _f$email = Field('email', _$email);
+  static int _$status(User v) => v.status;
+  static const Field<User, int> _f$status = Field(
+    'status',
+    _$status,
+    opt: true,
+    def: 1,
+  );
   static bool _$isActive(User v) => v.isActive;
   static const Field<User, bool> _f$isActive = Field(
     'isActive',
@@ -41,6 +48,7 @@ class UserMapper extends ClassMapperBase<User> {
     #id: _f$id,
     #fullName: _f$fullName,
     #email: _f$email,
+    #status: _f$status,
     #isActive: _f$isActive,
   };
 
@@ -49,6 +57,7 @@ class UserMapper extends ClassMapperBase<User> {
       id: data.dec(_f$id),
       fullName: data.dec(_f$fullName),
       email: data.dec(_f$email),
+      status: data.dec(_f$status),
       isActive: data.dec(_f$isActive),
     );
   }
@@ -99,7 +108,13 @@ extension UserValueCopy<$R, $Out> on ObjectCopyWith<$R, User, $Out> {
 
 abstract class UserCopyWith<$R, $In extends User, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? id, String? fullName, String? email, bool? isActive});
+  $R call({
+    String? id,
+    String? fullName,
+    String? email,
+    int? status,
+    bool? isActive,
+  });
   UserCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -110,20 +125,27 @@ class _UserCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, User, $Out>
   @override
   late final ClassMapperBase<User> $mapper = UserMapper.ensureInitialized();
   @override
-  $R call({String? id, String? fullName, String? email, bool? isActive}) =>
-      $apply(
-        FieldCopyWithData({
-          if (id != null) #id: id,
-          if (fullName != null) #fullName: fullName,
-          if (email != null) #email: email,
-          if (isActive != null) #isActive: isActive,
-        }),
-      );
+  $R call({
+    String? id,
+    String? fullName,
+    String? email,
+    int? status,
+    bool? isActive,
+  }) => $apply(
+    FieldCopyWithData({
+      if (id != null) #id: id,
+      if (fullName != null) #fullName: fullName,
+      if (email != null) #email: email,
+      if (status != null) #status: status,
+      if (isActive != null) #isActive: isActive,
+    }),
+  );
   @override
   User $make(CopyWithData data) => User(
     id: data.get(#id, or: $value.id),
     fullName: data.get(#fullName, or: $value.fullName),
     email: data.get(#email, or: $value.email),
+    status: data.get(#status, or: $value.status),
     isActive: data.get(#isActive, or: $value.isActive),
   );
 

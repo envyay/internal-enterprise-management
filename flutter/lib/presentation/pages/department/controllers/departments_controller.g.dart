@@ -34,7 +34,7 @@ final class DepartmentsControllerProvider
 }
 
 String _$departmentsControllerHash() =>
-    r'2adaf29a36991b15c45dddd9f7de01da8b4202c2';
+    r'a74845f29b057577fa9df60b2a63809873da2a6c';
 
 abstract class _$DepartmentsController
     extends $AsyncNotifier<List<Department>> {

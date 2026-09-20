@@ -5,9 +5,10 @@ part 'user.mapper.dart';
 
 @MappableClass()
 class User extends AggregateRoot<String> with UserMappable{
-  User({required super.id, required this.fullName, required this.email, this.isActive = false});
+  User({required super.id, required this.fullName, required this.email, this.status = 1, this.isActive = false});
 
   final String fullName;
   final String email;
+  final int status;
   final bool isActive;
 }

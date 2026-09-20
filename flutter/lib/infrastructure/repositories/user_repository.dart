@@ -13,7 +13,7 @@ abstract interface class IUserRepository {
 
   Future<String> createUser({required String fullName, required String email});
 
-  Future<bool> updateUser({required String id, required String fullName, required String email});
+  Future<bool> updateUser({required String id, required String fullName, required String email, required int status});
 
   Future<bool> deleteUser({required String id});
 
@@ -78,8 +78,8 @@ class UsersRepository implements IUserRepository {
   }
 
   @override
-  Future<bool> updateUser({required String id, required String fullName, required String email}) async {
-    final res = await _userRemoteDataSource.updateUser(UpdateUserDto(id: id, fullName: fullName, email: email));
+  Future<bool> updateUser({required String id, required String fullName, required String email, required int status}) async {
+    final res = await _userRemoteDataSource.updateUser(UpdateUserDto(id: id, fullName: fullName, email: email, status: status));
     return res.data;
   }
 }

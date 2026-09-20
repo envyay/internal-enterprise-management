@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UpdateUserDto {
 
- String get id; String get fullName; String get email;
+ String get id; String get fullName; String get email; int get status;
 /// Create a copy of UpdateUserDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UpdateUserDtoCopyWith<UpdateUserDto> get copyWith => _$UpdateUserDtoCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateUserDto&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateUserDto&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,fullName,email);
+int get hashCode => Object.hash(runtimeType,id,fullName,email,status);
 
 @override
 String toString() {
-  return 'UpdateUserDto(id: $id, fullName: $fullName, email: $email)';
+  return 'UpdateUserDto(id: $id, fullName: $fullName, email: $email, status: $status)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $UpdateUserDtoCopyWith<$Res>  {
   factory $UpdateUserDtoCopyWith(UpdateUserDto value, $Res Function(UpdateUserDto) _then) = _$UpdateUserDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String fullName, String email
+ String id, String fullName, String email, int status
 });
 
 
@@ -66,12 +66,13 @@ class _$UpdateUserDtoCopyWithImpl<$Res>
 
 /// Create a copy of UpdateUserDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fullName = null,Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? fullName = null,Object? email = null,Object? status = null,}) {
   return _then(UpdateUserDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String fullName,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String fullName,  String email,  int status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateUserDto() when $default != null:
-return $default(_that.id,_that.fullName,_that.email);case _:
+return $default(_that.id,_that.fullName,_that.email,_that.status);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.fullName,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String fullName,  String email)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String fullName,  String email,  int status)  $default,) {final _that = this;
 switch (_that) {
 case _UpdateUserDto():
-return $default(_that.id,_that.fullName,_that.email);case _:
+return $default(_that.id,_that.fullName,_that.email,_that.status);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.fullName,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String fullName,  String email)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String fullName,  String email,  int status)?  $default,) {final _that = this;
 switch (_that) {
 case _UpdateUserDto() when $default != null:
-return $default(_that.id,_that.fullName,_that.email);case _:
+return $default(_that.id,_that.fullName,_that.email,_that.status);case _:
   return null;
 
 }
@@ -212,12 +213,13 @@ return $default(_that.id,_that.fullName,_that.email);case _:
 @JsonSerializable()
 
 class _UpdateUserDto implements UpdateUserDto {
-  const _UpdateUserDto({required this.id, required this.fullName, required this.email});
+  const _UpdateUserDto({required this.id, required this.fullName, required this.email, required this.status});
   factory _UpdateUserDto.fromJson(Map<String, dynamic> json) => _$UpdateUserDtoFromJson(json);
 
 @override final  String id;
 @override final  String fullName;
 @override final  String email;
+@override final  int status;
 
 /// Create a copy of UpdateUserDto
 /// with the given fields replaced by the non-null parameter values.
@@ -232,16 +234,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateUserDto&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateUserDto&&(identical(other.id, id) || other.id == id)&&(identical(other.fullName, fullName) || other.fullName == fullName)&&(identical(other.email, email) || other.email == email)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,fullName,email);
+int get hashCode => Object.hash(runtimeType,id,fullName,email,status);
 
 @override
 String toString() {
-  return 'UpdateUserDto(id: $id, fullName: $fullName, email: $email)';
+  return 'UpdateUserDto(id: $id, fullName: $fullName, email: $email, status: $status)';
 }
 
 
@@ -252,7 +254,7 @@ abstract mixin class _$UpdateUserDtoCopyWith<$Res> implements $UpdateUserDtoCopy
   factory _$UpdateUserDtoCopyWith(_UpdateUserDto value, $Res Function(_UpdateUserDto) _then) = __$UpdateUserDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String fullName, String email
+ String id, String fullName, String email, int status
 });
 
 
@@ -269,12 +271,13 @@ class __$UpdateUserDtoCopyWithImpl<$Res>
 
 /// Create a copy of UpdateUserDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fullName = null,Object? email = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? fullName = null,Object? email = null,Object? status = null,}) {
   return _then(_UpdateUserDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,fullName: null == fullName ? _self.fullName : fullName // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
-as String,
+as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int,
   ));
 }
 

@@ -15,6 +15,7 @@ class DepartmentMapper extends ClassMapperBase<Department> {
   static DepartmentMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = DepartmentMapper._());
+      UserMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -26,12 +27,31 @@ class DepartmentMapper extends ClassMapperBase<Department> {
   static const Field<Department, String> _f$id = Field('id', _$id);
   static String _$name(Department v) => v.name;
   static const Field<Department, String> _f$name = Field('name', _$name);
+  static bool _$isActive(Department v) => v.isActive;
+  static const Field<Department, bool> _f$isActive = Field(
+    'isActive',
+    _$isActive,
+    opt: true,
+    def: false,
+  );
+  static List<User> _$users(Department v) => v.users;
+  static const Field<Department, List<User>> _f$users = Field('users', _$users);
 
   @override
-  final MappableFields<Department> fields = const {#id: _f$id, #name: _f$name};
+  final MappableFields<Department> fields = const {
+    #id: _f$id,
+    #name: _f$name,
+    #isActive: _f$isActive,
+    #users: _f$users,
+  };
 
   static Department _instantiate(DecodingData data) {
-    return Department(id: data.dec(_f$id), name: data.dec(_f$name));
+    return Department(
+      id: data.dec(_f$id),
+      name: data.dec(_f$name),
+      isActive: data.dec(_f$isActive),
+      users: data.dec(_f$users),
+    );
   }
 
   @override
@@ -94,7 +114,8 @@ extension DepartmentValueCopy<$R, $Out>
 
 abstract class DepartmentCopyWith<$R, $In extends Department, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? id, String? name});
+  ListCopyWith<$R, User, UserCopyWith<$R, User, User>> get users;
+  $R call({String? id, String? name, bool? isActive, List<User>? users});
   DepartmentCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -107,13 +128,28 @@ class _DepartmentCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Department> $mapper =
       DepartmentMapper.ensureInitialized();
   @override
-  $R call({String? id, String? name}) => $apply(
-    FieldCopyWithData({if (id != null) #id: id, if (name != null) #name: name}),
-  );
+  ListCopyWith<$R, User, UserCopyWith<$R, User, User>> get users =>
+      ListCopyWith(
+        $value.users,
+        (v, t) => v.copyWith.$chain(t),
+        (v) => call(users: v),
+      );
+  @override
+  $R call({String? id, String? name, bool? isActive, List<User>? users}) =>
+      $apply(
+        FieldCopyWithData({
+          if (id != null) #id: id,
+          if (name != null) #name: name,
+          if (isActive != null) #isActive: isActive,
+          if (users != null) #users: users,
+        }),
+      );
   @override
   Department $make(CopyWithData data) => Department(
     id: data.get(#id, or: $value.id),
     name: data.get(#name, or: $value.name),
+    isActive: data.get(#isActive, or: $value.isActive),
+    users: data.get(#users, or: $value.users),
   );
 
   @override

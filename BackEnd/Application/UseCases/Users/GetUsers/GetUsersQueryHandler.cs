@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Users;
+using Application.DTOs.Users;
 using Domain.Aggregates;
 using Infrastructure.Repository;
 using MediatR;
@@ -16,6 +16,7 @@ public class GetUsersQueryHandler(IRepository<User, Guid> userRepository)
             Id = x.Id,
             FullName = x.FullName,
             Email = x.Email,
+            Status = x.Status,
         }).ToList();
     }
 }
