@@ -16,6 +16,9 @@ abstract class ProjectRemoteDataSource {
   @GET('GetAll')
   Future<ApiResponse<List<ProjectDto>>> getProjects();
 
+  @GET('{id}')
+  Future<ApiResponse<ProjectDto?>> getProjectById(@Path('id') String id);
+
   @POST('Create')
   Future<ApiResponse<String>> createProject(@Body() CreateProjectDto body);
 

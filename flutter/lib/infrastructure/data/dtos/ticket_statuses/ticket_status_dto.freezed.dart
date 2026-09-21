@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TicketStatusDto {
 
- String get id; String get name; ProjectDto get projectId; List<TicketDto> get ticketIds;
+ String get id; String get name; String get projectId; List<TicketDto>? get tickets;
 /// Create a copy of TicketStatusDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $TicketStatusDtoCopyWith<TicketStatusDto> get copyWith => _$TicketStatusDtoCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TicketStatusDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&const DeepCollectionEquality().equals(other.ticketIds, ticketIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TicketStatusDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&const DeepCollectionEquality().equals(other.tickets, tickets));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,projectId,const DeepCollectionEquality().hash(ticketIds));
+int get hashCode => Object.hash(runtimeType,id,name,projectId,const DeepCollectionEquality().hash(tickets));
 
 @override
 String toString() {
-  return 'TicketStatusDto(id: $id, name: $name, projectId: $projectId, ticketIds: $ticketIds)';
+  return 'TicketStatusDto(id: $id, name: $name, projectId: $projectId, tickets: $tickets)';
 }
 
 
@@ -49,11 +49,11 @@ abstract mixin class $TicketStatusDtoCopyWith<$Res>  {
   factory $TicketStatusDtoCopyWith(TicketStatusDto value, $Res Function(TicketStatusDto) _then) = _$TicketStatusDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, ProjectDto projectId, List<TicketDto> ticketIds
+ String id, String name, String projectId, List<TicketDto>? tickets
 });
 
 
-$ProjectDtoCopyWith<$Res> get projectId;
+
 
 }
 /// @nodoc
@@ -66,25 +66,16 @@ class _$TicketStatusDtoCopyWithImpl<$Res>
 
 /// Create a copy of TicketStatusDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? projectId = null,Object? ticketIds = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? projectId = null,Object? tickets = freezed,}) {
   return _then(TicketStatusDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
-as ProjectDto,ticketIds: null == ticketIds ? _self.ticketIds : ticketIds // ignore: cast_nullable_to_non_nullable
-as List<TicketDto>,
+as String,tickets: freezed == tickets ? _self.tickets : tickets // ignore: cast_nullable_to_non_nullable
+as List<TicketDto>?,
   ));
 }
-/// Create a copy of TicketStatusDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ProjectDtoCopyWith<$Res> get projectId {
-  
-  return $ProjectDtoCopyWith<$Res>(_self.projectId, (value) {
-    return _then(_self.copyWith(projectId: value));
-  });
-}
+
 }
 
 
@@ -166,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  ProjectDto projectId,  List<TicketDto> ticketIds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String projectId,  List<TicketDto>? tickets)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TicketStatusDto() when $default != null:
-return $default(_that.id,_that.name,_that.projectId,_that.ticketIds);case _:
+return $default(_that.id,_that.name,_that.projectId,_that.tickets);case _:
   return orElse();
 
 }
@@ -187,10 +178,10 @@ return $default(_that.id,_that.name,_that.projectId,_that.ticketIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  ProjectDto projectId,  List<TicketDto> ticketIds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String projectId,  List<TicketDto>? tickets)  $default,) {final _that = this;
 switch (_that) {
 case _TicketStatusDto():
-return $default(_that.id,_that.name,_that.projectId,_that.ticketIds);case _:
+return $default(_that.id,_that.name,_that.projectId,_that.tickets);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +198,10 @@ return $default(_that.id,_that.name,_that.projectId,_that.ticketIds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  ProjectDto projectId,  List<TicketDto> ticketIds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String projectId,  List<TicketDto>? tickets)?  $default,) {final _that = this;
 switch (_that) {
 case _TicketStatusDto() when $default != null:
-return $default(_that.id,_that.name,_that.projectId,_that.ticketIds);case _:
+return $default(_that.id,_that.name,_that.projectId,_that.tickets);case _:
   return null;
 
 }
@@ -222,17 +213,19 @@ return $default(_that.id,_that.name,_that.projectId,_that.ticketIds);case _:
 @JsonSerializable()
 
 class _TicketStatusDto implements TicketStatusDto {
-  const _TicketStatusDto({required this.id, required this.name, required this.projectId, required  List<TicketDto> ticketIds}): _ticketIds = ticketIds;
+  const _TicketStatusDto({required this.id, required this.name, required this.projectId, required  List<TicketDto>? tickets}): _tickets = tickets;
   factory _TicketStatusDto.fromJson(Map<String, dynamic> json) => _$TicketStatusDtoFromJson(json);
 
 @override final  String id;
 @override final  String name;
-@override final  ProjectDto projectId;
- final  List<TicketDto> _ticketIds;
-@override List<TicketDto> get ticketIds {
-  if (_ticketIds is EqualUnmodifiableListView) return _ticketIds;
+@override final  String projectId;
+ final  List<TicketDto>? _tickets;
+@override List<TicketDto>? get tickets {
+  final value = _tickets;
+  if (value == null) return null;
+  if (_tickets is EqualUnmodifiableListView) return _tickets;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_ticketIds);
+  return EqualUnmodifiableListView(value);
 }
 
 
@@ -249,16 +242,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TicketStatusDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&const DeepCollectionEquality().equals(other._ticketIds, _ticketIds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TicketStatusDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&const DeepCollectionEquality().equals(other._tickets, _tickets));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,projectId,const DeepCollectionEquality().hash(_ticketIds));
+int get hashCode => Object.hash(runtimeType,id,name,projectId,const DeepCollectionEquality().hash(_tickets));
 
 @override
 String toString() {
-  return 'TicketStatusDto(id: $id, name: $name, projectId: $projectId, ticketIds: $ticketIds)';
+  return 'TicketStatusDto(id: $id, name: $name, projectId: $projectId, tickets: $tickets)';
 }
 
 
@@ -269,11 +262,11 @@ abstract mixin class _$TicketStatusDtoCopyWith<$Res> implements $TicketStatusDto
   factory _$TicketStatusDtoCopyWith(_TicketStatusDto value, $Res Function(_TicketStatusDto) _then) = __$TicketStatusDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, ProjectDto projectId, List<TicketDto> ticketIds
+ String id, String name, String projectId, List<TicketDto>? tickets
 });
 
 
-@override $ProjectDtoCopyWith<$Res> get projectId;
+
 
 }
 /// @nodoc
@@ -286,26 +279,17 @@ class __$TicketStatusDtoCopyWithImpl<$Res>
 
 /// Create a copy of TicketStatusDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? projectId = null,Object? ticketIds = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? projectId = null,Object? tickets = freezed,}) {
   return _then(_TicketStatusDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
-as ProjectDto,ticketIds: null == ticketIds ? _self._ticketIds : ticketIds // ignore: cast_nullable_to_non_nullable
-as List<TicketDto>,
+as String,tickets: freezed == tickets ? _self._tickets : tickets // ignore: cast_nullable_to_non_nullable
+as List<TicketDto>?,
   ));
 }
 
-/// Create a copy of TicketStatusDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ProjectDtoCopyWith<$Res> get projectId {
-  
-  return $ProjectDtoCopyWith<$Res>(_self.projectId, (value) {
-    return _then(_self.copyWith(projectId: value));
-  });
-}
+
 }
 
 // dart format on

@@ -54,6 +54,20 @@ class ProjectItem extends ConsumerWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
+                      const SizedBox(width: 28),
+
+                      Text(
+                        project.code,
+                        style: TextStyle(
+                          color: isActive
+                              ? const Color(0xff001E40)
+                              : const Color(0xff43474F),
+                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                          fontSize: 14,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                 ),

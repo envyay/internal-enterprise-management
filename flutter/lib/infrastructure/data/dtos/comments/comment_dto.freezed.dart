@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentDto {
 
- String get id; TicketDto get ticketId; UserDto get userId; String get content;
+ String get id; String get ticketId; String get userId; String get content;
 /// Create a copy of CommentDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,11 +49,11 @@ abstract mixin class $CommentDtoCopyWith<$Res>  {
   factory $CommentDtoCopyWith(CommentDto value, $Res Function(CommentDto) _then) = _$CommentDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, TicketDto ticketId, UserDto userId, String content
+ String id, String ticketId, String userId, String content
 });
 
 
-$TicketDtoCopyWith<$Res> get ticketId;$UserDtoCopyWith<$Res> get userId;
+
 
 }
 /// @nodoc
@@ -70,30 +70,12 @@ class _$CommentDtoCopyWithImpl<$Res>
   return _then(CommentDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
-as TicketDto,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as UserDto,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
-/// Create a copy of CommentDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$TicketDtoCopyWith<$Res> get ticketId {
-  
-  return $TicketDtoCopyWith<$Res>(_self.ticketId, (value) {
-    return _then(_self.copyWith(ticketId: value));
-  });
-}/// Create a copy of CommentDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserDtoCopyWith<$Res> get userId {
-  
-  return $UserDtoCopyWith<$Res>(_self.userId, (value) {
-    return _then(_self.copyWith(userId: value));
-  });
-}
+
 }
 
 
@@ -175,7 +157,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  TicketDto ticketId,  UserDto userId,  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String ticketId,  String userId,  String content)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CommentDto() when $default != null:
 return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
@@ -196,7 +178,7 @@ return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  TicketDto ticketId,  UserDto userId,  String content)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String ticketId,  String userId,  String content)  $default,) {final _that = this;
 switch (_that) {
 case _CommentDto():
 return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
@@ -216,7 +198,7 @@ return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  TicketDto ticketId,  UserDto userId,  String content)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String ticketId,  String userId,  String content)?  $default,) {final _that = this;
 switch (_that) {
 case _CommentDto() when $default != null:
 return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
@@ -235,8 +217,8 @@ class _CommentDto implements CommentDto {
   factory _CommentDto.fromJson(Map<String, dynamic> json) => _$CommentDtoFromJson(json);
 
 @override final  String id;
-@override final  TicketDto ticketId;
-@override final  UserDto userId;
+@override final  String ticketId;
+@override final  String userId;
 @override final  String content;
 
 /// Create a copy of CommentDto
@@ -272,11 +254,11 @@ abstract mixin class _$CommentDtoCopyWith<$Res> implements $CommentDtoCopyWith<$
   factory _$CommentDtoCopyWith(_CommentDto value, $Res Function(_CommentDto) _then) = __$CommentDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, TicketDto ticketId, UserDto userId, String content
+ String id, String ticketId, String userId, String content
 });
 
 
-@override $TicketDtoCopyWith<$Res> get ticketId;@override $UserDtoCopyWith<$Res> get userId;
+
 
 }
 /// @nodoc
@@ -293,31 +275,13 @@ class __$CommentDtoCopyWithImpl<$Res>
   return _then(_CommentDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
-as TicketDto,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as UserDto,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
 
-/// Create a copy of CommentDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$TicketDtoCopyWith<$Res> get ticketId {
-  
-  return $TicketDtoCopyWith<$Res>(_self.ticketId, (value) {
-    return _then(_self.copyWith(ticketId: value));
-  });
-}/// Create a copy of CommentDto
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserDtoCopyWith<$Res> get userId {
-  
-  return $UserDtoCopyWith<$Res>(_self.userId, (value) {
-    return _then(_self.copyWith(userId: value));
-  });
-}
+
 }
 
 // dart format on

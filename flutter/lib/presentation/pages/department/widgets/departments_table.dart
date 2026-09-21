@@ -10,7 +10,7 @@ class DepartmentsTable extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(departmentsControllerProvider);
-    final controller = ref.read(departmentsControllerProvider.notifier);
+    final controller = ref.watch(departmentsControllerProvider.notifier);
     final router = ref.read(appRouterProvider);
     return state.when(
       data: (departments) {

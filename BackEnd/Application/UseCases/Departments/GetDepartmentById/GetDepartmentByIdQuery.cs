@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.UseCases.Departments.GetDepartmentById;
 
-public class GetDepartmentByIdQuery : IRequest<DepartmentDTO?>
+public class GetDepartmentByIdQuery : IRequest<DepartmentDto?>
 {
     public Guid Id { get; set; }
 }

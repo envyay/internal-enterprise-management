@@ -1,4 +1,4 @@
-import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
+import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -9,9 +9,15 @@ abstract class TicketStatusDto with _$TicketStatusDto {
   const factory TicketStatusDto({
     required String id,
     required String name,
-    required ProjectDto projectId,
-    required List<TicketDto> ticketIds,
+    required String projectId,
+    required List<TicketDto>? tickets,
   }) = _TicketStatusDto;
 
   factory TicketStatusDto.fromJson(Map<String, dynamic> json) => _$TicketStatusDtoFromJson(json);
+}
+
+extension TicketStatusDtoX on TicketStatusDto {
+  TicketStatus toAggregate() {
+    return TicketStatus(id: id, projectId: projectId, name: name, tickets: tickets?.map((item) => item.toAggregate()).toList() ?? []);
+  }
 }

@@ -2,9 +2,9 @@
 
 namespace Application.DTOs.Departments;
 
-public class DepartmentDTO
+public class DepartmentDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public List<UserDTO> Users { get; set; }
+    public List<UserDto> Users { get; set; }
 }

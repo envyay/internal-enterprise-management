@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Application.UseCases.Users.GetUsers;
 
-public sealed record GetUsersQuery : IRequest<List<UserDTO>>;
+public sealed record GetUsersQuery : IRequest<List<UserDto>>;

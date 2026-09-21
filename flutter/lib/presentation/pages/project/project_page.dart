@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/create_project_dialog.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/project_item.dart';
@@ -17,23 +18,23 @@ class ProjectPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(projectsControllerProvider.notifier);
     final state = ref.watch(projectsControllerProvider);
+    final state1 = ref.watch(getProjectDetailsControllerProvider);
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
         title: 'Project Management',
-        description:
-            'You can manage project',
+        description: 'You can manage project',
         child: Container(
           color: Colors.transparent,
           child: SingleChildScrollView(
             child: StaggeredGrid.count(
               crossAxisCount: 4,
-              mainAxisSpacing: 4,
+              mainAxisSpacing: 8,
               crossAxisSpacing: 4,
               children: [
                 StaggeredGridTile.count(
-                  crossAxisCellCount: 1,
-                  mainAxisCellCount: 2,
+                  crossAxisCellCount: 2,
+                  mainAxisCellCount: 1.5,
                   child: OverviewContainer(
                     title: 'Projects',
                     icon: Assets.lib.infrastructure.assets.icons.create,
@@ -49,7 +50,7 @@ class ProjectPage extends ConsumerWidget {
                         },
                       );
                     },
-                     child: state.when(
+                    child: state.when(
                       data: (projects) {
                         return ListView.builder(
                           itemCount: projects.length,
@@ -60,7 +61,8 @@ class ProjectPage extends ConsumerWidget {
                               isActive: item.isActive,
                               onTap: () {
                                 controller.onSelect(item.id);
-                              }, project: item,
+                              },
+                              project: item,
                             );
                           },
                         );
@@ -75,10 +77,57 @@ class ProjectPage extends ConsumerWidget {
                   ),
                 ),
                 StaggeredGridTile.count(
-                  crossAxisCellCount: 3,
-                  mainAxisCellCount: 2,
+                  crossAxisCellCount: 1,
+                  mainAxisCellCount: 1.5,
                   child: OverviewContainer(
-                    title: 'Role-Based Access Control (RBAC)',
+                    title: 'Project Details',
+                    child: Container(
+                      padding: .symmetric(vertical: 8, horizontal: 16),
+                      alignment: .topStart,
+                      width: .infinity,
+                      child: state1.when(
+                        data: (project) {
+                          return Column(
+                            crossAxisAlignment: .start,
+                            children: [
+                              Text('Project Name: ${project?.name ?? ''}'),
+                              Text(
+                                'Description: ${project?.description ?? ''}',
+                              ),
+                              Text('Code: ${project?.code ?? ''}'),
+                              Text('Status: ${project?.status ?? ''}'),
+                              Text('Start Date: ${project?.startDate ?? ''}'),
+                              Text('End Date: ${project?.endDate ?? ''}'),
+                              Text('Members: ${project?.users.length ?? ''}'),
+                              Text(
+                                'Number Of Ticket Statuses: ${project?.ticketStatuses.length ?? ''}',
+                              ),
+                            ],
+                          );
+                        },
+                        error: ((error, stackTrace) => const Text('Error')),
+                        loading: () {
+                          return const Text('Loading...');
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+
+                StaggeredGridTile.count(
+                  crossAxisCellCount: 1,
+                  mainAxisCellCount: 1.5,
+                  child: OverviewContainer(
+                    title: 'Ticket Status',
+                    child: Column(children: [Text('data')]),
+                  ),
+                ),
+
+                StaggeredGridTile.count(
+                  crossAxisCellCount: 4,
+                  mainAxisCellCount: 1.5,
+                  child: OverviewContainer(
+                    title: 'Users Management',
                     child: Column(children: [Text('data')]),
                   ),
                 ),

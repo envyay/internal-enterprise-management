@@ -2,7 +2,7 @@
 
 namespace Application.DTOs.UserGroupPolicies;
 
-public class UserGroupPolicyDTO
+public class UserGroupPolicyDto
 {
     public Guid Id { get; set; }
     public string Policy { get; set; }

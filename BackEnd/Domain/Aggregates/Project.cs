@@ -5,16 +5,16 @@ namespace Domain.Aggregates;
 
 public class Project : AggregateRoot<Guid>
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string Code { get; set; }
-    public ProjectStatus Status { get; set; }
-    public DateTime? StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Code { get; set; } = string.Empty;
+    public ProjectStatus Status { get; set; } = ProjectStatus.Active;
+    public DateTime? StartDate { get; set; } = DateTime.Now;
+    public DateTime? EndDate { get; set; } = DateTime.Now.AddYears(1);
     
-    public ICollection<User> Users { get; set; }
-    public ICollection<Ticket> Tickets { get; set; }
-    public ICollection<TicketStatus> TicketStatuses { get; set; }
+    public ICollection<User> Users { get; set; } = new List<User>();
+    public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+    public ICollection<TicketStatus> TicketStatuses { get; set; } = new List<TicketStatus>();
     
     public static Project Create(string name, string description, string code, DateTime? startDate = null, DateTime? endDate = null)
     {

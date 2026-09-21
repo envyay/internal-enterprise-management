@@ -15,6 +15,8 @@ class ProjectMapper extends ClassMapperBase<Project> {
   static ProjectMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = ProjectMapper._());
+      UserMapper.ensureInitialized();
+      TicketStatusMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -40,6 +42,25 @@ class ProjectMapper extends ClassMapperBase<Project> {
   );
   static String _$code(Project v) => v.code;
   static const Field<Project, String> _f$code = Field('code', _$code);
+  static int _$status(Project v) => v.status;
+  static const Field<Project, int> _f$status = Field('status', _$status);
+  static DateTime? _$startDate(Project v) => v.startDate;
+  static const Field<Project, DateTime> _f$startDate = Field(
+    'startDate',
+    _$startDate,
+  );
+  static DateTime? _$endDate(Project v) => v.endDate;
+  static const Field<Project, DateTime> _f$endDate = Field(
+    'endDate',
+    _$endDate,
+  );
+  static List<User> _$users(Project v) => v.users;
+  static const Field<Project, List<User>> _f$users = Field('users', _$users);
+  static List<TicketStatus> _$ticketStatuses(Project v) => v.ticketStatuses;
+  static const Field<Project, List<TicketStatus>> _f$ticketStatuses = Field(
+    'ticketStatuses',
+    _$ticketStatuses,
+  );
 
   @override
   final MappableFields<Project> fields = const {
@@ -48,6 +69,11 @@ class ProjectMapper extends ClassMapperBase<Project> {
     #description: _f$description,
     #isActive: _f$isActive,
     #code: _f$code,
+    #status: _f$status,
+    #startDate: _f$startDate,
+    #endDate: _f$endDate,
+    #users: _f$users,
+    #ticketStatuses: _f$ticketStatuses,
   };
 
   static Project _instantiate(DecodingData data) {
@@ -57,6 +83,11 @@ class ProjectMapper extends ClassMapperBase<Project> {
       description: data.dec(_f$description),
       isActive: data.dec(_f$isActive),
       code: data.dec(_f$code),
+      status: data.dec(_f$status),
+      startDate: data.dec(_f$startDate),
+      endDate: data.dec(_f$endDate),
+      users: data.dec(_f$users),
+      ticketStatuses: data.dec(_f$ticketStatuses),
     );
   }
 
@@ -117,12 +148,24 @@ extension ProjectValueCopy<$R, $Out> on ObjectCopyWith<$R, Project, $Out> {
 
 abstract class ProjectCopyWith<$R, $In extends Project, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  ListCopyWith<$R, User, UserCopyWith<$R, User, User>> get users;
+  ListCopyWith<
+    $R,
+    TicketStatus,
+    TicketStatusCopyWith<$R, TicketStatus, TicketStatus>
+  >
+  get ticketStatuses;
   $R call({
     String? id,
     String? name,
     String? description,
     bool? isActive,
     String? code,
+    int? status,
+    DateTime? startDate,
+    DateTime? endDate,
+    List<User>? users,
+    List<TicketStatus>? ticketStatuses,
   });
   ProjectCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -136,12 +179,35 @@ class _ProjectCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Project> $mapper =
       ProjectMapper.ensureInitialized();
   @override
+  ListCopyWith<$R, User, UserCopyWith<$R, User, User>> get users =>
+      ListCopyWith(
+        $value.users,
+        (v, t) => v.copyWith.$chain(t),
+        (v) => call(users: v),
+      );
+  @override
+  ListCopyWith<
+    $R,
+    TicketStatus,
+    TicketStatusCopyWith<$R, TicketStatus, TicketStatus>
+  >
+  get ticketStatuses => ListCopyWith(
+    $value.ticketStatuses,
+    (v, t) => v.copyWith.$chain(t),
+    (v) => call(ticketStatuses: v),
+  );
+  @override
   $R call({
     String? id,
     String? name,
     String? description,
     bool? isActive,
     String? code,
+    int? status,
+    Object? startDate = $none,
+    Object? endDate = $none,
+    List<User>? users,
+    List<TicketStatus>? ticketStatuses,
   }) => $apply(
     FieldCopyWithData({
       if (id != null) #id: id,
@@ -149,6 +215,11 @@ class _ProjectCopyWithImpl<$R, $Out>
       if (description != null) #description: description,
       if (isActive != null) #isActive: isActive,
       if (code != null) #code: code,
+      if (status != null) #status: status,
+      if (startDate != $none) #startDate: startDate,
+      if (endDate != $none) #endDate: endDate,
+      if (users != null) #users: users,
+      if (ticketStatuses != null) #ticketStatuses: ticketStatuses,
     }),
   );
   @override
@@ -158,6 +229,11 @@ class _ProjectCopyWithImpl<$R, $Out>
     description: data.get(#description, or: $value.description),
     isActive: data.get(#isActive, or: $value.isActive),
     code: data.get(#code, or: $value.code),
+    status: data.get(#status, or: $value.status),
+    startDate: data.get(#startDate, or: $value.startDate),
+    endDate: data.get(#endDate, or: $value.endDate),
+    users: data.get(#users, or: $value.users),
+    ticketStatuses: data.get(#ticketStatuses, or: $value.ticketStatuses),
   );
 
   @override

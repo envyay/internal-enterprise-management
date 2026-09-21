@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TicketDto {
 
- String get id; String get title; String get description;
+ String get id; String get title; String get description; String get projectId; String get ticketStatusId; List<UserDto> get users; List<CommentDto> get comments;
 /// Create a copy of TicketDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $TicketDtoCopyWith<TicketDto> get copyWith => _$TicketDtoCopyWithImpl<TicketDto>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&(identical(other.ticketStatusId, ticketStatusId) || other.ticketStatusId == ticketStatusId)&&const DeepCollectionEquality().equals(other.users, users)&&const DeepCollectionEquality().equals(other.comments, comments));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description);
+int get hashCode => Object.hash(runtimeType,id,title,description,projectId,ticketStatusId,const DeepCollectionEquality().hash(users),const DeepCollectionEquality().hash(comments));
 
 @override
 String toString() {
-  return 'TicketDto(id: $id, title: $title, description: $description)';
+  return 'TicketDto(id: $id, title: $title, description: $description, projectId: $projectId, ticketStatusId: $ticketStatusId, users: $users, comments: $comments)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $TicketDtoCopyWith<$Res>  {
   factory $TicketDtoCopyWith(TicketDto value, $Res Function(TicketDto) _then) = _$TicketDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String description
+ String id, String title, String description, String projectId, String ticketStatusId, List<UserDto> users, List<CommentDto> comments
 });
 
 
@@ -66,12 +66,16 @@ class _$TicketDtoCopyWithImpl<$Res>
 
 /// Create a copy of TicketDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? projectId = null,Object? ticketStatusId = null,Object? users = null,Object? comments = null,}) {
   return _then(TicketDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,
+as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
+as String,ticketStatusId: null == ticketStatusId ? _self.ticketStatusId : ticketStatusId // ignore: cast_nullable_to_non_nullable
+as String,users: null == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>,comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
+as List<CommentDto>,
   ));
 }
 
@@ -156,10 +160,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto> users,  List<CommentDto> comments)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TicketDto() when $default != null:
-return $default(_that.id,_that.title,_that.description);case _:
+return $default(_that.id,_that.title,_that.description,_that.projectId,_that.ticketStatusId,_that.users,_that.comments);case _:
   return orElse();
 
 }
@@ -177,10 +181,10 @@ return $default(_that.id,_that.title,_that.description);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto> users,  List<CommentDto> comments)  $default,) {final _that = this;
 switch (_that) {
 case _TicketDto():
-return $default(_that.id,_that.title,_that.description);case _:
+return $default(_that.id,_that.title,_that.description,_that.projectId,_that.ticketStatusId,_that.users,_that.comments);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +201,10 @@ return $default(_that.id,_that.title,_that.description);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto> users,  List<CommentDto> comments)?  $default,) {final _that = this;
 switch (_that) {
 case _TicketDto() when $default != null:
-return $default(_that.id,_that.title,_that.description);case _:
+return $default(_that.id,_that.title,_that.description,_that.projectId,_that.ticketStatusId,_that.users,_that.comments);case _:
   return null;
 
 }
@@ -212,12 +216,28 @@ return $default(_that.id,_that.title,_that.description);case _:
 @JsonSerializable()
 
 class _TicketDto implements TicketDto {
-  const _TicketDto({required this.id, required this.title, required this.description});
+  const _TicketDto({required this.id, required this.title, required this.description, required this.projectId, required this.ticketStatusId, required  List<UserDto> users, required  List<CommentDto> comments}): _users = users,_comments = comments;
   factory _TicketDto.fromJson(Map<String, dynamic> json) => _$TicketDtoFromJson(json);
 
 @override final  String id;
 @override final  String title;
 @override final  String description;
+@override final  String projectId;
+@override final  String ticketStatusId;
+ final  List<UserDto> _users;
+@override List<UserDto> get users {
+  if (_users is EqualUnmodifiableListView) return _users;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_users);
+}
+
+ final  List<CommentDto> _comments;
+@override List<CommentDto> get comments {
+  if (_comments is EqualUnmodifiableListView) return _comments;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_comments);
+}
+
 
 /// Create a copy of TicketDto
 /// with the given fields replaced by the non-null parameter values.
@@ -232,16 +252,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.projectId, projectId) || other.projectId == projectId)&&(identical(other.ticketStatusId, ticketStatusId) || other.ticketStatusId == ticketStatusId)&&const DeepCollectionEquality().equals(other._users, _users)&&const DeepCollectionEquality().equals(other._comments, _comments));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description);
+int get hashCode => Object.hash(runtimeType,id,title,description,projectId,ticketStatusId,const DeepCollectionEquality().hash(_users),const DeepCollectionEquality().hash(_comments));
 
 @override
 String toString() {
-  return 'TicketDto(id: $id, title: $title, description: $description)';
+  return 'TicketDto(id: $id, title: $title, description: $description, projectId: $projectId, ticketStatusId: $ticketStatusId, users: $users, comments: $comments)';
 }
 
 
@@ -252,7 +272,7 @@ abstract mixin class _$TicketDtoCopyWith<$Res> implements $TicketDtoCopyWith<$Re
   factory _$TicketDtoCopyWith(_TicketDto value, $Res Function(_TicketDto) _then) = __$TicketDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String description
+ String id, String title, String description, String projectId, String ticketStatusId, List<UserDto> users, List<CommentDto> comments
 });
 
 
@@ -269,12 +289,16 @@ class __$TicketDtoCopyWithImpl<$Res>
 
 /// Create a copy of TicketDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? projectId = null,Object? ticketStatusId = null,Object? users = null,Object? comments = null,}) {
   return _then(_TicketDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,
+as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
+as String,ticketStatusId: null == ticketStatusId ? _self.ticketStatusId : ticketStatusId // ignore: cast_nullable_to_non_nullable
+as String,users: null == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>,comments: null == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
+as List<CommentDto>,
   ));
 }
 

@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Application.UseCases.Departments.GetDepartmentById;
 
 public class GetDepartmentByIdQueryHandler(IRepository<Department, Guid> departmentRepository)
-    : IRequestHandler<GetDepartmentByIdQuery, DepartmentDTO?>
+    : IRequestHandler<GetDepartmentByIdQuery, DepartmentDto?>
 {
-    public async Task<DepartmentDTO?> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
+    public async Task<DepartmentDto?> Handle(GetDepartmentByIdQuery request, CancellationToken cancellationToken)
     {
         // var department = await departmentRepository.GetByIdAsync(request.Id, cancellationToken);
         var department = await departmentRepository
@@ -18,11 +18,11 @@ public class GetDepartmentByIdQueryHandler(IRepository<Department, Guid> departm
             .Include(u => u.Users)
             .FirstOrDefaultAsync(cancellationToken);
         if (department == null) return null;
-        var dto = new DepartmentDTO
+        var dto = new DepartmentDto
         {
             Id = department.Id,
             Name = department.Name,
-            Users = department.Users.Select(x => new UserDTO
+            Users = department.Users.Select(x => new UserDto
             {
                 Id = x.Id,
                 Email = x.Email,

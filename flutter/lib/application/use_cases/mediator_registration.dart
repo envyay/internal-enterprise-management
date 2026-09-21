@@ -34,6 +34,8 @@ import 'package:enterprise_management/application/use_cases/projects/create_proj
 import 'package:enterprise_management/application/use_cases/projects/create_project/create_project_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/projects/delete_project/delete_project_command.dart';
 import 'package:enterprise_management/application/use_cases/projects/delete_project/delete_project_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/projects/get_project/get_project_query.dart';
+import 'package:enterprise_management/application/use_cases/projects/get_project/get_project_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/projects/get_projects/get_projects_query.dart';
 import 'package:enterprise_management/application/use_cases/projects/get_projects/get_projects_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/projects/update_project/update_project_command.dart';
@@ -171,6 +173,10 @@ extension MediatorRegistrationX on Mediator {
     //Project
     registerQueryHandler<GetProjectsQuery, List<Project?>>(
         GetProjectsQueryHandler(projectRepository: ref.read(projectRepositoryProvider))
+    );
+
+    registerQueryHandler<GetProjectQuery, Project?>(
+        GetProjectQueryHandler(projectRepository: ref.read(projectRepositoryProvider))
     );
 
     registerCommandHandler<CreateProjectCommand, String>(

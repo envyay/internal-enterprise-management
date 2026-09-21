@@ -8,7 +8,7 @@ import 'package:enterprise_management/infrastructure/data/remote/data_source/pro
 abstract class IProjectRepository {
   Future<List<Project>> getProjects();
 
-  Future<ProjectDto?> getProjectById({required String id});
+  Future<Project?> getProjectById({required String id});
 
   Future<String> createProject({required String name, required String description, required String code});
 
@@ -33,9 +33,9 @@ class ProjectRepository implements IProjectRepository {
   }
 
   @override
-  Future<ProjectDto?> getProjectById({required String id}) {
-    // TODO: implement getProjectById
-    throw UnimplementedError();
+  Future<Project?> getProjectById({required String id}) async {
+    final res = await _projectRemoteDataSource.getProjectById(id);
+    return res.data?.map((item) => item.toAggregate());
   }
 
   @override
