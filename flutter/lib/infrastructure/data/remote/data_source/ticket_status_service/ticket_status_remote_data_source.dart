@@ -16,6 +16,9 @@ abstract class TicketStatusRemoteDataSource {
   @GET('GetAll')
   Future<ApiResponse<List<TicketStatusDto>>> getTicketStatuses();
 
+  @GET('{id}')
+  Future<ApiResponse<TicketStatusDto?>> getTicketStatusById(@Path('id') String id);
+
   @POST('Create')
   Future<ApiResponse<TicketStatusDto>> createTicketStatus(@Body() CreateTicketStatusDto body);
 

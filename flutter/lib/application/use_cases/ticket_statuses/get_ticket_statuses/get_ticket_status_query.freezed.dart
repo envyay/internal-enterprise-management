@@ -13,7 +13,7 @@ part of 'get_ticket_status_query.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$GetTicketStatusQuery {
+mixin _$GetTicketStatusesQuery {
 
 
 
@@ -21,7 +21,7 @@ mixin _$GetTicketStatusQuery {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetTicketStatusQuery);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetTicketStatusesQuery);
 }
 
 
@@ -30,20 +30,20 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'GetTicketStatusQuery()';
+  return 'GetTicketStatusesQuery()';
 }
 
 
 }
 
 /// @nodoc
-class $GetTicketStatusQueryCopyWith<$Res>  {
-$GetTicketStatusQueryCopyWith(GetTicketStatusQuery _, $Res Function(GetTicketStatusQuery) __);
+class $GetTicketStatusesQueryCopyWith<$Res>  {
+$GetTicketStatusesQueryCopyWith(GetTicketStatusesQuery _, $Res Function(GetTicketStatusesQuery) __);
 }
 
 
-/// Adds pattern-matching-related methods to [GetTicketStatusQuery].
-extension GetTicketStatusQueryPatterns on GetTicketStatusQuery {
+/// Adds pattern-matching-related methods to [GetTicketStatusesQuery].
+extension GetTicketStatusesQueryPatterns on GetTicketStatusesQuery {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -56,10 +56,10 @@ extension GetTicketStatusQueryPatterns on GetTicketStatusQuery {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _GetTicketStatusQuery value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _GetTicketStatusesQuery value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _GetTicketStatusQuery() when $default != null:
+case _GetTicketStatusesQuery() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -78,10 +78,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _GetTicketStatusQuery value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _GetTicketStatusesQuery value)  $default,){
 final _that = this;
 switch (_that) {
-case _GetTicketStatusQuery():
+case _GetTicketStatusesQuery():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -99,10 +99,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _GetTicketStatusQuery value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _GetTicketStatusesQuery value)?  $default,){
 final _that = this;
 switch (_that) {
-case _GetTicketStatusQuery() when $default != null:
+case _GetTicketStatusesQuery() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -122,7 +122,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function()?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _GetTicketStatusQuery() when $default != null:
+case _GetTicketStatusesQuery() when $default != null:
 return $default();case _:
   return orElse();
 
@@ -143,7 +143,7 @@ return $default();case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function()  $default,) {final _that = this;
 switch (_that) {
-case _GetTicketStatusQuery():
+case _GetTicketStatusesQuery():
 return $default();case _:
   throw StateError('Unexpected subclass');
 
@@ -163,7 +163,7 @@ return $default();case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function()?  $default,) {final _that = this;
 switch (_that) {
-case _GetTicketStatusQuery() when $default != null:
+case _GetTicketStatusesQuery() when $default != null:
 return $default();case _:
   return null;
 
@@ -175,8 +175,8 @@ return $default();case _:
 /// @nodoc
 
 
-class _GetTicketStatusQuery implements GetTicketStatusQuery {
-  const _GetTicketStatusQuery();
+class _GetTicketStatusesQuery implements GetTicketStatusesQuery {
+  const _GetTicketStatusesQuery();
   
 
 
@@ -186,7 +186,7 @@ class _GetTicketStatusQuery implements GetTicketStatusQuery {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetTicketStatusQuery);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetTicketStatusesQuery);
 }
 
 
@@ -195,7 +195,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'GetTicketStatusQuery()';
+  return 'GetTicketStatusesQuery()';
 }
 
 

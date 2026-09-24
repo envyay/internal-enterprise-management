@@ -56,6 +56,38 @@ class _TicketStatusRemoteDataSource implements TicketStatusRemoteDataSource {
   }
 
   @override
+  Future<ApiResponse<TicketStatusDto?>> getTicketStatusById(String id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<TicketStatusDto?>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<TicketStatusDto?> _value;
+    try {
+      _value = ApiResponse<TicketStatusDto?>.fromJson(
+        _result.data!,
+        (json) => json == null
+            ? null
+            : TicketStatusDto.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<ApiResponse<TicketStatusDto>> createTicketStatus(
     CreateTicketStatusDto body,
   ) async {

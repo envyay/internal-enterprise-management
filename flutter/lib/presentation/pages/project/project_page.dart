@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/create_project_dialog.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/project_item.dart';
+import 'package:enterprise_management/presentation/pages/project/widgets/ticket_status_item.dart';
 import 'package:enterprise_management/presentation/widgets/base_page.dart';
 import 'package:enterprise_management/presentation/widgets/overview_container.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +18,12 @@ class ProjectPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(projectsControllerProvider.notifier);
-    final state = ref.watch(projectsControllerProvider);
-    final state1 = ref.watch(getProjectDetailsControllerProvider);
+    final projectController = ref.watch(projectsControllerProvider.notifier);
+    final ticketStatusController = ref.watch(ticketStatusesControllerProvider.notifier);
+    final projects = ref.watch(projectsControllerProvider);
+    final projectDetails = ref.watch(getProjectDetailsControllerProvider);
+    final ticketStatuses = ref.watch(ticketStatusesControllerProvider);
+
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -50,7 +55,7 @@ class ProjectPage extends ConsumerWidget {
                         },
                       );
                     },
-                    child: state.when(
+                    child: projects.when(
                       data: (projects) {
                         return ListView.builder(
                           itemCount: projects.length,
@@ -60,7 +65,7 @@ class ProjectPage extends ConsumerWidget {
                               name: item.name,
                               isActive: item.isActive,
                               onTap: () {
-                                controller.onSelect(item.id);
+                                projectController.onSelect(item.id);
                               },
                               project: item,
                             );
@@ -85,7 +90,7 @@ class ProjectPage extends ConsumerWidget {
                       padding: .symmetric(vertical: 8, horizontal: 16),
                       alignment: .topStart,
                       width: .infinity,
-                      child: state1.when(
+                      child: projectDetails.when(
                         data: (project) {
                           return Column(
                             crossAxisAlignment: .start,
@@ -119,7 +124,17 @@ class ProjectPage extends ConsumerWidget {
                   mainAxisCellCount: 1.5,
                   child: OverviewContainer(
                     title: 'Ticket Status',
-                    child: Column(children: [Text('data')]),
+                    icon: Assets.lib.infrastructure.assets.icons.create,
+                    child: ticketStatuses.when(data: (ticketStatuses) {
+                      return ListView.builder(
+                        itemCount: ticketStatuses.length,
+                          itemBuilder: (context, index) {
+                          final item = ticketStatuses[index];
+                          return TicketStatusItem(ticketStatus: item, name: item.name);
+                          });
+                    }, error: ((error, stackTrace) => const Text('Error')), loading: () {
+                      return const Text('Loading...');
+                    })
                   ),
                 ),
 
@@ -127,7 +142,7 @@ class ProjectPage extends ConsumerWidget {
                   crossAxisCellCount: 4,
                   mainAxisCellCount: 1.5,
                   child: OverviewContainer(
-                    title: 'Users Management',
+                    title: 'Users In Project',
                     child: Column(children: [Text('data')]),
                   ),
                 ),

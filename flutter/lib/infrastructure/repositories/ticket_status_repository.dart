@@ -1,3 +1,4 @@
+import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_ticket_status_dto.dart';
@@ -6,8 +7,8 @@ import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/t
 import 'package:enterprise_management/infrastructure/data/remote/data_source/ticket_status_service/ticket_status_remote_data_source.dart';
 
 abstract interface class ITicketStatusRepository {
-  Future<List<TicketStatusDto>> getTicketStatuses();
-  Future<TicketStatusDto> getTicketStatusById({required String id});
+  Future<List<TicketStatus>> getTicketStatuses();
+  Future<TicketStatus?> getTicketStatusById({required String id});
   Future<TicketStatusDto> createTicketStatus({required String name, required ProjectDto projectId});
   Future<bool> updateTicketStatus({required String id, required String name, required List<ProjectDto> projectIds});
   Future<bool> deleteTicketStatus({required String id});
@@ -29,15 +30,15 @@ class TicketStatusRepository implements ITicketStatusRepository {
   }
 
   @override
-  Future<TicketStatusDto> getTicketStatusById({required String id}) {
-    // TODO: implement getTicketStatusById
-    throw UnimplementedError();
+  Future<TicketStatus?> getTicketStatusById({required String id}) async {
+    final res = await _ticketStatusRemoteDataSource.getTicketStatusById(id);
+    return res.data?.map((item) => item.toAggregate());
   }
 
   @override
-  Future<List<TicketStatusDto>> getTicketStatuses() async {
+  Future<List<TicketStatus>> getTicketStatuses() async {
     final res = await _ticketStatusRemoteDataSource.getTicketStatuses();
-    return res.data;
+    return res.data.map((item) => item.toAggregate()).toList();
   }
 
   @override

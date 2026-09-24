@@ -82,6 +82,7 @@ import 'package:enterprise_management/application/use_cases/users/user_sign_in_v
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
+import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
@@ -209,8 +210,8 @@ extension MediatorRegistrationX on Mediator {
     );
 
     //TickStatus
-    registerQueryHandler<GetTicketStatusQuery, List<TicketStatusDto>>(
-      GetTicketStatusQueryHandler(ticketStatusRepository: ref.read(ticketStatusRepositoryProvider)),
+    registerQueryHandler<GetTicketStatusesQuery, List<TicketStatus?>>(
+      GetTicketStatusesQueryHandler(ticketStatusRepository: ref.read(ticketStatusRepositoryProvider)),
     );
     
     registerCommandHandler<CreateTicketStatusCommand, TicketStatusDto>(

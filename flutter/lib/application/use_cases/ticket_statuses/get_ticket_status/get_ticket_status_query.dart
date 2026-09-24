@@ -4,6 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'get_ticket_status_query.freezed.dart';
 @freezed
-abstract class GetTicketStatusesQuery with _$GetTicketStatusesQuery implements IQuery<List<TicketStatus>> {
-  const factory GetTicketStatusesQuery() = _GetTicketStatusesQuery;
+abstract class GetTicketStatusQuery with _$GetTicketStatusQuery implements IQuery<TicketStatus?> {
+  const factory GetTicketStatusQuery({required String id}) = _GetTicketStatusQuery;
 }
