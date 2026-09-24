@@ -4,6 +4,7 @@ import 'package:enterprise_management/infrastructure/data/dtos/api_requests/dele
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'project_remote_data_source.g.dart';
@@ -18,6 +19,9 @@ abstract class ProjectRemoteDataSource {
 
   @GET('{id}')
   Future<ApiResponse<ProjectDto?>> getProjectById(@Path('id') String id);
+
+  @GET('{id}/TicketStatuses')
+  Future<ApiResponse<List<TicketStatusDto>>> getTicketStatusesByProjectId(@Path('id') String id);
 
   @POST('Create')
   Future<ApiResponse<String>> createProject(@Body() CreateProjectDto body);

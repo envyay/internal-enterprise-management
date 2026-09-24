@@ -2,6 +2,7 @@ import 'package:enterprise_management/application/use_cases/projects/delete_proj
 import 'package:enterprise_management/application/use_cases/projects/get_projects/get_projects_query.dart';
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -56,5 +57,8 @@ class ProjectsController extends _$ProjectsController {
 
     final projectDetailsController = ref.watch(getProjectDetailsControllerProvider.notifier);
     projectDetailsController.getProjectDetails(id: id);
+
+    final ticketStatusesInProjectController = ref.watch(ticketStatusesInProjectControllerProvider.notifier);
+    ticketStatusesInProjectController.getTicketStatusesByProjectId(projectId: id);
   }
 }

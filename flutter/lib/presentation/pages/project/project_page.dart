@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
-import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_controller.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/create_project_dialog.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/project_item.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/ticket_status_item.dart';
@@ -19,10 +19,10 @@ class ProjectPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final projectController = ref.watch(projectsControllerProvider.notifier);
-    final ticketStatusController = ref.watch(ticketStatusesControllerProvider.notifier);
+    final ticketStatusesInProjectController = ref.watch(ticketStatusesInProjectControllerProvider.notifier);
     final projects = ref.watch(projectsControllerProvider);
     final projectDetails = ref.watch(getProjectDetailsControllerProvider);
-    final ticketStatuses = ref.watch(ticketStatusesControllerProvider);
+    final ticketStatusesInProject = ref.watch(ticketStatusesInProjectControllerProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
@@ -38,8 +38,8 @@ class ProjectPage extends ConsumerWidget {
               crossAxisSpacing: 4,
               children: [
                 StaggeredGridTile.count(
-                  crossAxisCellCount: 2,
-                  mainAxisCellCount: 1.5,
+                  crossAxisCellCount: 1,
+                  mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Projects',
                     icon: Assets.lib.infrastructure.assets.icons.create,
@@ -83,7 +83,7 @@ class ProjectPage extends ConsumerWidget {
                 ),
                 StaggeredGridTile.count(
                   crossAxisCellCount: 1,
-                  mainAxisCellCount: 1.5,
+                  mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Project Details',
                     child: Container(
@@ -121,11 +121,11 @@ class ProjectPage extends ConsumerWidget {
 
                 StaggeredGridTile.count(
                   crossAxisCellCount: 1,
-                  mainAxisCellCount: 1.5,
+                  mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Ticket Status',
                     icon: Assets.lib.infrastructure.assets.icons.create,
-                    child: ticketStatuses.when(data: (ticketStatuses) {
+                    child: ticketStatusesInProject.when(data: (ticketStatuses) {
                       return ListView.builder(
                         itemCount: ticketStatuses.length,
                           itemBuilder: (context, index) {
@@ -139,8 +139,8 @@ class ProjectPage extends ConsumerWidget {
                 ),
 
                 StaggeredGridTile.count(
-                  crossAxisCellCount: 4,
-                  mainAxisCellCount: 1.5,
+                  crossAxisCellCount: 1,
+                  mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Users In Project',
                     child: Column(children: [Text('data')]),

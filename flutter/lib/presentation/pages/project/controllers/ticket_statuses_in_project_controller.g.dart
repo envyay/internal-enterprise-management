@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ticket_statuses_controller.dart';
+part of 'ticket_statuses_in_project_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -9,35 +9,41 @@ part of 'ticket_statuses_controller.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(TicketStatusesController)
-final ticketStatusesControllerProvider = TicketStatusesControllerProvider._();
+@ProviderFor(TicketStatusesInProjectController)
+final ticketStatusesInProjectControllerProvider =
+    TicketStatusesInProjectControllerProvider._();
 
-final class TicketStatusesControllerProvider
+final class TicketStatusesInProjectControllerProvider
     extends
-        $AsyncNotifierProvider<TicketStatusesController, List<TicketStatus>> {
-  TicketStatusesControllerProvider._()
+        $AsyncNotifierProvider<
+          TicketStatusesInProjectController,
+          List<TicketStatus>
+        > {
+  TicketStatusesInProjectControllerProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'ticketStatusesControllerProvider',
+        name: r'ticketStatusesInProjectControllerProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$ticketStatusesControllerHash();
+  String debugGetCreateSourceHash() =>
+      _$ticketStatusesInProjectControllerHash();
 
   @$internal
   @override
-  TicketStatusesController create() => TicketStatusesController();
+  TicketStatusesInProjectController create() =>
+      TicketStatusesInProjectController();
 }
 
-String _$ticketStatusesControllerHash() =>
-    r'51424a67f273b38410080951675840ad98a43747';
+String _$ticketStatusesInProjectControllerHash() =>
+    r'0831edc71d95a92295f9d0a835a5d03a86e13147';
 
-abstract class _$TicketStatusesController
+abstract class _$TicketStatusesInProjectController
     extends $AsyncNotifier<List<TicketStatus>> {
   FutureOr<List<TicketStatus>> build();
   @$mustCallSuper

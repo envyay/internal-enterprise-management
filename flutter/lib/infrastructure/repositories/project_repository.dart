@@ -1,14 +1,18 @@
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
+import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/project_service/project_remote_data_source.dart';
 
 abstract class IProjectRepository {
   Future<List<Project>> getProjects();
 
   Future<Project?> getProjectById({required String id});
+
+  Future<List<TicketStatus>> getTicketStatusesByProjectId({required String projectId});
 
   Future<String> createProject({required String name, required String description, required String code});
 
@@ -48,5 +52,11 @@ class ProjectRepository implements IProjectRepository {
   Future<bool> updateProject({required String id, required String name, required String description, required String code}) async {
     final res = await _projectRemoteDataSource.updateProject(UpdateProjectDto(id: id, name: name, description: description, code: code));
     return res.data;
+  }
+
+  @override
+  Future<List<TicketStatus>> getTicketStatusesByProjectId({required String projectId}) async {
+    final res = await _projectRemoteDataSource.getTicketStatusesByProjectId(projectId);
+    return res.data.map((item) => item.toAggregate()).toList();
   }
 }
