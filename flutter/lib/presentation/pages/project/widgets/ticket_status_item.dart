@@ -1,4 +1,6 @@
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
+import 'package:enterprise_management/presentation/pages/project/widgets/edit_ticket_status_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,6 +18,7 @@ class TicketStatusItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(ticketStatusesInProjectControllerProvider.notifier);
     final router = ref.read(appRouterProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -39,8 +42,7 @@ class TicketStatusItem extends ConsumerWidget {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return Container();
-                        // return EditProjectDialog(project: project,);
+                        return EditTicketStatusDialog(ticketStatus: ticketStatus);
                       },
                     );
                   },
@@ -68,7 +70,9 @@ class TicketStatusItem extends ConsumerWidget {
                           ),
                           TextButton(
                             onPressed: () async {
-                              // await controller.delete(ticketStatus.id);
+                              final project = ticketStatus.projectId;
+                              await controller.delete(ticketStatus.id);
+                              controller.refresh(project);
                               router.pop();
                             },
                             child: const Text(

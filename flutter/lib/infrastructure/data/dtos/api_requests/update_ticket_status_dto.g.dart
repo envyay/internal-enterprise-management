@@ -11,15 +11,8 @@ _UpdateTicketStatusDto _$UpdateTicketStatusDtoFromJson(
 ) => _UpdateTicketStatusDto(
   id: json['id'] as String,
   name: json['name'] as String,
-  projectIds: (json['projectIds'] as List<dynamic>)
-      .map((e) => ProjectDto.fromJson(e as Map<String, dynamic>))
-      .toList(),
 );
 
 Map<String, dynamic> _$UpdateTicketStatusDtoToJson(
   _UpdateTicketStatusDto instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'name': instance.name,
-  'projectIds': instance.projectIds,
-};
+) => <String, dynamic>{'id': instance.id, 'name': instance.name};

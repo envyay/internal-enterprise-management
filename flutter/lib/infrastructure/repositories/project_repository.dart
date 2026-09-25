@@ -1,10 +1,13 @@
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
+import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_project_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/set_users_in_project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/project_service/project_remote_data_source.dart';
 
 abstract class IProjectRepository {
@@ -14,11 +17,15 @@ abstract class IProjectRepository {
 
   Future<List<TicketStatus>> getTicketStatusesByProjectId({required String projectId});
 
+  Future<List<User>> getUsersByProjectId({required String projectId});
+
   Future<String> createProject({required String name, required String description, required String code});
 
   Future<bool> updateProject({required String id, required String name, required String description, required String code});
 
   Future<bool> deleteProject({required String id});
+
+  Future<bool> setUsersInProject({required String id, required List<String> userIds});
 }
 
 class ProjectRepository implements IProjectRepository {
@@ -58,5 +65,17 @@ class ProjectRepository implements IProjectRepository {
   Future<List<TicketStatus>> getTicketStatusesByProjectId({required String projectId}) async {
     final res = await _projectRemoteDataSource.getTicketStatusesByProjectId(projectId);
     return res.data.map((item) => item.toAggregate()).toList();
+  }
+
+  @override
+  Future<List<User>> getUsersByProjectId({required String projectId}) async {
+    final res = await _projectRemoteDataSource.getUsersByProjectId(projectId);
+    return res.data.map((item) => item.toAggregate()).toList();
+  }
+
+  @override
+  Future<bool> setUsersInProject({required String id, required List<String> userIds}) async {
+    final res = await _projectRemoteDataSource.setUsersInProject(SetUsersInProjectDto(id: id, userIds: userIds));
+    return res.data;
   }
 }

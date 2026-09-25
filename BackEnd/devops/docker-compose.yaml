@@ -19,7 +19,7 @@ services:
       - Jwt__Key=RWkM9SHJ%ePH#qv7y7trwsX5S@*d$$K$$A
       - Jwt__Issuer=iem
       - Jwt__Audience=iem
-      - Jwt__ExpiresInMinutes=60
+      - Jwt__ExpiresInMinutes=10080
     depends_on:
       - postgres
       - valkey

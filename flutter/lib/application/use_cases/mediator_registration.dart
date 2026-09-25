@@ -40,6 +40,10 @@ import 'package:enterprise_management/application/use_cases/projects/get_project
 import 'package:enterprise_management/application/use_cases/projects/get_projects/get_projects_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/projects/get_ticket_statuses/get_ticket_statuses_by_project_id_query.dart';
 import 'package:enterprise_management/application/use_cases/projects/get_ticket_statuses/get_ticket_statuses_by_project_id_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/projects/get_users/get_users_by_project_id_query.dart';
+import 'package:enterprise_management/application/use_cases/projects/get_users/get_users_by_project_id_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/projects/set_users_in_project/set_users_in_project_command.dart';
+import 'package:enterprise_management/application/use_cases/projects/set_users_in_project/set_users_in_project_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/projects/update_project/update_project_command.dart';
 import 'package:enterprise_management/application/use_cases/projects/update_project/update_project_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/ticket_statuses/create_ticket_status/create_ticket_status_command.dart';
@@ -182,6 +186,10 @@ extension MediatorRegistrationX on Mediator {
         GetTicketStatusesByProjectIdQueryHandler(projectRepository: ref.read(projectRepositoryProvider))
     );
 
+    registerQueryHandler<GetUsersByProjectIdQuery, List<User>>(
+        GetUsersByProjectIdQueryHandler(projectRepository: ref.read(projectRepositoryProvider))
+    );
+
     registerQueryHandler<GetProjectQuery, Project?>(
         GetProjectQueryHandler(projectRepository: ref.read(projectRepositoryProvider))
     );
@@ -196,6 +204,10 @@ extension MediatorRegistrationX on Mediator {
 
     registerCommandHandler<DeleteProjectCommand, bool>(
       DeleteProjectCommandHandler(projectRepository: ref.read(projectRepositoryProvider)),
+    );
+
+    registerCommandHandler<SetUsersInProjectCommand, bool>(
+      SetUsersInProjectCommandHandler(projectRepository: ref.read(projectRepositoryProvider)),
     );
 
     //Ticket
@@ -220,7 +232,7 @@ extension MediatorRegistrationX on Mediator {
       GetTicketStatusesQueryHandler(ticketStatusRepository: ref.read(ticketStatusRepositoryProvider)),
     );
     
-    registerCommandHandler<CreateTicketStatusCommand, TicketStatusDto>(
+    registerCommandHandler<CreateTicketStatusCommand, TicketStatus>(
       CreateTicketStatusCommandHandler(ticketStatusRepository: ref.read(ticketStatusRepositoryProvider)),
     );
 

@@ -126,6 +126,42 @@ class _ProjectRemoteDataSource implements ProjectRemoteDataSource {
   }
 
   @override
+  Future<ApiResponse<List<UserDto>>> getUsersByProjectId(String id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<List<UserDto>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '${id}/Users',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<List<UserDto>> _value;
+    try {
+      _value = ApiResponse<List<UserDto>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                  .map<UserDto>(
+                    (i) => UserDto.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<ApiResponse<String>> createProject(CreateProjectDto body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -198,6 +234,37 @@ class _ProjectRemoteDataSource implements ProjectRemoteDataSource {
           .compose(
             _dio.options,
             '${id}',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<bool> _value;
+    try {
+      _value = ApiResponse<bool>.fromJson(
+        _result.data!,
+        (json) => json as bool,
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<ApiResponse<bool>> setUsersInProject(SetUsersInProjectDto body) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body.toJson());
+    final _options = _setStreamType<ApiResponse<bool>>(
+      Options(method: 'PUT', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            'SetUsers',
             queryParameters: queryParameters,
             data: _data,
           )

@@ -1,10 +1,15 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:enterprise_management/presentation/pages/department/controllers/users_in_department_controller.dart';
+import 'package:enterprise_management/presentation/pages/department/widgets/add_users_dialog.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/users_in_project_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/create_project_dialog.dart';
+import 'package:enterprise_management/presentation/pages/project/widgets/create_ticket_status_dialog.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/project_item.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/ticket_status_item.dart';
+import 'package:enterprise_management/presentation/pages/project/widgets/users_in_project.dart';
 import 'package:enterprise_management/presentation/widgets/base_page.dart';
 import 'package:enterprise_management/presentation/widgets/overview_container.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +24,15 @@ class ProjectPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final projectController = ref.watch(projectsControllerProvider.notifier);
-    final ticketStatusesInProjectController = ref.watch(ticketStatusesInProjectControllerProvider.notifier);
+    final ticketStatusesInProjectController = ref.watch(
+      ticketStatusesInProjectControllerProvider.notifier,
+    );
     final projects = ref.watch(projectsControllerProvider);
     final projectDetails = ref.watch(getProjectDetailsControllerProvider);
-    final ticketStatusesInProject = ref.watch(ticketStatusesInProjectControllerProvider);
+    final ticketStatusesInProject = ref.watch(
+      ticketStatusesInProjectControllerProvider,
+    );
+    final usersInProject = ref.watch(usersInProjectControllerProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
@@ -125,16 +135,35 @@ class ProjectPage extends ConsumerWidget {
                   child: OverviewContainer(
                     title: 'Ticket Status',
                     icon: Assets.lib.infrastructure.assets.icons.create,
-                    child: ticketStatusesInProject.when(data: (ticketStatuses) {
-                      return ListView.builder(
-                        itemCount: ticketStatuses.length,
+                    onTap: () {
+                      final projectId = projectController
+                          .getSelectedProjectId();
+                      if (projectId == null) return;
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CreateTicketStatusDialog(projectId: projectId);
+                        },
+                      );
+                    },
+                    child: ticketStatusesInProject.when(
+                      data: (ticketStatuses) {
+                        return ListView.builder(
+                          itemCount: ticketStatuses.length,
                           itemBuilder: (context, index) {
-                          final item = ticketStatuses[index];
-                          return TicketStatusItem(ticketStatus: item, name: item.name);
-                          });
-                    }, error: ((error, stackTrace) => const Text('Error')), loading: () {
-                      return const Text('Loading...');
-                    })
+                            final item = ticketStatuses[index];
+                            return TicketStatusItem(
+                              ticketStatus: item,
+                              name: item.name,
+                            );
+                          },
+                        );
+                      },
+                      error: ((error, stackTrace) => const Text('Error')),
+                      loading: () {
+                        return const Text('Loading...');
+                      },
+                    ),
                   ),
                 ),
 
@@ -143,7 +172,29 @@ class ProjectPage extends ConsumerWidget {
                   mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Users In Project',
-                    child: Column(children: [Text('data')]),
+                      icon: Assets.lib.infrastructure.assets.icons.create,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return Consumer(
+                            builder: (context, ref, child) {
+                              final state = ref.watch(usersInProjectControllerProvider);
+                              final controller = ref.watch(usersInProjectControllerProvider.notifier);
+                              final project = state.value;
+                              return AddUsersDialog(
+                                initialSelectedUserIds: project?.users.map((item) => item.id).toSet() ?? {},
+                                onSave: (users) {
+                                  if (project == null) return;
+                                  controller.setUsersInProject(id: project.id, userIds: users.map((item) => item.id).toList());
+                                },
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    child: UsersInProject()
                   ),
                 ),
               ],

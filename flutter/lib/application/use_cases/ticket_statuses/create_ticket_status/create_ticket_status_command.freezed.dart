@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateTicketStatusCommand {
 
- String get name; ProjectDto get projectId;
+ String get name; String get projectId;
 /// Create a copy of CreateTicketStatusCommand
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,11 +46,11 @@ abstract mixin class $CreateTicketStatusCommandCopyWith<$Res>  {
   factory $CreateTicketStatusCommandCopyWith(CreateTicketStatusCommand value, $Res Function(CreateTicketStatusCommand) _then) = _$CreateTicketStatusCommandCopyWithImpl;
 @useResult
 $Res call({
- String name, ProjectDto projectId
+ String name, String projectId
 });
 
 
-$ProjectDtoCopyWith<$Res> get projectId;
+
 
 }
 /// @nodoc
@@ -67,19 +67,10 @@ class _$CreateTicketStatusCommandCopyWithImpl<$Res>
   return _then(CreateTicketStatusCommand(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
-as ProjectDto,
+as String,
   ));
 }
-/// Create a copy of CreateTicketStatusCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ProjectDtoCopyWith<$Res> get projectId {
-  
-  return $ProjectDtoCopyWith<$Res>(_self.projectId, (value) {
-    return _then(_self.copyWith(projectId: value));
-  });
-}
+
 }
 
 
@@ -161,7 +152,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  ProjectDto projectId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String projectId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateTicketStatusCommand() when $default != null:
 return $default(_that.name,_that.projectId);case _:
@@ -182,7 +173,7 @@ return $default(_that.name,_that.projectId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  ProjectDto projectId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String projectId)  $default,) {final _that = this;
 switch (_that) {
 case _CreateTicketStatusCommand():
 return $default(_that.name,_that.projectId);case _:
@@ -202,7 +193,7 @@ return $default(_that.name,_that.projectId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  ProjectDto projectId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String projectId)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateTicketStatusCommand() when $default != null:
 return $default(_that.name,_that.projectId);case _:
@@ -221,7 +212,7 @@ class _CreateTicketStatusCommand implements CreateTicketStatusCommand {
   
 
 @override final  String name;
-@override final  ProjectDto projectId;
+@override final  String projectId;
 
 /// Create a copy of CreateTicketStatusCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -253,11 +244,11 @@ abstract mixin class _$CreateTicketStatusCommandCopyWith<$Res> implements $Creat
   factory _$CreateTicketStatusCommandCopyWith(_CreateTicketStatusCommand value, $Res Function(_CreateTicketStatusCommand) _then) = __$CreateTicketStatusCommandCopyWithImpl;
 @override @useResult
 $Res call({
- String name, ProjectDto projectId
+ String name, String projectId
 });
 
 
-@override $ProjectDtoCopyWith<$Res> get projectId;
+
 
 }
 /// @nodoc
@@ -274,20 +265,11 @@ class __$CreateTicketStatusCommandCopyWithImpl<$Res>
   return _then(_CreateTicketStatusCommand(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
-as ProjectDto,
+as String,
   ));
 }
 
-/// Create a copy of CreateTicketStatusCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$ProjectDtoCopyWith<$Res> get projectId {
-  
-  return $ProjectDtoCopyWith<$Res>(_self.projectId, (value) {
-    return _then(_self.copyWith(projectId: value));
-  });
-}
+
 }
 
 // dart format on

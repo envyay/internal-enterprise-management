@@ -3,6 +3,7 @@ import 'package:enterprise_management/application/use_cases/projects/get_project
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/users_in_project_controller.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -60,5 +61,16 @@ class ProjectsController extends _$ProjectsController {
 
     final ticketStatusesInProjectController = ref.watch(ticketStatusesInProjectControllerProvider.notifier);
     ticketStatusesInProjectController.getTicketStatusesByProjectId(projectId: id);
+
+    final usersInProjectController = ref.watch(usersInProjectControllerProvider.notifier);
+    usersInProjectController.getUsersByProjectId(id: id);
+  }
+
+  String? getSelectedProjectId() {
+    final items = state.value ?? [];
+    if(items.isEmpty) return null;
+
+    final project = items.where((item) => item.isActive == true).firstOrNull;
+    return project?.id;
   }
 }

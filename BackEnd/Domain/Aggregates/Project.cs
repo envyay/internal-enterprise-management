@@ -29,6 +29,11 @@ public class Project : AggregateRoot<Guid>
             EndDate = endDate
         };
     }
+
+    public void SetUsers(List<User> users)
+    {
+        Users = users;
+    }
     
     public void Update(string name, string description, string code, DateTime? startDate = null, DateTime? endDate = null)
     {

@@ -1,5 +1,4 @@
-﻿using Application.UseCases.Departments.AddUsersToDepartment;
-using Domain.Aggregates;
+﻿using Domain.Aggregates;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using MediatR;

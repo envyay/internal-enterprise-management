@@ -9,7 +9,7 @@ class UpdateTicketStatusCommandHandler extends ICommandHandler<UpdateTicketStatu
 
   @override
   Future<Result<bool>> handle(UpdateTicketStatusCommand command) async {
-    final res = await _ticketStatusRepository.updateTicketStatus(id: command.id, name: command.name, projectIds: command.projectIds);
+    final res = await _ticketStatusRepository.updateTicketStatus(id: command.id, name: command.name);
     return Result.success(res);
   }
 

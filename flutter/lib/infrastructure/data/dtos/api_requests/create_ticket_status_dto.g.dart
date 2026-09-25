@@ -10,7 +10,7 @@ _CreateTicketStatusDto _$CreateTicketStatusDtoFromJson(
   Map<String, dynamic> json,
 ) => _CreateTicketStatusDto(
   name: json['name'] as String,
-  projectId: ProjectDto.fromJson(json['projectId'] as Map<String, dynamic>),
+  projectId: json['projectId'] as String,
 );
 
 Map<String, dynamic> _$CreateTicketStatusDtoToJson(

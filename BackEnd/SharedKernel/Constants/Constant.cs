@@ -62,9 +62,11 @@ public static class AppPolicy
     public const string GetAllProjects = nameof(GetAllProjects);
     public const string GetByIdProject = nameof(GetByIdProject);
     public const string GetTicketStatusesByProjectId = nameof(GetTicketStatusesByProjectId);
+    public const string GetUsersByProjectId = nameof(GetUsersByProjectId);
     public const string CreateProject = nameof(CreateProject);
     public const string UpdateProject = nameof(UpdateProject);
     public const string DeleteProject = nameof(DeleteProject);
+    public const string SetUsersInProject = nameof(SetUsersInProject);
 
     // Document
     public const string GetAllDocuments = nameof(GetAllDocuments);
@@ -128,9 +130,11 @@ public static class AppPolicy
         GetAllProjects,
         GetByIdProject,
         GetTicketStatusesByProjectId,
+        GetUsersByProjectId,
         CreateProject,
         UpdateProject,
         DeleteProject,
+        SetUsersInProject,
 
         // Document
         GetAllDocuments,

@@ -3,6 +3,8 @@ using Application.UseCases.Projects.DeleteProjectById;
 using Application.UseCases.Projects.GetProjectById;
 using Application.UseCases.Projects.GetProjects;
 using Application.UseCases.Projects.GetTicketStatusesByProjectId;
+using Application.UseCases.Projects.GetUsersByProjectId;
+using Application.UseCases.Projects.SetUsersInProject;
 using Application.UseCases.Projects.UpdateProject;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -39,6 +41,14 @@ public class ProjectsController(ISender sender) : ControllerBase
         return Ok(ticketStatuses);
     }
 
+    [Authorize(Policy = AppPolicy.GetUsersByProjectId)]
+    [HttpGet("{id:guid}/Users")]
+    public async Task<IActionResult> GetUsersByProjectId(Guid id)
+    {
+        var users = await sender.Send(new GetUsersByProjectIdQuery{ProjectId = id});
+        return Ok(users);
+    }
+
     [Authorize(Policy = AppPolicy.CreateProject)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateProjectCommand request)
@@ -61,5 +71,13 @@ public class ProjectsController(ISender sender) : ControllerBase
     {
         var success = await sender.Send(new DeleteProjectByIdCommand{Id = id});
         return Ok(success);
+    }
+
+    [Authorize(Policy = AppPolicy.SetUsersInProject)]
+    [HttpPut("SetUsers")]
+    public async Task<IActionResult> SetUsers(SetUsersInProjectCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);       
     }
 }

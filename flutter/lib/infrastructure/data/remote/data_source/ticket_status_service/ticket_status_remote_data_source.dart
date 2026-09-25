@@ -25,6 +25,6 @@ abstract class TicketStatusRemoteDataSource {
   @PUT('Update')
   Future<ApiResponse<bool>> updateTicketStatus(@Body() UpdateTicketStatusDto body);
   
-  @DELETE('Delete/{id}')
-  Future<ApiResponse<bool>> deleteTicketStatus(@Body() DeleteTicketStatusDto body);
+  @DELETE('{id}')
+  Future<ApiResponse<bool>> deleteTicketStatus(@Path('id') String id);
 }

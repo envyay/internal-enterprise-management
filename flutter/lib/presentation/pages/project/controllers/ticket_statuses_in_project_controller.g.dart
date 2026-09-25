@@ -41,7 +41,7 @@ final class TicketStatusesInProjectControllerProvider
 }
 
 String _$ticketStatusesInProjectControllerHash() =>
-    r'0831edc71d95a92295f9d0a835a5d03a86e13147';
+    r'40c2cdadc3e2e2ac77a1a25d6e57e82ca516de66';
 
 abstract class _$TicketStatusesInProjectController
     extends $AsyncNotifier<List<TicketStatus>> {
