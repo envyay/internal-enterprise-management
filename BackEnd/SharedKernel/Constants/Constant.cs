@@ -89,6 +89,7 @@ public static class AppPolicy
     // Ticket Status
     public const string GetAllTicketStatuses = nameof(GetAllTicketStatuses);
     public const string GetByIdTicketStatus = nameof(GetByIdTicketStatus);
+    public const string GetTicketsByTicketStatusId = nameof(GetTicketsByTicketStatusId);
     public const string CreateTicketStatus = nameof(CreateTicketStatus);
     public const string UpdateTicketStatus = nameof(UpdateTicketStatus);
     public const string DeleteTicketStatus = nameof(DeleteTicketStatus);
@@ -158,6 +159,7 @@ public static class AppPolicy
         // Ticket Status
         GetAllTicketStatuses,
         GetByIdTicketStatus,
+        GetTicketsByTicketStatusId,
         CreateTicketStatus,
         UpdateTicketStatus,
         DeleteTicketStatus,

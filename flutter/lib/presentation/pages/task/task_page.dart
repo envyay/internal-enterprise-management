@@ -2,6 +2,8 @@ import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/ticket_statuses_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/tickets_in_ticket_status_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/widgets/ticket_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -52,122 +54,34 @@ class ProjectTrackerPage extends ConsumerWidget {
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                   children: ticketStatuses.map((status) {
+                    final ticketsState = ref.watch(
+                      ticketsInTicketStatusControllerProvider(status.id),
+                    );
                     return StaggeredGridTile.count(
                       crossAxisCellCount: 8,
                       mainAxisCellCount: 4,
                       child: OverviewContainer(
                         title: status.name,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: .symmetric(horizontal: 12, vertical: 12),
-                              child: Container(
-                                padding: .symmetric(
-                                  horizontal: 12,
-                                  vertical: 12,
-                                ),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xffC3C6D1),
-                                    width: 1,
-                                  ),
-                                  borderRadius: .circular(4),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: .start,
-                                  spacing: 4,
-                                  children: [
-                                    Container(
-                                      padding: .symmetric(
-                                        horizontal: 8,
-                                        vertical: 4,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xff003366),
-                                        borderRadius: .circular(2),
-                                      ),
-                                      child: Text(
-                                        'DEVELOPMENT',
-                                        style: TextStyle(
-                                          color: Color(0xffFFFFFF),
-                                          fontSize: 10,
-                                          fontWeight: .bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Text(
-                                      'Implement OAuth2 Flow',
-                                      style: TextStyle(
-                                        color: Color(0xff0B1C30),
-                                        fontWeight: .w500,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Set up authentication endpoints and integrate with Azure AD for single sign-on.',
-                                      style: TextStyle(
-                                        color: Color(0xff43474F),
-                                        fontSize: 12,
-                                        fontWeight: .w400,
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: .only(top: 12),
-                                      padding: .symmetric(vertical: 8),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          top: BorderSide(
-                                            width: 1,
-                                            color: Color(0xffE5EEFF),
-                                          ),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Assets
-                                                  .lib
-                                                  .infrastructure
-                                                  .assets
-                                                  .icons
-                                                  .lightBulb
-                                                  .svg(),
-                                            ],
-                                          ),
-                                          Row(
-                                            spacing: 12,
-                                            children: [
-                                              Assets
-                                                  .lib
-                                                  .infrastructure
-                                                  .assets
-                                                  .icons
-                                                  .message
-                                                  .svg(),
-                                              Assets
-                                                  .lib
-                                                  .infrastructure
-                                                  .assets
-                                                  .icons
-                                                  .attachment
-                                                  .svg(),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
+                        child: ticketsState.when(
+                          data: (tickets) {
+                            return ListView.builder(
+                              itemCount: tickets.length,
+                              itemBuilder: (context, index) {
+                                final ticket = tickets[index];
+                                return TicketCard(ticket: ticket);
+                              },
+                            );
+                          },
+                          error: (error, stackTrace) {
+                            return const Text('Error');
+                          },
+                          loading: () {
+                            return const Text('Loading...');
+                          },
                         ),
                       ),
                     );
-                  }).toList()
+                  }).toList(),
                 );
               },
               error: (error, stackTrace) {

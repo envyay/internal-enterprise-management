@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TicketDto {
 
- String get id; String get title; String get description; String get projectId; String get ticketStatusId; List<UserDto> get users; List<CommentDto> get comments;
+ String get id; String get title; String get description; String get projectId; String get ticketStatusId; List<UserDto>? get users; List<CommentDto>? get comments;
 /// Create a copy of TicketDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $TicketDtoCopyWith<$Res>  {
   factory $TicketDtoCopyWith(TicketDto value, $Res Function(TicketDto) _then) = _$TicketDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String description, String projectId, String ticketStatusId, List<UserDto> users, List<CommentDto> comments
+ String id, String title, String description, String projectId, String ticketStatusId, List<UserDto>? users, List<CommentDto>? comments
 });
 
 
@@ -66,16 +66,16 @@ class _$TicketDtoCopyWithImpl<$Res>
 
 /// Create a copy of TicketDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? projectId = null,Object? ticketStatusId = null,Object? users = null,Object? comments = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? projectId = null,Object? ticketStatusId = null,Object? users = freezed,Object? comments = freezed,}) {
   return _then(TicketDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
 as String,ticketStatusId: null == ticketStatusId ? _self.ticketStatusId : ticketStatusId // ignore: cast_nullable_to_non_nullable
-as String,users: null == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,comments: null == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
-as List<CommentDto>,
+as String,users: freezed == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>?,comments: freezed == comments ? _self.comments : comments // ignore: cast_nullable_to_non_nullable
+as List<CommentDto>?,
   ));
 }
 
@@ -160,7 +160,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto> users,  List<CommentDto> comments)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto>? users,  List<CommentDto>? comments)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TicketDto() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.projectId,_that.ticketStatusId,_that.users,_that.comments);case _:
@@ -181,7 +181,7 @@ return $default(_that.id,_that.title,_that.description,_that.projectId,_that.tic
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto> users,  List<CommentDto> comments)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto>? users,  List<CommentDto>? comments)  $default,) {final _that = this;
 switch (_that) {
 case _TicketDto():
 return $default(_that.id,_that.title,_that.description,_that.projectId,_that.ticketStatusId,_that.users,_that.comments);case _:
@@ -201,7 +201,7 @@ return $default(_that.id,_that.title,_that.description,_that.projectId,_that.tic
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto> users,  List<CommentDto> comments)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  String projectId,  String ticketStatusId,  List<UserDto>? users,  List<CommentDto>? comments)?  $default,) {final _that = this;
 switch (_that) {
 case _TicketDto() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.projectId,_that.ticketStatusId,_that.users,_that.comments);case _:
@@ -216,7 +216,7 @@ return $default(_that.id,_that.title,_that.description,_that.projectId,_that.tic
 @JsonSerializable()
 
 class _TicketDto implements TicketDto {
-  const _TicketDto({required this.id, required this.title, required this.description, required this.projectId, required this.ticketStatusId, required  List<UserDto> users, required  List<CommentDto> comments}): _users = users,_comments = comments;
+  const _TicketDto({required this.id, required this.title, required this.description, required this.projectId, required this.ticketStatusId,  List<UserDto>? users,  List<CommentDto>? comments}): _users = users,_comments = comments;
   factory _TicketDto.fromJson(Map<String, dynamic> json) => _$TicketDtoFromJson(json);
 
 @override final  String id;
@@ -224,18 +224,22 @@ class _TicketDto implements TicketDto {
 @override final  String description;
 @override final  String projectId;
 @override final  String ticketStatusId;
- final  List<UserDto> _users;
-@override List<UserDto> get users {
+ final  List<UserDto>? _users;
+@override List<UserDto>? get users {
+  final value = _users;
+  if (value == null) return null;
   if (_users is EqualUnmodifiableListView) return _users;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_users);
+  return EqualUnmodifiableListView(value);
 }
 
- final  List<CommentDto> _comments;
-@override List<CommentDto> get comments {
+ final  List<CommentDto>? _comments;
+@override List<CommentDto>? get comments {
+  final value = _comments;
+  if (value == null) return null;
   if (_comments is EqualUnmodifiableListView) return _comments;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_comments);
+  return EqualUnmodifiableListView(value);
 }
 
 
@@ -272,7 +276,7 @@ abstract mixin class _$TicketDtoCopyWith<$Res> implements $TicketDtoCopyWith<$Re
   factory _$TicketDtoCopyWith(_TicketDto value, $Res Function(_TicketDto) _then) = __$TicketDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String description, String projectId, String ticketStatusId, List<UserDto> users, List<CommentDto> comments
+ String id, String title, String description, String projectId, String ticketStatusId, List<UserDto>? users, List<CommentDto>? comments
 });
 
 
@@ -289,16 +293,16 @@ class __$TicketDtoCopyWithImpl<$Res>
 
 /// Create a copy of TicketDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? projectId = null,Object? ticketStatusId = null,Object? users = null,Object? comments = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? projectId = null,Object? ticketStatusId = null,Object? users = freezed,Object? comments = freezed,}) {
   return _then(_TicketDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,projectId: null == projectId ? _self.projectId : projectId // ignore: cast_nullable_to_non_nullable
 as String,ticketStatusId: null == ticketStatusId ? _self.ticketStatusId : ticketStatusId // ignore: cast_nullable_to_non_nullable
-as String,users: null == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,comments: null == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
-as List<CommentDto>,
+as String,users: freezed == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>?,comments: freezed == comments ? _self._comments : comments // ignore: cast_nullable_to_non_nullable
+as List<CommentDto>?,
   ));
 }
 

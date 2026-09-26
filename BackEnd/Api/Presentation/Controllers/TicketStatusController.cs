@@ -1,5 +1,6 @@
 using Application.UseCases.TicketStatuses.CreateTicketStatus;
 using Application.UseCases.TicketStatuses.DeleteTicketStatus;
+using Application.UseCases.TicketStatuses.GetTicketsByTicketStatusId;
 using Application.UseCases.TicketStatuses.GetTicketStatusById;
 using Application.UseCases.ticketStatuses.GetTicketStatuses;
 using Application.UseCases.TicketStatuses.UpdateTicketStatus;
@@ -28,6 +29,14 @@ public class TicketStatusController(ISender sender) : ControllerBase
     {
         var ticketStatus = await sender.Send(new GetTicketStatusByIdQuery { Id = id });
         return Ok(ticketStatus);
+    }
+
+    [Authorize(Policy = AppPolicy.GetTicketsByTicketStatusId)]
+    [HttpGet("{id:guid}/Tickets")]
+    public async Task<IActionResult> GetTicketsByTicketStatusId(Guid id)
+    {
+        var tickets = await sender.Send(new GetTicketsByTicketStatusIdQuery{TicketStatusId = id});
+        return Ok(tickets);
     }
 
     [Authorize(Policy = AppPolicy.CreateTicketStatus)]

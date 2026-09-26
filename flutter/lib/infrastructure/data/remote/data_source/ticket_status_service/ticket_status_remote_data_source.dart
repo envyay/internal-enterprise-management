@@ -6,6 +6,7 @@ import 'package:enterprise_management/infrastructure/data/dtos/api_requests/upda
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'ticket_status_remote_data_source.g.dart';
@@ -18,6 +19,9 @@ abstract class TicketStatusRemoteDataSource {
 
   @GET('{id}')
   Future<ApiResponse<TicketStatusDto?>> getTicketStatusById(@Path('id') String id);
+  
+  @GET('{id}/Tickets')
+  Future<ApiResponse<List<TicketDto>>> getTicketsByTicketStatusId(@Path('id') String id);
 
   @POST('Create')
   Future<ApiResponse<TicketStatusDto>> createTicketStatus(@Body() CreateTicketStatusDto body);

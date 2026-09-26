@@ -52,6 +52,8 @@ import 'package:enterprise_management/application/use_cases/ticket_statuses/dele
 import 'package:enterprise_management/application/use_cases/ticket_statuses/delete_ticket_status/delete_ticket_status_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/ticket_statuses/get_ticket_statuses/get_ticket_status_query.dart';
 import 'package:enterprise_management/application/use_cases/ticket_statuses/get_ticket_statuses/get_ticket_status_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/ticket_statuses/get_tickets/get_tickets_by_ticket_status_id_query.dart';
+import 'package:enterprise_management/application/use_cases/ticket_statuses/get_tickets/get_tickets_by_ticket_status_id_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/ticket_statuses/update_ticket_status/update_ticket_status_command.dart';
 import 'package:enterprise_management/application/use_cases/ticket_statuses/update_ticket_status/update_ticket_status_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/tickets/create_ticket/create_ticket_command.dart';
@@ -88,6 +90,7 @@ import 'package:enterprise_management/application/use_cases/users/user_sign_in_v
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
+import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
@@ -230,6 +233,10 @@ extension MediatorRegistrationX on Mediator {
     //TickStatus
     registerQueryHandler<GetTicketStatusesQuery, List<TicketStatus?>>(
       GetTicketStatusesQueryHandler(ticketStatusRepository: ref.read(ticketStatusRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetTicketsByTicketStatusIdQuery, List<Ticket>>(
+      GetTicketsByTicketStatusIdQueryHandler(ticketStatusRepository: ref.read(ticketStatusRepositoryProvider)),
     );
     
     registerCommandHandler<CreateTicketStatusCommand, TicketStatus>(

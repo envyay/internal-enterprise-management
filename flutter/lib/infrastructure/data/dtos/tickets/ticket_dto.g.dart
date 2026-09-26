@@ -12,11 +12,11 @@ _TicketDto _$TicketDtoFromJson(Map<String, dynamic> json) => _TicketDto(
   description: json['description'] as String,
   projectId: json['projectId'] as String,
   ticketStatusId: json['ticketStatusId'] as String,
-  users: (json['users'] as List<dynamic>)
-      .map((e) => UserDto.fromJson(e as Map<String, dynamic>))
+  users: (json['users'] as List<dynamic>?)
+      ?.map((e) => UserDto.fromJson(e as Map<String, dynamic>))
       .toList(),
-  comments: (json['comments'] as List<dynamic>)
-      .map((e) => CommentDto.fromJson(e as Map<String, dynamic>))
+  comments: (json['comments'] as List<dynamic>?)
+      ?.map((e) => CommentDto.fromJson(e as Map<String, dynamic>))
       .toList(),
 );
 
