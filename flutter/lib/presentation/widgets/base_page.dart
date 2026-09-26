@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BasePage extends StatelessWidget {
-  const BasePage({super.key, required this.title, required this.description, required this.child});
+  const BasePage({super.key, required this.title, required this.description, required this.child, this.dropDown});
 
   final String title;
   final String description;
   final Widget child;
+  final Widget? dropDown;
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +19,29 @@ class BasePage extends StatelessWidget {
             mainAxisAlignment: .spaceBetween,
             crossAxisAlignment: .end,
             children: [
-              Column(
-                crossAxisAlignment: .start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: Color(0xff0B1C30),
-                      fontSize: 32,
-                      fontWeight: .w600,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: .start,
+                  children: [
+                    if (dropDown != null) dropDown!,
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: Color(0xff0B1C30),
+                        fontSize: 32,
+                        fontWeight: .w600,
+                      ),
                     ),
-                  ),
-                  Text(
-                    description,
-                    style: TextStyle(
-                      color: Color(0xff43474F),
-                      fontSize: 14,
-                      fontWeight: .w500,
+                    Text(
+                      description,
+                      style: TextStyle(
+                        color: Color(0xff43474F),
+                        fontSize: 14,
+                        fontWeight: .w500,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

@@ -47,6 +47,7 @@ public static class AppPolicy
     // User
     public const string GetAllUsers = nameof(GetAllUsers);
     public const string CreateUser = nameof(CreateUser);
+    public const string GetProjectsByUserId = nameof(GetProjectsByUserId);
     public const string UpdateUser = nameof(UpdateUser);
     public const string DeleteUser = nameof(DeleteUser);
 
@@ -115,6 +116,7 @@ public static class AppPolicy
         // User
         GetAllUsers,
         CreateUser,
+        GetProjectsByUserId,
         UpdateUser,
         DeleteUser,
 

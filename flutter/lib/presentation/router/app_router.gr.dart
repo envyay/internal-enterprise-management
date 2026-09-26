@@ -21,7 +21,8 @@ import 'package:enterprise_management/presentation/pages/knowledge_base_page.dar
 import 'package:enterprise_management/presentation/pages/main_page.dart' as _i5;
 import 'package:enterprise_management/presentation/pages/project/project_page.dart'
     as _i6;
-import 'package:enterprise_management/presentation/pages/task_page.dart' as _i7;
+import 'package:enterprise_management/presentation/pages/task/task_page.dart'
+    as _i7;
 import 'package:enterprise_management/presentation/pages/user/user_page.dart'
     as _i9;
 import 'package:enterprise_management/presentation/pages/user_group/user_group_page.dart'

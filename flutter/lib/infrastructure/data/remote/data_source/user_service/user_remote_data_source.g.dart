@@ -56,6 +56,42 @@ class _UserRemoteDataSource implements UserRemoteDataSource {
   }
 
   @override
+  Future<ApiResponse<List<ProjectDto>?>> getProjectsByUserId(String id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<List<ProjectDto>?>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '${id}/Projects',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<List<ProjectDto>?> _value;
+    try {
+      _value = ApiResponse<List<ProjectDto>?>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                  .map<ProjectDto>(
+                    (i) => ProjectDto.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<ApiResponse<String>> createUser(CreateUserDto body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

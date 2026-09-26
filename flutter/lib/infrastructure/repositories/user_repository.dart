@@ -1,8 +1,10 @@
+import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_request_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_verify_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_user_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_service/user_remote_data_source.dart';
 
 import '../data/dtos/users/user_dto.dart';
@@ -10,6 +12,8 @@ import '../data/local/data_source/auth_local_data_source.dart';
 
 abstract interface class IUserRepository {
   Future<List<User>> getUsers();
+
+  Future<List<Project>> getProjectsByUserId({required String userId});
 
   Future<String> createUser({required String fullName, required String email});
 
@@ -81,5 +85,11 @@ class UsersRepository implements IUserRepository {
   Future<bool> updateUser({required String id, required String fullName, required String email, required int status}) async {
     final res = await _userRemoteDataSource.updateUser(UpdateUserDto(id: id, fullName: fullName, email: email, status: status));
     return res.data;
+  }
+
+  @override
+  Future<List<Project>> getProjectsByUserId({required String userId}) async {
+    final res = await _userRemoteDataSource.getProjectsByUserId(userId);
+    return res.data?.map((item) => item.toAggregate()).toList() ?? [];
   }
 }

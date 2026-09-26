@@ -1,5 +1,6 @@
 using Application.UseCases.Users.CreateUser;
 using Application.UseCases.Users.DeleteUser;
+using Application.UseCases.Users.GetProjectsByUserId;
 using Application.UseCases.Users.GetUsers;
 using Application.UseCases.Users.LoginRequest;
 using Application.UseCases.Users.LoginVerify;
@@ -29,6 +30,14 @@ public class UsersController(ISender sender) : ControllerBase
     {
         var userId = await sender.Send(request);
         return Ok(userId);
+    }
+
+    [Authorize(Policy = AppPolicy.GetProjectsByUserId)]
+    [HttpGet("{id:guid}/Projects")]
+    public async Task<IActionResult> GetProjectsByUserId(Guid id)
+    {
+        var projects = await sender.Send(new GetProjectsByUserIdQuery { UserId = id });
+        return Ok(projects);
     }
 
     [Authorize(Policy = AppPolicy.UpdateUser)]

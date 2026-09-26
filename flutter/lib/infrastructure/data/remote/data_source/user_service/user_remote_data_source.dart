@@ -5,6 +5,7 @@ import 'package:enterprise_management/infrastructure/data/dtos/api_requests/logi
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_verify_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
@@ -17,6 +18,9 @@ abstract class UserRemoteDataSource {
   
   @GET('GetAll')
   Future<ApiResponse<List<UserDto>>> getUsers();
+
+  @GET('{id}/Projects')
+  Future<ApiResponse<List<ProjectDto>?>> getProjectsByUserId(@Path('id') String id);
 
   @POST('Create')
   Future<ApiResponse<String>> createUser(@Body() CreateUserDto body);
