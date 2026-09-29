@@ -9,7 +9,6 @@ public class TicketDto
     public string Title { get; set; }
     public string Description { get; set; }
     public List<CommentDto> Comments { get; set; }
-    public Guid ProjectId { get; set; }
     public Guid TicketStatusId { get; set; }
     public List<UserDto> Users { get; set; }
 }

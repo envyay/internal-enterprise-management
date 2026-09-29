@@ -22,7 +22,6 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.Property(x => x.EndDate);
         
         builder.HasMany(x => x.Users).WithMany(x => x.Projects).UsingEntity(x => x.ToTable("ProjectAssignee"));
-        builder.HasMany(x => x.Tickets).WithOne(x => x.Project).HasForeignKey(x => x.ProjectId);
         builder.HasMany(x => x.TicketStatuses).WithOne(x => x.Project).HasForeignKey(x => x.ProjectId);
         
         builder.HasIndex(x => x.Name);

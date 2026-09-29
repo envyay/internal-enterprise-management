@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UpdateTicketDto {
 
- String get id; String get title; String get description;
+ String get id; String get title; String get description; List<String> get userIds;
 /// Create a copy of UpdateTicketDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UpdateTicketDtoCopyWith<UpdateTicketDto> get copyWith => _$UpdateTicketDtoCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateTicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UpdateTicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.userIds, userIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description);
+int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(userIds));
 
 @override
 String toString() {
-  return 'UpdateTicketDto(id: $id, title: $title, description: $description)';
+  return 'UpdateTicketDto(id: $id, title: $title, description: $description, userIds: $userIds)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $UpdateTicketDtoCopyWith<$Res>  {
   factory $UpdateTicketDtoCopyWith(UpdateTicketDto value, $Res Function(UpdateTicketDto) _then) = _$UpdateTicketDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String title, String description
+ String id, String title, String description, List<String> userIds
 });
 
 
@@ -66,12 +66,13 @@ class _$UpdateTicketDtoCopyWithImpl<$Res>
 
 /// Create a copy of UpdateTicketDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? userIds = null,}) {
   return _then(UpdateTicketDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,
+as String,userIds: null == userIds ? _self.userIds : userIds // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title,  String description,  List<String> userIds)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UpdateTicketDto() when $default != null:
-return $default(_that.id,_that.title,_that.description);case _:
+return $default(_that.id,_that.title,_that.description,_that.userIds);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.title,_that.description);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title,  String description,  List<String> userIds)  $default,) {final _that = this;
 switch (_that) {
 case _UpdateTicketDto():
-return $default(_that.id,_that.title,_that.description);case _:
+return $default(_that.id,_that.title,_that.description,_that.userIds);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.title,_that.description);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title,  String description,  List<String> userIds)?  $default,) {final _that = this;
 switch (_that) {
 case _UpdateTicketDto() when $default != null:
-return $default(_that.id,_that.title,_that.description);case _:
+return $default(_that.id,_that.title,_that.description,_that.userIds);case _:
   return null;
 
 }
@@ -212,12 +213,19 @@ return $default(_that.id,_that.title,_that.description);case _:
 @JsonSerializable()
 
 class _UpdateTicketDto implements UpdateTicketDto {
-  const _UpdateTicketDto({required this.id, required this.title, required this.description});
+  const _UpdateTicketDto({required this.id, required this.title, required this.description, required  List<String> userIds}): _userIds = userIds;
   factory _UpdateTicketDto.fromJson(Map<String, dynamic> json) => _$UpdateTicketDtoFromJson(json);
 
 @override final  String id;
 @override final  String title;
 @override final  String description;
+ final  List<String> _userIds;
+@override List<String> get userIds {
+  if (_userIds is EqualUnmodifiableListView) return _userIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_userIds);
+}
+
 
 /// Create a copy of UpdateTicketDto
 /// with the given fields replaced by the non-null parameter values.
@@ -232,16 +240,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateTicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UpdateTicketDto&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._userIds, _userIds));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,description);
+int get hashCode => Object.hash(runtimeType,id,title,description,const DeepCollectionEquality().hash(_userIds));
 
 @override
 String toString() {
-  return 'UpdateTicketDto(id: $id, title: $title, description: $description)';
+  return 'UpdateTicketDto(id: $id, title: $title, description: $description, userIds: $userIds)';
 }
 
 
@@ -252,7 +260,7 @@ abstract mixin class _$UpdateTicketDtoCopyWith<$Res> implements $UpdateTicketDto
   factory _$UpdateTicketDtoCopyWith(_UpdateTicketDto value, $Res Function(_UpdateTicketDto) _then) = __$UpdateTicketDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title, String description
+ String id, String title, String description, List<String> userIds
 });
 
 
@@ -269,12 +277,13 @@ class __$UpdateTicketDtoCopyWithImpl<$Res>
 
 /// Create a copy of UpdateTicketDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? userIds = null,}) {
   return _then(_UpdateTicketDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,
+as String,userIds: null == userIds ? _self._userIds : userIds // ignore: cast_nullable_to_non_nullable
+as List<String>,
   ));
 }
 

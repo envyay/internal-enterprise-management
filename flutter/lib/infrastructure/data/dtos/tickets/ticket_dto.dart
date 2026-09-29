@@ -13,8 +13,7 @@ abstract class TicketDto with _$TicketDto {
     required String id,
     required String title,
     required String description,
-    required String projectId,
-    required String ticketStatusId,
+    String? ticketStatusId,
     List<UserDto>? users,
     List<CommentDto>? comments,
   }) = _TicketDto;
@@ -29,8 +28,7 @@ extension TicketDtoX on TicketDto {
       id: id,
       title: title,
       description: description,
-      projectId: projectId,
-      ticketStatusId: ticketStatusId,
+      ticketStatusId: ticketStatusId ?? '',
       users: (users ?? []).map((item) => item.toAggregate()).toList(),
       comments: (comments ?? []).map((item) => item.toAggregate()).toList(),
     );

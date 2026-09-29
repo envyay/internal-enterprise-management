@@ -11,6 +11,9 @@ _UpdateTicketDto _$UpdateTicketDtoFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
+      userIds: (json['userIds'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$UpdateTicketDtoToJson(_UpdateTicketDto instance) =>
@@ -18,4 +21,5 @@ Map<String, dynamic> _$UpdateTicketDtoToJson(_UpdateTicketDto instance) =>
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
+      'userIds': instance.userIds,
     };

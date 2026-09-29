@@ -1,4 +1,3 @@
-import 'package:enterprise_management/presentation/pages/department/controllers/users_in_department_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/users_in_project_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

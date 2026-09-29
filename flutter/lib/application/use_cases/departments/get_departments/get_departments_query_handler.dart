@@ -1,6 +1,5 @@
 import 'package:enterprise_management/application/use_cases/departments/get_departments/get_departments_query.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/departments/department_dto.dart';
 import 'package:enterprise_management/infrastructure/repositories/department_repository.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';

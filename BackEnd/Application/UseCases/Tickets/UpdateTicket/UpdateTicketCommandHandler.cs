@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using MediatR;
@@ -11,7 +11,10 @@ public class UpdateTicketCommandHandler(IRepository<Ticket, Guid> ticketReposito
     public async Task<bool> Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
     {
         var users = await userRepository.Where(x => request.UserIds.Contains(x.Id)).ToListAsync(cancellationToken);
-        var ticket = await ticketRepository.GetByIdAsync(request.Id, cancellationToken);
+        var ticket = await ticketRepository
+            .Where(t => t.Id == request.Id)
+            .Include(t => t.Users)
+            .FirstOrDefaultAsync(cancellationToken);
         if (ticket == null) return false;
         ticket.Update(request.TicketStatusId, request.Title, request.Description, users);
         await ticketRepository.UpdateAsync(ticket);

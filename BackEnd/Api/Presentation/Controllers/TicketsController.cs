@@ -1,8 +1,10 @@
 using Application.UseCases.Tickets.CreateTicket;
 using Application.UseCases.Tickets.DeleteTicket;
-using Application.UseCases.Tickets.GetCommentByTicketId;
+using Application.UseCases.Tickets.GetCommentsByTicketId;
 using Application.UseCases.Tickets.GetTicketById;
 using Application.UseCases.Tickets.GetTicketsQuery;
+using Application.UseCases.Tickets.GetUsersByTicketId;
+using Application.UseCases.Tickets.SetUsersInTicket;
 using Application.UseCases.Tickets.UpdateTicket;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -31,11 +33,27 @@ public class TicketsController(ISender sender) : ControllerBase
         return Ok(ticket);
     }
 
+    [Authorize(Policy = AppPolicy.GetUsersByTicketId)]
+    [HttpGet("{id:guid}/Users")]
+    public async Task<IActionResult> GetUsersByTicketId(Guid id)
+    {
+        var users = await sender.Send(new GetUsersByTicketIdQuery{TicketId = id});
+        return Ok(users);
+    }
+
+    [Authorize(Policy = AppPolicy.SetUsersInTicket)]
+    [HttpPut("SetUsers")]
+    public async Task<IActionResult> SetUsers(SetUsersInTicketCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);       
+    }
+
     [Authorize(Policy = AppPolicy.GetCommentsByTicketId)]
     [HttpGet("{id:guid}/Comments")]
     public async Task<IActionResult> GetCommentsByTicketId(Guid id)
     {
-        var comments = await sender.Send(new GetCommentByTicketIdQuery { TicketId = id });
+        var comments = await sender.Send(new GetCommentsByTicketIdQuery { TicketId = id });
         return Ok(comments);
     }
 

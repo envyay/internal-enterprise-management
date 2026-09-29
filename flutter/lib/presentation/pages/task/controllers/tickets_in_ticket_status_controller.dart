@@ -23,4 +23,9 @@ class TicketsInTicketStatusController extends _$TicketsInTicketStatusController 
       return [];
     });
   }
+
+  Future<void> refresh(String ticketStatusId) async {
+    final data = await getTicketsByTicketStatusId(ticketStatusId: ticketStatusId);
+    state = AsyncData(data);
+  }
 }

@@ -38,11 +38,6 @@ class TicketMapper extends ClassMapperBase<Ticket> {
     'comments',
     _$comments,
   );
-  static String _$projectId(Ticket v) => v.projectId;
-  static const Field<Ticket, String> _f$projectId = Field(
-    'projectId',
-    _$projectId,
-  );
   static String _$ticketStatusId(Ticket v) => v.ticketStatusId;
   static const Field<Ticket, String> _f$ticketStatusId = Field(
     'ticketStatusId',
@@ -57,7 +52,6 @@ class TicketMapper extends ClassMapperBase<Ticket> {
     #title: _f$title,
     #description: _f$description,
     #comments: _f$comments,
-    #projectId: _f$projectId,
     #ticketStatusId: _f$ticketStatusId,
     #users: _f$users,
   };
@@ -68,7 +62,6 @@ class TicketMapper extends ClassMapperBase<Ticket> {
       title: data.dec(_f$title),
       description: data.dec(_f$description),
       comments: data.dec(_f$comments),
-      projectId: data.dec(_f$projectId),
       ticketStatusId: data.dec(_f$ticketStatusId),
       users: data.dec(_f$users),
     );
@@ -127,7 +120,6 @@ abstract class TicketCopyWith<$R, $In extends Ticket, $Out>
     String? title,
     String? description,
     List<Comment>? comments,
-    String? projectId,
     String? ticketStatusId,
     List<User>? users,
   });
@@ -160,7 +152,6 @@ class _TicketCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Ticket, $Out>
     String? title,
     String? description,
     List<Comment>? comments,
-    String? projectId,
     String? ticketStatusId,
     List<User>? users,
   }) => $apply(
@@ -169,7 +160,6 @@ class _TicketCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Ticket, $Out>
       if (title != null) #title: title,
       if (description != null) #description: description,
       if (comments != null) #comments: comments,
-      if (projectId != null) #projectId: projectId,
       if (ticketStatusId != null) #ticketStatusId: ticketStatusId,
       if (users != null) #users: users,
     }),
@@ -180,7 +170,6 @@ class _TicketCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Ticket, $Out>
     title: data.get(#title, or: $value.title),
     description: data.get(#description, or: $value.description),
     comments: data.get(#comments, or: $value.comments),
-    projectId: data.get(#projectId, or: $value.projectId),
     ticketStatusId: data.get(#ticketStatusId, or: $value.ticketStatusId),
     users: data.get(#users, or: $value.users),
   );

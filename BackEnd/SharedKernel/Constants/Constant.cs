@@ -81,6 +81,8 @@ public static class AppPolicy
     // Ticket
     public const string GetAllTickets = nameof(GetAllTickets);
     public const string GetByIdTicket = nameof(GetByIdTicket);
+    public const string GetUsersByTicketId = nameof(GetUsersByTicketId);
+    public const string SetUsersInTicket = nameof(SetUsersInTicket);
     public const string GetCommentsByTicketId = nameof(GetCommentsByTicketId);
     public const string CreateTicket = nameof(CreateTicket);
     public const string UpdateTicket = nameof(UpdateTicket);
@@ -151,6 +153,8 @@ public static class AppPolicy
         // Ticket
         GetAllTickets,
         GetByIdTicket,
+        GetUsersByTicketId,
+        SetUsersInTicket,
         GetCommentsByTicketId,
         CreateTicket,
         UpdateTicket,

@@ -60,8 +60,14 @@ import 'package:enterprise_management/application/use_cases/tickets/create_ticke
 import 'package:enterprise_management/application/use_cases/tickets/create_ticket/create_ticket_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/tickets/delete_ticket/delete_ticket_command.dart';
 import 'package:enterprise_management/application/use_cases/tickets/delete_ticket/delete_ticket_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/tickets/get_ticket/get_ticket_query.dart';
+import 'package:enterprise_management/application/use_cases/tickets/get_ticket/get_ticket_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/tickets/get_tickets/get_tickets_query.dart';
 import 'package:enterprise_management/application/use_cases/tickets/get_tickets/get_tickets_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/tickets/get_users/get_users_by_ticket_id_query.dart';
+import 'package:enterprise_management/application/use_cases/tickets/get_users/get_users_by_ticket_id_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command.dart';
+import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket/update_ticket_command.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket/update_ticket_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/add_users_to_user_group/add_users_to_user_group_command.dart';
@@ -214,16 +220,28 @@ extension MediatorRegistrationX on Mediator {
     );
 
     //Ticket
-    registerQueryHandler<GetTicketsQuery, List<TicketDto?>>(
+    registerQueryHandler<GetTicketsQuery, List<Ticket>>(
         GetTicketsQueryHandler(ticketRepository: ref.read(ticketRepositoryProvider))
     );
 
-    registerCommandHandler<CreateTicketCommand, TicketDto?>(
+    registerQueryHandler<GetTicketQuery, Ticket>(
+        GetTicketQueryHandler(ticketRepository: ref.read(ticketRepositoryProvider))
+    );
+
+    registerQueryHandler<GetUsersByTicketIdQuery, List<User>>(
+        GetUsersByTicketIdQueryHandler(ticketRepository: ref.read(ticketRepositoryProvider))
+    );
+
+    registerCommandHandler<CreateTicketCommand, String>(
       CreateTicketCommandHandler(ticketRepository: ref.read(ticketRepositoryProvider)),
     );
 
     registerCommandHandler<UpdateTicketCommand, bool>(
       UpdateTicketCommandHandler(ticketRepository: ref.read(ticketRepositoryProvider)),
+    );
+
+    registerCommandHandler<SetUsersInTicketCommand, bool>(
+      SetUsersInTicketCommandHandler(ticketRepository: ref.read(ticketRepositoryProvider)),
     );
 
     registerCommandHandler<DeleteTicketCommand, bool>(

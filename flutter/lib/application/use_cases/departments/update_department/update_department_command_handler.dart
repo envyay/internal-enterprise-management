@@ -1,4 +1,3 @@
-import 'package:enterprise_management/application/use_cases/departments/create_department/create_department_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/departments/update_department/update_department_command.dart';
 import 'package:enterprise_management/infrastructure/repositories/department_repository.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command_handler.dart';

@@ -222,7 +222,7 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<Guid>("ProjectId")
+                    b.Property<Guid?>("ProjectId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("TicketStatusId")
@@ -491,19 +491,15 @@ namespace Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Domain.Aggregates.Ticket", b =>
                 {
-                    b.HasOne("Domain.Aggregates.Project", "Project")
+                    b.HasOne("Domain.Aggregates.Project", null)
                         .WithMany("Tickets")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("Domain.Aggregates.TicketStatus", "TicketStatus")
                         .WithMany("Tickets")
                         .HasForeignKey("TicketStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Project");
 
                     b.Navigation("TicketStatus");
                 });
