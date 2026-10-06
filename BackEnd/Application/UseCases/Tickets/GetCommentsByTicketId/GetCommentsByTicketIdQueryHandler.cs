@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Comments;
+using Application.DTOs.Users;
 using Domain.Aggregates;
 using Infrastructure.Repository;
 using MediatR;
@@ -12,14 +13,16 @@ public class GetCommentsByTicketIdQueryHandler(IRepository<Comment, Guid> commen
     public async Task<List<CommentDto>> Handle(GetCommentsByTicketIdQuery request, CancellationToken cancellationToken)
     {
         var comments = await commentRepository.Where(x => x.TicketId.Equals(request.TicketId))
-            .Select(x => new CommentDto
-            {
-                Id = x.Id,
-                Content = x.Content,
-                UserId = x.UserId,
-                TicketId = x.TicketId,
-            })
+            .Include(x => x.User)
             .ToListAsync(cancellationToken);
-        return comments;
+        
+        
+        return comments.Select(x => new CommentDto
+        {
+            Id = x.Id,
+            Content = x.Content,
+            TicketId = x.TicketId,
+            User = new UserDto {Id = x.UserId, FullName = x.User.FullName}
+        }).ToList();
     }
 }

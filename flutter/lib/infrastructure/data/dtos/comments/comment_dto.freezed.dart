@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CommentDto {
 
- String get id; String get ticketId; String get userId; String get content;
+ String get id; String get ticketId; String get userId; String get content; UserDto get user;
 /// Create a copy of CommentDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $CommentDtoCopyWith<CommentDto> get copyWith => _$CommentDtoCopyWithImpl<Comment
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.user, user) || other.user == user));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,ticketId,userId,content);
+int get hashCode => Object.hash(runtimeType,id,ticketId,userId,content,user);
 
 @override
 String toString() {
-  return 'CommentDto(id: $id, ticketId: $ticketId, userId: $userId, content: $content)';
+  return 'CommentDto(id: $id, ticketId: $ticketId, userId: $userId, content: $content, user: $user)';
 }
 
 
@@ -49,11 +49,11 @@ abstract mixin class $CommentDtoCopyWith<$Res>  {
   factory $CommentDtoCopyWith(CommentDto value, $Res Function(CommentDto) _then) = _$CommentDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String ticketId, String userId, String content
+ String id, String ticketId, String userId, String content, UserDto user
 });
 
 
-
+$UserDtoCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -66,16 +66,26 @@ class _$CommentDtoCopyWithImpl<$Res>
 
 /// Create a copy of CommentDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? ticketId = null,Object? userId = null,Object? content = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? ticketId = null,Object? userId = null,Object? content = null,Object? user = null,}) {
   return _then(CommentDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as UserDto,
   ));
 }
-
+/// Create a copy of CommentDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserDtoCopyWith<$Res> get user {
+  
+  return $UserDtoCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
 }
 
 
@@ -157,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String ticketId,  String userId,  String content)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String ticketId,  String userId,  String content,  UserDto user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CommentDto() when $default != null:
-return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
+return $default(_that.id,_that.ticketId,_that.userId,_that.content,_that.user);case _:
   return orElse();
 
 }
@@ -178,10 +188,10 @@ return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String ticketId,  String userId,  String content)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String ticketId,  String userId,  String content,  UserDto user)  $default,) {final _that = this;
 switch (_that) {
 case _CommentDto():
-return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
+return $default(_that.id,_that.ticketId,_that.userId,_that.content,_that.user);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +208,10 @@ return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String ticketId,  String userId,  String content)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String ticketId,  String userId,  String content,  UserDto user)?  $default,) {final _that = this;
 switch (_that) {
 case _CommentDto() when $default != null:
-return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
+return $default(_that.id,_that.ticketId,_that.userId,_that.content,_that.user);case _:
   return null;
 
 }
@@ -213,13 +223,14 @@ return $default(_that.id,_that.ticketId,_that.userId,_that.content);case _:
 @JsonSerializable()
 
 class _CommentDto implements CommentDto {
-  const _CommentDto({required this.id, required this.ticketId, required this.userId, required this.content});
+  const _CommentDto({required this.id, required this.ticketId, required this.userId, required this.content, required this.user});
   factory _CommentDto.fromJson(Map<String, dynamic> json) => _$CommentDtoFromJson(json);
 
 @override final  String id;
 @override final  String ticketId;
 @override final  String userId;
 @override final  String content;
+@override final  UserDto user;
 
 /// Create a copy of CommentDto
 /// with the given fields replaced by the non-null parameter values.
@@ -234,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommentDto&&(identical(other.id, id) || other.id == id)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.content, content) || other.content == content)&&(identical(other.user, user) || other.user == user));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,ticketId,userId,content);
+int get hashCode => Object.hash(runtimeType,id,ticketId,userId,content,user);
 
 @override
 String toString() {
-  return 'CommentDto(id: $id, ticketId: $ticketId, userId: $userId, content: $content)';
+  return 'CommentDto(id: $id, ticketId: $ticketId, userId: $userId, content: $content, user: $user)';
 }
 
 
@@ -254,11 +265,11 @@ abstract mixin class _$CommentDtoCopyWith<$Res> implements $CommentDtoCopyWith<$
   factory _$CommentDtoCopyWith(_CommentDto value, $Res Function(_CommentDto) _then) = __$CommentDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String ticketId, String userId, String content
+ String id, String ticketId, String userId, String content, UserDto user
 });
 
 
-
+@override $UserDtoCopyWith<$Res> get user;
 
 }
 /// @nodoc
@@ -271,17 +282,27 @@ class __$CommentDtoCopyWithImpl<$Res>
 
 /// Create a copy of CommentDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? ticketId = null,Object? userId = null,Object? content = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? ticketId = null,Object? userId = null,Object? content = null,Object? user = null,}) {
   return _then(_CommentDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
-as String,
+as String,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as UserDto,
   ));
 }
 
-
+/// Create a copy of CommentDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserDtoCopyWith<$Res> get user {
+  
+  return $UserDtoCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
 }
 
 // dart format on

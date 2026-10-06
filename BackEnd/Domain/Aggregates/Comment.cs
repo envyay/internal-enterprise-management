@@ -7,18 +7,18 @@ public class Comment : AggregateRoot<Guid>
     public Guid TicketId { get; set; }
     public Guid UserId { get; set; }
     public Ticket Ticket { get; set; }
-    public string Content { get; set; }
+    public string Content { get; set; } = string.Empty;
     
     public User User { get; set; }
 
-    public static Comment Create(Guid ticketId, string content, Guid userId)
+    public static Comment Create(Guid ticketId, string content, Guid? userId)
     {
         return new Comment
         {
             Id = Guid.CreateVersion7(),
             TicketId = ticketId,
             Content = content,
-            UserId = userId
+            UserId = userId ?? Guid.Empty
         };
     }
     

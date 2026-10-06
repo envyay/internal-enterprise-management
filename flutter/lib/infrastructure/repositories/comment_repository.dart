@@ -9,7 +9,7 @@ import 'package:enterprise_management/infrastructure/data/remote/data_source/com
 abstract interface class ICommentRepository {
   Future<List<CommentDto>> getComments();
   Future<CommentDto> getCommentById({required String id});
-  Future<String> createComment({required String ticketId, required String userId, required String content});
+  Future<String> createComment({required String ticketId, required String content});
   Future<bool> updateComment({required String id, required String content});
   Future<bool> deleteComment({required String id});
 }
@@ -19,8 +19,8 @@ class CommentRepository implements ICommentRepository {
   final CommentRemoteDataSource _commentRemoteDataSource;
 
   @override
-  Future<String> createComment({required String ticketId, required String userId, required String content}) async {
-    final res = await _commentRemoteDataSource.createComment(CreateCommentDto(content: content, ticketId: ticketId, userId: userId));
+  Future<String> createComment({required String ticketId, required String content}) async {
+    final res = await _commentRemoteDataSource.createComment(CreateCommentDto(content: content, ticketId: ticketId));
     return res.data;
   }
 

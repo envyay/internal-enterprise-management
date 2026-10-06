@@ -15,6 +15,7 @@ class CommentMapper extends ClassMapperBase<Comment> {
   static CommentMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = CommentMapper._());
+      UserMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -33,6 +34,8 @@ class CommentMapper extends ClassMapperBase<Comment> {
     'ticketId',
     _$ticketId,
   );
+  static User _$user(Comment v) => v.user;
+  static const Field<Comment, User> _f$user = Field('user', _$user);
 
   @override
   final MappableFields<Comment> fields = const {
@@ -40,6 +43,7 @@ class CommentMapper extends ClassMapperBase<Comment> {
     #content: _f$content,
     #userId: _f$userId,
     #ticketId: _f$ticketId,
+    #user: _f$user,
   };
 
   static Comment _instantiate(DecodingData data) {
@@ -48,6 +52,7 @@ class CommentMapper extends ClassMapperBase<Comment> {
       content: data.dec(_f$content),
       userId: data.dec(_f$userId),
       ticketId: data.dec(_f$ticketId),
+      user: data.dec(_f$user),
     );
   }
 
@@ -108,7 +113,14 @@ extension CommentValueCopy<$R, $Out> on ObjectCopyWith<$R, Comment, $Out> {
 
 abstract class CommentCopyWith<$R, $In extends Comment, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? id, String? content, String? userId, String? ticketId});
+  UserCopyWith<$R, User, User> get user;
+  $R call({
+    String? id,
+    String? content,
+    String? userId,
+    String? ticketId,
+    User? user,
+  });
   CommentCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -121,21 +133,31 @@ class _CommentCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Comment> $mapper =
       CommentMapper.ensureInitialized();
   @override
-  $R call({String? id, String? content, String? userId, String? ticketId}) =>
-      $apply(
-        FieldCopyWithData({
-          if (id != null) #id: id,
-          if (content != null) #content: content,
-          if (userId != null) #userId: userId,
-          if (ticketId != null) #ticketId: ticketId,
-        }),
-      );
+  UserCopyWith<$R, User, User> get user =>
+      $value.user.copyWith.$chain((v) => call(user: v));
+  @override
+  $R call({
+    String? id,
+    String? content,
+    String? userId,
+    String? ticketId,
+    User? user,
+  }) => $apply(
+    FieldCopyWithData({
+      if (id != null) #id: id,
+      if (content != null) #content: content,
+      if (userId != null) #userId: userId,
+      if (ticketId != null) #ticketId: ticketId,
+      if (user != null) #user: user,
+    }),
+  );
   @override
   Comment $make(CopyWithData data) => Comment(
     id: data.get(#id, or: $value.id),
     content: data.get(#content, or: $value.content),
     userId: data.get(#userId, or: $value.userId),
     ticketId: data.get(#ticketId, or: $value.ticketId),
+    user: data.get(#user, or: $value.user),
   );
 
   @override

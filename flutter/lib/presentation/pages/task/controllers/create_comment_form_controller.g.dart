@@ -61,7 +61,7 @@ final class CreateCommentFormControllerProvider
 }
 
 String _$createCommentFormControllerHash() =>
-    r'e725165ea96ecd8c9b3242453336fb8d7434407b';
+    r'8bfd0f5608cae6e67c5863f50f73a895daffd566';
 
 final class CreateCommentFormControllerFamily extends $Family
     with

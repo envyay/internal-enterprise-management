@@ -22,6 +22,9 @@ using StackExchange.Redis;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
+services.AddHttpContextAccessor();
+services.AddScoped<IUserContextService, UserContextService>();
+
 services.Configure<SmtpOptions>(builder.Configuration.GetSection("SmtpSettings"));
 services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
 

@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateCommentDto {
 
- String get content; String get ticketId; String get userId;
+ String get content; String get ticketId;
 /// Create a copy of CreateCommentDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $CreateCommentDtoCopyWith<CreateCommentDto> get copyWith => _$CreateCommentDtoCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateCommentDto&&(identical(other.content, content) || other.content == content)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateCommentDto&&(identical(other.content, content) || other.content == content)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,content,ticketId,userId);
+int get hashCode => Object.hash(runtimeType,content,ticketId);
 
 @override
 String toString() {
-  return 'CreateCommentDto(content: $content, ticketId: $ticketId, userId: $userId)';
+  return 'CreateCommentDto(content: $content, ticketId: $ticketId)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $CreateCommentDtoCopyWith<$Res>  {
   factory $CreateCommentDtoCopyWith(CreateCommentDto value, $Res Function(CreateCommentDto) _then) = _$CreateCommentDtoCopyWithImpl;
 @useResult
 $Res call({
- String content, String ticketId, String userId
+ String content, String ticketId
 });
 
 
@@ -66,11 +66,10 @@ class _$CreateCommentDtoCopyWithImpl<$Res>
 
 /// Create a copy of CreateCommentDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? content = null,Object? ticketId = null,Object? userId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? content = null,Object? ticketId = null,}) {
   return _then(CreateCommentDto(
 content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
-as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -156,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String content,  String ticketId,  String userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String content,  String ticketId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateCommentDto() when $default != null:
-return $default(_that.content,_that.ticketId,_that.userId);case _:
+return $default(_that.content,_that.ticketId);case _:
   return orElse();
 
 }
@@ -177,10 +176,10 @@ return $default(_that.content,_that.ticketId,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String content,  String ticketId,  String userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String content,  String ticketId)  $default,) {final _that = this;
 switch (_that) {
 case _CreateCommentDto():
-return $default(_that.content,_that.ticketId,_that.userId);case _:
+return $default(_that.content,_that.ticketId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +196,10 @@ return $default(_that.content,_that.ticketId,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String content,  String ticketId,  String userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String content,  String ticketId)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateCommentDto() when $default != null:
-return $default(_that.content,_that.ticketId,_that.userId);case _:
+return $default(_that.content,_that.ticketId);case _:
   return null;
 
 }
@@ -212,12 +211,11 @@ return $default(_that.content,_that.ticketId,_that.userId);case _:
 @JsonSerializable()
 
 class _CreateCommentDto implements CreateCommentDto {
-  const _CreateCommentDto({required this.content, required this.ticketId, required this.userId});
+  const _CreateCommentDto({required this.content, required this.ticketId});
   factory _CreateCommentDto.fromJson(Map<String, dynamic> json) => _$CreateCommentDtoFromJson(json);
 
 @override final  String content;
 @override final  String ticketId;
-@override final  String userId;
 
 /// Create a copy of CreateCommentDto
 /// with the given fields replaced by the non-null parameter values.
@@ -232,16 +230,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateCommentDto&&(identical(other.content, content) || other.content == content)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId)&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateCommentDto&&(identical(other.content, content) || other.content == content)&&(identical(other.ticketId, ticketId) || other.ticketId == ticketId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,content,ticketId,userId);
+int get hashCode => Object.hash(runtimeType,content,ticketId);
 
 @override
 String toString() {
-  return 'CreateCommentDto(content: $content, ticketId: $ticketId, userId: $userId)';
+  return 'CreateCommentDto(content: $content, ticketId: $ticketId)';
 }
 
 
@@ -252,7 +250,7 @@ abstract mixin class _$CreateCommentDtoCopyWith<$Res> implements $CreateCommentD
   factory _$CreateCommentDtoCopyWith(_CreateCommentDto value, $Res Function(_CreateCommentDto) _then) = __$CreateCommentDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String content, String ticketId, String userId
+ String content, String ticketId
 });
 
 
@@ -269,11 +267,10 @@ class __$CreateCommentDtoCopyWithImpl<$Res>
 
 /// Create a copy of CreateCommentDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? content = null,Object? ticketId = null,Object? userId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? content = null,Object? ticketId = null,}) {
   return _then(_CreateCommentDto(
 content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
-as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

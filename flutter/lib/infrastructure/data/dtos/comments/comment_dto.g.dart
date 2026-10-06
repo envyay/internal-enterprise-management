@@ -11,6 +11,7 @@ _CommentDto _$CommentDtoFromJson(Map<String, dynamic> json) => _CommentDto(
   ticketId: json['ticketId'] as String,
   userId: json['userId'] as String,
   content: json['content'] as String,
+  user: UserDto.fromJson(json['user'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$CommentDtoToJson(_CommentDto instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$CommentDtoToJson(_CommentDto instance) =>
       'ticketId': instance.ticketId,
       'userId': instance.userId,
       'content': instance.content,
+      'user': instance.user,
     };

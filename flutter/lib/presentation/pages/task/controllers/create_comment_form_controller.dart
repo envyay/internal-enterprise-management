@@ -21,12 +21,11 @@ class CreateCommentFormController extends _$CreateCommentFormController {
     state = state.copyWith(content: DescriptionInput.dirty(value));
   }
 
-  Future<void> submit(String ticketId, String userId) async{
-    final content = state.content.value;
+  Future<void> submit(String ticketId) async{
+    final content = state.content.value.trim();
+    if(content.isEmpty) return;
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(CreateCommentCommand(content: content, ticketId: ticketId, userId: userId));
-    final router = ref.read(appRouterProvider);
-    router.pop();
+    await mediator.send(CreateCommentCommand(content: content, ticketId: ticketId));
   }
 
   Future<void> edit(String id) async{

@@ -10,7 +10,7 @@ class CreateCommentCommandHandler extends ICommandHandler<CreateCommentCommand, 
 
   @override
   Future<Result<String>> handle(CreateCommentCommand command) async {
-    final res = await _commentRepository.createComment(ticketId: command.ticketId, userId: command.userId, content: command.content);
+    final res = await _commentRepository.createComment(ticketId: command.ticketId, content: command.content);
     return Result.success(res);
   }
 
