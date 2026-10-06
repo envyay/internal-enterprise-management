@@ -22,12 +22,12 @@ public class Ticket : AggregateRoot<Guid>
             Users = users
         };
     }
-    public void Update(Guid ticketStatusId, string title, string description, List<User> users)
+    public void Update(Guid ticketStatusId, string title, string description)
     {
         TicketStatusId = ticketStatusId;
         Title = title;
         Description = description;
-        Users = users;
+        // Users = users;
     }
 
     public void SetUsers(List<User> users)

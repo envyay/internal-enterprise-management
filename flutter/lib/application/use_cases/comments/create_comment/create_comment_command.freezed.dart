@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateCommentCommand {
 
- String get content; TicketDto get ticketId; UserDto get userId;
+ String get content; String get ticketId; String get userId;
 /// Create a copy of CreateCommentCommand
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,11 +46,11 @@ abstract mixin class $CreateCommentCommandCopyWith<$Res>  {
   factory $CreateCommentCommandCopyWith(CreateCommentCommand value, $Res Function(CreateCommentCommand) _then) = _$CreateCommentCommandCopyWithImpl;
 @useResult
 $Res call({
- String content, TicketDto ticketId, UserDto userId
+ String content, String ticketId, String userId
 });
 
 
-$TicketDtoCopyWith<$Res> get ticketId;$UserDtoCopyWith<$Res> get userId;
+
 
 }
 /// @nodoc
@@ -67,29 +67,11 @@ class _$CreateCommentCommandCopyWithImpl<$Res>
   return _then(CreateCommentCommand(
 content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
-as TicketDto,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as UserDto,
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
-/// Create a copy of CreateCommentCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$TicketDtoCopyWith<$Res> get ticketId {
-  
-  return $TicketDtoCopyWith<$Res>(_self.ticketId, (value) {
-    return _then(_self.copyWith(ticketId: value));
-  });
-}/// Create a copy of CreateCommentCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserDtoCopyWith<$Res> get userId {
-  
-  return $UserDtoCopyWith<$Res>(_self.userId, (value) {
-    return _then(_self.copyWith(userId: value));
-  });
-}
+
 }
 
 
@@ -171,7 +153,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String content,  TicketDto ticketId,  UserDto userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String content,  String ticketId,  String userId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateCommentCommand() when $default != null:
 return $default(_that.content,_that.ticketId,_that.userId);case _:
@@ -192,7 +174,7 @@ return $default(_that.content,_that.ticketId,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String content,  TicketDto ticketId,  UserDto userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String content,  String ticketId,  String userId)  $default,) {final _that = this;
 switch (_that) {
 case _CreateCommentCommand():
 return $default(_that.content,_that.ticketId,_that.userId);case _:
@@ -212,7 +194,7 @@ return $default(_that.content,_that.ticketId,_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String content,  TicketDto ticketId,  UserDto userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String content,  String ticketId,  String userId)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateCommentCommand() when $default != null:
 return $default(_that.content,_that.ticketId,_that.userId);case _:
@@ -231,8 +213,8 @@ class _CreateCommentCommand implements CreateCommentCommand {
   
 
 @override final  String content;
-@override final  TicketDto ticketId;
-@override final  UserDto userId;
+@override final  String ticketId;
+@override final  String userId;
 
 /// Create a copy of CreateCommentCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -264,11 +246,11 @@ abstract mixin class _$CreateCommentCommandCopyWith<$Res> implements $CreateComm
   factory _$CreateCommentCommandCopyWith(_CreateCommentCommand value, $Res Function(_CreateCommentCommand) _then) = __$CreateCommentCommandCopyWithImpl;
 @override @useResult
 $Res call({
- String content, TicketDto ticketId, UserDto userId
+ String content, String ticketId, String userId
 });
 
 
-@override $TicketDtoCopyWith<$Res> get ticketId;@override $UserDtoCopyWith<$Res> get userId;
+
 
 }
 /// @nodoc
@@ -285,30 +267,12 @@ class __$CreateCommentCommandCopyWithImpl<$Res>
   return _then(_CreateCommentCommand(
 content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,ticketId: null == ticketId ? _self.ticketId : ticketId // ignore: cast_nullable_to_non_nullable
-as TicketDto,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as UserDto,
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+as String,
   ));
 }
 
-/// Create a copy of CreateCommentCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$TicketDtoCopyWith<$Res> get ticketId {
-  
-  return $TicketDtoCopyWith<$Res>(_self.ticketId, (value) {
-    return _then(_self.copyWith(ticketId: value));
-  });
-}/// Create a copy of CreateCommentCommand
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserDtoCopyWith<$Res> get userId {
-  
-  return $UserDtoCopyWith<$Res>(_self.userId, (value) {
-    return _then(_self.copyWith(userId: value));
-  });
-}
+
 }
 
 // dart format on

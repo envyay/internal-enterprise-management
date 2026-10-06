@@ -1,6 +1,8 @@
 import 'package:enterprise_management/application/use_cases/tickets/get_ticket/get_ticket_query.dart';
+import 'package:enterprise_management/application/use_cases/tickets/get_users/get_users_by_ticket_id_query.dart';
 import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
+import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -11,19 +13,21 @@ part 'users_in_ticket_controller.g.dart';
 @Riverpod()
 class UsersInTicketController extends _$UsersInTicketController {
   @override
-  Future<Ticket?> build() async {
-    return null;
+  Future<List<User>> build(String ticketId) async {
+    return getUsersByTicketId(ticketId: ticketId);
   }
 
-  Future<void> getUsersByTicketId({required String ticketId}) async {
+  Future<List<User>> getUsersByTicketId({required String ticketId}) async {
     final mediator = ref.read(mediatorProvider);
-    final res = await mediator.query(GetTicketQuery(id: ticketId));
-    res.when(
-      success: (project) {
-        state = AsyncData(project);
+    final res = await mediator.query(GetUsersByTicketIdQuery(ticketId: ticketId));
+    return res.when(
+      success: (users) {
+        state = AsyncData(users);
+        return users;
       },
       failure: (error) {
         state = AsyncError(error, StackTrace.current);
+        return [];
       },
     );
   }

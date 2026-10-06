@@ -54,7 +54,7 @@ final class TicketsInTicketStatusControllerProvider
 }
 
 String _$ticketsInTicketStatusControllerHash() =>
-    r'5b7c71ebdd5180d4fb0b3378dc93c13ffbacf76e';
+    r'1f97608a49e16098a4d11c18c1f611cc9ab07cfd';
 
 final class TicketsInTicketStatusControllerFamily extends $Family
     with

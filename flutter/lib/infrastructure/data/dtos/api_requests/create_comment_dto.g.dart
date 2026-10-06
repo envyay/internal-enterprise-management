@@ -9,8 +9,8 @@ part of 'create_comment_dto.dart';
 _CreateCommentDto _$CreateCommentDtoFromJson(Map<String, dynamic> json) =>
     _CreateCommentDto(
       content: json['content'] as String,
-      ticketId: TicketDto.fromJson(json['ticketId'] as Map<String, dynamic>),
-      userId: UserDto.fromJson(json['userId'] as Map<String, dynamic>),
+      ticketId: json['ticketId'] as String,
+      userId: json['userId'] as String,
     );
 
 Map<String, dynamic> _$CreateCommentDtoToJson(_CreateCommentDto instance) =>

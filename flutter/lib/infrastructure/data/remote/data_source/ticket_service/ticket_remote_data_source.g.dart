@@ -92,6 +92,42 @@ class _TicketRemoteDataSource implements TicketRemoteDataSource {
   }
 
   @override
+  Future<ApiResponse<List<CommentDto>>> getCommentsByTicketId(String id) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<ApiResponse<List<CommentDto>>>(
+      Options(method: 'GET', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '${id}/Comments',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<List<CommentDto>> _value;
+    try {
+      _value = ApiResponse<List<CommentDto>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                  .map<CommentDto>(
+                    (i) => CommentDto.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options, response: _result);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<ApiResponse<TicketDto>> getTicketById(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -215,17 +251,16 @@ class _TicketRemoteDataSource implements TicketRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<bool>> deleteTicket(DeleteTicketDto body) async {
+  Future<ApiResponse<bool>> deleteTicket(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ApiResponse<bool>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Delete/{id}',
+            '${id}',
             queryParameters: queryParameters,
             data: _data,
           )

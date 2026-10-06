@@ -4,6 +4,7 @@ import 'package:enterprise_management/infrastructure/data/dtos/api_requests/dele
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/set_users_in_ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:retrofit/retrofit.dart';
@@ -18,6 +19,9 @@ abstract class TicketRemoteDataSource {
   @GET('{id}/Users')
   Future<ApiResponse<List<UserDto>>> getUsersByTicketId(@Path('id') String id);
 
+  @GET('{id}/Comments')
+  Future<ApiResponse<List<CommentDto>>> getCommentsByTicketId(@Path('id') String id);
+
   @GET('{id}')
   Future<ApiResponse<TicketDto>> getTicketById(@Path('id') String id);
 
@@ -30,6 +34,6 @@ abstract class TicketRemoteDataSource {
   @PUT('SetUsers')
   Future<ApiResponse<bool>> setUsersInTicket(@Body() SetUsersInTicketDto body);
   
-  @DELETE('Delete/{id}')
-  Future<ApiResponse<bool>> deleteTicket(@Body() DeleteTicketDto body);
+  @DELETE('{id}')
+  Future<ApiResponse<bool>> deleteTicket(@Path('id') String id);
 }

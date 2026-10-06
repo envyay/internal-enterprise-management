@@ -1,4 +1,5 @@
 import 'package:enterprise_management/application/use_cases/tickets/create_ticket/create_ticket_command.dart';
+import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket/update_ticket_command.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
@@ -49,18 +50,28 @@ class CreateTicketFormController extends _$CreateTicketFormController {
     if(state.isNotValid) return;
     final title = state.title.value;
     final description = state.description.value;
-    final userIds = state.users.map((item) => item.id).toList();
+    // final userIds = state.users.map((item) => item.id).toList();
     final mediator = ref.read(mediatorProvider);
+    
+    // 1. Cập nhật Title và Description
     await mediator.send(UpdateTicketCommand(
       id: ticket?.id ?? '',
       title: title,
       description: description,
-      userIds: userIds,
+      ticketStatusId: ticketStatusId,
     ));
+
+    // 2. Cập nhật danh sách User bằng API riêng để tránh lỗi 500
+    // await mediator.send(SetUsersInTicketCommand(
+    //   id: ticket?.id ?? '',
+    //   userIds: userIds,
+    // ));
 
     final router = ref.read(appRouterProvider);
     router.pop();
+
   }
+
 
 
 

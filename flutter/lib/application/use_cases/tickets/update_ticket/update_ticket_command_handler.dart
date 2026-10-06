@@ -12,7 +12,8 @@ class UpdateTicketCommandHandler extends ICommandHandler<UpdateTicketCommand, bo
       id: command.id,
       title: command.title,
       description: command.description,
-      userIds: command.userIds,
+        ticketStatusId: command.ticketStatusId
+      // userIds: command.userIds,
     );
     return Result.success(res);
   }

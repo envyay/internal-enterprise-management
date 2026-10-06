@@ -1,7 +1,5 @@
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
-import 'package:enterprise_management/presentation/pages/project/controllers/users_in_project_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/users_in_project_task_controller.dart';
-import 'package:enterprise_management/presentation/pages/user/controllers/users_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

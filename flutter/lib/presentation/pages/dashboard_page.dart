@@ -1,9 +1,7 @@
 import 'package:auto_route/annotations.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../application/use_cases/users/user_sign_in/user_sign_in_command.dart';
 import '../../infrastructure/assets/gen/assets.gen.dart';
 import '../widgets/base_page.dart';
 import '../widgets/outline_icon_button.dart';

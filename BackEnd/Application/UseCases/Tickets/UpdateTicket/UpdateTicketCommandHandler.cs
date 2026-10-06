@@ -10,13 +10,12 @@ public class UpdateTicketCommandHandler(IRepository<Ticket, Guid> ticketReposito
 {
     public async Task<bool> Handle(UpdateTicketCommand request, CancellationToken cancellationToken)
     {
-        var users = await userRepository.Where(x => request.UserIds.Contains(x.Id)).ToListAsync(cancellationToken);
+        // var users = await userRepository.Where(x => request.UserIds.Contains(x.Id)).ToListAsync(cancellationToken);
         var ticket = await ticketRepository
             .Where(t => t.Id == request.Id)
-            .Include(t => t.Users)
             .FirstOrDefaultAsync(cancellationToken);
         if (ticket == null) return false;
-        ticket.Update(request.TicketStatusId, request.Title, request.Description, users);
+        ticket.Update(request.TicketStatusId, request.Title, request.Description);
         await ticketRepository.UpdateAsync(ticket);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return true;

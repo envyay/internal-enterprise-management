@@ -8,6 +8,6 @@ abstract class UpdateTicketCommand with _$UpdateTicketCommand implements IComman
     required String id,
     required String title,
     required String description,
-    required List<String> userIds,
+    required String ticketStatusId,
   }) = _UpdateTicketCommand;
-}
+}

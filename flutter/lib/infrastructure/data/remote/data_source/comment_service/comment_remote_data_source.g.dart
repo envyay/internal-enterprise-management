@@ -56,13 +56,13 @@ class _CommentRemoteDataSource implements CommentRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<CommentDto>> createComment(CreateCommentDto body) async {
+  Future<ApiResponse<String>> createComment(CreateCommentDto body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _options = _setStreamType<ApiResponse<CommentDto>>(
+    final _options = _setStreamType<ApiResponse<String>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -73,11 +73,11 @@ class _CommentRemoteDataSource implements CommentRemoteDataSource {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<CommentDto> _value;
+    late ApiResponse<String> _value;
     try {
-      _value = ApiResponse<CommentDto>.fromJson(
+      _value = ApiResponse<String>.fromJson(
         _result.data!,
-        (json) => CommentDto.fromJson(json as Map<String, dynamic>),
+        (json) => json as String,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -118,17 +118,16 @@ class _CommentRemoteDataSource implements CommentRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<bool>> deleteComment(DeleteCommentDto body) async {
+  Future<ApiResponse<bool>> deleteComment(String id) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ApiResponse<bool>>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'Delete/{id}',
+            '${id}',
             queryParameters: queryParameters,
             data: _data,
           )

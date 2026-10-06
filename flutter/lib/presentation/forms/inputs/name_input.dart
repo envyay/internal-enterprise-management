@@ -1,4 +1,3 @@
-import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:formz/formz.dart';
 
 enum NameValidationError { empty, maxLength }

@@ -15,11 +15,11 @@ abstract class CommentRemoteDataSource {
   Future<ApiResponse<List<CommentDto>>> getComments();
 
   @POST('Create')
-  Future<ApiResponse<CommentDto>> createComment(@Body() CreateCommentDto body);
+  Future<ApiResponse<String>> createComment(@Body() CreateCommentDto body);
   
   @PUT('Update')
   Future<ApiResponse<bool>> updateComment(@Body() UpdateCommentDto body);
 
-  @DELETE('Delete/{id}')
-  Future<ApiResponse<bool>> deleteComment(@Body() DeleteCommentDto body);
+  @DELETE('{id}')
+  Future<ApiResponse<bool>> deleteComment(@Path('id') String id);
 }

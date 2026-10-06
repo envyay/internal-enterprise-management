@@ -6,6 +6,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'create_comment_command.freezed.dart';
 @freezed
-abstract class CreateCommentCommand with _$CreateCommentCommand implements ICommand<CommentDto> {
-  const factory CreateCommentCommand({required String content, required TicketDto ticketId, required UserDto userId}) = _CreateCommentCommand;
+abstract class CreateCommentCommand with _$CreateCommentCommand implements ICommand<String> {
+  const factory CreateCommentCommand({required String content, required String ticketId, required String userId}) = _CreateCommentCommand;
 }
