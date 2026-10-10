@@ -6,6 +6,7 @@ using Application.UseCases.Tickets.GetTicketsQuery;
 using Application.UseCases.Tickets.GetUsersByTicketId;
 using Application.UseCases.Tickets.SetUsersInTicket;
 using Application.UseCases.Tickets.UpdateTicket;
+using Application.UseCases.Tickets.UpdateTicketByTicketStatus;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,6 +72,14 @@ public class TicketsController(ISender sender) : ControllerBase
     {
         var success = await sender.Send(request);
         return Ok(success);
+    }
+
+    [Authorize(Policy = AppPolicy.UpdateTicketByTicketStatus)]
+    [HttpPut("UpdateByTicketStatus")]
+    public async Task<IActionResult> UpdateTicketByTicketStatus(UpdateTicketByTicketStatusCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);       
     }
 
     [Authorize(Policy = AppPolicy.DeleteTicket)]

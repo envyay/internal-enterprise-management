@@ -56,15 +56,13 @@ class _DocumentRemoteDataSource implements DocumentRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<DocumentDto>> createDocument(
-    CreateDocumentDto body,
-  ) async {
+  Future<ApiResponse<String>> createDocument(CreateDocumentDto body) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
-    final _options = _setStreamType<ApiResponse<DocumentDto>>(
+    final _options = _setStreamType<ApiResponse<String>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -75,11 +73,11 @@ class _DocumentRemoteDataSource implements DocumentRemoteDataSource {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<DocumentDto> _value;
+    late ApiResponse<String> _value;
     try {
-      _value = ApiResponse<DocumentDto>.fromJson(
+      _value = ApiResponse<String>.fromJson(
         _result.data!,
-        (json) => DocumentDto.fromJson(json as Map<String, dynamic>),
+        (json) => json as String,
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options, response: _result);
@@ -151,12 +149,14 @@ class _DocumentRemoteDataSource implements DocumentRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<String>> downloadDocument(DownloadDocumentDto body) async {
+  Future<ApiResponse<String>> downloadDocument(
+    DownloadDocumentDto query,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(query.toJson());
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ApiResponse<String>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
@@ -182,12 +182,12 @@ class _DocumentRemoteDataSource implements DocumentRemoteDataSource {
   }
 
   @override
-  Future<ApiResponse<String>> uploadDocument(UploadDocumentDto body) async {
+  Future<ApiResponse<String>> uploadDocument(UploadDocumentDto query) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(query.toJson());
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
-    _data.addAll(body.toJson());
+    const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<ApiResponse<String>>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(

@@ -17,7 +17,7 @@ abstract class DocumentRemoteDataSource {
   Future<ApiResponse<List<DocumentDto>>> getDocuments();
 
   @POST('Create')
-  Future<ApiResponse<DocumentDto>> createDocument(@Body() CreateDocumentDto body);
+  Future<ApiResponse<String>> createDocument(@Body() CreateDocumentDto body);
 
   @PUT('Update')
   Future<ApiResponse<bool>> updateDocument(@Body() UpdateDocumentDto body);
@@ -26,8 +26,8 @@ abstract class DocumentRemoteDataSource {
   Future<ApiResponse<bool>> deleteDocument(@Body() DeleteDocumentDto body);
   
   @GET('Download')
-  Future<ApiResponse<String>> downloadDocument(@Body() DownloadDocumentDto body);
+  Future<ApiResponse<String>> downloadDocument(@Queries() DownloadDocumentDto query);
 
   @GET('Upload')
-  Future<ApiResponse<String>> uploadDocument(@Body() UploadDocumentDto body);
+  Future<ApiResponse<String>> uploadDocument(@Queries() UploadDocumentDto query);
 }

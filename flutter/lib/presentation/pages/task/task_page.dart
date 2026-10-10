@@ -7,7 +7,8 @@ import 'package:enterprise_management/presentation/pages/task/controllers/ticket
 import 'package:enterprise_management/presentation/pages/task/controllers/tickets_in_ticket_status_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/edit_ticket_drawer.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/ticket_card.dart';
-import 'package:enterprise_management/presentation/pages/task/widgets/ticket_drawer.dart';
+import 'package:enterprise_management/presentation/pages/task/widgets/create_ticket_drawer.dart';
+import 'package:enterprise_management/presentation/pages/task/widgets/ticket_details_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -20,7 +21,7 @@ import '../../widgets/overview_container.dart';
 class ProjectTrackerPage extends ConsumerWidget {
   const ProjectTrackerPage({super.key});
 
-  void _openTicketDrawer(BuildContext context, TicketStatus ticketStatus, String projectId) {
+  void _createTicketDrawer(BuildContext context, TicketStatus ticketStatus, String projectId) {
     showGeneralDialog(
       context: context,
       barrierDismissible: true,
@@ -30,7 +31,7 @@ class ProjectTrackerPage extends ConsumerWidget {
       pageBuilder: (_, __, ___) => Align(
         alignment: Alignment.centerRight,
         child: Material(
-          child: TicketDrawer(ticketStatus: ticketStatus, projectId: projectId),
+          child: CreateTicketDrawer(ticketStatus: ticketStatus, projectId: projectId),
         ),
       ),
       transitionBuilder: (_, animation, __, child) {
@@ -56,6 +57,31 @@ class ProjectTrackerPage extends ConsumerWidget {
         alignment: Alignment.centerRight,
         child: Material(
           child: EditTicketDrawer(ticketStatus: ticketStatus, projectId: projectId, ticket: ticket,),
+        ),
+      ),
+      transitionBuilder: (_, animation, __, child) {
+        return SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(1, 0),
+            end: Offset.zero,
+          ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOut)),
+          child: child,
+        );
+      },
+    );
+  }
+
+  void _ticketDetailsDrawer(BuildContext context, TicketStatus ticketStatus, String projectId, Ticket ticket) {
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: 'Dismiss',
+      barrierColor: Colors.black26,
+      transitionDuration: const Duration(milliseconds: 250),
+      pageBuilder: (_, __, ___) => Align(
+        alignment: Alignment.centerRight,
+        child: Material(
+          child: TicketDetailsDrawer(ticketStatus: ticketStatus, projectId: projectId, ticket: ticket,),
         ),
       ),
       transitionBuilder: (_, animation, __, child) {
@@ -122,25 +148,53 @@ class ProjectTrackerPage extends ConsumerWidget {
                           title: status.name,
                           icon: Assets.lib.infrastructure.assets.icons.create,
                           onTap: () {
-                            _openTicketDrawer(scaffoldContext, status, status.projectId);
+                            _createTicketDrawer(scaffoldContext, status, status.projectId);
                           },
-                          child: ticketsState.when(
-                            data: (tickets) {
-                              return ListView.builder(
-                                itemCount: tickets.length,
-                                itemBuilder: (context, index) {
-                                  final ticket = tickets[index];
-                                  return TicketCard(ticket: ticket, onTap: () {
-                                    _editTicketDrawer((scaffoldContext), status, status.projectId, ticket);
-                                  },);
-                                },
+                          child: DragTarget<({Ticket ticket, String fromStatusId})>(
+                            // Chỉ nhận ticket đến từ cột khác
+                            onWillAcceptWithDetails: (details) => details.data.fromStatusId != status.id,
+                            onAcceptWithDetails: (details) {
+                              final data = details.data;
+                              ref
+                                  .read(ticketsInTicketStatusControllerProvider(data.fromStatusId).notifier)
+                                  .updateTicketByTicketStatus(data.ticket.id, status.id);
+                            },
+                            builder: (context, candidateData, rejectedData) {
+                              final isHovering = candidateData.isNotEmpty;
+                              return Container(
+                                // Tô sáng cột khi đang kéo ticket ngang qua
+                                decoration: BoxDecoration(
+                                  color: isHovering ? Colors.blue.withOpacity(0.08) : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: ticketsState.when(
+                                  data: (tickets) => ListView.builder(
+                                    itemCount: tickets.length,
+                                    itemBuilder: (context, index) {
+                                      final ticket = tickets[index];
+                                      final card = TicketCard(
+                                        ticket: ticket,
+                                        onPressed: () => _editTicketDrawer(scaffoldContext, status, status.projectId, ticket),
+                                        onTap: () => _ticketDetailsDrawer(scaffoldContext, status, status.projectId, ticket),
+                                      );
+                                      return Draggable<({Ticket ticket, String fromStatusId})>(
+                                        data: (ticket: ticket, fromStatusId: status.id),
+                                        // Hình hiển thị dưới con trỏ khi kéo
+                                        feedback: Material(
+                                          elevation: 6,
+                                          borderRadius: BorderRadius.circular(8),
+                                          child: SizedBox(width: 280, child: card),
+                                        ),
+                                        // Chỗ cũ của ticket mờ đi trong lúc kéo
+                                        childWhenDragging: Opacity(opacity: 0.3, child: card),
+                                        child: card,
+                                      );
+                                    },
+                                  ),
+                                  error: (e, st) => const Text('Error'),
+                                  loading: () => const Text('Loading...'),
+                                ),
                               );
-                            },
-                            error: (error, stackTrace) {
-                              return const Text('Error');
-                            },
-                            loading: () {
-                              return const Text('Loading...');
                             },
                           ),
                         ),

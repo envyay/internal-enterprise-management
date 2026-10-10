@@ -10,8 +10,8 @@ import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TicketDrawer extends ConsumerWidget {
-  const TicketDrawer({super.key, required this.ticketStatus, required this.projectId});
+class CreateTicketDrawer extends ConsumerWidget {
+  const CreateTicketDrawer({super.key, required this.ticketStatus, required this.projectId});
 
   final TicketStatus ticketStatus;
   final String projectId;

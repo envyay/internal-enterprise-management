@@ -1,9 +1,11 @@
+import 'package:enterprise_management/application/use_cases/tickets/update_ticket_by_ticket_status/update_ticket_by_ticket_status_command.dart';
 import 'package:enterprise_management/domain/aggregates/comment/comment.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/set_users_in_ticket_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_ticket_by_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
@@ -35,6 +37,8 @@ abstract interface class ITicketRepository {
     required String ticketStatusId
     // required List<String> userIds,
   });
+
+  Future<bool> updateTicketByTicketStatus({required String id, required String ticketStatusId});
 
   Future<bool> deleteTicket({required String id});
 }
@@ -100,5 +104,11 @@ class TicketRepository implements ITicketRepository {
   Future<List<Comment>> getCommentsByTicketId({required String ticketId}) async {
     final res = await _ticketRemoteDataSource.getCommentsByTicketId(ticketId);
     return res.data.map((item) => item.toAggregate()).toList();
+  }
+
+  @override
+  Future<bool> updateTicketByTicketStatus({required String id, required String ticketStatusId}) async {
+    final res = await _ticketRemoteDataSource.updateTicketByTicketStatus(UpdateTicketByTicketStatusDto(id: id, ticketStatusId: ticketStatusId));
+    return res.data;
   }
 }

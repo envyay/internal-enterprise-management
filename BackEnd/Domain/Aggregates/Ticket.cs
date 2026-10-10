@@ -30,6 +30,11 @@ public class Ticket : AggregateRoot<Guid>
         // Users = users;
     }
 
+    public void SetTicketStatus(Guid ticketStatusId)
+    {
+        TicketStatusId = ticketStatusId;  
+    }
+
     public void SetUsers(List<User> users)
     {
         Users = users;   

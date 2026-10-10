@@ -1,5 +1,6 @@
 import 'package:enterprise_management/application/use_cases/ticket_statuses/get_tickets/get_tickets_by_ticket_status_id_query.dart';
 import 'package:enterprise_management/application/use_cases/tickets/delete_ticket/delete_ticket_command.dart';
+import 'package:enterprise_management/application/use_cases/tickets/update_ticket_by_ticket_status/update_ticket_by_ticket_status_command.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
@@ -34,5 +35,12 @@ class TicketsInTicketStatusController extends _$TicketsInTicketStatusController 
     final mediator = ref.read(mediatorProvider);
     await mediator.send(DeleteTicketCommand(id: id));
     refresh(ticketStatusId);
+  }
+
+  Future<void> updateTicketByTicketStatus(String id, String newTicketStatusId) async {
+    final mediator = ref.read(mediatorProvider);
+    await mediator.send(UpdateTicketByTicketStatusCommand(id: id, ticketStatusId: newTicketStatusId));
+    refresh(ticketStatusId);
+    ref.invalidate(ticketsInTicketStatusControllerProvider(newTicketStatusId));
   }
 }

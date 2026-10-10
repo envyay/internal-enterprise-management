@@ -31,6 +31,13 @@ public enum DocumentStatus
     Active = 1
 }
 
+public enum DocumentReferenceType
+{
+    Public = 0,
+    Department = 1,
+    Ticket = 2
+}
+
 public static class AppPolicy
 {
     // User Group
@@ -86,6 +93,7 @@ public static class AppPolicy
     public const string GetCommentsByTicketId = nameof(GetCommentsByTicketId);
     public const string CreateTicket = nameof(CreateTicket);
     public const string UpdateTicket = nameof(UpdateTicket);
+    public const string UpdateTicketByTicketStatus = nameof(UpdateTicketByTicketStatus);
     public const string DeleteTicket = nameof(DeleteTicket);
 
     // Ticket Status
@@ -158,6 +166,7 @@ public static class AppPolicy
         GetCommentsByTicketId,
         CreateTicket,
         UpdateTicket,
+        UpdateTicketByTicketStatus,
         DeleteTicket,
 
         // Ticket Status

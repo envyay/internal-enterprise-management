@@ -12,5 +12,5 @@ String _baseUrl(String path) {
 @Riverpod(keepAlive: true)
 DocumentRemoteDataSource documentRemote(Ref ref) {
   final dio = ref.watch(appDioProvider);
-  return DocumentRemoteDataSource(dio, baseUrl: _baseUrl('Departments'));
+  return DocumentRemoteDataSource(dio, baseUrl: _baseUrl('Documents'));
 }

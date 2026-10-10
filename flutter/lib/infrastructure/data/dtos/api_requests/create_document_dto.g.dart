@@ -8,7 +8,9 @@ part of 'create_document_dto.dart';
 
 _CreateDocumentDto _$CreateDocumentDtoFromJson(Map<String, dynamic> json) =>
     _CreateDocumentDto(
-      referenceId: json['referenceId'] as String,
+      referenceId: json['referenceId'] as String?,
+      referenceType: (json['referenceType'] as num).toInt(),
+      name: json['name'] as String,
       objectName: json['objectName'] as String,
       size: (json['size'] as num).toInt(),
       extension: json['extension'] as String,
@@ -17,6 +19,8 @@ _CreateDocumentDto _$CreateDocumentDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$CreateDocumentDtoToJson(_CreateDocumentDto instance) =>
     <String, dynamic>{
       'referenceId': instance.referenceId,
+      'referenceType': instance.referenceType,
+      'name': instance.name,
       'objectName': instance.objectName,
       'size': instance.size,
       'extension': instance.extension,

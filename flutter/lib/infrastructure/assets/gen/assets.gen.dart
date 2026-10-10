@@ -131,6 +131,10 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get settings =>
       const SvgGenImage('lib/infrastructure/assets/icons/settings.svg');
 
+  /// File path: lib/infrastructure/assets/icons/subtask.svg
+  SvgGenImage get subtask =>
+      const SvgGenImage('lib/infrastructure/assets/icons/subtask.svg');
+
   /// File path: lib/infrastructure/assets/icons/support.svg
   SvgGenImage get support =>
       const SvgGenImage('lib/infrastructure/assets/icons/support.svg');
@@ -184,6 +188,7 @@ class $LibInfrastructureAssetsIconsGen {
     search,
     send,
     settings,
+    subtask,
     support,
     tick,
     timeline,

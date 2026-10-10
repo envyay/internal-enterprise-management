@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UploadDocumentQuery {
 
- String get objectName; int get expiresInSeconds;
+ String? get referenceId; int get referenceType;
 /// Create a copy of UploadDocumentQuery
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $UploadDocumentQueryCopyWith<UploadDocumentQuery> get copyWith => _$UploadDocume
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UploadDocumentQuery&&(identical(other.objectName, objectName) || other.objectName == objectName)&&(identical(other.expiresInSeconds, expiresInSeconds) || other.expiresInSeconds == expiresInSeconds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UploadDocumentQuery&&(identical(other.referenceId, referenceId) || other.referenceId == referenceId)&&(identical(other.referenceType, referenceType) || other.referenceType == referenceType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,objectName,expiresInSeconds);
+int get hashCode => Object.hash(runtimeType,referenceId,referenceType);
 
 @override
 String toString() {
-  return 'UploadDocumentQuery(objectName: $objectName, expiresInSeconds: $expiresInSeconds)';
+  return 'UploadDocumentQuery(referenceId: $referenceId, referenceType: $referenceType)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $UploadDocumentQueryCopyWith<$Res>  {
   factory $UploadDocumentQueryCopyWith(UploadDocumentQuery value, $Res Function(UploadDocumentQuery) _then) = _$UploadDocumentQueryCopyWithImpl;
 @useResult
 $Res call({
- String objectName, int expiresInSeconds
+ String? referenceId, int referenceType
 });
 
 
@@ -63,10 +63,10 @@ class _$UploadDocumentQueryCopyWithImpl<$Res>
 
 /// Create a copy of UploadDocumentQuery
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? objectName = null,Object? expiresInSeconds = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? referenceId = freezed,Object? referenceType = null,}) {
   return _then(UploadDocumentQuery(
-objectName: null == objectName ? _self.objectName : objectName // ignore: cast_nullable_to_non_nullable
-as String,expiresInSeconds: null == expiresInSeconds ? _self.expiresInSeconds : expiresInSeconds // ignore: cast_nullable_to_non_nullable
+referenceId: freezed == referenceId ? _self.referenceId : referenceId // ignore: cast_nullable_to_non_nullable
+as String?,referenceType: null == referenceType ? _self.referenceType : referenceType // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -152,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String objectName,  int expiresInSeconds)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String? referenceId,  int referenceType)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UploadDocumentQuery() when $default != null:
-return $default(_that.objectName,_that.expiresInSeconds);case _:
+return $default(_that.referenceId,_that.referenceType);case _:
   return orElse();
 
 }
@@ -173,10 +173,10 @@ return $default(_that.objectName,_that.expiresInSeconds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String objectName,  int expiresInSeconds)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String? referenceId,  int referenceType)  $default,) {final _that = this;
 switch (_that) {
 case _UploadDocumentQuery():
-return $default(_that.objectName,_that.expiresInSeconds);case _:
+return $default(_that.referenceId,_that.referenceType);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +193,10 @@ return $default(_that.objectName,_that.expiresInSeconds);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String objectName,  int expiresInSeconds)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String? referenceId,  int referenceType)?  $default,) {final _that = this;
 switch (_that) {
 case _UploadDocumentQuery() when $default != null:
-return $default(_that.objectName,_that.expiresInSeconds);case _:
+return $default(_that.referenceId,_that.referenceType);case _:
   return null;
 
 }
@@ -208,11 +208,11 @@ return $default(_that.objectName,_that.expiresInSeconds);case _:
 
 
 class _UploadDocumentQuery implements UploadDocumentQuery {
-  const _UploadDocumentQuery({required this.objectName, required this.expiresInSeconds});
+  const _UploadDocumentQuery({required this.referenceId, required this.referenceType});
   
 
-@override final  String objectName;
-@override final  int expiresInSeconds;
+@override final  String? referenceId;
+@override final  int referenceType;
 
 /// Create a copy of UploadDocumentQuery
 /// with the given fields replaced by the non-null parameter values.
@@ -224,16 +224,16 @@ _$UploadDocumentQueryCopyWith<_UploadDocumentQuery> get copyWith => __$UploadDoc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UploadDocumentQuery&&(identical(other.objectName, objectName) || other.objectName == objectName)&&(identical(other.expiresInSeconds, expiresInSeconds) || other.expiresInSeconds == expiresInSeconds));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UploadDocumentQuery&&(identical(other.referenceId, referenceId) || other.referenceId == referenceId)&&(identical(other.referenceType, referenceType) || other.referenceType == referenceType));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,objectName,expiresInSeconds);
+int get hashCode => Object.hash(runtimeType,referenceId,referenceType);
 
 @override
 String toString() {
-  return 'UploadDocumentQuery(objectName: $objectName, expiresInSeconds: $expiresInSeconds)';
+  return 'UploadDocumentQuery(referenceId: $referenceId, referenceType: $referenceType)';
 }
 
 
@@ -244,7 +244,7 @@ abstract mixin class _$UploadDocumentQueryCopyWith<$Res> implements $UploadDocum
   factory _$UploadDocumentQueryCopyWith(_UploadDocumentQuery value, $Res Function(_UploadDocumentQuery) _then) = __$UploadDocumentQueryCopyWithImpl;
 @override @useResult
 $Res call({
- String objectName, int expiresInSeconds
+ String? referenceId, int referenceType
 });
 
 
@@ -261,10 +261,10 @@ class __$UploadDocumentQueryCopyWithImpl<$Res>
 
 /// Create a copy of UploadDocumentQuery
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? objectName = null,Object? expiresInSeconds = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? referenceId = freezed,Object? referenceType = null,}) {
   return _then(_UploadDocumentQuery(
-objectName: null == objectName ? _self.objectName : objectName // ignore: cast_nullable_to_non_nullable
-as String,expiresInSeconds: null == expiresInSeconds ? _self.expiresInSeconds : expiresInSeconds // ignore: cast_nullable_to_non_nullable
+referenceId: freezed == referenceId ? _self.referenceId : referenceId // ignore: cast_nullable_to_non_nullable
+as String?,referenceType: null == referenceType ? _self.referenceType : referenceType // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

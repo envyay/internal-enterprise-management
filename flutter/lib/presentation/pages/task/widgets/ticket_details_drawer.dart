@@ -16,8 +16,8 @@ import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class EditTicketDrawer extends ConsumerStatefulWidget {
-  const EditTicketDrawer({
+class TicketDetailsDrawer extends ConsumerStatefulWidget {
+  const TicketDetailsDrawer({
     super.key,
     required this.ticketStatus,
     required this.projectId,
@@ -29,10 +29,10 @@ class EditTicketDrawer extends ConsumerStatefulWidget {
   final Ticket ticket;
 
   @override
-  ConsumerState<EditTicketDrawer> createState() => _EditTicketDrawerState();
+  ConsumerState<TicketDetailsDrawer> createState() => _EditTicketDrawerState();
 }
 
-class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
+class _EditTicketDrawerState extends ConsumerState<TicketDetailsDrawer> {
   late final _commentController = TextEditingController();
   late final _scrollController = ScrollController();
 
@@ -57,9 +57,6 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
     final commentsInTicketController = ref.watch(
       commentsInTicketControllerProvider(widget.ticket.id).notifier,
     );
-    final createTicketForm = ref.watch(
-      createTicketFormControllerProvider(widget.ticket).notifier,
-    );
     final createCommentForm = ref.watch(
       createCommentFormControllerProvider(null).notifier,
     );
@@ -80,7 +77,7 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               alignment: Alignment.centerLeft,
               child: const Text(
-                'Edit Ticket Form',
+                'Ticket Details',
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
@@ -94,85 +91,13 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
               controller: _scrollController,
               padding: .only(bottom: 80),
               children: [
-                Text('status: ${widget.ticketStatus.name}'),
-                TextFormField(
-                  initialValue: state.title.value,
-                  onChanged: (value) {
-                    createTicketForm.setTitle(value);
-                  },
-                  decoration: InputDecoration(
-                    label: const Text('Name'),
-                    errorText: titleError,
-                  ),
-                ),
-                TextFormField(
-                  initialValue: state.description.value,
-                  onChanged: (value) {
-                    createTicketForm.setDescription(value);
-                  },
-                  decoration: InputDecoration(
-                    label: const Text('Description'),
-                    errorText: descriptionError,
-                  ),
-                ),
-                SolidButton(
-                  title: 'Assign User',
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Consumer(
-                          builder: (context, ref, child) {
-                            final controller = ref.watch(
-                              usersInTicketControllerProvider(widget.ticket.id)
-                                  .notifier,
-                            );
+                Text('Status: ${widget.ticketStatus.name}'),
+                Text('Title: ${widget.ticket.title}'),
+                Text('Description: ${widget.ticket.description}'),
+                Text('Attachment: '),
 
-                            final state = ref.watch(
-                              usersInTicketControllerProvider(widget.ticket.id),
-                            );
-                            final users = state.value ?? [];
-                            return AssignUsersDialog(
-                              initialSelectedUserIds: users
-                                  .map((item) => item.id)
-                                  .toSet(),
-                              projectId: widget.projectId,
-                              onSave: (users) {
-                                createTicketForm.setUsers(users);
-                                controller.setUsersInTicket(
-                                  ticketId: widget.ticket.id,
-                                  userIds: users
-                                      .map((item) => item.id)
-                                      .toList(),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
-
+                Text('Assigned User:'),
                 UsersInTicket(ticket: widget.ticket),
-                SolidButton(
-                  title: 'Save',
-                  onTap: () async {
-                    await createTicketForm.edit(widget.ticketStatus.id);
-                    ticketsInTicketStatusController.refresh(
-                      widget.ticketStatus.id,
-                    );
-                  },
-                ),
-                SolidButton(
-                  title: 'Delete',
-                  onTap: () async {
-                    await ticketsInTicketStatusController.delete(
-                      widget.ticket.id,
-                    );
-                    router.pop();
-                  },
-                ),
                 Container(
                   alignment: .topLeft,
                   width: .infinity,

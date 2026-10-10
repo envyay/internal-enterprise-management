@@ -1,12 +1,14 @@
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/pages/task/widgets/edit_ticket_drawer.dart';
 import 'package:flutter/material.dart';
 
 class TicketCard extends StatelessWidget {
-  const TicketCard({super.key, required this.ticket, required this.onTap});
+  const TicketCard({super.key, required this.ticket, required this.onTap, this.onPressed});
 
   final Ticket ticket;
   final Function() onTap;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +26,28 @@ class TicketCard extends StatelessWidget {
             crossAxisAlignment: .start,
             spacing: 4,
             children: [
-              Text(
-                ticket.title,
-                style: TextStyle(
-                  color: Color(0xff0B1C30),
-                  fontWeight: .w500,
-                  fontSize: 14,
-                ),
+              Row(
+                mainAxisAlignment: .spaceBetween,
+                children: [
+                  Text(
+                    ticket.title,
+                    style: TextStyle(
+                      color: Color(0xff0B1C30),
+                      fontWeight: .w500,
+                      fontSize: 14,
+                    ),
+                  ),
+
+                  IconButton(
+                    icon: const Icon(
+                      Icons.edit_outlined,
+                      size: 18,
+                      color: Color(0xff006C49),
+                    ),
+                    onPressed: onPressed,
+                    tooltip: 'Edit',
+                  ),
+                ],
               ),
               Text(
                 ticket.description,
@@ -52,17 +69,15 @@ class TicketCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
+
+                      spacing: 10,
                       children: [
-                        Assets.lib.infrastructure.assets.icons.lightBulb.svg(),
+                        Assets.lib.infrastructure.assets.icons.subtask.svg(),
+
+                        Text('Subtask')
                       ],
                     ),
-                    Row(
-                      spacing: 12,
-                      children: [
-                        Assets.lib.infrastructure.assets.icons.message.svg(),
-                        Assets.lib.infrastructure.assets.icons.attachment.svg(),
-                      ],
-                    ),
+                    Assets.lib.infrastructure.assets.icons.message.svg(),
                   ],
                 ),
               ),

@@ -1,17 +1,19 @@
 import 'package:auto_route/annotations.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-import '../../infrastructure/assets/gen/assets.gen.dart';
-import '../widgets/base_page.dart';
-import '../widgets/overview_container.dart';
+import '../../../infrastructure/assets/gen/assets.gen.dart';
+import '../../widgets/base_page.dart';
+import '../../widgets/overview_container.dart';
 
 @RoutePage()
-class KnowledgeBasePage extends StatelessWidget {
+class KnowledgeBasePage extends ConsumerWidget {
   const KnowledgeBasePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -31,6 +33,11 @@ class KnowledgeBasePage extends StatelessWidget {
                   mainAxisCellCount: 4,
                   child: OverviewContainer(
                     title: 'Indexed Data Sources',
+                    icon: Assets.lib.infrastructure.assets.icons.word,
+                    onTap: () async {
+                      final resourcesController = ref.read(resourcesControllerProvider.notifier);
+                      resourcesController.uploadDocument();
+                    },
                     child: Column(
                       children: [
                         Container(

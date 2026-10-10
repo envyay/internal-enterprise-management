@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:enterprise_management/application/use_cases/comments/create_comment/create_comment_command.dart';
 import 'package:enterprise_management/application/use_cases/comments/create_comment/create_comment_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/comments/delete_comment/delete_comment_command.dart';
@@ -72,6 +73,8 @@ import 'package:enterprise_management/application/use_cases/tickets/set_users_in
 import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket/update_ticket_command.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket/update_ticket_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/tickets/update_ticket_by_ticket_status/update_ticket_by_ticket_status_command.dart';
+import 'package:enterprise_management/application/use_cases/tickets/update_ticket_by_ticket_status/update_ticket_by_ticket_status_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/add_users_to_user_group/add_users_to_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/add_users_to_user_group/add_users_to_user_group_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/create_user_group/create_user_group_command.dart';
@@ -98,6 +101,7 @@ import 'package:enterprise_management/application/use_cases/users/user_sign_in_v
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
 import 'package:enterprise_management/domain/aggregates/comment/comment.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
+import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
@@ -251,6 +255,10 @@ extension MediatorRegistrationX on Mediator {
       SetUsersInTicketCommandHandler(ticketRepository: ref.read(ticketRepositoryProvider)),
     );
 
+    registerCommandHandler<UpdateTicketByTicketStatusCommand, bool>(
+      UpdateTicketByTicketStatusCommandHandler(ticketRepository: ref.read(ticketRepositoryProvider)),
+    );
+
     registerCommandHandler<DeleteTicketCommand, bool>(
       DeleteTicketCommandHandler(ticketRepository: ref.read(ticketRepositoryProvider)),
     );
@@ -294,7 +302,7 @@ extension MediatorRegistrationX on Mediator {
     );
 
     //Document
-    registerQueryHandler<GetDocumentsQuery, List<DocumentDto>>(
+    registerQueryHandler<GetDocumentsQuery, List<Document>>(
       GetDocumentsQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
     );
 
@@ -302,11 +310,11 @@ extension MediatorRegistrationX on Mediator {
       DownloadDocumentQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
     );
 
-    registerQueryHandler<UploadDocumentQuery, String>(
-      UploadDocumentQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
+    registerQueryHandler<UploadDocumentQuery, bool>(
+      UploadDocumentQueryHandler(documentRepository: ref.read(documentRepositoryProvider), dio: Dio()),
     );
 
-    registerCommandHandler<CreateDocumentCommand, DocumentDto>(
+    registerCommandHandler<CreateDocumentCommand, String>(
       CreateDocumentCommandHandler(documentRepository: ref.read(documentRepositoryProvider)),
     );
 
