@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DocumentDto {
 
- String get id; String get referenceId; String get name; String get bucketName; String get objectName; int get size; int get status; String get extension;
+ String get id; String? get referenceId; String get name; String get bucketName; String get objectName; int get size; int get status; String get extension;
 /// Create a copy of DocumentDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +49,7 @@ abstract mixin class $DocumentDtoCopyWith<$Res>  {
   factory $DocumentDtoCopyWith(DocumentDto value, $Res Function(DocumentDto) _then) = _$DocumentDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String referenceId, String name, String bucketName, String objectName, int size, int status, String extension
+ String id, String? referenceId, String name, String bucketName, String objectName, int size, int status, String extension
 });
 
 
@@ -66,11 +66,11 @@ class _$DocumentDtoCopyWithImpl<$Res>
 
 /// Create a copy of DocumentDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? referenceId = null,Object? name = null,Object? bucketName = null,Object? objectName = null,Object? size = null,Object? status = null,Object? extension = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? referenceId = freezed,Object? name = null,Object? bucketName = null,Object? objectName = null,Object? size = null,Object? status = null,Object? extension = null,}) {
   return _then(DocumentDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,referenceId: null == referenceId ? _self.referenceId : referenceId // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,referenceId: freezed == referenceId ? _self.referenceId : referenceId // ignore: cast_nullable_to_non_nullable
+as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,bucketName: null == bucketName ? _self.bucketName : bucketName // ignore: cast_nullable_to_non_nullable
 as String,objectName: null == objectName ? _self.objectName : objectName // ignore: cast_nullable_to_non_nullable
 as String,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String referenceId,  String name,  String bucketName,  String objectName,  int size,  int status,  String extension)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String? referenceId,  String name,  String bucketName,  String objectName,  int size,  int status,  String extension)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DocumentDto() when $default != null:
 return $default(_that.id,_that.referenceId,_that.name,_that.bucketName,_that.objectName,_that.size,_that.status,_that.extension);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.referenceId,_that.name,_that.bucketName,_that.obj
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String referenceId,  String name,  String bucketName,  String objectName,  int size,  int status,  String extension)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String? referenceId,  String name,  String bucketName,  String objectName,  int size,  int status,  String extension)  $default,) {final _that = this;
 switch (_that) {
 case _DocumentDto():
 return $default(_that.id,_that.referenceId,_that.name,_that.bucketName,_that.objectName,_that.size,_that.status,_that.extension);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.referenceId,_that.name,_that.bucketName,_that.obj
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String referenceId,  String name,  String bucketName,  String objectName,  int size,  int status,  String extension)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String? referenceId,  String name,  String bucketName,  String objectName,  int size,  int status,  String extension)?  $default,) {final _that = this;
 switch (_that) {
 case _DocumentDto() when $default != null:
 return $default(_that.id,_that.referenceId,_that.name,_that.bucketName,_that.objectName,_that.size,_that.status,_that.extension);case _:
@@ -217,11 +217,11 @@ return $default(_that.id,_that.referenceId,_that.name,_that.bucketName,_that.obj
 @JsonSerializable()
 
 class _DocumentDto implements DocumentDto {
-  const _DocumentDto({required this.id, required this.referenceId, required this.name, required this.bucketName, required this.objectName, required this.size, required this.status, required this.extension});
+  const _DocumentDto({required this.id, this.referenceId, required this.name, required this.bucketName, required this.objectName, required this.size, required this.status, required this.extension});
   factory _DocumentDto.fromJson(Map<String, dynamic> json) => _$DocumentDtoFromJson(json);
 
 @override final  String id;
-@override final  String referenceId;
+@override final  String? referenceId;
 @override final  String name;
 @override final  String bucketName;
 @override final  String objectName;
@@ -262,7 +262,7 @@ abstract mixin class _$DocumentDtoCopyWith<$Res> implements $DocumentDtoCopyWith
   factory _$DocumentDtoCopyWith(_DocumentDto value, $Res Function(_DocumentDto) _then) = __$DocumentDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String referenceId, String name, String bucketName, String objectName, int size, int status, String extension
+ String id, String? referenceId, String name, String bucketName, String objectName, int size, int status, String extension
 });
 
 
@@ -279,11 +279,11 @@ class __$DocumentDtoCopyWithImpl<$Res>
 
 /// Create a copy of DocumentDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? referenceId = null,Object? name = null,Object? bucketName = null,Object? objectName = null,Object? size = null,Object? status = null,Object? extension = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? referenceId = freezed,Object? name = null,Object? bucketName = null,Object? objectName = null,Object? size = null,Object? status = null,Object? extension = null,}) {
   return _then(_DocumentDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,referenceId: null == referenceId ? _self.referenceId : referenceId // ignore: cast_nullable_to_non_nullable
-as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,referenceId: freezed == referenceId ? _self.referenceId : referenceId // ignore: cast_nullable_to_non_nullable
+as String?,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,bucketName: null == bucketName ? _self.bucketName : bucketName // ignore: cast_nullable_to_non_nullable
 as String,objectName: null == objectName ? _self.objectName : objectName // ignore: cast_nullable_to_non_nullable
 as String,size: null == size ? _self.size : size // ignore: cast_nullable_to_non_nullable

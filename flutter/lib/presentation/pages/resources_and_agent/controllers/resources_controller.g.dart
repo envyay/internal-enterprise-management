@@ -13,7 +13,7 @@ part of 'resources_controller.dart';
 final resourcesControllerProvider = ResourcesControllerProvider._();
 
 final class ResourcesControllerProvider
-    extends $NotifierProvider<ResourcesController, dynamic> {
+    extends $AsyncNotifierProvider<ResourcesController, List<Document>> {
   ResourcesControllerProvider._()
     : super(
         from: null,
@@ -31,30 +31,22 @@ final class ResourcesControllerProvider
   @$internal
   @override
   ResourcesController create() => ResourcesController();
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(dynamic value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<dynamic>(value),
-    );
-  }
 }
 
 String _$resourcesControllerHash() =>
-    r'cc5b9edf6102ea84eca2003f143f697b22f61902';
+    r'3754c59eeb83154614e635e64fedbcbb48e6e9a1';
 
-abstract class _$ResourcesController extends $Notifier<dynamic> {
-  dynamic build();
+abstract class _$ResourcesController extends $AsyncNotifier<List<Document>> {
+  FutureOr<List<Document>> build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<dynamic, dynamic>;
+    final ref = this.ref as $Ref<AsyncValue<List<Document>>, List<Document>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<dynamic, dynamic>,
-              dynamic,
+              AnyNotifier<AsyncValue<List<Document>>, List<Document>>,
+              AsyncValue<List<Document>>,
               Object?,
               Object?
             >;

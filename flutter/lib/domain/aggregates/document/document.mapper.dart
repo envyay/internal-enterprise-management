@@ -24,10 +24,11 @@ class DocumentMapper extends ClassMapperBase<Document> {
 
   static String _$id(Document v) => v.id;
   static const Field<Document, String> _f$id = Field('id', _$id);
-  static String _$referenceId(Document v) => v.referenceId;
+  static String? _$referenceId(Document v) => v.referenceId;
   static const Field<Document, String> _f$referenceId = Field(
     'referenceId',
     _$referenceId,
+    opt: true,
   );
   static String _$name(Document v) => v.name;
   static const Field<Document, String> _f$name = Field('name', _$name);
@@ -157,7 +158,7 @@ class _DocumentCopyWithImpl<$R, $Out>
   @override
   $R call({
     String? id,
-    String? referenceId,
+    Object? referenceId = $none,
     String? name,
     String? bucketName,
     String? objectName,
@@ -167,7 +168,7 @@ class _DocumentCopyWithImpl<$R, $Out>
   }) => $apply(
     FieldCopyWithData({
       if (id != null) #id: id,
-      if (referenceId != null) #referenceId: referenceId,
+      if (referenceId != $none) #referenceId: referenceId,
       if (name != null) #name: name,
       if (bucketName != null) #bucketName: bucketName,
       if (objectName != null) #objectName: objectName,

@@ -2,8 +2,10 @@ using Application.UseCases.Documents;
 using Application.UseCases.Documents.CreateDocument;
 using Application.UseCases.Documents.DeleteDocument;
 using Application.UseCases.Documents.DownloadDocument;
+using Application.UseCases.Documents.GetDocumentByDepartments;
 using Application.UseCases.Documents.GetDocumentById;
 using Application.UseCases.Documents.GetDocuments;
+using Application.UseCases.Documents.GetDocumentsByDepartment;
 using Application.UseCases.Documents.UpdateDocument;
 using Application.UseCases.Documents.UploadDocument;
 using MediatR;
@@ -31,6 +33,22 @@ public class DocumentsController(ISender sender) : ControllerBase
     {
         var document = await sender.Send(new GetDocumentByIdQuery{Id = id});
         return Ok(document);
+    }
+
+    [Authorize(Policy = AppPolicy.GetDocumentsByDepartment)]
+    [HttpGet("GetByDepartment/{id:guid}")]
+    public async Task<IActionResult> GetByDepartment(Guid id)
+    {
+        var documents = await sender.Send(new GetDocumentsByDepartmentQuery{DepartmentId = id});
+        return Ok(documents);
+    }
+
+    [Authorize(Policy = AppPolicy.GetDocumentsByDepartments)]
+    [HttpGet("GetByDepartments")]
+    public async Task<IActionResult> GetDocumentsByDepartments()
+    {
+        var documents = await sender.Send(new GetDocumentsByDepartmentsQuery());
+        return Ok(documents);
     }
 
     [Authorize(Policy = AppPolicy.CreateDocument)]

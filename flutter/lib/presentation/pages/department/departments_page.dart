@@ -1,10 +1,12 @@
 import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/pages/department/controllers/documents_in_department_controller.dart';
 import 'package:enterprise_management/presentation/pages/department/controllers/users_in_department_controller.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/add_users_dialog.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/create_department_dialog.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/departments_table.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/users_in_department.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/widgets/document_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -18,6 +20,12 @@ class DepartmentPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final documentState = ref.watch(documentsInDepartmentControllerProvider);
+    final documentController = ref.watch(
+      documentsInDepartmentControllerProvider.notifier,
+    );
+    final departmentState = ref.watch(usersInDepartmentControllerProvider);
+    final department = departmentState.value;
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -34,7 +42,7 @@ class DepartmentPage extends ConsumerWidget {
               children: [
                 StaggeredGridTile.count(
                   crossAxisCellCount: 3,
-                  mainAxisCellCount: 2,
+                  mainAxisCellCount: (department?.id ?? '').isNotEmpty ? 1 : 2,
                   child: OverviewContainer(
                     title: 'Departments',
                     icon: Assets.lib.infrastructure.assets.icons.create,
@@ -125,26 +133,57 @@ class DepartmentPage extends ConsumerWidget {
                     ),
                   ),
                 ),
+                if ((department?.id ?? '').isNotEmpty)
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 3,
+                    mainAxisCellCount: 1,
+                    child: OverviewContainer(
+                      title: 'Documents In Department',
+                      icon: Assets.lib.infrastructure.assets.icons.plus,
+                      onTap: () async {
+                        await documentController.uploadDocument(
+                          referenceId: department?.id ?? '',
+                        );
+                        documentController.refresh(
+                          departmentId: department?.id ?? '',
+                        );
+                      },
+                      child: DocumentTable(state: documentState),
+                    ),
+                  ),
                 StaggeredGridTile.count(
                   crossAxisCellCount: 1,
                   mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Users In Department',
-                    icon: Assets.lib.infrastructure.assets.icons.plus,
+                    icon: (department?.id ?? "").isNotEmpty ? Assets.lib.infrastructure.assets.icons.plus : null,
                     onTap: () {
                       showDialog(
                         context: context,
                         builder: (context) {
                           return Consumer(
                             builder: (context, ref, child) {
-                              final state = ref.watch(usersInDepartmentControllerProvider);
-                              final controller = ref.watch(usersInDepartmentControllerProvider.notifier);
+                              final state = ref.watch(
+                                usersInDepartmentControllerProvider,
+                              );
+                              final controller = ref.watch(
+                                usersInDepartmentControllerProvider.notifier,
+                              );
                               final department = state.value;
                               return AddUsersDialog(
-                                initialSelectedUserIds: department?.users.map((item) => item.id).toSet() ?? {},
+                                initialSelectedUserIds:
+                                    department?.users
+                                        .map((item) => item.id)
+                                        .toSet() ??
+                                    {},
                                 onSave: (users) {
                                   if (department == null) return;
-                                  controller.setUsersInDepartment(id: department.id, userIds: users.map((item) => item.id).toList());
+                                  controller.setUsersInDepartment(
+                                    id: department.id,
+                                    userIds: users
+                                        .map((item) => item.id)
+                                        .toList(),
+                                  );
                                 },
                               );
                             },

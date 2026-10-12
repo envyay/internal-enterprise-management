@@ -79,6 +79,8 @@ public static class AppPolicy
     // Document
     public const string GetAllDocuments = nameof(GetAllDocuments);
     public const string GetByIdDocument = nameof(GetByIdDocument);
+    public const string GetDocumentsByDepartment = nameof(GetDocumentsByDepartment);
+    public const string GetDocumentsByDepartments = nameof(GetDocumentsByDepartments);
     public const string CreateDocument = nameof(CreateDocument);
     public const string UpdateDocument = nameof(UpdateDocument);
     public const string DeleteDocument = nameof(DeleteDocument);
@@ -152,6 +154,8 @@ public static class AppPolicy
         // Document
         GetAllDocuments,
         GetByIdDocument,
+        GetDocumentsByDepartment,
+        GetDocumentsByDepartments,
         CreateDocument,
         UpdateDocument,
         DeleteDocument,

@@ -12,6 +12,9 @@ abstract interface class IDocumentRepository {
 
   Future<Document> getDocumentById();
 
+  Future<List<Document>> getDocumentsByDepartment({required String departmentId});
+  Future<List<Document>> getDocumentsByDepartments();
+
   Future<String> createDocument({
     required String? referenceId,
     required int referenceType,
@@ -120,5 +123,17 @@ class DocumentRepository implements IDocumentRepository {
       ),
     );
     return res.data;
+  }
+
+  @override
+  Future<List<Document>> getDocumentsByDepartment({required String departmentId}) async {
+    final res = await _documentRemoteDataSource.getDocumentsByDepartment(departmentId);
+    return res.data.map((item) => item.toAggregate()).toList();
+  }
+
+  @override
+  Future<List<Document>> getDocumentsByDepartments() async {
+    final res = await _documentRemoteDataSource.getDocumentsByDepartments();
+    return res.data.map((item) => item.toAggregate()).toList();
   }
 }

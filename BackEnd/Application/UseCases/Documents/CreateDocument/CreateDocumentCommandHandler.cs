@@ -18,7 +18,7 @@ public class CreateDocumentCommandHandler(
     public async Task<Guid> Handle(CreateDocumentCommand request, CancellationToken cancellationToken)
     {
         var document = Document.Create(
-            request.ReferencedId,
+            request.ReferenceId,
             request.ReferenceType,
             request.Name,
             request.ObjectName,

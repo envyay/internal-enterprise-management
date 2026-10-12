@@ -1,5 +1,8 @@
 import 'package:auto_route/annotations.dart';
+import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_controller.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_in_departments_controller.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/widgets/document_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -14,6 +17,8 @@ class KnowledgeBasePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final documentState = ref.watch(resourcesControllerProvider);
+    final documentInDepartmentState = ref.watch(resourcesInDepartmentsControllerProvider);
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -38,203 +43,16 @@ class KnowledgeBasePage extends ConsumerWidget {
                       final resourcesController = ref.read(resourcesControllerProvider.notifier);
                       resourcesController.uploadDocument();
                     },
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: .symmetric(horizontal: 16),
-                          child: Table(
-                            border: TableBorder(
-                              bottom: BorderSide(
-                                color: Color(0xffC3C6D1),
-                                width: 1.5,
-                              ),
-                            ),
-                            columnWidths: {
-                              0: FixedColumnWidth(500),
-                              1: FlexColumnWidth(),
-                              2: FlexColumnWidth(),
-                              3: FlexColumnWidth(),
-                            },
-                            children: [
-                              TableRow(
-                                children: [
-                                  Container(
-                                    padding: .symmetric(vertical: 16),
-                                    child: Text(
-                                      'File name',
-                                      style: TextStyle(
-                                        color: Color(0xff43474F),
-                                        fontWeight: .w600,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: .symmetric(vertical: 16),
-                                    child: Text(
-                                      'Status',
-                                      style: TextStyle(
-                                        color: Color(0xff43474F),
-                                        fontWeight: .w600,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: .symmetric(vertical: 16),
-                                    alignment: .centerRight,
-                                    child: Text(
-                                      'Date modified',
-                                      style: TextStyle(
-                                        color: Color(0xff43474F),
-                                        fontWeight: .w600,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            itemCount: 100,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                padding: .symmetric(horizontal: 16),
-                                child: Table(
-                                  border: (index < (100 - 1))
-                                      ? TableBorder(
-                                          bottom: BorderSide(
-                                            color: Color(0xffC3C6D1),
-                                          ),
-                                        )
-                                      : null,
-                                  columnWidths: {
-                                    0: FixedColumnWidth(500),
-                                    1: FlexColumnWidth(),
-                                    2: FlexColumnWidth(),
-                                  },
-                                  defaultVerticalAlignment: .middle,
-                                  children: [
-                                    TableRow(
-                                      children: [
-                                        Container(
-                                          padding: .symmetric(vertical: 12),
-                                          child: Row(
-                                            spacing: 12,
-                                            children: [
-                                              Assets.lib.infrastructure.assets.icons.pdf.svg(),
-                                              Column(
-                                                crossAxisAlignment: .start,
-                                                children: [
-                                                  Text(
-                                                    'Q3_Financial_Report_Final.pdf',
-                                                    style: TextStyle(
-                                                      color: Color(0xff0B1C30),
-                                                      fontWeight: .w500,
-                                                      fontSize: 14,
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    spacing: 10,
-                                                    children: [
-                                                      Text(
-                                                        '2.4 MB',
-                                                        style: TextStyle(
-                                                          color: Color(
-                                                            0xff43474F,
-                                                          ),
-                                                          fontSize: 12,
-                                                          fontWeight: .w400,
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        height: 5,
-                                                        width: 5,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                              color: Color(
-                                                                0xff43474F,
-                                                              ),
-                                                              borderRadius:
-                                                                  .circular(12),
-                                                            ),
-                                                      ),
-                                                      Text(
-                                                        'RAG Indexed',
-                                                        style: TextStyle(
-                                                          color: Color(
-                                                            0xff43474F,
-                                                          ),
-                                                          fontSize: 12,
-                                                          fontWeight: .w400,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                              padding: .symmetric(
-                                                vertical: 4,
-                                                horizontal: 10,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: Color(0xff6CF8BB),
-                                                borderRadius: .circular(12),
-                                              ),
-                                              child: Row(
-                                                mainAxisSize: .min,
-                                                spacing: 6,
-                                                children: [
-                                                  Container(
-                                                    height: 5,
-                                                    width: 5,
-                                                    decoration: BoxDecoration(
-                                                      color: Color(0xff43474F),
-                                                      borderRadius: .circular(
-                                                        12,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                    'Active',
-                                                    style: TextStyle(
-                                                      color: Color(0xff00714D),
-                                                      fontWeight: .w600,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Container(
-                                          padding: .symmetric(
-                                            horizontal: 12,
-                                            vertical: 12,
-                                          ),
-                                          alignment: .centerRight,
-                                          child: Text('$index'),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                    tabs: const [
+                      Tab(text: 'Public'),
+                      Tab(text: 'Department'),
+                      Tab(text: 'Ticket'),
+                    ],
+                    tabViews: [
+                      DocumentTable(state: documentState),
+                      DocumentTable(state: documentInDepartmentState),
+                      DocumentTable(state: documentState),
+                    ],
                   ),
                 ),
                 StaggeredGridTile.count(

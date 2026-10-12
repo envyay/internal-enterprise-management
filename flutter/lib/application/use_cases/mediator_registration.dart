@@ -27,6 +27,10 @@ import 'package:enterprise_management/application/use_cases/documents/download_d
 import 'package:enterprise_management/application/use_cases/documents/download_document/download_document_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/get_documents/get_documents_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/get_documents/get_documents_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_department/get_documents_by_department_query.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_department/get_documents_by_department_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_departments/get_documents_by_departments_query.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_departments/get_documents_by_departments_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/update_document/update_document_command.dart';
 import 'package:enterprise_management/application/use_cases/documents/update_document/update_document_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/upload_document/upload_document_query.dart';
@@ -304,6 +308,14 @@ extension MediatorRegistrationX on Mediator {
     //Document
     registerQueryHandler<GetDocumentsQuery, List<Document>>(
       GetDocumentsQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetDocumentsByDepartmentQuery, List<Document>>(
+      GetDocumentsByDepartmentQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetDocumentsByDepartmentsQuery, List<Document>>(
+      GetDocumentsByDepartmentsQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
     );
 
     registerQueryHandler<DownloadDocumentQuery, String>(

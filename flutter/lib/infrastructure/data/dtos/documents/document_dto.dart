@@ -10,7 +10,7 @@ part 'document_dto.g.dart';
 abstract class DocumentDto with _$DocumentDto {
   const factory DocumentDto({
     required String id,
-    required String referenceId,
+    String? referenceId,
     required String name,
     required String bucketName,
     required String objectName,
@@ -27,7 +27,7 @@ extension DocumentDtoX on DocumentDto {
   Document toAggregate() {
     return Document(
       id: id,
-      referenceId: referenceId,
+      referenceId: referenceId ?? "",
       bucketName: bucketName,
       objectName: objectName,
       size: size,

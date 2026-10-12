@@ -5,7 +5,7 @@ namespace Application.UseCases.Documents.CreateDocument;
 
 public class CreateDocumentCommand : IRequest<Guid>
 {
-    public Guid ReferencedId { get; set; }
+    public Guid ReferenceId { get; set; }
     public DocumentReferenceType ReferenceType { get; set; }
     public string Name { get; set; }
     public string ObjectName { get; set; }

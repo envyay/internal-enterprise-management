@@ -6,6 +6,8 @@ import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'documents_in_department_controller.dart';
+
 part 'departments_controller.g.dart';
 
 @Riverpod()
@@ -57,6 +59,10 @@ class DepartmentsController extends _$DepartmentsController {
 
     final usersInDepartmentController = ref.watch(usersInDepartmentControllerProvider.notifier);
     usersInDepartmentController.getUsersInDepartment(id: id);
+
+    final documentsInDepartmentController = ref.watch(documentsInDepartmentControllerProvider.notifier);
+    documentsInDepartmentController.getDocumentsByDepartment(departmentId: id);
+
   }
 
   void edit() async {

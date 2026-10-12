@@ -8,7 +8,7 @@ part of 'document_dto.dart';
 
 _DocumentDto _$DocumentDtoFromJson(Map<String, dynamic> json) => _DocumentDto(
   id: json['id'] as String,
-  referenceId: json['referenceId'] as String,
+  referenceId: json['referenceId'] as String?,
   name: json['name'] as String,
   bucketName: json['bucketName'] as String,
   objectName: json['objectName'] as String,
