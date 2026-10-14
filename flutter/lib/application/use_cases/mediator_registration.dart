@@ -31,10 +31,16 @@ import 'package:enterprise_management/application/use_cases/documents/get_docume
 import 'package:enterprise_management/application/use_cases/documents/get_documents_by_department/get_documents_by_department_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/get_documents_by_departments/get_documents_by_departments_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/get_documents_by_departments/get_documents_by_departments_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_ticket/get_documents_by_ticket_query.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_ticket/get_documents_by_ticket_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_tickets/get_documents_by_tickets_query.dart';
+import 'package:enterprise_management/application/use_cases/documents/get_documents_by_tickets/get_documents_by_tickets_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/update_document/update_document_command.dart';
 import 'package:enterprise_management/application/use_cases/documents/update_document/update_document_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/upload_document/upload_document_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/upload_document/upload_document_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/documents/upload_file/upload_file_command.dart';
+import 'package:enterprise_management/application/use_cases/documents/upload_file/upload_file_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/projects/create_project/create_project_command.dart';
 import 'package:enterprise_management/application/use_cases/projects/create_project/create_project_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/projects/delete_project/delete_project_command.dart';
@@ -112,9 +118,6 @@ import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_sta
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/documents/document_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/user_groups/user_groups_dto.dart';
 import 'package:enterprise_management/infrastructure/repositories/providers.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
@@ -318,12 +321,24 @@ extension MediatorRegistrationX on Mediator {
       GetDocumentsByDepartmentsQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
     );
 
+    registerQueryHandler<GetDocumentsByTicketQuery, List<Document>>(
+      GetDocumentsByTicketQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetDocumentsByTicketsQuery, List<Document>>(
+      GetDocumentsByTicketsQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
+    );
+
     registerQueryHandler<DownloadDocumentQuery, String>(
       DownloadDocumentQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
     );
 
     registerQueryHandler<UploadDocumentQuery, bool>(
       UploadDocumentQueryHandler(documentRepository: ref.read(documentRepositoryProvider), dio: Dio()),
+    );
+
+    registerCommandHandler<UploadFilesCommand, bool>(
+      UploadFilesCommandHandler(documentRepository: ref.read(documentRepositoryProvider), dio: Dio()),
     );
 
     registerCommandHandler<CreateDocumentCommand, String>(

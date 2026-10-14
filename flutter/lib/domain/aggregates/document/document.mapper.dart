@@ -51,6 +51,13 @@ class DocumentMapper extends ClassMapperBase<Document> {
     'extension',
     _$extension,
   );
+  static String _$path(Document v) => v.path;
+  static const Field<Document, String> _f$path = Field(
+    'path',
+    _$path,
+    opt: true,
+    def: '',
+  );
 
   @override
   final MappableFields<Document> fields = const {
@@ -62,6 +69,7 @@ class DocumentMapper extends ClassMapperBase<Document> {
     #size: _f$size,
     #status: _f$status,
     #extension: _f$extension,
+    #path: _f$path,
   };
 
   static Document _instantiate(DecodingData data) {
@@ -74,6 +82,7 @@ class DocumentMapper extends ClassMapperBase<Document> {
       size: data.dec(_f$size),
       status: data.dec(_f$status),
       extension: data.dec(_f$extension),
+      path: data.dec(_f$path),
     );
   }
 
@@ -143,6 +152,7 @@ abstract class DocumentCopyWith<$R, $In extends Document, $Out>
     int? size,
     int? status,
     String? extension,
+    String? path,
   });
   DocumentCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -165,6 +175,7 @@ class _DocumentCopyWithImpl<$R, $Out>
     int? size,
     int? status,
     String? extension,
+    String? path,
   }) => $apply(
     FieldCopyWithData({
       if (id != null) #id: id,
@@ -175,6 +186,7 @@ class _DocumentCopyWithImpl<$R, $Out>
       if (size != null) #size: size,
       if (status != null) #status: status,
       if (extension != null) #extension: extension,
+      if (path != null) #path: path,
     }),
   );
   @override
@@ -187,6 +199,7 @@ class _DocumentCopyWithImpl<$R, $Out>
     size: data.get(#size, or: $value.size),
     status: data.get(#status, or: $value.status),
     extension: data.get(#extension, or: $value.extension),
+    path: data.get(#path, or: $value.path),
   );
 
   @override

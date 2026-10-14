@@ -60,7 +60,7 @@ final class CreateTicketFormControllerProvider
 }
 
 String _$createTicketFormControllerHash() =>
-    r'3726bd1e8c42738bbbe479e34b844b214e297451';
+    r'0543ac25a6ce8051fbb36ea890ca140444ff68e4';
 
 final class CreateTicketFormControllerFamily extends $Family
     with

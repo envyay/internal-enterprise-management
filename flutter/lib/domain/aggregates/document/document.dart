@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:enterprise_management/shared_kernel/aggregate/aggregate_root.dart';
 
 part 'document.mapper.dart';
+
 @MappableClass()
 class Document extends AggregateRoot<String> with DocumentMappable {
   Document({
@@ -13,6 +14,7 @@ class Document extends AggregateRoot<String> with DocumentMappable {
     required this.size,
     required this.status,
     required this.extension,
+    this.path = '',
   });
 
   final String? referenceId;
@@ -22,4 +24,5 @@ class Document extends AggregateRoot<String> with DocumentMappable {
   final int size;
   final int status;
   final String extension;
+  final String path;
 }

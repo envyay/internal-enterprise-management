@@ -22,6 +22,12 @@ abstract class DocumentRemoteDataSource {
   @GET('GetByDepartments')
   Future<ApiResponse<List<DocumentDto>>> getDocumentsByDepartments();
 
+  @GET('GetByTicket/{id}')
+  Future<ApiResponse<List<DocumentDto>>> getDocumentsByTicket(@Path('id') String id);
+
+  @GET('GetByTickets')
+  Future<ApiResponse<List<DocumentDto>>> getDocumentsByTickets();
+
   @POST('Create')
   Future<ApiResponse<String>> createDocument(@Body() CreateDocumentDto body);
 

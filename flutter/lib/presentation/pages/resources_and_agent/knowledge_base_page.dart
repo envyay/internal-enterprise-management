@@ -2,7 +2,9 @@ import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_controller.dart';
 import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_in_departments_controller.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_in_tickets_controller.dart';
 import 'package:enterprise_management/presentation/pages/resources_and_agent/widgets/document_table.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/documents_in_ticket_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -19,6 +21,7 @@ class KnowledgeBasePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final documentState = ref.watch(resourcesControllerProvider);
     final documentInDepartmentState = ref.watch(resourcesInDepartmentsControllerProvider);
+    final documentInTicketState = ref.watch(resourcesInTicketsControllerProvider);
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -51,7 +54,7 @@ class KnowledgeBasePage extends ConsumerWidget {
                     tabViews: [
                       DocumentTable(state: documentState),
                       DocumentTable(state: documentInDepartmentState),
-                      DocumentTable(state: documentState),
+                      DocumentTable(state: documentInTicketState),
                     ],
                   ),
                 ),

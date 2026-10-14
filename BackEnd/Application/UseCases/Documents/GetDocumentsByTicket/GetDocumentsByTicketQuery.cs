@@ -1,6 +1,9 @@
-﻿namespace Application.UseCases.Documents.GetDocumentsByTicket;
+﻿using Application.DTOs.Documents;
+using MediatR;
 
-public class GetDocumentsByTicketQuery
+namespace Application.UseCases.Documents.GetDocumentsByTicket;
+
+public class GetDocumentsByTicketQuery : IRequest<List<DocumentDto>>
 {
-    
+    public Guid TicketId { get; set; }
 }

@@ -3,9 +3,12 @@ import 'package:enterprise_management/presentation/forms/inputs/description_inpu
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/users_in_project_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/create_ticket_form_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/documents_in_ticket_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/ticket_attachment_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/tickets_in_ticket_status_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/users_in_project_task_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/assign_users_dialog.dart';
+import 'package:enterprise_management/presentation/pages/task/widgets/document_table_in_ticket.dart';
 import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,12 +21,16 @@ class CreateTicketDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ticketAttachmentState = ref.watch(ticketAttachmentControllerProvider());
+    final ticketAttachmentController = ref.watch(ticketAttachmentControllerProvider().notifier);
+
     final ticketsInTicketStatusController = ref.watch(
       ticketsInTicketStatusControllerProvider(ticketStatus.id).notifier,
     );
     final usersInProjectController = ref.watch(
       usersInProjectControllerProvider.notifier,
     );
+
     final form = ref.watch(createTicketFormControllerProvider(null).notifier);
     final state = ref.watch(createTicketFormControllerProvider(null));
     final titleError = state.title.error?.errorMessage;
@@ -44,6 +51,7 @@ class CreateTicketDrawer extends ConsumerWidget {
             ),
           ),
           Column(
+            spacing: 12,
             children: [
               TextField(
                 onChanged: (value) {
@@ -63,15 +71,15 @@ class CreateTicketDrawer extends ConsumerWidget {
                   errorText: descriptionError,
                 ),
               ),
-              TextField(
-                onChanged: (value) {
-                  // form.setCode(value);
-                },
-                decoration: InputDecoration(
-                  label: Text('Attachment'),
-                  // errorText: errorCode,
-                ),
+              Container(
+                alignment: .topLeft,
+                  child: Text('Attachment')),
+              Container(
+                child: DocumentTableInTicket(state: ticketAttachmentState),
               ),
+              SolidButton(title: 'Upload Attachment', onTap: () {
+                ticketAttachmentController.pickAttachment();
+              },),
               SolidButton(
                 title: 'Assign User',
                 onTap: () {
@@ -98,11 +106,18 @@ class CreateTicketDrawer extends ConsumerWidget {
               SolidButton(
                 title: 'Create',
                 onTap: () async {
-                  await form.submit(ticketStatus.id);
+                  final ticketId = await form.submit(ticketStatus.id);
+                  if (ticketId == null) return;
+                  final files = ticketAttachmentState.value;
+                  if (files == null) return;
+                  final documentsInTicketController = ref.watch(documentsInTicketControllerProvider().notifier);
+                  documentsInTicketController.uploadDocument(referenceId: ticketId, files: files);
+
                   ticketsInTicketStatusController.refresh(ticketStatus.id);
+
+
                 },
               ),
-              // Expanded(child: child)
             ],
           ),
         ],

@@ -15,6 +15,9 @@ abstract interface class IDocumentRepository {
   Future<List<Document>> getDocumentsByDepartment({required String departmentId});
   Future<List<Document>> getDocumentsByDepartments();
 
+  Future<List<Document>> getDocumentsByTicket({required String ticketId});
+  Future<List<Document>> getDocumentsByTickets();
+
   Future<String> createDocument({
     required String? referenceId,
     required int referenceType,
@@ -134,6 +137,18 @@ class DocumentRepository implements IDocumentRepository {
   @override
   Future<List<Document>> getDocumentsByDepartments() async {
     final res = await _documentRemoteDataSource.getDocumentsByDepartments();
+    return res.data.map((item) => item.toAggregate()).toList();
+  }
+
+  @override
+  Future<List<Document>> getDocumentsByTicket({required String ticketId}) async {
+    final res = await _documentRemoteDataSource.getDocumentsByTicket(ticketId);
+    return res.data.map((item) => item.toAggregate()).toList();
+  }
+
+  @override
+  Future<List<Document>> getDocumentsByTickets() async {
+    final res = await _documentRemoteDataSource.getDocumentsByTickets();
     return res.data.map((item) => item.toAggregate()).toList();
   }
 }

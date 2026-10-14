@@ -6,6 +6,8 @@ using Application.UseCases.Documents.GetDocumentByDepartments;
 using Application.UseCases.Documents.GetDocumentById;
 using Application.UseCases.Documents.GetDocuments;
 using Application.UseCases.Documents.GetDocumentsByDepartment;
+using Application.UseCases.Documents.GetDocumentsByTicket;
+using Application.UseCases.Documents.GetDocumentsByTickets;
 using Application.UseCases.Documents.UpdateDocument;
 using Application.UseCases.Documents.UploadDocument;
 using MediatR;
@@ -43,11 +45,27 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(documents);
     }
 
+    [Authorize(Policy = AppPolicy.GetDocumentsByTicket)]
+    [HttpGet("GetByTicket/{id:guid}")]
+    public async Task<IActionResult> GetByTicket(Guid id)
+    {
+        var documents = await sender.Send(new GetDocumentsByTicketQuery{TicketId = id});
+        return Ok(documents);
+    }
+
     [Authorize(Policy = AppPolicy.GetDocumentsByDepartments)]
     [HttpGet("GetByDepartments")]
     public async Task<IActionResult> GetDocumentsByDepartments()
     {
         var documents = await sender.Send(new GetDocumentsByDepartmentsQuery());
+        return Ok(documents);
+    }
+    
+    [Authorize(Policy = AppPolicy.GetDocumentsByTickets)]
+    [HttpGet("GetByTickets")]
+    public async Task<IActionResult> GetDocumentsByTickets()
+    {
+        var documents = await sender.Send(new GetDocumentsByTicketsQuery());
         return Ok(documents);
     }
 

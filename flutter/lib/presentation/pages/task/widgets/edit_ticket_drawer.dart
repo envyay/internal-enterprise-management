@@ -1,3 +1,4 @@
+import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
@@ -6,10 +7,13 @@ import 'package:enterprise_management/presentation/forms/inputs/name_input.dart'
 import 'package:enterprise_management/presentation/pages/task/controllers/comments_in_ticket_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/create_comment_form_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/create_ticket_form_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/documents_in_ticket_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/ticket_attachment_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/tickets_in_ticket_status_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/users_in_ticket_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/assign_users_dialog.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/comments_in_ticket.dart';
+import 'package:enterprise_management/presentation/pages/task/widgets/document_table_in_ticket.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/users_in_ticket.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
 import 'package:enterprise_management/presentation/widgets/solid_button.dart';
@@ -51,6 +55,10 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
   @override
   Widget build(BuildContext context) {
     final router = ref.read(appRouterProvider);
+
+    final ticketAttachmentState = ref.watch(ticketAttachmentControllerProvider(ticketId: widget.ticket.id));
+    final ticketAttachmentController = ref.watch(ticketAttachmentControllerProvider(ticketId: widget.ticket.id).notifier);
+
     final ticketsInTicketStatusController = ref.watch(
       ticketsInTicketStatusControllerProvider(widget.ticketStatus.id).notifier,
     );
@@ -115,6 +123,15 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
                     errorText: descriptionError,
                   ),
                 ),
+                Container(
+                    alignment: .topLeft,
+                    child: Text('Attachment')),
+                Container(
+                  child: DocumentTableInTicket(state: ticketAttachmentState),
+                ),
+                SolidButton(title: 'Upload Attachment', onTap: () {
+                  ticketAttachmentController.pickAttachment();
+                },),
                 SolidButton(
                   title: 'Assign User',
                   onTap: () {
@@ -159,6 +176,16 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
                   title: 'Save',
                   onTap: () async {
                     await createTicketForm.edit(widget.ticketStatus.id);
+                    final files = ticketAttachmentState.value;
+                    if (files == null) return;
+                    final List<Document> newList = [];
+                    for (final file in files) {
+                      if (file.id == ''){
+                        newList.add(file);
+                      }
+                    }
+                    final documentsInTicketController = ref.watch(documentsInTicketControllerProvider().notifier);
+                    documentsInTicketController.uploadDocument(referenceId: widget.ticket.id, files: newList);
                     ticketsInTicketStatusController.refresh(
                       widget.ticketStatus.id,
                     );
