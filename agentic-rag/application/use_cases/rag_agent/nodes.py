@@ -132,24 +132,64 @@ def rewrite_query(state: State, llm):
         original_query = current_query
 
     context_section = "\n\n".join(context_parts)
-    llm_with_structure = llm.with_structured_output(QueryAnalysis)
-    response = llm_with_structure.invoke([SystemMessage(content=get_rewrite_query_prompt()), HumanMessage(content=context_section)])
+    response = None
+    try:
+        llm_with_structure = llm.with_structured_output(QueryAnalysis)
+        response = llm_with_structure.invoke([SystemMessage(content=get_rewrite_query_prompt()), HumanMessage(content=context_section)])
+    except Exception:
+        response = None
+
     clarification_message_update = (
         [_name_internal_message(last_message, "clarification_response")]
         if pending_query else []
     )
 
-    if response.questions and response.is_clear:
+    candidate_questions = []
+    if response and getattr(response, "questions", None):
+        candidate_questions = [
+            q.strip() for q in response.questions
+            if isinstance(q, str) and q.strip()
+        ]
+
+    query_to_fallback = pending_query or current_query
+    if not candidate_questions and query_to_fallback:
+        candidate_questions = [query_to_fallback]
+
+    vague_pronouns = {"nó", "đó", "cái đó", "file đó", "tài liệu đó", "it", "that", "this", "them"}
+    query_is_vague_pronoun = (
+        query_to_fallback.lower() in vague_pronouns and not conversation_summary and not recent_messages
+    )
+
+    is_clear = (
+        bool(candidate_questions)
+        and not query_is_vague_pronoun
+        and (getattr(response, "is_clear", True) if candidate_questions != [query_to_fallback] else True)
+    )
+
+    if is_clear and candidate_questions:
         return {
             "questionIsClear": True,
             "originalQuery": original_query,
             "pendingQuery": "",
             "pendingClarifications": [],
-            "rewrittenQuestions": response.questions,
+            "rewrittenQuestions": candidate_questions,
             "messages": clarification_message_update,
         }
 
-    clarification = response.clarification_needed if response.clarification_needed and len(response.clarification_needed.strip()) > 10 else "I need more information to understand your question."
+    raw_clarification = (
+        response.clarification_needed.strip()
+        if (response and getattr(response, "clarification_needed", None))
+        else ""
+    )
+    if (
+        raw_clarification
+        and len(raw_clarification) > 10
+        and raw_clarification.lower() != query_to_fallback.lower()
+    ):
+        clarification = raw_clarification
+    else:
+        clarification = "Bạn có thể miêu tả chi tiết hơn hoặc cung cấp từ khóa cụ thể về tài liệu cần tra cứu không?"
+
     return {
         "questionIsClear": False,
         "originalQuery": "",

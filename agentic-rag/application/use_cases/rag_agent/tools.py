@@ -1,5 +1,4 @@
-import os
-import json
+from qdrant_client import models
 from langchain_core.tools import tool
 import config
 from infrastructure.services.vector_db.qdrant_service import QdrantServices
@@ -55,30 +54,23 @@ class ToolFactory:
         """
         log_tool_start("retrieve_parent_chunks", {"parent_id": parent_id})
         try:
-            # Assuming parent chunks are stored in './local_parent_store' as per
-            parent_store_dir = "./local_parent_store"
-            parent_file = os.path.join(parent_store_dir, f"{parent_id}.json")
-            if not os.path.exists(parent_file):
-                output = "NO_PARENT_DOCUMENT"
-                log_tool_end("retrieve_parent_chunks", output)
-                return output
-
-            with open(parent_file, 'r', encoding='utf-8') as f:
-                parent = json.load(f)
-
-            output = (
-                f"Parent ID: {parent.get('parent_id', 'n/a')}\n"
-                f"File Name: {parent.get('metadata', {}).get('source', 'unknown')}\n"
-                f"Content: {parent.get('content', '').strip()}"
+            parent_store = self.qdrant_services.get_collection(config.PARENT_COLLECTION)
+            # Tìm parent chunk theo ID hoặc parent_id trong metadata
+            results = parent_store.similarity_search(
+                query="",
+                k=1,
+                filter=models.Filter(
+                    must=[
+                        models.HasIdCondition(has_id=[parent_id])
+                    ]
+                )
             )
-            log_tool_end("retrieve_parent_chunks", output)
-            return output
-
+            if not results:
+                return "NO_PARENT_DOCUMENT"
+            return results[0].page_content
         except Exception as e:
             log_error("retrieve_parent_chunks", e)
-            output = f"PARENT_RETRIEVAL_ERROR: {str(e)}"
-            log_tool_end("retrieve_parent_chunks", output)
-            return output
+            return f"PARENT_RETRIEVAL_ERROR: {str(e)}"
     
     def create_tools(self) -> list:
         search_tool = tool("search_child_chunks")(self._search_child_chunks)

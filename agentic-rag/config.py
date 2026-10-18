@@ -11,8 +11,9 @@ PARENT_COLLECTION = "iem-parent-store"
 SPARSE_VECTOR_NAME = "sparse"
 
 #model
-DENSE_MODEL = "Qwen/Qwen3-Embedding-0.6B"
-SPARSE_MODEL = "Qdrant/bm25"
+OLLAMA_BASE_URL = "http://localhost:11434"
+DENSE_MODEL = "qwen3-embedding:0.6b"   # served by Ollama
+SPARSE_MODEL = "Qdrant/bm25"           # BM25 via FastEmbed (Ollama does not support sparse models)
 LLM_MODEL = "qwen2.5:7b"
 JUDGE_MODEL = "llama3.2:3b"
 LLM_TEMPERATURE = 0

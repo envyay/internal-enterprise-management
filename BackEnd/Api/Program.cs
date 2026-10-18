@@ -54,6 +54,8 @@ services.AddScoped<IUnitOfWork, UnitOfWork>();
 services.AddScoped<IJwtService, JwtService>();
 services.AddScoped<IOtpService, OtpService>();
 services.AddScoped<IMailService, MailService>();
+services.AddScoped<IRagService, RagService>();
+
 
 // controllers
 services.AddControllers(options => options.Filters.Add<ApiResponseFilter>());
@@ -95,7 +97,7 @@ services.AddMediatR(config =>
     config.RegisterServicesFromAssembly(typeof(DomainAssemblyMaker).Assembly);
 });
 
-// Valkey
+// valkey
 var valkey = builder.Configuration["Valkey:ConnectionStrings"];
 services.AddSingleton<IConnectionMultiplexer>(
     ConnectionMultiplexer.Connect(valkey!));
@@ -110,16 +112,23 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
     {
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]!)),
-        
+
         ValidateIssuer = true,
         ValidIssuer = jwtSettings["Issuer"]!,
-        
+
         ValidateAudience = true,
         ValidAudience = jwtSettings["Audience"]!,
-        
+
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero
     };
+});
+
+//rag service
+services.AddHttpClient<IRagService, RagService>(c =>
+{
+    c.BaseAddress = new Uri(builder.Configuration["RagService:Url"]!);
+    // c.Timeout = TimeSpan.FromSeconds(2);
 });
 
 // Authorization

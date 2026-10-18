@@ -16,19 +16,7 @@ T = TypeVar("T")
 
 class AppContainer:
     def __init__(self) -> None:
-        minio_service = MinioServices()
-        parser = MarkItDownParser()
-        chunk_service = ChunkService()
-        qdrant_service = QdrantServices()
-
-        self._instances: dict[type[Any], Any] = {
-            IngestDocumentCommandHandler: IngestDocumentCommandHandler(
-                minio_services=minio_service,
-                parser=parser,
-                chunk_service=chunk_service,
-                qdrant_service=qdrant_service,
-            ),
-        }
+        self._instances: dict[type[Any], Any] = {}
 
     @property
     def external_container(self) -> None:
@@ -38,12 +26,23 @@ class AppContainer:
         pass
 
     async def resolve(self, type_: Type[T]) -> T:
-        instance = self._instances.get(type_)
+        if type_ not in self._instances:
+            if type_ is IngestDocumentCommandHandler:
+                minio_service = MinioServices()
+                parser = MarkItDownParser()
+                chunk_service = ChunkService()
+                qdrant_service = QdrantServices()
 
-        if instance is None:
-            raise ValueError(f"Cannot resolve dependency: {type_.__name__}")
+                self._instances[IngestDocumentCommandHandler] = IngestDocumentCommandHandler(
+                    minio_services=minio_service,
+                    parser=parser,
+                    chunk_service=chunk_service,
+                    qdrant_service=qdrant_service,
+                )
+            else:
+                raise ValueError(f"Cannot resolve dependency: {type_.__name__}")
 
-        return instance
+        return self._instances[type_]
 
 @lru_cache
 def get_mediator() -> RequestMediator:

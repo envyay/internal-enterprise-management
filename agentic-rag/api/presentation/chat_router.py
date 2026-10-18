@@ -18,7 +18,7 @@ class ChatRequest(BaseModel):
 # Initialize the graph singleton
 def get_graph():
     if not hasattr(get_graph, "instance"):
-        llm = ChatOllama(model=config.LLM_MODEL, temperature=config.LLM_TEMPERATURE, seed=config.LLM_SEED)
+        llm = ChatOllama(model=config.LLM_MODEL, temperature=config.LLM_TEMPERATURE, seed=config.LLM_SEED, base_url=config.OLLAMA_BASE_URL)
 
         tool_factory = ToolFactory(collection_name=config.CHILD_COLLECTION)
         tools = tool_factory.create_tools()

@@ -12,14 +12,14 @@ async def handle_minio_event(
     dto: MinioEventDTO,
     mediator: RequestMediator = Depends(get_mediator),
 ):
-    inserted_ids = await mediator.send(IngestDocumentCommand(bucket_name=dto.bucket_name, object_name=dto.object_name))
+    inserted_ids = await mediator.send(IngestDocumentCommand(bucket_name=dto.bucketName, object_name=dto.objectName))
 
     return {
         "message": "Ingest completed",
         "results": [
             {
-                "bucket": dto.bucket_name,
-                "object": dto.object_name,
+                "bucket": dto.bucketName,
+                "object": dto.objectName,
                 "inserted_ids": inserted_ids,
             }
         ],

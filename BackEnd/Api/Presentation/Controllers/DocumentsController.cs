@@ -10,6 +10,7 @@ using Application.UseCases.Documents.GetDocumentsByTicket;
 using Application.UseCases.Documents.GetDocumentsByTickets;
 using Application.UseCases.Documents.UpdateDocument;
 using Application.UseCases.Documents.UploadDocument;
+using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace Api.Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DocumentsController(ISender sender) : ControllerBase
+public class DocumentsController(ISender sender, IRagService ragService) : ControllerBase
 {
     [Authorize(Policy = AppPolicy.GetAllDocuments)]
     [HttpGet("GetAll")]
@@ -27,6 +28,13 @@ public class DocumentsController(ISender sender) : ControllerBase
     {
         var documents = await sender.Send(new GetDocumentsQuery());
         return Ok(documents);
+    }
+
+    [HttpPost("Ingest")]
+    public async Task<IActionResult> Ingest()
+    {
+        var success = await ragService.Ingest("iem", "01a13a34-f92f-7c64-99ba-fd8fe7ed4ed8.docx");
+        return Ok(success);
     }
 
     [Authorize(Policy = AppPolicy.GetByIdDocument)]

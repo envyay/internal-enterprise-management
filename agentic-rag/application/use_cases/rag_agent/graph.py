@@ -58,5 +58,5 @@ def create_agent_graph(llm, tools_list):
 
     agent_graph = graph_builder.compile(checkpointer=checkpointer, interrupt_before=["request_clarification"])
 
-    print("✓ Agent graph compiled successfully.")
+    print("[OK] Agent graph compiled successfully.")
     return agent_graph
