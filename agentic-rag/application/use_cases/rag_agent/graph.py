@@ -8,12 +8,10 @@ from shared_kernel.execution_logger import logged_node
 from .nodes import (
     aggregate_answers,
     collect_answer,
-    compress_context,
     fallback_response,
     orchestrator,
     request_clarification,
     rewrite_query,
-    should_compress_context,
     summarize_history,
 )
 from .edges import route_after_orchestrator_call, route_after_rewrite
@@ -28,15 +26,17 @@ def create_agent_graph(llm, tools_list):
     agent_builder = StateGraph(AgentState)
     agent_builder.add_node("orchestrator", logged_node("agent.orchestrator", partial(orchestrator, llm_with_tools=llm_with_tools)))
     agent_builder.add_node("tools", tool_node)
-    agent_builder.add_node("compress_context", logged_node("agent.compress_context", partial(compress_context, llm=llm)))
     agent_builder.add_node("fallback_response", logged_node("agent.fallback_response", partial(fallback_response, llm=llm)))
-    agent_builder.add_node("should_compress_context", logged_node("agent.should_compress_context", should_compress_context))
     agent_builder.add_node("collect_answer", logged_node("agent.collect_answer", collect_answer))
 
     agent_builder.add_edge(START, "orchestrator")
-    agent_builder.add_conditional_edges("orchestrator", route_after_orchestrator_call, {"tools": "tools", "fallback_response": "fallback_response", "collect_answer": "collect_answer"})
-    agent_builder.add_edge("tools", "should_compress_context")
-    agent_builder.add_edge("compress_context", "orchestrator")
+    agent_builder.add_conditional_edges(
+        "orchestrator",
+        route_after_orchestrator_call,
+        {"tools": "tools", "fallback_response": "fallback_response", "collect_answer": "collect_answer"}
+    )
+    # Direct loop: Sau khi tools tìm kiếm xong, quay thẳng về orchestrator để trả lời, loại bỏ bước nén context gây chậm
+    agent_builder.add_edge("tools", "orchestrator")
     agent_builder.add_edge("fallback_response", "collect_answer")
     agent_builder.add_edge("collect_answer", END)
 

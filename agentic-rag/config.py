@@ -10,12 +10,21 @@ CHILD_COLLECTION = "iem"
 PARENT_COLLECTION = "iem-parent-store"
 SPARSE_VECTOR_NAME = "sparse"
 
+import os
+
 #model
+DENSE_PROVIDER = "gemini"
+DENSE_MODEL = "models/gemini-embedding-001"
+DENSE_DIMENSION = 768
+SPARSE_MODEL = "Qdrant/bm25"           # BM25 via FastEmbed
+
 OLLAMA_BASE_URL = "http://localhost:11434"
-DENSE_MODEL = "embeddinggemma-2:740m"   # served by Ollama
-SPARSE_MODEL = "Qdrant/bm25"           # BM25 via FastEmbed (Ollama does not support sparse models)
-LLM_MODEL = "gemma4:e4b"
-JUDGE_MODEL = "llama3.2:3b"
+
+# Gemini Cloud LLM
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyAg5GNG0pr13rY9_3uYbcS39TBOFU1XkiE")
+LLM_PROVIDER = "gemini"
+LLM_MODEL = "gemini-3.5-flash-lite"
+# JUDGE_MODEL = "gemini-3.5-flash-lite"
 LLM_TEMPERATURE = 0
 LLM_SEED = 42
 

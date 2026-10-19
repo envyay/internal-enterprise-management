@@ -22,6 +22,7 @@ class State(MessagesState):
     pendingClarifications: List[str] = []
     rewrittenQuestions: List[str] = []
     agent_answers: Annotated[List[dict], accumulate_or_reset] = []
+    document_ids: List[str] | None = None
 
 class AgentState(MessagesState):
     """State for individual agent subgraph"""
@@ -34,3 +35,5 @@ class AgentState(MessagesState):
     agent_answers: List[dict] = []
     tool_call_count: Annotated[int, operator.add] = 0
     iteration_count: Annotated[int, operator.add] = 0
+    document_ids: List[str] | None = None
+

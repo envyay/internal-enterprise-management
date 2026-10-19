@@ -20,7 +20,7 @@ namespace Api.Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DocumentsController(ISender sender, IRagService ragService) : ControllerBase
+public class DocumentsController(ISender sender) : ControllerBase
 {
     [Authorize(Policy = AppPolicy.GetAllDocuments)]
     [HttpGet("GetAll")]
@@ -28,13 +28,6 @@ public class DocumentsController(ISender sender, IRagService ragService) : Contr
     {
         var documents = await sender.Send(new GetDocumentsQuery());
         return Ok(documents);
-    }
-
-    [HttpPost("Ingest")]
-    public async Task<IActionResult> Ingest()
-    {
-        var success = await ragService.Ingest("iem", "01a13a32-cb2c-717a-b080-af62835a519b.pdf");
-        return Ok(success);
     }
 
     [Authorize(Policy = AppPolicy.GetByIdDocument)]

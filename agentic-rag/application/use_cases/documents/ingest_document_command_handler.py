@@ -21,11 +21,15 @@ class IngestDocumentCommandHandler(RequestHandler):
 
     async def handle(self, request: IngestDocumentCommand) -> tuple[list[str], list[str]]:
         file_stream = self.minio_service.get_file_stream(request.bucket_name, request.object_name)
-        document = self.parser.parse(cast(BinaryIO, cast(object, file_stream)), filename=request.object_name)
+        document = self.parser.parse(cast(BinaryIO, cast(object, file_stream)), filename=request.file_name,
+                                     document_id=request.document_id, referenced_id=request.referenced_id,
+                                     reference_type=request.reference_type, object_name=request.object_name)
         parents, children = self.chunk_service.chunk(document)
 
         child_store = self.qdrant_service.get_collection(config.CHILD_COLLECTION)
         parent_store = self.qdrant_service.get_collection(config.PARENT_COLLECTION)
+
+
 
         import asyncio
         save_children, save_parents = await asyncio.gather(

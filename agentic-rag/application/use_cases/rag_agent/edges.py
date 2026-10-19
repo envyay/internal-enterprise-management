@@ -9,7 +9,12 @@ def route_after_rewrite(state: State) -> Literal["request_clarification", "agent
         decision = "request_clarification"
     else:
         decision = [
-                Send("agent", {"question": query, "question_index": idx, "messages": []})
+                Send("agent", {
+                    "question": query,
+                    "question_index": idx,
+                    "messages": [],
+                    "document_ids": state.get("document_ids")
+                })
                 for idx, query in enumerate(state["rewrittenQuestions"])
             ]
     log_route("after_rewrite", decision, state)

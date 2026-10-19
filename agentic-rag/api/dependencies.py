@@ -52,3 +52,8 @@ def get_mediator() -> RequestMediator:
     container = AppContainer()
 
     return RequestMediator(request_map=request_map, container=container)
+
+
+@lru_cache
+def get_qdrant_service() -> QdrantServices:
+    return QdrantServices()

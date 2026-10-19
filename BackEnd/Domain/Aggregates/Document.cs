@@ -17,7 +17,7 @@ public class Document : AggregateRoot<Guid>
     public User Updater { get; set; }
 
     public static Document Create(
-        Guid referencedId,
+        Guid? referencedId,
         DocumentReferenceType referenceType,
         string name,
         string objectName,

@@ -40,11 +40,24 @@ def _retrieval_contexts(messages) -> list[str]:
             contexts.extend(part for part in parts if part)
     return list(dict.fromkeys(contexts))
 
+def _extract_text_content(content) -> str:
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, dict):
+                parts.append(item.get("text", ""))
+            else:
+                parts.append(str(item))
+        return "".join(parts)
+    return str(content or "")
+
 def _format_conversation(messages) -> str:
     lines = []
     for msg in messages:
         role = "User" if isinstance(msg, HumanMessage) else "Assistant"
-        lines.append(f"{role}: {msg.content}")
+        lines.append(f"{role}: {_extract_text_content(msg.content)}")
     return "\n".join(lines)
 
 def _remove_messages_not_in(messages, keep_ids):
@@ -99,7 +112,7 @@ def summarize_history(state: State, llm):
         SystemMessage(content=get_conversation_summary_prompt()),
         HumanMessage(content=conversation),
     ])
-    updates["conversation_summary"] = summary_response.content.strip()
+    updates["conversation_summary"] = _extract_text_content(summary_response.content).strip()
     return updates
 
 def rewrite_query(state: State, llm):
@@ -211,14 +224,25 @@ def orchestrator(state: AgentState, llm_with_tools):
         [HumanMessage(content=f"[COMPRESSED CONTEXT FROM PRIOR RESEARCH]\n\n{context_summary}")]
         if context_summary else []
     )
+    scope_injection = []
+    doc_ids = state.get("document_ids")
+    if doc_ids is not None:
+        scope_injection = [
+            SystemMessage(
+                content=f"RÀNG BUỘC PHÂN QUYỀN TÀI LIỆU: Bạn chỉ được phép tra cứu và trả lời dựa trên các tài liệu được cấp phép có ID: {doc_ids}. "
+                "Hệ thống tìm kiếm đã tự động giới hạn chỉ trong các tài liệu này. Tuyệt đối KHÔNG trả lời thông tin ngoài phạm vi tài liệu được phép. "
+                "Nếu các trích dẫn tìm kiếm không có thông tin hoặc công cụ trả về NO_RELEVANT_CHUNKS, hãy trả lời bằng tiếng Việt rằng không tìm thấy thông tin phù hợp trong các tài liệu được phân quyền."
+            )
+        ]
+
     if not state.get("messages"):
         human_msg = HumanMessage(content=state["question"], name="agent_question")
         force_search = HumanMessage(content="YOU MUST CALL 'search_child_chunks' AS THE FIRST STEP TO ANSWER THIS QUESTION.")
-        response = llm_with_tools.invoke([sys_msg] + summary_injection + [human_msg, force_search])
+        response = llm_with_tools.invoke([sys_msg] + scope_injection + summary_injection + [human_msg, force_search])
         response = _name_internal_message(response, "agent_response")
         return {"messages": [human_msg, response], "tool_call_count": len(response.tool_calls or []), "iteration_count": 1}
 
-    response = llm_with_tools.invoke([sys_msg] + summary_injection + state["messages"])
+    response = llm_with_tools.invoke([sys_msg] + scope_injection + summary_injection + state["messages"])
     response = _name_internal_message(response, "agent_response")
     tool_calls = response.tool_calls if hasattr(response, "tool_calls") else []
     return {"messages": [response], "tool_call_count": len(tool_calls) if tool_calls else 0, "iteration_count": 1}
@@ -332,7 +356,7 @@ def compress_context(state: AgentState, llm):
 def collect_answer(state: AgentState):
     last_message = state["messages"][-1]
     is_valid = isinstance(last_message, AIMessage) and last_message.content and not last_message.tool_calls
-    answer = last_message.content if is_valid else "Unable to generate an answer."
+    answer = _extract_text_content(last_message.content).strip() if is_valid else "Unable to generate an answer."
     return {
         "final_answer": answer,
         "agent_answers": [{
@@ -355,6 +379,11 @@ def aggregate_answers(state: State, llm):
 
     sorted_answers = sorted(state["agent_answers"], key=lambda x: x["index"])
 
+    # Fast-path: Nếu chỉ có 1 câu hỏi/câu trả lời (chiếm đa số trường hợp),
+    # orchestrator đã sinh câu trả lời hoàn chỉnh kèm nguồn, trả về ngay lập tức để tiết kiệm 10-15s!
+    if len(sorted_answers) == 1:
+        return {"messages": removals + [AIMessage(content=sorted_answers[0]["answer"])]}
+
     formatted_answers = ""
     for i, ans in enumerate(sorted_answers, start=1):
         formatted_answers += (f"\nRetrieved response {i}:\n"f"{ans['answer']}\n")
@@ -362,3 +391,4 @@ def aggregate_answers(state: State, llm):
     user_message = HumanMessage(content=f"""Original user question: {state["originalQuery"]}\nRetrieved answers:{formatted_answers}""")
     synthesis_response = llm.invoke([SystemMessage(content=get_aggregation_prompt()), user_message])
     return {"messages": removals + [AIMessage(content=synthesis_response.content)]}
+

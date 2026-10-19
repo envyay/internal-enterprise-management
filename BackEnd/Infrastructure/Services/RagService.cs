@@ -10,9 +10,9 @@ public class RagService(HttpClient http) : IRagService
         return res.Result.Content.ReadAsStringAsync(cancellationToken);
     }
 
-    public async Task<bool> Ingest(string bucketName, string objectName, CancellationToken cancellationToken = default)
+    public async Task<bool> Ingest(string bucketName, string objectName, string documentId, string? referencedId, int referenceType, string fileName,CancellationToken cancellationToken = default)
     {
-        var success = await http.PostAsJsonAsync("/minio-webhook", new {bucketName, objectName}, cancellationToken);
+        var success = await http.PostAsJsonAsync("/minio-webhook", new {bucketName, objectName, documentId, referencedId, referenceType, fileName}, cancellationToken);
         var res = await success.Content.ReadAsStringAsync(cancellationToken);
         return true;
     }

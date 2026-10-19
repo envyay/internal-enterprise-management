@@ -33,6 +33,7 @@ class ChunkService(IChunkService):
         for i, lc_doc in enumerate(langchain_docs):
             metadata = document.metadata.copy()
             metadata.update(lc_doc.metadata)
+            metadata["document_id"] = document.metadata.get("document_id") or str(document.id)
             chunk_id = str(uuid.uuid5(uuid.NAMESPACE_OID, f"{document.id}_p{i}"))
             parents.append(Document(
                 id=chunk_id,
