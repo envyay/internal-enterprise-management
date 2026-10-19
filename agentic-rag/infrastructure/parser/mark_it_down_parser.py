@@ -9,11 +9,12 @@ from domain.parser.parser_interface import IParser
 
 
 class MarkItDownParser(IParser):
-    def parse(self, stream: BinaryIO, filename: str) -> Document:
-        md = MarkItDown()
-        ext = os.path.splitext(filename)[1]
+    def __init__(self):
+        self._md = MarkItDown()
 
-        result = md.convert_stream(stream, file_extension=ext)
+    def parse(self, stream: BinaryIO, filename: str) -> Document:
+        ext = os.path.splitext(filename)[1]
+        result = self._md.convert_stream(stream, file_extension=ext)
 
         return Document(
             id=str(uuid.uuid4()),

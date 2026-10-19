@@ -26,7 +26,11 @@ class IngestDocumentCommandHandler(RequestHandler):
 
         child_store = self.qdrant_service.get_collection(config.CHILD_COLLECTION)
         parent_store = self.qdrant_service.get_collection(config.PARENT_COLLECTION)
-        save_children = child_store.add_documents(children)
-        save_parents = parent_store.add_documents(parents)
+
+        import asyncio
+        save_children, save_parents = await asyncio.gather(
+            child_store.aadd_documents(children),
+            parent_store.aadd_documents(parents)
+        )
 
         return save_parents, save_children

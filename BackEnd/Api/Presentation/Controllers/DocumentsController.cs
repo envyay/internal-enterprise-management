@@ -33,7 +33,7 @@ public class DocumentsController(ISender sender, IRagService ragService) : Contr
     [HttpPost("Ingest")]
     public async Task<IActionResult> Ingest()
     {
-        var success = await ragService.Ingest("iem", "01a13a34-f92f-7c64-99ba-fd8fe7ed4ed8.docx");
+        var success = await ragService.Ingest("iem", "01a13a32-cb2c-717a-b080-af62835a519b.pdf");
         return Ok(success);
     }
 
