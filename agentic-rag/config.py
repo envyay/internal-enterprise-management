@@ -21,7 +21,7 @@ SPARSE_MODEL = "Qdrant/bm25"           # BM25 via FastEmbed
 OLLAMA_BASE_URL = "http://localhost:11434"
 
 # Gemini Cloud LLM
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyAg5GNG0pr13rY9_3uYbcS39TBOFU1XkiE")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 LLM_PROVIDER = "gemini"
 LLM_MODEL = "gemini-3.5-flash-lite"
 # JUDGE_MODEL = "gemini-3.5-flash-lite"

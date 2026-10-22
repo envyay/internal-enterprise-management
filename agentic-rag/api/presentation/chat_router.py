@@ -15,7 +15,7 @@ import json
 
 class ChatRequest(BaseModel):
     query: str
-    thread_id: str | None = None
+    threadId: str | None = None
     document_ids: list[str] | None = Field(default=None, alias="documentIds")
 
     model_config = ConfigDict(populate_by_name=True)
@@ -64,7 +64,7 @@ def _extract_chunk_text(content) -> str:
 
 @router.post("/")
 async def chat_endpoint(request: ChatRequest):
-    active_thread_id = request.thread_id or str(uuid.uuid4())
+    active_thread_id = request.threadId or str(uuid.uuid4())
 
     # Fast check: Nếu ASP.NET Core truyền danh sách rỗng -> user không có quyền trên bất kỳ tài liệu nào
     if request.document_ids is not None and len(request.document_ids) == 0:
@@ -104,7 +104,7 @@ async def chat_endpoint(request: ChatRequest):
 
 @router.post("/stream")
 async def chat_stream_endpoint(request: ChatRequest):
-    active_thread_id = request.thread_id or str(uuid.uuid4())
+    active_thread_id = request.threadId or str(uuid.uuid4())
 
     # Fast check: Nếu danh sách document_ids rỗng -> trả về ngay thông báo không có quyền
     if request.document_ids is not None and len(request.document_ids) == 0:
