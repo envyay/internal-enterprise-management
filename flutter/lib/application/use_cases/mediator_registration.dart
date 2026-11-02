@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:enterprise_management/application/use_cases/chats/chat_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/chat_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/comments/create_comment/create_comment_command.dart';
 import 'package:enterprise_management/application/use_cases/comments/create_comment/create_comment_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/comments/delete_comment/delete_comment_command.dart';
@@ -85,22 +87,34 @@ import 'package:enterprise_management/application/use_cases/tickets/update_ticke
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket/update_ticket_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket_by_ticket_status/update_ticket_by_ticket_status_command.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket_by_ticket_status/update_ticket_by_ticket_status_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/user_group_policies/get_user_group_policies/get_user_group_policies_query.dart';
+import 'package:enterprise_management/application/use_cases/user_group_policies/get_user_group_policies/get_user_group_policies_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/add_users_to_user_group/add_users_to_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/add_users_to_user_group/add_users_to_user_group_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/create_user_group/create_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/create_user_group/create_user_group_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/delete_user_group/delete_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/delete_user_group/delete_user_group_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/get_user_group/get_user_group_query.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/get_user_group/get_user_group_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/get_user_groups/get_user_groups_query.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/get_user_groups/get_user_groups_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/get_users_by_user_group_id/get_users_by_user_group_id_query.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/get_users_by_user_group_id/get_users_by_user_group_id_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/remove_user_from_user_group/remove_user_from_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/remove_user_from_user_group/remove_user_from_user_group_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/set_policies_in_user_group/set_policies_in_user_group_command.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/set_policies_in_user_group/set_policies_in_user_group_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/set_users_in_user_group/set_users_in_user_group_command.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/set_users_in_user_group/set_users_in_user_group_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/update_user_group/update_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/update_user_group/update_user_group_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/create_user/create_user_command.dart';
 import 'package:enterprise_management/application/use_cases/users/create_user/create_user_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/delete_user/delete_user_command.dart';
 import 'package:enterprise_management/application/use_cases/users/delete_user/delete_user_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/users/get_policies/get_policies_query.dart';
+import 'package:enterprise_management/application/use_cases/users/get_policies/get_policies_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query.dart';
 import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/update_user/update_user_command.dart';
@@ -109,6 +123,8 @@ import 'package:enterprise_management/application/use_cases/users/user_sign_in/u
 import 'package:enterprise_management/application/use_cases/users/user_sign_in/user_sign_in_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/users/user_sign_out/user_sign_out_command.dart';
+import 'package:enterprise_management/application/use_cases/users/user_sign_out/user_sign_out_command_handler.dart';
 import 'package:enterprise_management/domain/aggregates/comment/comment.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
@@ -117,17 +133,27 @@ import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
+import 'package:enterprise_management/domain/aggregates/user_group_policy/user_group_policy.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/user_groups/user_groups_dto.dart';
 import 'package:enterprise_management/infrastructure/repositories/providers.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
 
 extension MediatorRegistrationX on Mediator {
   void registerApplicationHandlers() {
     // Commands & Handlers
+
+    //Chat
+    registerCommandHandler<ChatCommand, Stream>(
+      ChatCommandHandler(chatRepository: ref.read(chatRepositoryProvider)),
+    );
+
     //User
     registerQueryHandler<GetUserQuery, List<User>>(
         GetUserQueryHandler(userRepository: ref.read(userRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetPoliciesQuery, List<String>>(
+      GetPoliciesQueryHandler(userRepository: ref.read(userRepositoryProvider)),
     );
 
     registerCommandHandler<CreateUserCommand, String>(
@@ -150,17 +176,37 @@ extension MediatorRegistrationX on Mediator {
       UserSignInVerifyCommandHandler(userRepository: ref.read(userRepositoryProvider)),
     );
 
+    registerCommandHandler<UserSignOutCommand, void>(
+      UserSignOutCommandHandler(userRepository: ref.read(userRepositoryProvider)),
+    );
+
     //UserGroup
     registerQueryHandler<GetUserGroupsQuery, List<UserGroup>>(
       GetUserGroupsQueryHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
     );
 
-    registerCommandHandler<CreateUserGroupCommand, UserGroupDto>(
+    registerQueryHandler<GetUserGroupQuery, UserGroup>(
+      GetUserGroupQueryHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetUsersByUserGroupIdQuery, List<User>>(
+      GetUsersByUserGroupIdQueryHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
+    );
+
+    registerCommandHandler<CreateUserGroupCommand, UserGroup>(
       CreateUserGroupCommandHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
     );
     
     registerCommandHandler<UpdateUserGroupCommand, bool>(
       UpdateUserGroupCommandHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
+    );
+
+    registerCommandHandler<SetPoliciesInUserGroupCommand, bool>(
+      SetPoliciesInUserGroupCommandHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
+    );
+
+    registerCommandHandler<SetUsersInUserGroupCommand, bool>(
+      SetUsersInUserGroupCommandHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
     );
     
     registerCommandHandler<DeleteUserGroupCommand, bool>(
@@ -173,6 +219,11 @@ extension MediatorRegistrationX on Mediator {
 
     registerCommandHandler<RemoveUserFromUserGroupCommand, bool>(
       RemoveUserFromUserGroupCommandHandler(userGroupRepository: ref.read(userGroupRepositoryProvider)),
+    );
+
+    //UserGroupPolicy
+    registerQueryHandler<GetUserGroupPoliciesQuery, List<UserGroupPolicy>>(
+      GetUserGroupPoliciesQueryHandler(userGroupPolicyRepository: ref.read(userGroupPolicyRepositoryProvider)),
     );
 
     //Department

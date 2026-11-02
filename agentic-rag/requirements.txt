@@ -16,3 +16,4 @@ python-cqrs==4.15.1
 urllib3
 uvicorn
 langchain-google-genai
+python-dotenv

@@ -2,12 +2,11 @@ import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
-import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/ticket_statuses_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/tickets_in_ticket_status_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/widgets/create_ticket_drawer.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/edit_ticket_drawer.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/ticket_card.dart';
-import 'package:enterprise_management/presentation/pages/task/widgets/create_ticket_drawer.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/ticket_details_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,13 +27,13 @@ class ProjectTrackerPage extends ConsumerWidget {
       barrierLabel: 'Dismiss',
       barrierColor: Colors.black26,
       transitionDuration: const Duration(milliseconds: 250),
-      pageBuilder: (_, __, ___) => Align(
+      pageBuilder: (_, _, _) => Align(
         alignment: Alignment.centerRight,
         child: Material(
           child: CreateTicketDrawer(ticketStatus: ticketStatus, projectId: projectId),
         ),
       ),
-      transitionBuilder: (_, animation, __, child) {
+      transitionBuilder: (_, animation, _, child) {
         return SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(1, 0),
@@ -53,13 +52,13 @@ class ProjectTrackerPage extends ConsumerWidget {
       barrierLabel: 'Dismiss',
       barrierColor: Colors.black26,
       transitionDuration: const Duration(milliseconds: 250),
-      pageBuilder: (_, __, ___) => Align(
+      pageBuilder: (_, _, _) => Align(
         alignment: Alignment.centerRight,
         child: Material(
           child: EditTicketDrawer(ticketStatus: ticketStatus, projectId: projectId, ticket: ticket,),
         ),
       ),
-      transitionBuilder: (_, animation, __, child) {
+      transitionBuilder: (_, animation, _, child) {
         return SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(1, 0),
@@ -78,13 +77,13 @@ class ProjectTrackerPage extends ConsumerWidget {
       barrierLabel: 'Dismiss',
       barrierColor: Colors.black26,
       transitionDuration: const Duration(milliseconds: 250),
-      pageBuilder: (_, __, ___) => Align(
+      pageBuilder: (_, _, _) => Align(
         alignment: Alignment.centerRight,
         child: Material(
           child: TicketDetailsDrawer(ticketStatus: ticketStatus, projectId: projectId, ticket: ticket,),
         ),
       ),
-      transitionBuilder: (_, animation, __, child) {
+      transitionBuilder: (_, animation, _, child) {
         return SlideTransition(
           position: Tween<Offset>(
             begin: const Offset(1, 0),
@@ -98,7 +97,6 @@ class ProjectTrackerPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(projectsControllerProvider.notifier);
     final state = ref.watch(projectsControllerProvider);
     final ticketStatusState = ref.watch(ticketStatusesControllerProvider);
 
@@ -151,7 +149,7 @@ class ProjectTrackerPage extends ConsumerWidget {
                             _createTicketDrawer(scaffoldContext, status, status.projectId);
                           },
                           child: DragTarget<({Ticket ticket, String fromStatusId})>(
-                            // Chỉ nhận ticket đến từ cột khác
+
                             onWillAcceptWithDetails: (details) => details.data.fromStatusId != status.id,
                             onAcceptWithDetails: (details) {
                               final data = details.data;
@@ -162,7 +160,7 @@ class ProjectTrackerPage extends ConsumerWidget {
                             builder: (context, candidateData, rejectedData) {
                               final isHovering = candidateData.isNotEmpty;
                               return Container(
-                                // Tô sáng cột khi đang kéo ticket ngang qua
+
                                 decoration: BoxDecoration(
                                   color: isHovering ? Colors.blue.withOpacity(0.08) : Colors.transparent,
                                   borderRadius: BorderRadius.circular(8),
@@ -179,13 +177,13 @@ class ProjectTrackerPage extends ConsumerWidget {
                                       );
                                       return Draggable<({Ticket ticket, String fromStatusId})>(
                                         data: (ticket: ticket, fromStatusId: status.id),
-                                        // Hình hiển thị dưới con trỏ khi kéo
+
                                         feedback: Material(
                                           elevation: 6,
                                           borderRadius: BorderRadius.circular(8),
                                           child: SizedBox(width: 280, child: card),
                                         ),
-                                        // Chỗ cũ của ticket mờ đi trong lúc kéo
+
                                         childWhenDragging: Opacity(opacity: 0.3, child: card),
                                         child: card,
                                       );

@@ -1,5 +1,4 @@
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
-import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:enterprise_management/presentation/pages/user_group/controllers/user_groups_controller.dart';
 import 'package:enterprise_management/presentation/pages/user_group/widgets/edit_user_group_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
@@ -42,6 +41,8 @@ class UserGroupItem extends ConsumerWidget {
               children: [
                 Expanded(
                   child: Row(
+                    mainAxisAlignment: .start,
+                    spacing: 24,
                     children: [
                       Text(
                         userGroup.name,
@@ -55,6 +56,18 @@ class UserGroupItem extends ConsumerWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
+
+                      Row(
+                        spacing: 4,
+                        children: [
+                          const Text('0'),
+                          const Icon(
+                            Icons.group_outlined,
+                            size: 18,
+                            color: Color(0xff43474F),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -65,16 +78,6 @@ class UserGroupItem extends ConsumerWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        spacing: 12,
-                        children: [
-                          Text('0'),
-                          Container(
-                            child: Assets.lib.infrastructure.assets.icons.profile.svg(),
-                          )
-                        ],
-                      ),
-
                       IconButton(
                         icon: const Icon(
                           Icons.edit_outlined,

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:enterprise_management/presentation/pages/department/controllers/users_in_department_controller.dart';
+import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/add_users_dialog.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
@@ -15,7 +15,6 @@ import 'package:enterprise_management/presentation/widgets/overview_container.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 
 @RoutePage()
 class ProjectPage extends ConsumerWidget {
@@ -24,15 +23,11 @@ class ProjectPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final projectController = ref.watch(projectsControllerProvider.notifier);
-    final ticketStatusesInProjectController = ref.watch(
-      ticketStatusesInProjectControllerProvider.notifier,
-    );
     final projects = ref.watch(projectsControllerProvider);
     final projectDetails = ref.watch(getProjectDetailsControllerProvider);
     final ticketStatusesInProject = ref.watch(
       ticketStatusesInProjectControllerProvider,
     );
-    final usersInProject = ref.watch(usersInProjectControllerProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),

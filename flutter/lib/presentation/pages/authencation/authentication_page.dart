@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:enterprise_management/presentation/forms/inputs/email_input.dart';
 import 'package:enterprise_management/presentation/pages/authencation/controllers/authentication_controller.dart';
@@ -141,9 +140,6 @@ class AuthenticationPage extends ConsumerWidget {
                                       controller.loginVerify(email, otp);
                                       context.router.pop();
                                     },
-                                    onResend: () {
-                                      print('Resending OTP...');
-                                    },
                                   );
                                 },
                               ),
@@ -170,8 +166,6 @@ class AuthenticationPage extends ConsumerWidget {
                         title: 'Google',
                         prefix: Assets.lib.infrastructure.assets.icons.website,
                         onTap: () {
-                          /// TODO: Login by google ///
-                          print('google');
                         },
                       ),
                       OutlineIconButton(
@@ -179,8 +173,6 @@ class AuthenticationPage extends ConsumerWidget {
                         title: 'Microsoft SharePoint',
                         prefix: Assets.lib.infrastructure.assets.icons.window,
                         onTap: () {
-                          /// TODO: Login by microsoft sharepoint ///
-                          print('microsoft');
                         },
                       ),
                       Container(

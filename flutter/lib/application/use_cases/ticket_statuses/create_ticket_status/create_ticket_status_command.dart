@@ -1,4 +1,3 @@
-import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

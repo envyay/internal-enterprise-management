@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel.Constants;
@@ -16,7 +16,10 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         builder.Property(x => x.Description).HasMaxLength(500);
         builder.Property(x => x.Code).HasMaxLength(255);
         
-        builder.Property(x => x.Status).HasConversion<int>().HasDefaultValue(ProjectStatus.Active);
+        builder.Property(x => x.Status)
+            .HasConversion<int>()
+            .HasDefaultValue(ProjectStatus.Active)
+            .HasSentinel((ProjectStatus)(-1));
         
         builder.Property(x => x.StartDate);
         builder.Property(x => x.EndDate);

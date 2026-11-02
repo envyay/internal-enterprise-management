@@ -1,7 +1,5 @@
-import 'package:enterprise_management/application/use_cases/tickets/get_ticket/get_ticket_query.dart';
 import 'package:enterprise_management/application/use_cases/tickets/get_users/get_users_by_ticket_id_query.dart';
 import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command.dart';
-import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -1,5 +1,3 @@
-import 'package:enterprise_management/domain/aggregates/project/project.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

@@ -29,6 +29,4 @@ class CreateDepartmentFormController extends _$CreateDepartmentFormController {
     final router = ref.read(appRouterProvider);
     router.pop();
   }
-
-  bool get isValid => state.isValid;
 }

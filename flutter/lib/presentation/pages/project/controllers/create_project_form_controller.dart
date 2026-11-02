@@ -39,6 +39,4 @@ class CreateProjectFormController extends _$CreateProjectFormController {
     final router = ref.read(appRouterProvider);
     router.pop();
   }
-
-  bool get isValid => state.isValid;
 }

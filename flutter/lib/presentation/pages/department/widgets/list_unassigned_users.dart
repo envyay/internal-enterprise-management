@@ -1,7 +1,5 @@
 import 'package:enterprise_management/presentation/pages/user/controllers/users_controller.dart';
-import 'package:enterprise_management/presentation/router/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ListUnassignedUsers extends ConsumerWidget {
@@ -10,8 +8,6 @@ class ListUnassignedUsers extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(usersControllerProvider);
-    final controller = ref.read(usersControllerProvider.notifier);
-    final router = ref.read(appRouterProvider);
     return state.when(
       data: (users) {
         return Expanded(

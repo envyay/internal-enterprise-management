@@ -1,10 +1,7 @@
-import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_ticket_status_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_ticket_status_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/projects/project_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/ticket_statuses/ticket_status_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/ticket_status_service/ticket_status_remote_data_source.dart';

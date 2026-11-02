@@ -1,5 +1,4 @@
 import 'package:enterprise_management/application/use_cases/comments/create_comment/create_comment_command.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
 import 'package:enterprise_management/infrastructure/repositories/comment_repository.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command_handler.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';

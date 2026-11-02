@@ -14,6 +14,4 @@ class SignInFormController extends _$SignInFormController {
   void setEmail(String value) {
     state = state.copyWith(email: EmailInput.dirty(value));
   }
-
-  bool get isValid => state.isValid;
 }

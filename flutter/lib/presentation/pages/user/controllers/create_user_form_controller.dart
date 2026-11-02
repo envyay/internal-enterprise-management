@@ -33,7 +33,4 @@ class CreateUserFormController extends _$CreateUserFormController{
     final router = ref.read(appRouterProvider);
     router.pop();
   }
-
-  bool get isValid => state.isValid;
-
 }

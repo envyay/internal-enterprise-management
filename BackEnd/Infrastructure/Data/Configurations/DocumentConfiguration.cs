@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel.Constants;
@@ -17,7 +17,10 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
         builder.Property(x => x.Name).HasMaxLength(255);
         builder.Property(x => x.ObjectName).HasMaxLength(255);
         builder.Property(x => x.Size);
-        builder.Property(x => x.Status).HasConversion<int>().HasDefaultValue(DocumentStatus.Active);
+        builder.Property(x => x.Status)
+            .HasConversion<int>()
+            .HasDefaultValue(DocumentStatus.Active)
+            .HasSentinel((DocumentStatus)(-1));
         builder.Property(x => x.ReferenceType).HasConversion<int>();
         builder.Property(x => x.Extension).HasMaxLength(255);
 

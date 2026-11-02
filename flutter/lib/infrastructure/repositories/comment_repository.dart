@@ -1,9 +1,6 @@
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_comment_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/tickets/ticket_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/comment_service/comment_remote_data_source.dart';
 
 abstract interface class ICommentRepository {

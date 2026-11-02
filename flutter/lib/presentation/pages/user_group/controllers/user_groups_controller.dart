@@ -1,6 +1,8 @@
 import 'package:enterprise_management/application/use_cases/user_groups/delete_user_group/delete_user_group_command.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/get_user_groups/get_user_groups_query.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
+import 'package:enterprise_management/presentation/pages/user_group/controllers/policies_in_user_group_controller.dart';
+import 'package:enterprise_management/presentation/pages/user_group/controllers/users_in_user_group_controller.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -47,6 +49,12 @@ class UserGroupsController extends _$UserGroupsController {
     }).toList();
 
     state = AsyncData(newItems);
+
+    final usersInUserGroupController = ref.read(usersInUserGroupControllerProvider.notifier);
+    usersInUserGroupController.getUsersInUserGroup(id: id);
+
+    final policiesInUserGroupController = ref.read(policiesInUserGroupControllerProvider.notifier);
+    policiesInUserGroupController.getPoliciesInUserGroup(id: id);
   }
 
   Future<void> delete(String id) async {

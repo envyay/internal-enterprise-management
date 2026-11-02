@@ -42,7 +42,7 @@ final class CreateUserFormControllerProvider
 }
 
 String _$createUserFormControllerHash() =>
-    r'f6a01a8be00dcd59a788dc15e884347624499f17';
+    r'b7f076eeedd8e5005646c2e620e19d382e9cb7d8';
 
 abstract class _$CreateUserFormController extends $Notifier<CreateUserForm> {
   CreateUserForm build();

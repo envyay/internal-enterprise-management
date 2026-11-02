@@ -5,8 +5,11 @@ using Application.UseCases.UserGroups.CreateUserGroup;
 using Application.UseCases.UserGroups.DeleteUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroups;
+using Application.UseCases.UserGroups.GetUsersByUserGroupId;
 using Application.UseCases.UserGroups.RemovePolicy;
 using Application.UseCases.UserGroups.RemoveUser;
+using Application.UseCases.UserGroups.SetPoliciesInUserGroup;
+using Application.UseCases.UserGroups.SetUsersInUserGroup;
 using Application.UseCases.UserGroups.UpdateUserGroup;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -33,6 +36,30 @@ public class UserGroupsController(ISender sender) : ControllerBase
     {
         var userGroup = await sender.Send(new GetUserGroupByIdQuery{Id = id});
         return Ok(userGroup);
+    }
+
+    [Authorize(Policy = AppPolicy.GetUsersByUserGroupId)]
+    [HttpGet("{id:guid}/Users")]
+    public async Task<IActionResult> GetUsersByUserGroupId(Guid id)
+    {
+        var users = await sender.Send(new GetUsersByUserGroupIdQuery { UserGroupId = id });
+        return Ok(users);
+    }
+    
+    [Authorize(Policy = AppPolicy.SetUsersInUserGroup)]
+    [HttpPut("SetUsers")]
+    public async Task<IActionResult> SetUsers(SetUsersInUserGroupCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);       
+    }
+    
+    [Authorize(Policy = AppPolicy.SetPoliciesInUserGroup)]
+    [HttpPut("SetPolicies")]
+    public async Task<IActionResult> SetPolicies(SetPoliciesInUserGroupCommand request)
+    {
+        var success = await sender.Send(request);
+        return Ok(success);       
     }
 
     [Authorize(Policy = AppPolicy.CreateUserGroup)]
@@ -90,4 +117,6 @@ public class UserGroupsController(ISender sender) : ControllerBase
         var success = await sender.Send(request);
         return Ok(success);       
     }
+    
+    
 }

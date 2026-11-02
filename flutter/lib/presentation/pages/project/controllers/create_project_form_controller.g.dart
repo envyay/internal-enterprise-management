@@ -43,7 +43,7 @@ final class CreateProjectFormControllerProvider
 }
 
 String _$createProjectFormControllerHash() =>
-    r'8e5ddfce81842376bdda1029a2c8aa5783092bb9';
+    r'e4969e53536d57a9ac2971c595096b7ab00e7d35';
 
 abstract class _$CreateProjectFormController
     extends $Notifier<CreateProjectForm> {

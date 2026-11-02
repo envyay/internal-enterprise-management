@@ -15,6 +15,8 @@ class UserGroupMapper extends ClassMapperBase<UserGroup> {
   static UserGroupMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = UserGroupMapper._());
+      UserMapper.ensureInitialized();
+      UserGroupPolicyMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -33,12 +35,20 @@ class UserGroupMapper extends ClassMapperBase<UserGroup> {
     opt: true,
     def: false,
   );
+  static List<User> _$users(UserGroup v) => v.users;
+  static const Field<UserGroup, List<User>> _f$users = Field('users', _$users);
+  static List<UserGroupPolicy> _$userGroupPolicies(UserGroup v) =>
+      v.userGroupPolicies;
+  static const Field<UserGroup, List<UserGroupPolicy>> _f$userGroupPolicies =
+      Field('userGroupPolicies', _$userGroupPolicies);
 
   @override
   final MappableFields<UserGroup> fields = const {
     #id: _f$id,
     #name: _f$name,
     #isActive: _f$isActive,
+    #users: _f$users,
+    #userGroupPolicies: _f$userGroupPolicies,
   };
 
   static UserGroup _instantiate(DecodingData data) {
@@ -46,6 +56,8 @@ class UserGroupMapper extends ClassMapperBase<UserGroup> {
       id: data.dec(_f$id),
       name: data.dec(_f$name),
       isActive: data.dec(_f$isActive),
+      users: data.dec(_f$users),
+      userGroupPolicies: data.dec(_f$userGroupPolicies),
     );
   }
 
@@ -108,7 +120,20 @@ extension UserGroupValueCopy<$R, $Out> on ObjectCopyWith<$R, UserGroup, $Out> {
 
 abstract class UserGroupCopyWith<$R, $In extends UserGroup, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({String? id, String? name, bool? isActive});
+  ListCopyWith<$R, User, UserCopyWith<$R, User, User>> get users;
+  ListCopyWith<
+    $R,
+    UserGroupPolicy,
+    UserGroupPolicyCopyWith<$R, UserGroupPolicy, UserGroupPolicy>
+  >
+  get userGroupPolicies;
+  $R call({
+    String? id,
+    String? name,
+    bool? isActive,
+    List<User>? users,
+    List<UserGroupPolicy>? userGroupPolicies,
+  });
   UserGroupCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -121,11 +146,37 @@ class _UserGroupCopyWithImpl<$R, $Out>
   late final ClassMapperBase<UserGroup> $mapper =
       UserGroupMapper.ensureInitialized();
   @override
-  $R call({String? id, String? name, bool? isActive}) => $apply(
+  ListCopyWith<$R, User, UserCopyWith<$R, User, User>> get users =>
+      ListCopyWith(
+        $value.users,
+        (v, t) => v.copyWith.$chain(t),
+        (v) => call(users: v),
+      );
+  @override
+  ListCopyWith<
+    $R,
+    UserGroupPolicy,
+    UserGroupPolicyCopyWith<$R, UserGroupPolicy, UserGroupPolicy>
+  >
+  get userGroupPolicies => ListCopyWith(
+    $value.userGroupPolicies,
+    (v, t) => v.copyWith.$chain(t),
+    (v) => call(userGroupPolicies: v),
+  );
+  @override
+  $R call({
+    String? id,
+    String? name,
+    bool? isActive,
+    List<User>? users,
+    List<UserGroupPolicy>? userGroupPolicies,
+  }) => $apply(
     FieldCopyWithData({
       if (id != null) #id: id,
       if (name != null) #name: name,
       if (isActive != null) #isActive: isActive,
+      if (users != null) #users: users,
+      if (userGroupPolicies != null) #userGroupPolicies: userGroupPolicies,
     }),
   );
   @override
@@ -133,6 +184,11 @@ class _UserGroupCopyWithImpl<$R, $Out>
     id: data.get(#id, or: $value.id),
     name: data.get(#name, or: $value.name),
     isActive: data.get(#isActive, or: $value.isActive),
+    users: data.get(#users, or: $value.users),
+    userGroupPolicies: data.get(
+      #userGroupPolicies,
+      or: $value.userGroupPolicies,
+    ),
   );
 
   @override

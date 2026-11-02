@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,7 +15,9 @@ public class UserGroupConfiguration : IEntityTypeConfiguration<UserGroup>
         
         builder.Property(x => x.Name).HasMaxLength(255);
         
-        builder.HasMany(x => x.UserGroupPolicies).WithOne(x => x.UserGroup).HasForeignKey(x => x.UserGroupId);
+        builder.HasMany(x => x.UserGroupPolicies)
+            .WithMany(x => x.UserGroups)
+            .UsingEntity(x => x.ToTable("UserGroupUserGroupPolicies"));
         
         builder.HasIndex(x => x.Name);
     }

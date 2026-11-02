@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_user_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_request_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/login_verify_dto.dart';
@@ -18,6 +17,9 @@ abstract class UserRemoteDataSource {
   
   @GET('GetAll')
   Future<ApiResponse<List<UserDto>>> getUsers();
+
+  @GET('GetPolicies')
+  Future<ApiResponse<List<String>>> getPolicies();
 
   @GET('{id}/Projects')
   Future<ApiResponse<List<ProjectDto>?>> getProjectsByUserId(@Path('id') String id);

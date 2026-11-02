@@ -1,14 +1,12 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:enterprise_management/presentation/pages/user/controllers/users_controller.dart';
+import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:enterprise_management/presentation/pages/user/widgets/create_user_dialog.dart';
 import 'package:enterprise_management/presentation/pages/user/widgets/users_table.dart';
-import 'package:enterprise_management/presentation/pages/user_group/widgets/user_group_item.dart';
 import 'package:enterprise_management/presentation/widgets/base_page.dart';
 import 'package:enterprise_management/presentation/widgets/overview_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 
 @RoutePage()
 class UserPage extends ConsumerWidget {
@@ -16,8 +14,6 @@ class UserPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final controller = ref.watch(usersControllerProvider.notifier);
-    final state = ref.watch(usersControllerProvider);
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(

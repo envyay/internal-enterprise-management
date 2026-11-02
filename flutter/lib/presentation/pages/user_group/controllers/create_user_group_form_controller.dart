@@ -28,6 +28,4 @@ class CreateUserGroupFormController extends _$CreateUserGroupFormController {
     final router = ref.read(appRouterProvider);
     router.pop();
   }
-
-  bool get isValid => state.isValid;
 }

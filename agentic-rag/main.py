@@ -4,6 +4,7 @@ import sys
 # Prevent langchain_text_splitters from eagerly loading torch & sentence_transformers (saves ~5-7s)
 sys.modules.setdefault("sentence_transformers", None)
 
+os.environ.setdefault("FASTEMBED_CACHE_PATH", os.path.expanduser("~/.cache/fastembed"))
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 os.environ.setdefault("CQRS_SUPPRESS_V4_EOL_WARNING", "1")
 
@@ -32,7 +33,7 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
         "main:app",
-        host="127.0.0.1",
+        host="0.0.0.0",
         port=8000,
         reload=True,
         reload_dirs=["api", "application", "domain", "infrastructure"]

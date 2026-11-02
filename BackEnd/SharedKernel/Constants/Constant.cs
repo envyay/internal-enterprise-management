@@ -40,9 +40,18 @@ public enum DocumentReferenceType
 
 public static class AppPolicy
 {
+    // Chat
+    public const string Chat = nameof(Chat);
+    
+    // UserGroupPolicy
+    public const string GetAllUserGroupPolicies = nameof(GetAllUserGroupPolicies);
+    
     // User Group
     public const string GetAllUserGroups = nameof(GetAllUserGroups);
     public const string GetByIdUserGroup = nameof(GetByIdUserGroup);
+    public const string GetUsersByUserGroupId = nameof(GetUsersByUserGroupId);
+    public const string SetUsersInUserGroup = nameof(SetUsersInUserGroup);
+    public const string SetPoliciesInUserGroup = nameof(SetPoliciesInUserGroup);
     public const string CreateUserGroup = nameof(CreateUserGroup);
     public const string UpdateUserGroup = nameof(UpdateUserGroup);
     public const string DeleteUserGroup = nameof(DeleteUserGroup);
@@ -117,9 +126,18 @@ public static class AppPolicy
 
     public static readonly string[] Policies =
     [
+        // Chat
+        Chat,
+        
+        // UserGroupPolicy
+        GetAllUserGroupPolicies,
+        
         // User Group
         GetAllUserGroups,
         GetByIdUserGroup,
+        GetUsersByUserGroupId,
+        SetUsersInUserGroup,
+        SetPoliciesInUserGroup,
         CreateUserGroup,
         UpdateUserGroup,
         DeleteUserGroup,

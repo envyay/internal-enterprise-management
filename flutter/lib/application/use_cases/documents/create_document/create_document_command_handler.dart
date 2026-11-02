@@ -1,5 +1,4 @@
 import 'package:enterprise_management/application/use_cases/documents/create_document/create_document_command.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/documents/document_dto.dart';
 import 'package:enterprise_management/infrastructure/repositories/document_repository.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command_handler.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';

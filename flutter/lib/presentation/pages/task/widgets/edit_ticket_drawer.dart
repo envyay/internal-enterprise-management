@@ -126,9 +126,7 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
                 Container(
                     alignment: .topLeft,
                     child: Text('Attachment')),
-                Container(
-                  child: DocumentTableInTicket(state: ticketAttachmentState),
-                ),
+                DocumentTableInTicket(state: ticketAttachmentState),
                 SolidButton(title: 'Upload Attachment', onTap: () {
                   ticketAttachmentController.pickAttachment();
                 },),

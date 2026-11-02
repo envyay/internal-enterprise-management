@@ -103,6 +103,14 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get logo =>
       const SvgGenImage('lib/infrastructure/assets/icons/logo.svg');
 
+  /// File path: lib/infrastructure/assets/icons/logout.svg
+  SvgGenImage get logout =>
+      const SvgGenImage('lib/infrastructure/assets/icons/logout.svg');
+
+  /// File path: lib/infrastructure/assets/icons/member.svg
+  SvgGenImage get member =>
+      const SvgGenImage('lib/infrastructure/assets/icons/member.svg');
+
   /// File path: lib/infrastructure/assets/icons/message.svg
   SvgGenImage get message =>
       const SvgGenImage('lib/infrastructure/assets/icons/message.svg');
@@ -147,6 +155,10 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get timeline =>
       const SvgGenImage('lib/infrastructure/assets/icons/timeline.svg');
 
+  /// File path: lib/infrastructure/assets/icons/user-group.svg
+  SvgGenImage get userGroup =>
+      const SvgGenImage('lib/infrastructure/assets/icons/user-group.svg');
+
   /// File path: lib/infrastructure/assets/icons/website.svg
   SvgGenImage get website =>
       const SvgGenImage('lib/infrastructure/assets/icons/website.svg');
@@ -181,6 +193,8 @@ class $LibInfrastructureAssetsIconsGen {
     history,
     lightBulb,
     logo,
+    logout,
+    member,
     message,
     pdf,
     plus,
@@ -192,6 +206,7 @@ class $LibInfrastructureAssetsIconsGen {
     support,
     tick,
     timeline,
+    userGroup,
     website,
     window,
     word,

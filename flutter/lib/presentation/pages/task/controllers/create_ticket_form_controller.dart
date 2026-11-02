@@ -1,5 +1,4 @@
 import 'package:enterprise_management/application/use_cases/tickets/create_ticket/create_ticket_command.dart';
-import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command.dart';
 import 'package:enterprise_management/application/use_cases/tickets/update_ticket/update_ticket_command.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
@@ -83,6 +82,4 @@ class CreateTicketFormController extends _$CreateTicketFormController {
     final router = ref.read(appRouterProvider);
     router.pop();
   }
-
-  bool get isValid => state.isValid;
 }

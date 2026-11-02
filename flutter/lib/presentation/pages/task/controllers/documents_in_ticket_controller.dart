@@ -1,12 +1,10 @@
 import 'package:enterprise_management/application/use_cases/documents/get_documents_by_ticket/get_documents_by_ticket_query.dart';
-import 'package:enterprise_management/application/use_cases/documents/upload_document/upload_document_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/upload_file/upload_file_command.dart';
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
 
 part 'documents_in_ticket_controller.g.dart';
 @Riverpod()

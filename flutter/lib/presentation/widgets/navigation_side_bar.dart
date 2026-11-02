@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../infrastructure/assets/gen/assets.gen.dart';
@@ -52,8 +51,8 @@ class NavigationSideBar extends StatelessWidget {
                     ),
                   ),
                   NavigationItem(
-                    title: 'Dashboard',
-                    icon: Assets.lib.infrastructure.assets.icons.grid,
+                    title: 'Knowledge Base',
+                    icon: Assets.lib.infrastructure.assets.icons.book,
                     active: tabsRouter.activeIndex == 0,
                     onTap: () {
                       tabsRouter.setActiveIndex(0);
@@ -68,15 +67,15 @@ class NavigationSideBar extends StatelessWidget {
                     },
                   ),
                   NavigationItem(
-                    title: 'Knowledge Base',
-                    icon: Assets.lib.infrastructure.assets.icons.book,
+                    title: 'Tasks',
+                    icon: Assets.lib.infrastructure.assets.icons.tick,
                     active: tabsRouter.activeIndex == 2,
                     onTap: () {
                       tabsRouter.setActiveIndex(2);
                     },
                   ),
                   NavigationItem(
-                    title: 'Tasks',
+                    title: 'User Groups',
                     icon: Assets.lib.infrastructure.assets.icons.tick,
                     active: tabsRouter.activeIndex == 3,
                     onTap: () {
@@ -84,7 +83,7 @@ class NavigationSideBar extends StatelessWidget {
                     },
                   ),
                   NavigationItem(
-                    title: 'User Groups',
+                    title: 'Projects',
                     icon: Assets.lib.infrastructure.assets.icons.tick,
                     active: tabsRouter.activeIndex == 4,
                     onTap: () {
@@ -92,19 +91,11 @@ class NavigationSideBar extends StatelessWidget {
                     },
                   ),
                   NavigationItem(
-                    title: 'Projects',
+                    title: 'Users',
                     icon: Assets.lib.infrastructure.assets.icons.tick,
                     active: tabsRouter.activeIndex == 5,
                     onTap: () {
                       tabsRouter.setActiveIndex(5);
-                    },
-                  ),
-                  NavigationItem(
-                    title: 'Users',
-                    icon: Assets.lib.infrastructure.assets.icons.tick,
-                    active: tabsRouter.activeIndex == 6,
-                    onTap: () {
-                      tabsRouter.setActiveIndex(6);
                     },
                   ),
                 ],

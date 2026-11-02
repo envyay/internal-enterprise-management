@@ -3,10 +3,8 @@ import 'package:enterprise_management/domain/aggregates/user_group/user_group.da
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
 import 'package:enterprise_management/presentation/pages/user_group/controllers/edit_user_group_form_controller.dart';
-import 'package:enterprise_management/presentation/pages/user_group/controllers/user_groups_controller.dart';
 import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EditUserGroupDialog extends ConsumerWidget {

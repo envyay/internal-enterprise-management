@@ -1,8 +1,6 @@
 import 'package:enterprise_management/application/use_cases/projects/get_project/get_project_query.dart';
 import 'package:enterprise_management/application/use_cases/projects/set_users_in_project/set_users_in_project_command.dart';
-import 'package:enterprise_management/application/use_cases/tickets/set_users_in_ticket/set_users_in_ticket_command.dart';
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
-import 'package:enterprise_management/presentation/pages/task/controllers/users_in_ticket_controller.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

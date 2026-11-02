@@ -1,3 +1,5 @@
+import asyncio
+
 from fastapi import APIRouter, HTTPException
 from langchain_core.messages import HumanMessage
 import uuid
@@ -69,7 +71,7 @@ async def chat_endpoint(request: ChatRequest):
     # Fast check: Nếu ASP.NET Core truyền danh sách rỗng -> user không có quyền trên bất kỳ tài liệu nào
     if request.document_ids is not None and len(request.document_ids) == 0:
         return {
-            "response": "Bạn chưa được cấp quyền truy cập vào bất kỳ tài liệu nào để tra cứu.",
+            "response": "You have not been granted access to any documents for reference.",
             "thread_id": active_thread_id
         }
 
@@ -109,7 +111,7 @@ async def chat_stream_endpoint(request: ChatRequest):
     # Fast check: Nếu danh sách document_ids rỗng -> trả về ngay thông báo không có quyền
     if request.document_ids is not None and len(request.document_ids) == 0:
         async def empty_perm_generator():
-            yield f"data: {json.dumps({'type': 'token', 'content': 'Bạn chưa được cấp quyền truy cập vào bất kỳ tài liệu nào để tra cứu.'}, ensure_ascii=False)}\n\n"
+            yield f"data: {json.dumps({'type': 'token', 'content': 'You have not been granted access to any documents for reference.'}, ensure_ascii=False)}\n\n"
             yield f"data: {json.dumps({'type': 'done', 'thread_id': active_thread_id}, ensure_ascii=False)}\n\n"
 
         return StreamingResponse(
@@ -137,7 +139,7 @@ async def chat_stream_endpoint(request: ChatRequest):
     async def event_generator():
         try:
             # Emit initial status
-            yield f"data: {json.dumps({'type': 'status', 'content': 'Đang tiếp nhận và phân tích câu hỏi...'}, ensure_ascii=False)}\n\n"
+            yield f"data: {json.dumps({'type': 'status', 'content': 'Receiving and analyzing the question...'}, ensure_ascii=False)}\n\n"
 
             async for event in graph.astream_events(inputs, config=config_dict, version="v2"):
                 kind = event.get("event")
@@ -147,8 +149,8 @@ async def chat_stream_endpoint(request: ChatRequest):
 
                 # Emit status when tool search starts
                 if kind == "on_tool_start":
-                    tool_name = name or "tìm kiếm"
-                    yield f"data: {json.dumps({'type': 'status', 'content': f'Đang tra cứu dữ liệu ({tool_name})...'}, ensure_ascii=False)}\n\n"
+                    tool_name = name or "search"
+                    yield f"data: {json.dumps({'type': 'status', 'content': f'Retrieving data ({tool_name})...'}, ensure_ascii=False)}\n\n"
 
                 # Handle clarification request when question is not clear
                 elif kind == "on_chain_end" and name == "rewrite_query":
@@ -186,4 +188,3 @@ async def chat_stream_endpoint(request: ChatRequest):
             "X-Accel-Buffering": "no"
         }
     )
-

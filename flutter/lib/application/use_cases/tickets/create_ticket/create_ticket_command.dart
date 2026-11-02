@@ -1,5 +1,3 @@
-import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
-import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

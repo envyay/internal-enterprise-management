@@ -1,13 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
-import 'package:enterprise_management/presentation/pages/project/controllers/edit_project_form_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/edit_ticket_status_form_controller.dart';
 import 'package:enterprise_management/presentation/widgets/solid_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EditTicketStatusDialog extends ConsumerWidget {

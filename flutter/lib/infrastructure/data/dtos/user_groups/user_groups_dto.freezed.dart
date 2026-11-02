@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserGroupDto {
 
- String get id; String get name; List<UserDto> get users;
+ String get id; String get name; List<UserDto>? get users; List<UserGroupPolicyDto>? get userGroupPolicies;
 /// Create a copy of UserGroupDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $UserGroupDtoCopyWith<UserGroupDto> get copyWith => _$UserGroupDtoCopyWithImpl<U
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserGroupDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.users, users));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserGroupDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.users, users)&&const DeepCollectionEquality().equals(other.userGroupPolicies, userGroupPolicies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(users));
+int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(users),const DeepCollectionEquality().hash(userGroupPolicies));
 
 @override
 String toString() {
-  return 'UserGroupDto(id: $id, name: $name, users: $users)';
+  return 'UserGroupDto(id: $id, name: $name, users: $users, userGroupPolicies: $userGroupPolicies)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $UserGroupDtoCopyWith<$Res>  {
   factory $UserGroupDtoCopyWith(UserGroupDto value, $Res Function(UserGroupDto) _then) = _$UserGroupDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, List<UserDto> users
+ String id, String name, List<UserDto>? users, List<UserGroupPolicyDto>? userGroupPolicies
 });
 
 
@@ -66,12 +66,13 @@ class _$UserGroupDtoCopyWithImpl<$Res>
 
 /// Create a copy of UserGroupDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? users = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? users = freezed,Object? userGroupPolicies = freezed,}) {
   return _then(UserGroupDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,users: null == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,
+as String,users: freezed == users ? _self.users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>?,userGroupPolicies: freezed == userGroupPolicies ? _self.userGroupPolicies : userGroupPolicies // ignore: cast_nullable_to_non_nullable
+as List<UserGroupPolicyDto>?,
   ));
 }
 
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  List<UserDto> users)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  List<UserDto>? users,  List<UserGroupPolicyDto>? userGroupPolicies)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserGroupDto() when $default != null:
-return $default(_that.id,_that.name,_that.users);case _:
+return $default(_that.id,_that.name,_that.users,_that.userGroupPolicies);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.id,_that.name,_that.users);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  List<UserDto> users)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  List<UserDto>? users,  List<UserGroupPolicyDto>? userGroupPolicies)  $default,) {final _that = this;
 switch (_that) {
 case _UserGroupDto():
-return $default(_that.id,_that.name,_that.users);case _:
+return $default(_that.id,_that.name,_that.users,_that.userGroupPolicies);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.id,_that.name,_that.users);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  List<UserDto> users)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  List<UserDto>? users,  List<UserGroupPolicyDto>? userGroupPolicies)?  $default,) {final _that = this;
 switch (_that) {
 case _UserGroupDto() when $default != null:
-return $default(_that.id,_that.name,_that.users);case _:
+return $default(_that.id,_that.name,_that.users,_that.userGroupPolicies);case _:
   return null;
 
 }
@@ -212,16 +213,27 @@ return $default(_that.id,_that.name,_that.users);case _:
 @JsonSerializable()
 
 class _UserGroupDto implements UserGroupDto {
-  const _UserGroupDto({required this.id, required this.name, required  List<UserDto> users}): _users = users;
+  const _UserGroupDto({required this.id, required this.name, required  List<UserDto>? users, required  List<UserGroupPolicyDto>? userGroupPolicies}): _users = users,_userGroupPolicies = userGroupPolicies;
   factory _UserGroupDto.fromJson(Map<String, dynamic> json) => _$UserGroupDtoFromJson(json);
 
 @override final  String id;
 @override final  String name;
- final  List<UserDto> _users;
-@override List<UserDto> get users {
+ final  List<UserDto>? _users;
+@override List<UserDto>? get users {
+  final value = _users;
+  if (value == null) return null;
   if (_users is EqualUnmodifiableListView) return _users;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_users);
+  return EqualUnmodifiableListView(value);
+}
+
+ final  List<UserGroupPolicyDto>? _userGroupPolicies;
+@override List<UserGroupPolicyDto>? get userGroupPolicies {
+  final value = _userGroupPolicies;
+  if (value == null) return null;
+  if (_userGroupPolicies is EqualUnmodifiableListView) return _userGroupPolicies;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(value);
 }
 
 
@@ -238,16 +250,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserGroupDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._users, _users));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserGroupDto&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other._users, _users)&&const DeepCollectionEquality().equals(other._userGroupPolicies, _userGroupPolicies));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(_users));
+int get hashCode => Object.hash(runtimeType,id,name,const DeepCollectionEquality().hash(_users),const DeepCollectionEquality().hash(_userGroupPolicies));
 
 @override
 String toString() {
-  return 'UserGroupDto(id: $id, name: $name, users: $users)';
+  return 'UserGroupDto(id: $id, name: $name, users: $users, userGroupPolicies: $userGroupPolicies)';
 }
 
 
@@ -258,7 +270,7 @@ abstract mixin class _$UserGroupDtoCopyWith<$Res> implements $UserGroupDtoCopyWi
   factory _$UserGroupDtoCopyWith(_UserGroupDto value, $Res Function(_UserGroupDto) _then) = __$UserGroupDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, List<UserDto> users
+ String id, String name, List<UserDto>? users, List<UserGroupPolicyDto>? userGroupPolicies
 });
 
 
@@ -275,12 +287,13 @@ class __$UserGroupDtoCopyWithImpl<$Res>
 
 /// Create a copy of UserGroupDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? users = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? users = freezed,Object? userGroupPolicies = freezed,}) {
   return _then(_UserGroupDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,users: null == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,
+as String,users: freezed == users ? _self._users : users // ignore: cast_nullable_to_non_nullable
+as List<UserDto>?,userGroupPolicies: freezed == userGroupPolicies ? _self._userGroupPolicies : userGroupPolicies // ignore: cast_nullable_to_non_nullable
+as List<UserGroupPolicyDto>?,
   ));
 }
 

@@ -1,18 +1,22 @@
 import 'package:enterprise_management/infrastructure/data/local/data_source/providers.dart';
+import 'package:enterprise_management/infrastructure/data/remote/data_source/chat_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/comment_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/department_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/documentRemoteDataSource/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/project_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/ticket_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/ticket_status_service/providers.dart';
+import 'package:enterprise_management/infrastructure/data/remote/data_source/user_group_policy_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_group_service/providers.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/user_service/providers.dart';
+import 'package:enterprise_management/infrastructure/repositories/chat_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/comment_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/department_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/document_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/project_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/ticket_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/ticket_status_repository.dart';
+import 'package:enterprise_management/infrastructure/repositories/user_group_policy_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/user_group_repository.dart';
 import 'package:enterprise_management/infrastructure/repositories/user_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -68,4 +72,17 @@ ICommentRepository commentRepository(Ref ref){
 IDocumentRepository documentRepository(Ref ref){
   final documentRemoteDataSource = ref.watch(documentRemoteProvider);
   return DocumentRepository(documentRemoteDataSource: documentRemoteDataSource);
+}
+
+@Riverpod(keepAlive: true)
+IChatRepository chatRepository(Ref ref){
+  final chatRemoteDataSource = ref.watch(chatRemoteProvider);
+  return ChatRepository(chatRemoteDataSource: chatRemoteDataSource);
+
+}
+
+@Riverpod(keepAlive: true)
+IUserGroupPolicyRepository userGroupPolicyRepository(Ref ref){
+  final userGroupPolicyRemoteDataSource = ref.watch(userGroupPolicyRemoteProvider);
+  return UserGroupPolicyRepository(userGroupPolicyRemoteDataSource: userGroupPolicyRemoteDataSource);
 }

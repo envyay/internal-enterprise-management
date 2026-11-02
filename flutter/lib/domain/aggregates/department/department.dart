@@ -1,6 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:enterprise_management/domain/aggregates/user/user.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:enterprise_management/shared_kernel/aggregate/aggregate_root.dart';
 
 part 'department.mapper.dart';

@@ -1,11 +1,7 @@
-import 'dart:io';
-
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class DocumentTableInTicket extends ConsumerWidget {
   const DocumentTableInTicket({super.key, required this.state});

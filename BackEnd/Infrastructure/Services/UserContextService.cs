@@ -13,4 +13,9 @@ public class UserContextService(IHttpContextAccessor contextAccessor) : IUserCon
 
         return Guid.Parse(id);
     }
+    public List<string> GetUserPolicies()
+    {
+        var policies = contextAccessor.HttpContext?.User.FindAll("policy").ToList();
+        return policies?.Select(p => p.Value).ToList() ?? [];
+    } 
 }

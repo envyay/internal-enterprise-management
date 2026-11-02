@@ -1,9 +1,7 @@
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'document_dto.freezed.dart';
-
 part 'document_dto.g.dart';
 
 @freezed

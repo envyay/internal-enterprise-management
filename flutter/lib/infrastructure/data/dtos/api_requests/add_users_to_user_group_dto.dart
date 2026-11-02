@@ -1,4 +1,3 @@
-import 'package:enterprise_management/infrastructure/data/dtos/users/user_dto.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'add_users_to_user_group_dto.freezed.dart';

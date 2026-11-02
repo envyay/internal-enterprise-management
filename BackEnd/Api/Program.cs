@@ -54,7 +54,6 @@ services.AddScoped<IUnitOfWork, UnitOfWork>();
 services.AddScoped<IJwtService, JwtService>();
 services.AddScoped<IOtpService, OtpService>();
 services.AddScoped<IMailService, MailService>();
-services.AddScoped<IRagService, RagService>();
 
 
 // controllers

@@ -1,6 +1,5 @@
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
-import 'package:enterprise_management/presentation/pages/task/widgets/edit_ticket_drawer.dart';
 import 'package:flutter/material.dart';
 
 class TicketCard extends StatelessWidget {

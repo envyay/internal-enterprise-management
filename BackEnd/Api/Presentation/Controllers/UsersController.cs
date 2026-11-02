@@ -1,5 +1,6 @@
 using Application.UseCases.Users.CreateUser;
 using Application.UseCases.Users.DeleteUser;
+using Application.UseCases.Users.GetPolicies;
 using Application.UseCases.Users.GetProjectsByUserId;
 using Application.UseCases.Users.GetUsers;
 using Application.UseCases.Users.LoginRequest;
@@ -22,6 +23,13 @@ public class UsersController(ISender sender) : ControllerBase
     {
         var users = await sender.Send(new GetUsersQuery());
         return Ok(users);
+    }
+    
+    [HttpGet("GetPolicies")]
+    public async Task<IActionResult> GetPolicies()
+    {
+        var policies = await sender.Send(new GetPoliciesQuery());
+        return Ok(policies);
     }
     
     [Authorize(Policy = AppPolicy.CreateUser)]

@@ -1,3 +1,9 @@
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv(dotenv_path=Path(__file__).resolve().parent / ".env")
+
 #minio
 MINIO_ENDPOINT = "localhost:9000"
 MINIO_ACCESS_KEY = "admin"

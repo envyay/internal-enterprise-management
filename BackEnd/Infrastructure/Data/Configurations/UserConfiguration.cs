@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SharedKernel.Constants;
@@ -18,9 +18,15 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(x => x.Email).HasMaxLength(255);
 
-        builder.Property(x => x.Status).HasConversion<int>().HasDefaultValue(UserStatus.Active);
+        builder.Property(x => x.Status)
+            .HasConversion<int>()
+            .HasDefaultValue(UserStatus.Active)
+            .HasSentinel((UserStatus)(-1));
         
-        builder.Property(x => x.Type).HasConversion<int>().HasDefaultValue(UserType.User);
+        builder.Property(x => x.Type)
+            .HasConversion<int>()
+            .HasDefaultValue(UserType.User)
+            .HasSentinel((UserType)(-1));
         
         builder.Property(x => x.IsProfileCompleted).HasDefaultValue(false);
         

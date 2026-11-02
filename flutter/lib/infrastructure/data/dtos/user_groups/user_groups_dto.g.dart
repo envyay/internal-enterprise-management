@@ -10,8 +10,11 @@ _UserGroupDto _$UserGroupDtoFromJson(Map<String, dynamic> json) =>
     _UserGroupDto(
       id: json['id'] as String,
       name: json['name'] as String,
-      users: (json['users'] as List<dynamic>)
-          .map((e) => UserDto.fromJson(e as Map<String, dynamic>))
+      users: (json['users'] as List<dynamic>?)
+          ?.map((e) => UserDto.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      userGroupPolicies: (json['userGroupPolicies'] as List<dynamic>?)
+          ?.map((e) => UserGroupPolicyDto.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -20,4 +23,5 @@ Map<String, dynamic> _$UserGroupDtoToJson(_UserGroupDto instance) =>
       'id': instance.id,
       'name': instance.name,
       'users': instance.users,
+      'userGroupPolicies': instance.userGroupPolicies,
     };

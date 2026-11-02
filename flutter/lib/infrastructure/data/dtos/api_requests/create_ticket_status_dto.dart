@@ -1,4 +1,3 @@
-import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'create_ticket_status_dto.freezed.dart';

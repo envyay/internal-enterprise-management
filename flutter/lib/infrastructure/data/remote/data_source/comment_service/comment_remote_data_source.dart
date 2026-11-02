@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_comment_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_comment_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_responses/api_response.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/comments/comment_dto.dart';

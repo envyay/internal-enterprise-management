@@ -383,3 +383,93 @@ final class DocumentRepositoryProvider
 
 String _$documentRepositoryHash() =>
     r'7ffd3e7735cf2da1b3e09e1697f7dbd1f48d2166';
+
+@ProviderFor(chatRepository)
+final chatRepositoryProvider = ChatRepositoryProvider._();
+
+final class ChatRepositoryProvider
+    extends
+        $FunctionalProvider<IChatRepository, IChatRepository, IChatRepository>
+    with $Provider<IChatRepository> {
+  ChatRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'chatRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$chatRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<IChatRepository> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  IChatRepository create(Ref ref) {
+    return chatRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IChatRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IChatRepository>(value),
+    );
+  }
+}
+
+String _$chatRepositoryHash() => r'9dc789c0ec9b22626ed1dc3428904c3575e3b5f7';
+
+@ProviderFor(userGroupPolicyRepository)
+final userGroupPolicyRepositoryProvider = UserGroupPolicyRepositoryProvider._();
+
+final class UserGroupPolicyRepositoryProvider
+    extends
+        $FunctionalProvider<
+          IUserGroupPolicyRepository,
+          IUserGroupPolicyRepository,
+          IUserGroupPolicyRepository
+        >
+    with $Provider<IUserGroupPolicyRepository> {
+  UserGroupPolicyRepositoryProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'userGroupPolicyRepositoryProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$userGroupPolicyRepositoryHash();
+
+  @$internal
+  @override
+  $ProviderElement<IUserGroupPolicyRepository> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  IUserGroupPolicyRepository create(Ref ref) {
+    return userGroupPolicyRepository(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(IUserGroupPolicyRepository value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<IUserGroupPolicyRepository>(value),
+    );
+  }
+}
+
+String _$userGroupPolicyRepositoryHash() =>
+    r'c408135cb13de213e676a100247d125b7b2970e1';

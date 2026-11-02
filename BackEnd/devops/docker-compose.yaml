@@ -55,8 +55,10 @@ services:
       - backend-network
 
   minio:
-    image: quay.io/minio/minio:latest
     container_name: minio_db
+    build:
+      context: ./minio
+      dockerfile: Dockerfile
     ports:
       - "9000:9000" # S3 API
       - "9001:9001" # Web Console
@@ -79,33 +81,12 @@ services:
     command: redis-server --appendonly yes
     networks:
       - backend-network
-  
-  ollama:
-    image: ollama/ollama:latest
-    container_name: ollama-service
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_models:/root/.ollama
-    environment:
-      - OLLAMA_MAX_LOADED_MODELS=3
-      - OLLAMA_KEEP_ALIVE=-1
-      - OLLAMA_FLASH_ATTENTION=1
-      - OLLAMA_KV_CACHE_TYPE=q8_0
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [ gpu ]
 
 volumes:
   postgres_data:
   qdrant_data:
   minio_data:
   valkey_data:
-  ollama_models:
 
 networks:
   backend-network:

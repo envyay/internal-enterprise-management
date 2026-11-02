@@ -5,7 +5,6 @@ import 'package:enterprise_management/application/use_cases/documents/upload_fil
 import 'package:enterprise_management/infrastructure/repositories/document_repository.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
-import 'package:uuid/uuid.dart';
 
 class UploadFilesCommandHandler
     extends ICommandHandler<UploadFilesCommand, bool> {

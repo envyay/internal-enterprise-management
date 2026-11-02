@@ -1,8 +1,6 @@
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/api_requests/set_users_in_department.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/create_department_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/api_requests/delete_department_dto.dart';
-import 'package:enterprise_management/infrastructure/data/dtos/api_requests/remove_user_from_department_dto.dart';
+import 'package:enterprise_management/infrastructure/data/dtos/api_requests/set_users_in_department.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/api_requests/update_department_dto.dart';
 import 'package:enterprise_management/infrastructure/data/dtos/departments/department_dto.dart';
 import 'package:enterprise_management/infrastructure/data/remote/data_source/department_service/department_remote_data_source.dart';

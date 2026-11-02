@@ -13,6 +13,8 @@ import '../data/local/data_source/auth_local_data_source.dart';
 abstract interface class IUserRepository {
   Future<List<User>> getUsers();
 
+  Future<List<String>> getPolicies();
+
   Future<List<Project>> getProjectsByUserId({required String userId});
 
   Future<String> createUser({required String fullName, required String email});
@@ -26,6 +28,8 @@ abstract interface class IUserRepository {
   Future<bool> loginVerify({required String email, required String otp});
 
   Future<String?> getAccessToken();
+
+  Future<void> deleteAccessToken();
 }
 
 class UsersRepository implements IUserRepository {
@@ -91,5 +95,16 @@ class UsersRepository implements IUserRepository {
   Future<List<Project>> getProjectsByUserId({required String userId}) async {
     final res = await _userRemoteDataSource.getProjectsByUserId(userId);
     return res.data?.map((item) => item.toAggregate()).toList() ?? [];
+  }
+
+  @override
+  Future<List<String>> getPolicies() async {
+    final res = await _userRemoteDataSource.getPolicies();
+    return res.data;
+  }
+
+  @override
+  Future<void> deleteAccessToken() {
+    return _authLocalDataSource.deleteAccessToken();
   }
 }

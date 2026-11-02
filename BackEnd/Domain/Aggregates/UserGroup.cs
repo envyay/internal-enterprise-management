@@ -1,4 +1,4 @@
-﻿using SharedKernel.Aggregate;
+using SharedKernel.Aggregate;
 
 namespace Domain.Aggregates;
 
@@ -22,7 +22,28 @@ public class UserGroup : AggregateRoot<Guid>
     {
         Name = name;
         Users.Clear();
-        Users = users;
+        foreach (var user in users)
+        {
+            Users.Add(user);
+        }
+    }
+    
+    public void SetUsers(List<User> users)
+    {
+        Users.Clear();
+        foreach (var user in users)
+        {
+            Users.Add(user);
+        }
+    }
+    
+    public void SetPolicies(List<UserGroupPolicy> userGroupPolicies)
+    {
+        UserGroupPolicies.Clear();
+        foreach (var policy in userGroupPolicies)
+        {
+            UserGroupPolicies.Add(policy);
+        }
     }
 
     public void AddUsers(List<User> users)

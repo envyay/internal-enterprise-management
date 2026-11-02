@@ -25,6 +25,4 @@ class CreateTicketStatusFormController extends _$CreateTicketStatusFormControlle
     final router = ref.read(appRouterProvider);
     router.pop();
   }
-
-  bool get isValid => state.isValid;
 }
