@@ -59,32 +59,32 @@ class NavigationSideBar extends StatelessWidget {
                     },
                   ),
                   NavigationItem(
-                    title: 'Departments',
-                    icon: Assets.lib.infrastructure.assets.icons.adminPanel,
+                    title: 'Tasks',
+                    icon: Assets.lib.infrastructure.assets.icons.tick,
                     active: tabsRouter.activeIndex == 1,
                     onTap: () {
                       tabsRouter.setActiveIndex(1);
                     },
                   ),
                   NavigationItem(
-                    title: 'Tasks',
-                    icon: Assets.lib.infrastructure.assets.icons.tick,
+                    title: 'Departments',
+                    icon: Assets.lib.infrastructure.assets.icons.adminPanel,
                     active: tabsRouter.activeIndex == 2,
                     onTap: () {
                       tabsRouter.setActiveIndex(2);
                     },
                   ),
                   NavigationItem(
-                    title: 'User Groups',
-                    icon: Assets.lib.infrastructure.assets.icons.tick,
+                    title: 'Projects',
+                    icon: Assets.lib.infrastructure.assets.icons.project,
                     active: tabsRouter.activeIndex == 3,
                     onTap: () {
                       tabsRouter.setActiveIndex(3);
                     },
                   ),
                   NavigationItem(
-                    title: 'Projects',
-                    icon: Assets.lib.infrastructure.assets.icons.tick,
+                    title: 'User Groups',
+                    icon: Assets.lib.infrastructure.assets.icons.userGroup,
                     active: tabsRouter.activeIndex == 4,
                     onTap: () {
                       tabsRouter.setActiveIndex(4);
@@ -92,7 +92,7 @@ class NavigationSideBar extends StatelessWidget {
                   ),
                   NavigationItem(
                     title: 'Users',
-                    icon: Assets.lib.infrastructure.assets.icons.tick,
+                    icon: Assets.lib.infrastructure.assets.icons.user,
                     active: tabsRouter.activeIndex == 5,
                     onTap: () {
                       tabsRouter.setActiveIndex(5);

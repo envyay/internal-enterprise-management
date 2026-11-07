@@ -5,7 +5,7 @@ part 'set_policies_in_user_group_dto.g.dart';
 
 @freezed
 abstract class SetPoliciesInUserGroupDto with _$SetPoliciesInUserGroupDto{
-  const factory SetPoliciesInUserGroupDto({required String id, required List<String> policyIds}) = _SetPoliciesInUserGroupDto;
+  const factory SetPoliciesInUserGroupDto({required String id, required List<String> policies}) = _SetPoliciesInUserGroupDto;
 
   factory SetPoliciesInUserGroupDto.fromJson(Map<String, dynamic> json) => _$SetPoliciesInUserGroupDtoFromJson(json);
 }

@@ -57,16 +57,16 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
                       const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final policy = policies[index];
-                    final isSelected = _selectedPolicyIds.contains(policy.id);
+                    final isSelected = _selectedPolicyIds.contains(policy.policy);
 
                     return CheckboxListTile(
                       value: isSelected,
                       onChanged: (val) {
                         setState(() {
                           if (val == true) {
-                            _selectedPolicyIds.add(policy.id);
+                            _selectedPolicyIds.add(policy.policy);
                           } else {
-                            _selectedPolicyIds.remove(policy.id);
+                            _selectedPolicyIds.remove(policy.policy);
                           }
                         });
                       },
@@ -105,7 +105,7 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
                     : () async {
                         final allPolicies = policiesState.value ?? [];
                         final selectedPolicies = allPolicies
-                            .where((u) => _selectedPolicyIds.contains(u.id))
+                            .where((u) => _selectedPolicyIds.contains(u.policy))
                             .toList();
 
                         if (widget.onSave != null) {

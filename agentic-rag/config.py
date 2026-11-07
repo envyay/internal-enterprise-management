@@ -10,6 +10,12 @@ MINIO_ACCESS_KEY = "admin"
 MINIO_SECRET_KEY = "123456@An"
 MINIO_SECURE = False
 
+#postgres
+POSTGRES_CHECKPOINT_URL = os.environ.get(
+    "POSTGRES_CHECKPOINT_URL",
+    "postgresql://admin:123456%40An@localhost:5432/iem?sslmode=disable"
+)
+
 #qdrant
 QDRANT_URL = "localhost:6333"
 CHILD_COLLECTION = "iem"

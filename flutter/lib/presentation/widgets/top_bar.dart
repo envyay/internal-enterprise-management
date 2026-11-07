@@ -25,9 +25,6 @@ class TopBar extends ConsumerWidget {
             spacing: 12,
             children: [
               InkWell(
-                child: Assets.lib.infrastructure.assets.icons.bell.svg(),
-              ),
-              InkWell(
                 onTap: () => _showLogoutDialog(context, ref),
                 child: Assets.lib.infrastructure.assets.icons.logout.svg(),
               ),

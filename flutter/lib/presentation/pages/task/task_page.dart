@@ -17,8 +17,32 @@ import '../../widgets/base_page.dart';
 import '../../widgets/overview_container.dart';
 
 @RoutePage()
-class ProjectTrackerPage extends ConsumerWidget {
+class ProjectTrackerPage extends ConsumerStatefulWidget {
   const ProjectTrackerPage({super.key});
+
+  @override
+  ConsumerState<ProjectTrackerPage> createState() => _ProjectTrackerPageState();
+}
+
+class _ProjectTrackerPageState extends ConsumerState<ProjectTrackerPage> {
+  String? _selectedProjectId;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final projects = ref.read(projectsControllerProvider).value ?? [];
+      if (_selectedProjectId == null && projects.isNotEmpty) {
+        final firstId = projects.first.id;
+        setState(() {
+          _selectedProjectId = firstId;
+        });
+        ref
+            .read(ticketStatusesControllerProvider.notifier)
+            .getTicketStatusesByProjectId(projectId: firstId);
+      }
+    });
+  }
 
   void _createTicketDrawer(BuildContext context, TicketStatus ticketStatus, String projectId) {
     showGeneralDialog(
@@ -96,31 +120,81 @@ class ProjectTrackerPage extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final state = ref.watch(projectsControllerProvider);
     final ticketStatusState = ref.watch(ticketStatusesControllerProvider);
+
+    ref.listen(projectsControllerProvider, (previous, next) {
+      final projects = next.value ?? [];
+      if (_selectedProjectId == null && projects.isNotEmpty) {
+        final firstId = projects.first.id;
+        setState(() {
+          _selectedProjectId = firstId;
+        });
+        ref
+            .read(ticketStatusesControllerProvider.notifier)
+            .getTicketStatusesByProjectId(projectId: firstId);
+      }
+    });
 
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: Builder(
         builder: (scaffoldContext) => BasePage(
-          dropDown: state.when(
-            data: (projects) => DropdownButtonFormField<String>(
-              items: projects
-                  .map(
-                    (p) => DropdownMenuItem(value: p.id, child: Text(p.name)),
-                  )
-                  .toList(),
-              onChanged: (projectId) {
-                final ticketStatusesController = ref.watch(
-                  ticketStatusesControllerProvider.notifier,
-                );
-                ticketStatusesController.getTicketStatusesByProjectId(
-                  projectId: projectId ?? '',
-                );
-              },
-            ),
-            error: (error, stackTrace) => const Text('Error'),
+          subHeader: state.when(
+            data: (projects) {
+              if (projects.isEmpty) return const SizedBox();
+              final currentSelectedId =
+                  _selectedProjectId ?? projects.first.id;
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: projects.map((p) {
+                    final isSelected = p.id == currentSelectedId;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: ChoiceChip(
+                        label: Text(p.name),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          if (p.id != _selectedProjectId) {
+                            setState(() {
+                              _selectedProjectId = p.id;
+                            });
+                            ref
+                                .read(ticketStatusesControllerProvider.notifier)
+                                .getTicketStatusesByProjectId(
+                                  projectId: p.id,
+                                );
+                          }
+                        },
+                        showCheckmark: false,
+                        selectedColor: const Color(0xFF001E40),
+                        backgroundColor: Colors.white,
+                        labelStyle: TextStyle(
+                          color: isSelected
+                              ? Colors.white
+                              : const Color(0xFF43474F),
+                          fontSize: 13,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w500,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          side: BorderSide(
+                            color: isSelected
+                                ? const Color(0xFF001E40)
+                                : const Color(0xFFC3C6D1),
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              );
+            },
+            error: (error, stackTrace) => const Text('Error loading projects'),
             loading: () => const CircularProgressIndicator(),
           ),
           title: 'Project Alpha Tracker',
@@ -162,7 +236,7 @@ class ProjectTrackerPage extends ConsumerWidget {
                               return Container(
 
                                 decoration: BoxDecoration(
-                                  color: isHovering ? Colors.blue.withOpacity(0.08) : Colors.transparent,
+                                  color: isHovering ? Colors.blue.withValues(alpha: 0.08) : Colors.transparent,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: ticketsState.when(

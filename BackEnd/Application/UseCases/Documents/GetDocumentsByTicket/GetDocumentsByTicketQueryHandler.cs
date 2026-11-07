@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Documents;
+using Application.DTOs.Documents;
 using Domain.Aggregates;
 using Infrastructure.Repository;
 using MediatR;
@@ -24,6 +24,7 @@ public class GetDocumentsByTicketQueryHandler(IRepository<Document, Guid> docume
                 Status = x.Status,
                 Size = x.Size,
                 Extension = x.Extension,
+                CreatedAt = x.CreatedAt,
             })
             .ToListAsync(cancellationToken);
         return docs;

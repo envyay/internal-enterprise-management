@@ -24,6 +24,12 @@ class DocumentMapper extends ClassMapperBase<Document> {
 
   static String _$id(Document v) => v.id;
   static const Field<Document, String> _f$id = Field('id', _$id);
+  static DateTime? _$createdAt(Document v) => v.createdAt;
+  static const Field<Document, DateTime> _f$createdAt = Field(
+    'createdAt',
+    _$createdAt,
+    opt: true,
+  );
   static String? _$referenceId(Document v) => v.referenceId;
   static const Field<Document, String> _f$referenceId = Field(
     'referenceId',
@@ -62,6 +68,7 @@ class DocumentMapper extends ClassMapperBase<Document> {
   @override
   final MappableFields<Document> fields = const {
     #id: _f$id,
+    #createdAt: _f$createdAt,
     #referenceId: _f$referenceId,
     #name: _f$name,
     #bucketName: _f$bucketName,
@@ -75,6 +82,7 @@ class DocumentMapper extends ClassMapperBase<Document> {
   static Document _instantiate(DecodingData data) {
     return Document(
       id: data.dec(_f$id),
+      createdAt: data.dec(_f$createdAt),
       referenceId: data.dec(_f$referenceId),
       name: data.dec(_f$name),
       bucketName: data.dec(_f$bucketName),
@@ -145,6 +153,7 @@ abstract class DocumentCopyWith<$R, $In extends Document, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   $R call({
     String? id,
+    DateTime? createdAt,
     String? referenceId,
     String? name,
     String? bucketName,
@@ -168,6 +177,7 @@ class _DocumentCopyWithImpl<$R, $Out>
   @override
   $R call({
     String? id,
+    Object? createdAt = $none,
     Object? referenceId = $none,
     String? name,
     String? bucketName,
@@ -179,6 +189,7 @@ class _DocumentCopyWithImpl<$R, $Out>
   }) => $apply(
     FieldCopyWithData({
       if (id != null) #id: id,
+      if (createdAt != $none) #createdAt: createdAt,
       if (referenceId != $none) #referenceId: referenceId,
       if (name != null) #name: name,
       if (bucketName != null) #bucketName: bucketName,
@@ -192,6 +203,7 @@ class _DocumentCopyWithImpl<$R, $Out>
   @override
   Document $make(CopyWithData data) => Document(
     id: data.get(#id, or: $value.id),
+    createdAt: data.get(#createdAt, or: $value.createdAt),
     referenceId: data.get(#referenceId, or: $value.referenceId),
     name: data.get(#name, or: $value.name),
     bucketName: data.get(#bucketName, or: $value.bucketName),

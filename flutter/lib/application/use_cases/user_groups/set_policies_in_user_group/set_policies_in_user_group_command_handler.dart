@@ -9,7 +9,7 @@ class SetPoliciesInUserGroupCommandHandler extends ICommandHandler<SetPoliciesIn
 
   @override
   Future<Result<bool>> handle(SetPoliciesInUserGroupCommand command) async {
-    final res = await _userGroupRepository.setPoliciesInUserGroup(id: command.id, policyIds: command.policyIds);
+    final res = await _userGroupRepository.setPoliciesInUserGroup(id: command.id, policies: command.policies);
     return Result.success(res);
   }
 }

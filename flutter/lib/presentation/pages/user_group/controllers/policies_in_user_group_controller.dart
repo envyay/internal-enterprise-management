@@ -30,11 +30,11 @@ class PoliciesInUserGroupController extends _$PoliciesInUserGroupController {
 
   Future<void> setPoliciesInUserGroup({
     required String id,
-    required List<String> policyIds,
+    required List<String> policies,
   }) async {
     final mediator = ref.read(mediatorProvider);
     final res = await mediator.send(
-      SetPoliciesInUserGroupCommand(id: id, policyIds: policyIds),
+      SetPoliciesInUserGroupCommand(id: id, policies: policies),
     );
 
     res.when(

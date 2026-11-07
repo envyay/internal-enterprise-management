@@ -42,6 +42,11 @@ public static class AppPolicy
 {
     // Chat
     public const string Chat = nameof(Chat);
+    public const string GetConversations = nameof(GetConversations);
+    public const string GetChatMessagesByConversationId = nameof(GetChatMessagesByConversationId);
+    public const string CreateConversation = nameof(CreateConversation);
+    public const string CreateChatMessage = nameof(CreateChatMessage);
+    public const string DeleteConversationById = nameof(DeleteConversationById);
     
     // UserGroupPolicy
     public const string GetAllUserGroupPolicies = nameof(GetAllUserGroupPolicies);
@@ -55,9 +60,7 @@ public static class AppPolicy
     public const string CreateUserGroup = nameof(CreateUserGroup);
     public const string UpdateUserGroup = nameof(UpdateUserGroup);
     public const string DeleteUserGroup = nameof(DeleteUserGroup);
-    public const string AddPoliciesToUserGroup = nameof(AddPoliciesToUserGroup);
     public const string RemovePolicyFromUserGroup = nameof(RemovePolicyFromUserGroup);
-    public const string AddUsersToUserGroup = nameof(AddUsersToUserGroup);
     public const string RemoveUserFromUserGroup = nameof(RemoveUserFromUserGroup);
 
     // User
@@ -128,6 +131,11 @@ public static class AppPolicy
     [
         // Chat
         Chat,
+        GetConversations,
+        GetChatMessagesByConversationId,
+        CreateConversation,
+        CreateChatMessage,
+        DeleteConversationById,
         
         // UserGroupPolicy
         GetAllUserGroupPolicies,
@@ -141,9 +149,7 @@ public static class AppPolicy
         CreateUserGroup,
         UpdateUserGroup,
         DeleteUserGroup,
-        AddPoliciesToUserGroup,
         RemovePolicyFromUserGroup,
-        AddUsersToUserGroup,
         RemoveUserFromUserGroup,
 
         // User

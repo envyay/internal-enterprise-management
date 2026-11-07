@@ -1,4 +1,4 @@
-﻿using SharedKernel.Constants;
+using SharedKernel.Constants;
 
 namespace Application.DTOs.Documents;
 
@@ -13,4 +13,5 @@ public class DocumentDto
     public string Extension { get; set; }
     public string Name { get; set; }
     public DocumentStatus Status { get; set; }  
+    public DateTime? CreatedAt { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Documents;
+using Application.DTOs.Documents;
 using Domain.Aggregates;
 using Infrastructure.Repository;
 using MediatR;
@@ -26,6 +26,7 @@ public class GetDocumentsByDepartmentQueryHandler(IRepository<Document, Guid> do
                 Status = x.Status,
                 Size = x.Size,
                 Extension = x.Extension,
+                CreatedAt = x.CreatedAt,
             })
             .ToListAsync(cancellationToken);
         return docs;

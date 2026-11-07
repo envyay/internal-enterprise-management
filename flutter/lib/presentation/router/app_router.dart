@@ -15,10 +15,10 @@ class AppRouter extends RootStackRouter {
       page: MainRoute.page,
       children: [
         AutoRoute(page: KnowledgeBaseRoute.page),
-        AutoRoute(page: DepartmentRoute.page),
         AutoRoute(page: ProjectTrackerRoute.page),
-        AutoRoute(page: UserGroupRoute.page),
+        AutoRoute(page: DepartmentRoute.page),
         AutoRoute(page: ProjectRoute.page),
+        AutoRoute(page: UserGroupRoute.page),
         AutoRoute(page: UserRoute.page),
       ],
     ),

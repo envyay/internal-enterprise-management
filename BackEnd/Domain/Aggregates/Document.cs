@@ -1,4 +1,4 @@
-﻿using SharedKernel.Aggregate;
+using SharedKernel.Aggregate;
 using SharedKernel.Constants;
 
 namespace Domain.Aggregates;
@@ -37,6 +37,7 @@ public class Document : AggregateRoot<Guid>
             Size = size,
             Extension = extension,
             Status = DocumentStatus.Active,
+            CreatedAt = DateTime.UtcNow,
         };
     }
 

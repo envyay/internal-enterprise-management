@@ -17,3 +17,5 @@ urllib3
 uvicorn
 langchain-google-genai
 python-dotenv
+langgraph-checkpoint-postgres
+psycopg[binary,pool]

@@ -37,25 +37,9 @@ public class UserGroup : AggregateRoot<Guid>
         }
     }
     
-    public void SetPolicies(List<UserGroupPolicy> userGroupPolicies)
+    public void SetPolicies(List<UserGroupPolicy> policies)
     {
         UserGroupPolicies.Clear();
-        foreach (var policy in userGroupPolicies)
-        {
-            UserGroupPolicies.Add(policy);
-        }
-    }
-
-    public void AddUsers(List<User> users)
-    {
-        foreach (var user in users)
-        {
-            Users.Add(user);
-        }
-    }
-
-    public void AddPolicies(List<UserGroupPolicy> policies)
-    {
         foreach (var policy in policies)
         {
             UserGroupPolicies.Add(policy);

@@ -2,6 +2,7 @@ using Application.DTOs.UserGroupPolicies;
 using Domain.Aggregates;
 using Infrastructure.Repository;
 using MediatR;
+using SharedKernel.Constants;
 
 namespace Application.UseCases.UserGroupPolicies;
 
@@ -9,11 +10,11 @@ public class GetUserGroupPoliciesQueryHandler(IRepository<UserGroupPolicy, Guid>
 {
     public async Task<List<UserGroupPolicyDto>> Handle(GetUserGroupPoliciesQuery request, CancellationToken cancellationToken)
     {
-        var userGroupPolicies = await userGroupPolicyRepository.GetAll(cancellationToken);
+        var userGroupPolicies = AppPolicy.Policies;
         return userGroupPolicies.Select(x => new UserGroupPolicyDto
         {
-            Id = x.Id,
-            Policy = x.Policy,
+            Id = Guid.CreateVersion7(),
+            Policy = x,
             UserGroup = null
         }).ToList();
     }

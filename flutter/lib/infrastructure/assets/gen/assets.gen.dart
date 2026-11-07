@@ -127,6 +127,10 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get profile =>
       const SvgGenImage('lib/infrastructure/assets/icons/profile.svg');
 
+  /// File path: lib/infrastructure/assets/icons/project.svg
+  SvgGenImage get project =>
+      const SvgGenImage('lib/infrastructure/assets/icons/project.svg');
+
   /// File path: lib/infrastructure/assets/icons/search.svg
   SvgGenImage get search =>
       const SvgGenImage('lib/infrastructure/assets/icons/search.svg');
@@ -138,6 +142,10 @@ class $LibInfrastructureAssetsIconsGen {
   /// File path: lib/infrastructure/assets/icons/settings.svg
   SvgGenImage get settings =>
       const SvgGenImage('lib/infrastructure/assets/icons/settings.svg');
+
+  /// File path: lib/infrastructure/assets/icons/sidebarRight.svg
+  SvgGenImage get sidebarRight =>
+      const SvgGenImage('lib/infrastructure/assets/icons/sidebarRight.svg');
 
   /// File path: lib/infrastructure/assets/icons/subtask.svg
   SvgGenImage get subtask =>
@@ -155,9 +163,17 @@ class $LibInfrastructureAssetsIconsGen {
   SvgGenImage get timeline =>
       const SvgGenImage('lib/infrastructure/assets/icons/timeline.svg');
 
+  /// File path: lib/infrastructure/assets/icons/uploadFile.svg
+  SvgGenImage get uploadFile =>
+      const SvgGenImage('lib/infrastructure/assets/icons/uploadFile.svg');
+
   /// File path: lib/infrastructure/assets/icons/user-group.svg
   SvgGenImage get userGroup =>
       const SvgGenImage('lib/infrastructure/assets/icons/user-group.svg');
+
+  /// File path: lib/infrastructure/assets/icons/user.svg
+  SvgGenImage get user =>
+      const SvgGenImage('lib/infrastructure/assets/icons/user.svg');
 
   /// File path: lib/infrastructure/assets/icons/website.svg
   SvgGenImage get website =>
@@ -199,14 +215,18 @@ class $LibInfrastructureAssetsIconsGen {
     pdf,
     plus,
     profile,
+    project,
     search,
     send,
     settings,
+    sidebarRight,
     subtask,
     support,
     tick,
     timeline,
+    uploadFile,
     userGroup,
+    user,
     website,
     window,
     word,

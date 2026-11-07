@@ -18,6 +18,7 @@ public class User : AggregateRoot<Guid>
     public ICollection<Document> CreatedDocuments { get; set; } = new List<Document>();
     public ICollection<Document> UpdateddDocuments { get; set; } = new List<Document>();
     public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public ICollection<Conversation> Conversations { get; set; } = new List<Conversation>();
 
     public static User Create(string fullName, string email)
     {

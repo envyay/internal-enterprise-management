@@ -40,6 +40,13 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
   late final _commentController = TextEditingController();
   late final _scrollController = ScrollController();
 
+  @override
+  void dispose() {
+    _commentController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
@@ -52,12 +59,47 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
     });
   }
 
+  Widget _buildIconButton({
+    required String tooltip,
+    required SvgGenImage icon,
+    required VoidCallback onTap,
+  }) {
+    return IconButton(
+      tooltip: tooltip,
+      onPressed: onTap,
+      visualDensity: VisualDensity.compact,
+      padding: const EdgeInsets.all(6),
+      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
+      style: IconButton.styleFrom(
+        hoverColor: const Color(0xFFF0F4FF),
+        highlightColor: const Color(0xFFD6E4FF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(6),
+        ),
+      ),
+      icon: icon.svg(
+        width: 16,
+        height: 16,
+        colorFilter: const ColorFilter.mode(
+          Color(0xff001E40),
+          BlendMode.srcIn,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final router = ref.read(appRouterProvider);
 
-    final ticketAttachmentState = ref.watch(ticketAttachmentControllerProvider(ticketId: widget.ticket.id));
-    final ticketAttachmentController = ref.watch(ticketAttachmentControllerProvider(ticketId: widget.ticket.id).notifier);
+    final ticketAttachmentState = ref.watch(
+      ticketAttachmentControllerProvider(ticketId: widget.ticket.id),
+    );
+    final ticketAttachmentController = ref.watch(
+      ticketAttachmentControllerProvider(
+        ticketId: widget.ticket.id,
+      ).notifier,
+    );
 
     final ticketsInTicketStatusController = ref.watch(
       ticketsInTicketStatusControllerProvider(widget.ticketStatus.id).notifier,
@@ -74,197 +116,465 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
     final state = ref.watch(createTicketFormControllerProvider(widget.ticket));
     final titleError = state.title.error?.errorMessage;
     final descriptionError = state.description.error?.errorMessage;
-    return Drawer(
+
+    return Container(
       width: 500,
-      child: Stack(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        border: Border(left: BorderSide(color: Color(0xffC3C6D1), width: 1)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 10,
+            offset: Offset(-3, 0),
+          ),
+        ],
+      ),
+      child: Column(
         children: [
-          Positioned(
-            left: 0,
-            top: 0,
-            right: 0,
-            child: Container(
-              height: 55,
-              color: Colors.blue,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                'Edit Ticket Form',
-                style: TextStyle(color: Colors.white, fontSize: 16),
-              ),
+          // Header (Navy Blue)
+          Container(
+            height: 64,
+            decoration: const BoxDecoration(color: Color(0xff001E40)),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Assets.lib.infrastructure.assets.icons.edit.svg(
+                      width: 18,
+                      height: 18,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      'Edit Ticket',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white, size: 20),
+                  onPressed: () => Navigator.of(context).maybePop(),
+                  tooltip: 'Close',
+                ),
+              ],
             ),
           ),
-          Positioned(
-            top: 55,
-            left: 0,
-            right: 0,
-            bottom: 0,
+
+          // Scrollable Body Content
+          Expanded(
             child: ListView(
               controller: _scrollController,
-              padding: .only(bottom: 80),
+              padding: const EdgeInsets.all(20),
               children: [
-                Text('status: ${widget.ticketStatus.name}'),
+                // Status Badge
+                Row(
+                  children: [
+                    const Text(
+                      'Status:',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Color(0xff43474F),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF0F4FF),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFFD6E4FF)),
+                      ),
+                      child: Text(
+                        widget.ticketStatus.name,
+                        style: const TextStyle(
+                          color: Color(0xFF001E40),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // Name/Title
                 TextFormField(
                   initialValue: state.title.value,
-                  onChanged: (value) {
-                    createTicketForm.setTitle(value);
-                  },
+                  onChanged: (value) => createTicketForm.setTitle(value),
                   decoration: InputDecoration(
-                    label: const Text('Name'),
+                    labelText: 'Ticket Title *',
+                    labelStyle: const TextStyle(
+                      color: Color(0xFF43474F),
+                      fontSize: 14,
+                    ),
+                    hintText: 'Enter title',
                     errorText: titleError,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(
+                        color: Color(0xFF001E40),
+                        width: 1.5,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
+                    ),
                   ),
                 ),
+                const SizedBox(height: 16),
+
+                // Description
                 TextFormField(
                   initialValue: state.description.value,
-                  onChanged: (value) {
-                    createTicketForm.setDescription(value);
-                  },
+                  maxLines: 4,
+                  minLines: 2,
+                  onChanged: (value) => createTicketForm.setDescription(value),
                   decoration: InputDecoration(
-                    label: const Text('Description'),
+                    labelText: 'Description',
+                    labelStyle: const TextStyle(
+                      color: Color(0xFF43474F),
+                      fontSize: 14,
+                    ),
+                    hintText: 'Enter description',
                     errorText: descriptionError,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: const BorderSide(
+                        color: Color(0xFF001E40),
+                        width: 1.5,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 14,
+                      vertical: 12,
+                    ),
                   ),
                 ),
-                Container(
-                    alignment: .topLeft,
-                    child: Text('Attachment')),
-                DocumentTableInTicket(state: ticketAttachmentState),
-                SolidButton(title: 'Upload Attachment', onTap: () {
-                  ticketAttachmentController.pickAttachment();
-                },),
-                SolidButton(
-                  title: 'Assign User',
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Consumer(
-                          builder: (context, ref, child) {
-                            final controller = ref.watch(
-                              usersInTicketControllerProvider(widget.ticket.id)
-                                  .notifier,
-                            );
+                const SizedBox(height: 16),
 
-                            final state = ref.watch(
-                              usersInTicketControllerProvider(widget.ticket.id),
+                // Save & Delete Buttons Row
+                Row(
+                  children: [
+                    Expanded(
+                      child: SolidButton(
+                        title: 'Save Changes',
+                        onTap: () async {
+                          await createTicketForm.edit(widget.ticketStatus.id);
+                          final files = ticketAttachmentState.value;
+                          if (files != null && files.isNotEmpty) {
+                            final List<Document> newList = [];
+                            for (final file in files) {
+                              if (file.id == '') {
+                                newList.add(file);
+                              }
+                            }
+                            if (newList.isNotEmpty) {
+                              final documentsInTicketController = ref.watch(
+                                documentsInTicketControllerProvider().notifier,
+                              );
+                              documentsInTicketController.uploadDocument(
+                                referenceId: widget.ticket.id,
+                                files: newList,
+                              );
+                            }
+                          }
+                          ticketsInTicketStatusController.refresh(
+                            widget.ticketStatus.id,
+                          );
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Ticket updated successfully'),
+                                duration: Duration(seconds: 2),
+                              ),
                             );
-                            final users = state.value ?? [];
-                            return AssignUsersDialog(
-                              initialSelectedUserIds: users
-                                  .map((item) => item.id)
-                                  .toSet(),
-                              projectId: widget.projectId,
-                              onSave: (users) {
-                                createTicketForm.setUsers(users);
-                                controller.setUsersInTicket(
-                                  ticketId: widget.ticket.id,
-                                  userIds: users
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(4),
+                      onTap: () async {
+                        final confirm = await showDialog<bool>(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            title: const Text('Delete Ticket'),
+                            content: const Text(
+                              'Are you sure you want to delete this ticket? This action cannot be undone.',
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(ctx, false),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () => Navigator.pop(ctx, true),
+                                child: const Text(
+                                  'Delete',
+                                  style: TextStyle(color: Color(0xFFBA1A1A)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                        if (confirm == true) {
+                          await ticketsInTicketStatusController.delete(
+                            widget.ticket.id,
+                          );
+                          router.pop();
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 12,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFFBFF),
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: const Color(0xFFBA1A1A)),
+                        ),
+                        child: Row(
+                          children: [
+                            Assets.lib.infrastructure.assets.icons.delete.svg(
+                              width: 16,
+                              height: 16,
+                              colorFilter: const ColorFilter.mode(
+                                Color(0xFFBA1A1A),
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            const Text(
+                              'Delete',
+                              style: TextStyle(
+                                color: Color(0xFFBA1A1A),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Divider(color: Color(0xffC3C6D1), height: 1),
+                const SizedBox(height: 16),
+
+                // Assignees Section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Assignees',
+                      style: TextStyle(
+                        color: Color(0xff0B1C30),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    _buildIconButton(
+                      tooltip: 'Assign User',
+                      icon: Assets.lib.infrastructure.assets.icons.plus,
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Consumer(
+                              builder: (context, ref, child) {
+                                final controller = ref.watch(
+                                  usersInTicketControllerProvider(
+                                    widget.ticket.id,
+                                  ).notifier,
+                                );
+                                final state = ref.watch(
+                                  usersInTicketControllerProvider(
+                                    widget.ticket.id,
+                                  ),
+                                );
+                                final users = state.value ?? [];
+                                return AssignUsersDialog(
+                                  initialSelectedUserIds: users
                                       .map((item) => item.id)
-                                      .toList(),
+                                      .toSet(),
+                                  projectId: widget.projectId,
+                                  onSave: (users) {
+                                    createTicketForm.setUsers(users);
+                                    controller.setUsersInTicket(
+                                      ticketId: widget.ticket.id,
+                                      userIds: users
+                                          .map((item) => item.id)
+                                          .toList(),
+                                    );
+                                  },
                                 );
                               },
                             );
                           },
                         );
                       },
-                    );
-                  },
+                    ),
+                  ],
                 ),
-
+                const SizedBox(height: 10),
                 UsersInTicket(ticket: widget.ticket),
-                SolidButton(
-                  title: 'Save',
-                  onTap: () async {
-                    await createTicketForm.edit(widget.ticketStatus.id);
-                    final files = ticketAttachmentState.value;
-                    if (files == null) return;
-                    final List<Document> newList = [];
-                    for (final file in files) {
-                      if (file.id == ''){
-                        newList.add(file);
-                      }
-                    }
-                    final documentsInTicketController = ref.watch(documentsInTicketControllerProvider().notifier);
-                    documentsInTicketController.uploadDocument(referenceId: widget.ticket.id, files: newList);
-                    ticketsInTicketStatusController.refresh(
-                      widget.ticketStatus.id,
-                    );
-                  },
+                const SizedBox(height: 20),
+                const Divider(color: Color(0xffC3C6D1), height: 1),
+                const SizedBox(height: 16),
+
+                // Attachments Section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Attachments',
+                      style: TextStyle(
+                        color: Color(0xff0B1C30),
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    _buildIconButton(
+                      tooltip: 'Upload File',
+                      icon: Assets.lib.infrastructure.assets.icons.uploadFile,
+                      onTap: () {
+                        ticketAttachmentController.pickAttachment();
+                      },
+                    ),
+                  ],
                 ),
-                SolidButton(
-                  title: 'Delete',
-                  onTap: () async {
-                    await ticketsInTicketStatusController.delete(
-                      widget.ticket.id,
-                    );
-                    router.pop();
-                  },
+                const SizedBox(height: 10),
+                DocumentTableInTicket(state: ticketAttachmentState),
+                const SizedBox(height: 20),
+                const Divider(color: Color(0xffC3C6D1), height: 1),
+                const SizedBox(height: 16),
+
+                // Comments Section
+                const Text(
+                  'Comments',
+                  style: TextStyle(
+                    color: Color(0xff0B1C30),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                Container(
-                  alignment: .topLeft,
-                  width: .infinity,
-                  child: Text('Comment'),
-                ),
+                const SizedBox(height: 12),
                 CommentsInTicket(ticketId: widget.ticket.id),
               ],
             ),
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              padding: .symmetric(vertical: 16, horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border(
-                  top: BorderSide(width: 1, color: Color(0xffC3C6D1)),
-                ),
-              ),
-              child: Column(
-                spacing: 12,
-                children: [
-                  TextField(
-                    maxLines: 5,
-                    minLines: 1,
-                    onChanged: (value) {
-                      createCommentForm.setContent(value);
-                    },
-                    controller: _commentController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Comment',
-                      prefixIcon: Container(
-                        padding: .all(8),
-                        margin: .only(left: 8, right: 4),
-                        height: 32,
-                        width: 38,
-                        child: Assets.lib.infrastructure.assets.icons.attachment
-                            .svg(),
-                      ),
-                      suffixIcon: InkWell(
-                        onTap: () async {
-                          await createCommentForm.submit(widget.ticket.id);
-                          await commentsInTicketController.refresh(widget.ticket.id);
-                          _commentController.clear();
 
-                          scrollToBottom();
-                        },
-                        child: Container(
-                          padding: .all(8),
-                          margin: .only(left: 4, right: 8, top: 8, bottom: 8),
-                          height: 32,
-                          width: 38,
-                          decoration: BoxDecoration(
-                            color: Color(0xff001E40),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Assets.lib.infrastructure.assets.icons.send
-                              .svg(),
+          // Pinned Bottom Comment Bar
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              border: Border(
+                top: BorderSide(color: Color(0xffC3C6D1), width: 1),
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _commentController,
+                    maxLines: 4,
+                    minLines: 1,
+                    onChanged: (value) => createCommentForm.setContent(value),
+                    decoration: InputDecoration(
+                      hintText: 'Add a comment...',
+                      hintStyle: const TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF74777F),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 10,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(
+                          color: Color(0xFF001E40),
+                          width: 1.5,
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 8),
+                Material(
+                  color: const Color(0xff001E40),
+                  borderRadius: BorderRadius.circular(20),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: () async {
+                      final text = _commentController.text.trim();
+                      if (text.isEmpty) return;
+                      await createCommentForm.submit(widget.ticket.id);
+                      await commentsInTicketController.refresh(
+                        widget.ticket.id,
+                      );
+                      _commentController.clear();
+                      scrollToBottom();
+                    },
+                    child: Container(
+                      width: 38,
+                      height: 38,
+                      alignment: Alignment.center,
+                      child: Assets.lib.infrastructure.assets.icons.send.svg(
+                        width: 16,
+                        height: 16,
+                        colorFilter: const ColorFilter.mode(
+                          Colors.white,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

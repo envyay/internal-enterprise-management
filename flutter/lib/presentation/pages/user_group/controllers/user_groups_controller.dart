@@ -50,10 +50,10 @@ class UserGroupsController extends _$UserGroupsController {
 
     state = AsyncData(newItems);
 
-    final usersInUserGroupController = ref.read(usersInUserGroupControllerProvider.notifier);
+    final usersInUserGroupController = ref.watch(usersInUserGroupControllerProvider.notifier);
     usersInUserGroupController.getUsersInUserGroup(id: id);
 
-    final policiesInUserGroupController = ref.read(policiesInUserGroupControllerProvider.notifier);
+    final policiesInUserGroupController = ref.watch(policiesInUserGroupControllerProvider.notifier);
     policiesInUserGroupController.getPoliciesInUserGroup(id: id);
   }
 

@@ -1,6 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:enterprise_management/application/use_cases/chats/chat_command.dart';
-import 'package:enterprise_management/application/use_cases/chats/chat_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/chats/chat/chat_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/chat/chat_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/chats/create_chat_message/create_chat_message_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/create_chat_message/create_chat_message_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/chats/create_conversation/create_conversation_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/create_conversation/create_conversation_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/chats/delete_conversation/delete_conversation_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/delete_conversation/delete_conversation_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/chats/get_chat_messages_by_conversation/get_chat_messages_by_conversation_query.dart';
+import 'package:enterprise_management/application/use_cases/chats/get_chat_messages_by_conversation/get_chat_messages_by_conversation_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/chats/get_conversations/get_conversations_query.dart';
+import 'package:enterprise_management/application/use_cases/chats/get_conversations/get_conversations_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/comments/create_comment/create_comment_command.dart';
 import 'package:enterprise_management/application/use_cases/comments/create_comment/create_comment_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/comments/delete_comment/delete_comment_command.dart';
@@ -125,7 +135,9 @@ import 'package:enterprise_management/application/use_cases/users/user_sign_in_v
 import 'package:enterprise_management/application/use_cases/users/user_sign_in_verify/user_sign_in_verify_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_out/user_sign_out_command.dart';
 import 'package:enterprise_management/application/use_cases/users/user_sign_out/user_sign_out_command_handler.dart';
+import 'package:enterprise_management/domain/aggregates/chat/chat_message.dart';
 import 'package:enterprise_management/domain/aggregates/comment/comment.dart';
+import 'package:enterprise_management/domain/aggregates/conversation/conversation.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
@@ -145,6 +157,26 @@ extension MediatorRegistrationX on Mediator {
     //Chat
     registerCommandHandler<ChatCommand, Stream>(
       ChatCommandHandler(chatRepository: ref.read(chatRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetConversationsQuery, List<Conversation>>(
+      GetConversationsQueryHandler(chatRepository: ref.read(chatRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetChatMessagesByConversationQuery, List<ChatMessage>>(
+      GetChatMessagesByConversationQueryHandler(chatRepository: ref.read(chatRepositoryProvider)),
+    );
+
+    registerCommandHandler<CreateConversationCommand, Conversation>(
+      CreateConversationCommandHandler(chatRepository: ref.read(chatRepositoryProvider)),
+    );
+
+    registerCommandHandler<CreateChatMessageCommand, String>(
+      CreateChatMessageCommandHandler(chatRepository: ref.read(chatRepositoryProvider)),
+    );
+
+    registerCommandHandler<DeleteConversationCommand, bool>(
+      DeleteConversationCommandHandler(chatRepository: ref.read(chatRepositoryProvider)),
     );
 
     //User

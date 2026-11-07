@@ -39,6 +39,7 @@ public class GetDocumentByDepartmentsQueryHandler(
                 Status = x.Status,
                 Size = x.Size,
                 Extension = x.Extension,
+                CreatedAt = x.CreatedAt,
             })
             .ToListAsync(cancellationToken);
         

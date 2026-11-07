@@ -1,5 +1,4 @@
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
-import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 
 class TicketCard extends StatelessWidget {
@@ -54,30 +53,6 @@ class TicketCard extends StatelessWidget {
                   color: Color(0xff43474F),
                   fontSize: 12,
                   fontWeight: .w400,
-                ),
-              ),
-              Container(
-                margin: .only(top: 12),
-                padding: .symmetric(vertical: 8),
-                decoration: BoxDecoration(
-                  border: Border(
-                    top: BorderSide(width: 1, color: Color(0xffE5EEFF)),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-
-                      spacing: 10,
-                      children: [
-                        Assets.lib.infrastructure.assets.icons.subtask.svg(),
-
-                        Text('Subtask')
-                      ],
-                    ),
-                    Assets.lib.infrastructure.assets.icons.message.svg(),
-                  ],
                 ),
               ),
             ],

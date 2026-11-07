@@ -4,6 +4,8 @@ from fastapi import APIRouter, HTTPException
 from langchain_core.messages import HumanMessage
 import uuid
 from langchain_ollama import ChatOllama
+from langgraph.checkpoint.postgres import PostgresSaver
+from psycopg_pool import ConnectionPool
 
 import config
 from application.use_cases.rag_agent.graph import create_agent_graph
@@ -23,26 +25,41 @@ class ChatRequest(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
 
-# Initialize the graph singleton
-def get_graph():
-    if not hasattr(get_graph, "instance"):
+pool = ConnectionPool(
+    conninfo=config.POSTGRES_CHECKPOINT_URL,
+    max_size=20,
+    kwargs={"autocommit": True},
+)
+
+def get_llm():
+    if not hasattr(get_llm, "instance"):
         if getattr(config, "LLM_PROVIDER", "gemini") == "gemini":
             from langchain_google_genai import ChatGoogleGenerativeAI
-            llm = ChatGoogleGenerativeAI(
+            get_llm.instance = ChatGoogleGenerativeAI(
                 model=config.LLM_MODEL,
                 google_api_key=config.GEMINI_API_KEY,
                 temperature=config.LLM_TEMPERATURE
             )
         else:
-            llm = ChatOllama(
+            get_llm.instance = ChatOllama(
                 model=config.LLM_MODEL,
                 temperature=config.LLM_TEMPERATURE,
                 seed=config.LLM_SEED,
                 base_url=config.OLLAMA_BASE_URL
             )
+    return get_llm.instance
+
+# Initialize the graph singleton
+def get_graph():
+    if not hasattr(get_graph, "instance"):
+        llm = get_llm()
 
         tool_factory = ToolFactory(collection_name=config.CHILD_COLLECTION)
         tools = tool_factory.create_tools()
+
+        checkpointer = PostgresSaver(pool)
+
+        checkpointer.setup()
 
         get_graph.instance = create_agent_graph(llm, tools)
     return get_graph.instance
@@ -102,6 +119,29 @@ async def chat_endpoint(request: ChatRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+class GenerateTitleRequest(BaseModel):
+    query: str
+
+
+@router.post("/generate-title")
+async def generate_title_endpoint(request: GenerateTitleRequest):
+    try:
+        llm = get_llm()
+        prompt = (
+            "You are a helpful assistant. Generate a short, concise conversation title (3 to 6 words maximum, no quotes, no period at end) "
+            "summarizing the topic of this user question. Always reply in the same language as the question.\n\n"
+            f"User question: {request.query}\nTitle:"
+        )
+        response = await llm.ainvoke(prompt)
+        text = _extract_chunk_text(response.content).strip().strip('"\'*#')
+        first_line = text.split('\n')[0].strip()
+        title = first_line if first_line else request.query[:30]
+        return {"title": title}
+    except Exception as e:
+        fallback = request.query[:30] + ("..." if len(request.query) > 30 else "")
+        return {"title": fallback}
 
 
 @router.post("/stream")

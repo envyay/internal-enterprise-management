@@ -7,6 +7,7 @@ part 'document.mapper.dart';
 class Document extends AggregateRoot<String> with DocumentMappable {
   Document({
     required super.id,
+    super.createdAt,
     this.referenceId,
     required this.name,
     required this.bucketName,

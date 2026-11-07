@@ -1,7 +1,12 @@
 import 'dart:convert';
 
-import 'package:enterprise_management/application/use_cases/chats/chat_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/chat/chat_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/create_chat_message/create_chat_message_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/create_conversation/create_conversation_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/get_chat_messages_by_conversation/get_chat_messages_by_conversation_query.dart';
 import 'package:enterprise_management/domain/aggregates/chat/chat_message.dart';
+import 'package:enterprise_management/domain/aggregates/conversation/conversation.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/chat_sessions_controller.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -12,74 +17,139 @@ part 'agent_chat_controller.g.dart';
 @Riverpod()
 class AgentChatController extends _$AgentChatController {
   static const _uuid = Uuid();
+  bool _isPersisted = false;
 
   @override
-  ChatState build() {
-    return ChatState(
-      threadId: _uuid.v7(),
-      messages: [
+  Conversation build() {
+    _isPersisted = false;
+    final conversationId = _uuid.v7();
+    return Conversation(
+      id: conversationId,
+      userId: '',
+      title: 'New Chat',
+      chatMessage: [
         ChatMessage(
           id: _uuid.v7(),
-          text:
+          conversationId: conversationId,
+          content:
               'Hello! I am an intelligent document retrieval assistant (RAG). '
               'You can ask questions about documents, processes, departments, '
               'or tasks within the system.',
           isUser: false,
-          timestamp: DateTime.now(),
         ),
       ],
     );
   }
 
   void resetChat() {
-    state = ChatState(
-      threadId: _uuid.v4(),
-      messages: [
+    _isPersisted = false;
+    final newConversationId = _uuid.v7();
+    state = Conversation(
+      id: newConversationId,
+      userId: '',
+      title: 'New Chat',
+      chatMessage: [
         ChatMessage(
-          id: _uuid.v4(),
-          text:
+          id: _uuid.v7(),
+          conversationId: newConversationId,
+          content:
               'The conversation has been refreshed. '
               'Feel free to ask me a question!',
           isUser: false,
-          timestamp: DateTime.now(),
         ),
       ],
     );
   }
 
+  Future<void> loadConversation(Conversation conversation) async {
+    _isPersisted = true;
+    state = conversation;
+
+    final mediator = ref.read(mediatorProvider);
+    final res = await mediator.query(
+      GetChatMessagesByConversationQuery(conversationId: conversation.id),
+    );
+
+    if (res is Success<List<ChatMessage>>) {
+      state = state.copyWith(chatMessage: res.data);
+    }
+  }
+
+  void loadSession(Conversation conversation) => loadConversation(conversation);
+
   Future<void> sendMessage(String query) async {
     final trimmedQuery = query.trim();
-    if (trimmedQuery.isEmpty || state.isLoading) return;
+    final messages = state.chatMessage ?? [];
+    final isLoading = messages.any((m) => m.isStreaming ?? false);
+    if (trimmedQuery.isEmpty || isLoading) return;
+
+    var conversationId = state.id;
 
     final userMessage = ChatMessage(
       id: _uuid.v7(),
-      text: trimmedQuery,
+      conversationId: conversationId,
+      content: trimmedQuery,
       isUser: true,
-      timestamp: DateTime.now(),
     );
 
     final botMessageId = _uuid.v7();
     final botMessage = ChatMessage(
       id: botMessageId,
-      text: '',
+      conversationId: conversationId,
+      content: '',
       isUser: false,
-      timestamp: DateTime.now(),
       isStreaming: true,
       status: 'Receiving and analyzing the response...',
     );
 
     state = state.copyWith(
-      messages: [...state.messages, userMessage, botMessage],
-      isLoading: true,
-      currentStatus: 'Receiving and analyzing the response...',
+      chatMessage: [...messages, userMessage, botMessage],
     );
 
+    final mediator = ref.read(mediatorProvider);
+
+    // Flow: If it's the first query in this conversation, create conversation + create chat message
+    if (!_isPersisted) {
+      final createConvRes = await mediator.send(
+        CreateConversationCommand(
+          query: trimmedQuery,
+          id: conversationId,
+        ),
+      );
+
+      if (createConvRes is Success<Conversation>) {
+        final createdConv = createConvRes.data;
+        _isPersisted = true;
+        conversationId = createdConv.id;
+        state = state.copyWith(
+          id: createdConv.id,
+          title: createdConv.title,
+        );
+        ref.read(chatSessionsProvider.notifier).refresh();
+      }
+
+      await mediator.send(
+        CreateChatMessageCommand(
+          content: trimmedQuery,
+          isUser: true,
+          conversationId: conversationId,
+        ),
+      );
+    } else {
+      await mediator.send(
+        CreateChatMessageCommand(
+          content: trimmedQuery,
+          isUser: true,
+          conversationId: conversationId,
+        ),
+      );
+    }
+
     try {
-      final mediator = ref.read(mediatorProvider);
       final res = await mediator.send(
         ChatCommand(
           query: trimmedQuery,
-          threadId: state.threadId ?? _uuid.v7(),
+          threadId: conversationId,
         ),
       );
 
@@ -91,7 +161,6 @@ class AgentChatController extends _$AgentChatController {
               .transform(const LineSplitter());
 
           var accumulatedText = '';
-          var activeThreadId = state.threadId;
 
           await for (final line in lineStream) {
             final trimmedLine = line.trim();
@@ -112,10 +181,6 @@ class AgentChatController extends _$AgentChatController {
                 accumulatedText += token;
                 _updateBotMessage(botMessageId, text: accumulatedText, status: null);
               } else if (type == 'done') {
-                final newThreadId = payload['thread_id'] as String?;
-                if (newThreadId != null && newThreadId.isNotEmpty) {
-                  activeThreadId = newThreadId;
-                }
                 _updateBotMessage(
                   botMessageId,
                   text: accumulatedText.isNotEmpty
@@ -143,11 +208,17 @@ class AgentChatController extends _$AgentChatController {
           }
           // Ensure streaming flag is cleared when stream ends
           _updateBotMessage(botMessageId, isStreaming: false, status: null);
-          state = state.copyWith(
-            threadId: activeThreadId,
-            isLoading: false,
-            currentStatus: null,
-          );
+
+          // Save bot's response to database so it can be reloaded later
+          if (accumulatedText.isNotEmpty) {
+            await mediator.send(
+              CreateChatMessageCommand(
+                content: accumulatedText,
+                isUser: false,
+                conversationId: conversationId,
+              ),
+            );
+          }
 
         case Failure<Stream>(failure: final failure):
           _updateBotMessage(
@@ -156,7 +227,6 @@ class AgentChatController extends _$AgentChatController {
             isStreaming: false,
             status: null,
           );
-          state = state.copyWith(isLoading: false, currentStatus: null);
       }
     } catch (e) {
       _updateBotMessage(
@@ -166,7 +236,6 @@ class AgentChatController extends _$AgentChatController {
         isError: true,
         status: null,
       );
-      state = state.copyWith(isLoading: false, currentStatus: null);
     }
   }
 
@@ -177,10 +246,11 @@ class AgentChatController extends _$AgentChatController {
     bool? isStreaming,
     bool? isError,
   }) {
-    final updatedMessages = state.messages.map((m) {
+    final currentMessages = state.chatMessage ?? [];
+    final updatedMessages = currentMessages.map((m) {
       if (m.id == id) {
         return m.copyWith(
-          text: text ?? m.text,
+          content: text ?? m.content,
           status: status,
           isStreaming: isStreaming ?? m.isStreaming,
           isError: isError ?? m.isError,
@@ -188,6 +258,6 @@ class AgentChatController extends _$AgentChatController {
       }
       return m;
     }).toList();
-    state = state.copyWith(messages: updatedMessages, currentStatus: status);
+    state = state.copyWith(chatMessage: updatedMessages);
   }
 }

@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Documents;
+using Application.DTOs.Documents;
 using Domain.Aggregates;
 using Infrastructure.Repository;
 using Infrastructure.Services;
@@ -38,6 +38,7 @@ public class GetDocumentsByTicketsQueryHandler(
                 Status = x.Status,
                 Size = x.Size,
                 Extension = x.Extension,
+                CreatedAt = x.CreatedAt,
             })
             .ToListAsync(cancellationToken);
         

@@ -15,6 +15,7 @@ abstract class DocumentDto with _$DocumentDto {
     required int size,
     required int status,
     required String extension,
+    DateTime? createdAt,
   }) = _DocumentDto;
 
   factory DocumentDto.fromJson(Map<String, dynamic> json) =>
@@ -32,6 +33,7 @@ extension DocumentDtoX on DocumentDto {
       status: status,
       extension: extension,
       name: name,
+      createdAt: createdAt,
     );
   }
 }

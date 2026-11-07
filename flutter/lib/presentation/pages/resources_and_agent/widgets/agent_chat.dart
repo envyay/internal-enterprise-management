@@ -50,25 +50,25 @@ class _AgentChatState extends ConsumerState<AgentChat> {
 
   @override
   Widget build(BuildContext context) {
-    final chatState = ref.watch(agentChatControllerProvider);
+    final conversation = ref.watch(agentChatControllerProvider);
+    final messages = conversation.chatMessage ?? [];
+    final isLoading = messages.any((m) => m.isStreaming ?? false);
 
     // Auto-scroll when messages update
     ref.listen(agentChatControllerProvider, (previous, next) {
-      if (previous?.messages.length != next.messages.length ||
-          previous?.messages.lastOrNull?.text !=
-              next.messages.lastOrNull?.text ||
-          previous?.currentStatus != next.currentStatus) {
+      final prevMsgs = previous?.chatMessage ?? [];
+      final nextMsgs = next.chatMessage ?? [];
+      if (prevMsgs.length != nextMsgs.length ||
+          prevMsgs.lastOrNull?.content != nextMsgs.lastOrNull?.content ||
+          prevMsgs.lastOrNull?.status != nextMsgs.lastOrNull?.status) {
         _scrollToBottom();
       }
     });
 
-    final showSuggestions =
-        chatState.messages.length <= 1 && !chatState.isLoading;
-
     return Column(
       children: [
         Expanded(
-          child: chatState.messages.isEmpty
+          child: messages.isEmpty
               ? _buildEmptyState()
               : ListView.separated(
                   controller: _scrollController,
@@ -76,18 +76,15 @@ class _AgentChatState extends ConsumerState<AgentChat> {
                     horizontal: 16,
                     vertical: 16,
                   ),
-                  itemCount: chatState.messages.length,
+                  itemCount: messages.length,
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 16),
                   itemBuilder: (context, index) {
-                    final message = chatState.messages[index];
+                    final message = messages[index];
                     return _buildMessageBubble(message);
                   },
                 ),
         ),
-
-        //Quick Suggestions (if new chat)
-        if (showSuggestions) _buildSuggestions(),
 
         //Input Bar
         Container(
@@ -150,51 +147,43 @@ class _AgentChatState extends ConsumerState<AgentChat> {
                       fontSize: 13,
                       color: Color(0xFF74777F),
                     ),
-                    prefixIcon: Container(
-                      padding: const EdgeInsets.all(8),
-                      margin: const EdgeInsets.only(left: 4, right: 4),
-                      height: 24,
-                      width: 24,
-                      child: Assets.lib.infrastructure.assets.icons.attachment
-                          .svg(
-                            colorFilter: const ColorFilter.mode(
-                              Color(0xFF74777F),
-                              BlendMode.srcIn,
-                            ),
-                          ),
-                    ),
                     suffixIcon: Container(
                       margin: const EdgeInsets.all(6),
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: chatState.isLoading
+                      child: Material(
+                        color: isLoading
                             ? const Color(0xFF74777F)
                             : const Color(0xFF001E40),
                         borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: chatState.isLoading
-                            ? null
-                            : () => _sendMessage(),
-                        icon: chatState.isLoading
-                            ? const SizedBox(
-                                width: 16,
-                                height: 16,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : Assets.lib.infrastructure.assets.icons.send.svg(
-                                width: 18,
-                                height: 18,
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
+                        clipBehavior: Clip.antiAlias,
+                        child: InkWell(
+                          onTap: isLoading ? null : () => _sendMessage(),
+                          splashColor: Colors.white.withValues(alpha: 0.3),
+                          highlightColor: Colors.white.withValues(alpha: 0.2),
+                          hoverColor: Colors.white.withValues(alpha: 0.1),
+                          child: SizedBox(
+                            width: 36,
+                            height: 36,
+                            child: Center(
+                              child: isLoading
+                                  ? const SizedBox(
+                                      width: 16,
+                                      height: 16,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : Assets.lib.infrastructure.assets.icons.send.svg(
+                                      width: 18,
+                                      height: 18,
+                                      colorFilter: const ColorFilter.mode(
+                                        Colors.white,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -246,51 +235,6 @@ class _AgentChatState extends ConsumerState<AgentChat> {
     );
   }
 
-  Widget _buildSuggestions() {
-    final suggestions = [
-      'Summary of recent documents',
-      'Department workflow',
-      'Company policy',
-    ];
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      alignment: Alignment.centerLeft,
-      child: Wrap(
-        spacing: 8,
-        runSpacing: 8,
-        children: suggestions.map((text) {
-          return InkWell(
-            onTap: () => _sendMessage(text),
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF1F4F9),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: const Color(0xFFD6E4FF)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.search, size: 14, color: Color(0xFF003366)),
-                  const SizedBox(width: 4),
-                  Text(
-                    text,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF003366),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
   Widget _buildMessageBubble(ChatMessage message) {
     if (message.isUser) {
       return Align(
@@ -308,7 +252,7 @@ class _AgentChatState extends ConsumerState<AgentChat> {
             ),
           ),
           child: SelectableText(
-            message.text,
+            message.content,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -399,9 +343,9 @@ class _AgentChatState extends ConsumerState<AgentChat> {
                     ),
                   ],
                   // Main Text Content
-                  if (message.text.isNotEmpty)
+                  if (message.content.isNotEmpty)
                     SelectableText(
-                      message.text,
+                      message.content,
                       style: TextStyle(
                         color: message.isError ?? false
                             ? const Color(0xFFB71C1C)
@@ -412,7 +356,7 @@ class _AgentChatState extends ConsumerState<AgentChat> {
                     ),
                   // Streaming typing indicator
                   if ((message.isStreaming ?? false) &&
-                      message.text.isEmpty &&
+                      message.content.isEmpty &&
                       message.status == null)
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 4),

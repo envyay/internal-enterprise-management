@@ -19,7 +19,7 @@ abstract interface class IUserGroupRepository {
 
   Future<List<User>> getUsersByUserGroupId({required String id});
   Future<bool> setUsersInUserGroup({required String id, required List<String> userIds});
-  Future<bool> setPoliciesInUserGroup({required String id, required List<String> policyIds});
+  Future<bool> setPoliciesInUserGroup({required String id, required List<String> policies});
 
   Future<bool> addUsersToUserGroup({required String id, required List<String> userIds});
   Future<bool> removeUsersFromUserGroup({required String id, required UserDto userId});
@@ -77,8 +77,8 @@ class UserGroupRepository implements IUserGroupRepository {
   }
 
   @override
-  Future<bool> setPoliciesInUserGroup({required String id, required List<String> policyIds}) async {
-    final res = await _userGroupRemoteDataSource.setPoliciesInUserGroup(SetPoliciesInUserGroupDto(id: id, policyIds: policyIds));
+  Future<bool> setPoliciesInUserGroup({required String id, required List<String> policies}) async {
+    final res = await _userGroupRemoteDataSource.setPoliciesInUserGroup(SetPoliciesInUserGroupDto(id: id, policies: policies));
     return res.data;
   }
 

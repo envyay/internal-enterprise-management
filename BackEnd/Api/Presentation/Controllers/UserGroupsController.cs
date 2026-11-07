@@ -1,6 +1,3 @@
-
-using Application.UseCases.UserGroups.AddPolicies;
-using Application.UseCases.UserGroups.AddUsers;
 using Application.UseCases.UserGroups.CreateUserGroup;
 using Application.UseCases.UserGroups.DeleteUserGroupById;
 using Application.UseCases.UserGroups.GetUserGroupById;
@@ -85,14 +82,6 @@ public class UserGroupsController(ISender sender) : ControllerBase
         var success = await sender.Send(new DeleteUserGroupByIdCommand{Id = id});
         return Ok(success);
     }
-    
-    [Authorize(Policy = AppPolicy.AddUsersToUserGroup)]
-    [HttpPost("AddUsers")]
-    public async Task<IActionResult> AddUsers(AddUsersToUserGroupCommand request)
-    {
-        var success = await sender.Send(request);
-        return Ok(success);
-    }
 
     [Authorize(Policy = AppPolicy.RemoveUserFromUserGroup)]
     [HttpDelete("RemoveUser")]
@@ -102,14 +91,6 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(success);
     }
     
-    [Authorize(Policy = AppPolicy.AddPoliciesToUserGroup)]
-    [HttpPost("AddPolicies")]
-    public async Task<IActionResult> AddPolicies(AddPoliciesToUserGroupCommand request)
-    {
-        var success = await sender.Send(request);
-        return Ok(success);
-    }
-
     [Authorize(Policy = AppPolicy.RemovePolicyFromUserGroup)]
     [HttpDelete("RemovePolicy")]
     public async Task<IActionResult> RemovePolicy(RemovePolicyFromUserGroupCommand request)

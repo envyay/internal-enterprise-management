@@ -23,13 +23,16 @@ class UserGroupPage extends ConsumerWidget {
     final controller = ref.watch(userGroupsControllerProvider.notifier);
     final state = ref.watch(userGroupsControllerProvider);
 
-    final selectedUserGroup =
-        state.value?.where((item) => item.isActive).firstOrNull;
+    final selectedUserGroup = state.value
+        ?.where((item) => item.isActive)
+        .firstOrNull;
 
-    final policiesInUserGroupState =
-        ref.watch(policiesInUserGroupControllerProvider);
-    final policiesInUserGroupController =
-        ref.watch(policiesInUserGroupControllerProvider.notifier);
+    final policiesInUserGroupState = ref.watch(
+      policiesInUserGroupControllerProvider,
+    );
+    final policiesInUserGroupController = ref.watch(
+      policiesInUserGroupControllerProvider.notifier,
+    );
 
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
@@ -151,19 +154,19 @@ class UserGroupPage extends ConsumerWidget {
                             data: (group) {
                               return PoliciesInUserGroup(
                                 key: ValueKey(selectedUserGroup.id),
-                                initialSelectedPolicyIds: group
-                                        ?.userGroupPolicies
-                                        .map((item) => item.id)
+                                initialSelectedPolicyIds:
+                                    group?.userGroupPolicies
+                                        .map((item) => item.policy)
                                         .toSet() ??
                                     {},
                                 onSave: (policies) async {
                                   await policiesInUserGroupController
                                       .setPoliciesInUserGroup(
-                                    id: selectedUserGroup.id,
-                                    policyIds: policies
-                                        .map((item) => item.id)
-                                        .toList(),
-                                  );
+                                        id: selectedUserGroup.id,
+                                        policies: policies
+                                            .map((item) => item.policy)
+                                            .toList(),
+                                      );
                                   if (context.mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(

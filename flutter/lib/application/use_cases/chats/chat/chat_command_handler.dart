@@ -1,4 +1,4 @@
-import 'package:enterprise_management/application/use_cases/chats/chat_command.dart';
+import 'package:enterprise_management/application/use_cases/chats/chat/chat_command.dart';
 import 'package:enterprise_management/infrastructure/repositories/chat_repository.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/command_handler.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';

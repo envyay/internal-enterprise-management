@@ -44,7 +44,7 @@ class DocumentTableInTicket extends ConsumerWidget {
                   Container(
                     padding: .symmetric(vertical: 16),
                     alignment: .centerRight,
-                    child: Text('Date modified', style: _headerStyle),
+                    child: Text('Date added', style: _headerStyle),
                   ),
                 ],
               ),
@@ -116,10 +116,13 @@ class DocumentTableInTicket extends ConsumerWidget {
                               fontWeight: .w400,
                             ),
                           ),
-                          Container(
-                            padding: .symmetric(horizontal: 12, vertical: 12),
-                            alignment: .centerRight,
-                            child: Text('$index'),
+                          Text(
+                            _formatDate(doc.createdAt),
+                            style: const TextStyle(
+                              color: Color(0xff43474F),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ],
                       ),
@@ -161,4 +164,15 @@ SvgGenImage fileIcon(String? extension) {
     default:
       return icons.attachment;
   }
+}
+
+String _formatDate(DateTime? date) {
+  if (date == null) return '--';
+  final target = date.toLocal();
+  final day = target.day.toString().padLeft(2, '0');
+  final month = target.month.toString().padLeft(2, '0');
+  final year = target.year;
+  final hour = target.hour.toString().padLeft(2, '0');
+  final minute = target.minute.toString().padLeft(2, '0');
+  return '$hour:$minute $day/$month/$year';
 }

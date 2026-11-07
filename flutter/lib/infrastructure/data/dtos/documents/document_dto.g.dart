@@ -15,6 +15,9 @@ _DocumentDto _$DocumentDtoFromJson(Map<String, dynamic> json) => _DocumentDto(
   size: (json['size'] as num).toInt(),
   status: (json['status'] as num).toInt(),
   extension: json['extension'] as String,
+  createdAt: json['createdAt'] == null
+      ? null
+      : DateTime.parse(json['createdAt'] as String),
 );
 
 Map<String, dynamic> _$DocumentDtoToJson(_DocumentDto instance) =>
@@ -27,4 +30,5 @@ Map<String, dynamic> _$DocumentDtoToJson(_DocumentDto instance) =>
       'size': instance.size,
       'status': instance.status,
       'extension': instance.extension,
+      'createdAt': instance.createdAt?.toIso8601String(),
     };
