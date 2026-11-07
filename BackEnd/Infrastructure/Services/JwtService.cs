@@ -22,6 +22,7 @@ public class JwtService(IOptions<JwtOptions> options) : IJwtService
         if (user.Type == UserType.Admin)
         {
             claims.Add(new Claim(ClaimTypes.Role, "Admin"));
+            policies = AppPolicy.Policies.ToList();
         }
 
         foreach (var policy in policies)

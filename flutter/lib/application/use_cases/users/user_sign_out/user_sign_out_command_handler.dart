@@ -8,7 +8,7 @@ class UserSignOutCommandHandler extends ICommandHandler<UserSignOutCommand, void
   final IUserRepository _userRepository;
   @override
   Future<Result<void>> handle(UserSignOutCommand command) async {
-    final res = await _userRepository.deleteAccessToken();
+    final res = await _userRepository.signOut();
     return Result.success(res);
   }
 }

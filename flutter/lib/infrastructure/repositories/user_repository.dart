@@ -19,7 +19,12 @@ abstract interface class IUserRepository {
 
   Future<String> createUser({required String fullName, required String email});
 
-  Future<bool> updateUser({required String id, required String fullName, required String email, required int status});
+  Future<bool> updateUser({
+    required String id,
+    required String fullName,
+    required String email,
+    required int status,
+  });
 
   Future<bool> deleteUser({required String id});
 
@@ -29,7 +34,7 @@ abstract interface class IUserRepository {
 
   Future<String?> getAccessToken();
 
-  Future<void> deleteAccessToken();
+  Future<void> signOut();
 }
 
 class UsersRepository implements IUserRepository {
@@ -46,7 +51,9 @@ class UsersRepository implements IUserRepository {
     required String fullName,
     required String email,
   }) async {
-    final res = await _userRemoteDataSource.createUser(CreateUserDto(fullName: fullName, email: email));
+    final res = await _userRemoteDataSource.createUser(
+      CreateUserDto(fullName: fullName, email: email),
+    );
     return res.data;
   }
 
@@ -86,8 +93,15 @@ class UsersRepository implements IUserRepository {
   }
 
   @override
-  Future<bool> updateUser({required String id, required String fullName, required String email, required int status}) async {
-    final res = await _userRemoteDataSource.updateUser(UpdateUserDto(id: id, fullName: fullName, email: email, status: status));
+  Future<bool> updateUser({
+    required String id,
+    required String fullName,
+    required String email,
+    required int status,
+  }) async {
+    final res = await _userRemoteDataSource.updateUser(
+      UpdateUserDto(id: id, fullName: fullName, email: email, status: status),
+    );
     return res.data;
   }
 
@@ -99,12 +113,20 @@ class UsersRepository implements IUserRepository {
 
   @override
   Future<List<String>> getPolicies() async {
+    var policies = await _authLocalDataSource.getPolicies();
+    if (policies != null) return policies;
+
     final res = await _userRemoteDataSource.getPolicies();
-    return res.data;
+    policies = res.data;
+    await _authLocalDataSource.savePolicies(policies);
+    return policies;
   }
 
   @override
-  Future<void> deleteAccessToken() {
-    return _authLocalDataSource.deleteAccessToken();
+  Future<void> signOut() async {
+    await Future.wait([
+      _authLocalDataSource.deletePolicies(),
+      _authLocalDataSource.deleteAccessToken(),
+    ]);
   }
 }

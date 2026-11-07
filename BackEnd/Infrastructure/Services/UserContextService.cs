@@ -17,5 +17,5 @@ public class UserContextService(IHttpContextAccessor contextAccessor) : IUserCon
     {
         var policies = contextAccessor.HttpContext?.User.FindAll("policy").ToList();
         return policies?.Select(p => p.Value).ToList() ?? [];
-    } 
+    }
 }

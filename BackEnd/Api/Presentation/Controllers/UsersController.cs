@@ -6,6 +6,7 @@ using Application.UseCases.Users.GetUsers;
 using Application.UseCases.Users.LoginRequest;
 using Application.UseCases.Users.LoginVerify;
 using Application.UseCases.Users.UpdateUser;
+using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ public class UsersController(ISender sender) : ControllerBase
         return Ok(users);
     }
     
+    [Authorize]
     [HttpGet("GetPolicies")]
     public async Task<IActionResult> GetPolicies()
     {

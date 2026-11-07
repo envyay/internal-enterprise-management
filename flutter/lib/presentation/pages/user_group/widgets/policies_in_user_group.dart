@@ -15,7 +15,8 @@ class PoliciesInUserGroup extends ConsumerStatefulWidget {
   final void Function(List<UserGroupPolicy> selectedPolicies)? onSave;
 
   @override
-  ConsumerState<PoliciesInUserGroup> createState() => _PoliciesInUserGroupState();
+  ConsumerState<PoliciesInUserGroup> createState() =>
+      _PoliciesInUserGroupState();
 }
 
 class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
@@ -31,7 +32,10 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
   @override
   void didUpdateWidget(covariant PoliciesInUserGroup oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!setEquals(oldWidget.initialSelectedPolicyIds, widget.initialSelectedPolicyIds)) {
+    if (!setEquals(
+      oldWidget.initialSelectedPolicyIds,
+      widget.initialSelectedPolicyIds,
+    )) {
       setState(() {
         _selectedPolicyIds = Set.from(widget.initialSelectedPolicyIds);
       });
@@ -57,33 +61,21 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
                       const Divider(height: 1),
                   itemBuilder: (context, index) {
                     final policy = policies[index];
-                    final isSelected = _selectedPolicyIds.contains(policy.policy);
+                    final isSelected = _selectedPolicyIds.contains(
+                      policy.policy,
+                    );
 
-                    return CheckboxListTile(
-                      value: isSelected,
+                    return _PolicyCheckboxItem(
+                      key: ValueKey(policy.policy),
+                      policyName: policy.policy,
+                      isSelected: isSelected,
                       onChanged: (val) {
-                        setState(() {
-                          if (val == true) {
-                            _selectedPolicyIds.add(policy.policy);
-                          } else {
-                            _selectedPolicyIds.remove(policy.policy);
-                          }
-                        });
+                        if (val == true) {
+                          _selectedPolicyIds.add(policy.policy);
+                        } else {
+                          _selectedPolicyIds.remove(policy.policy);
+                        }
                       },
-                      title: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              policy.policy,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF191C20),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                     );
                   },
                 );
@@ -138,6 +130,62 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
             ],
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _PolicyCheckboxItem extends StatefulWidget {
+  const _PolicyCheckboxItem({
+    super.key,
+    required this.policyName,
+    required this.isSelected,
+    required this.onChanged,
+  });
+
+  final String policyName;
+  final bool isSelected;
+  final ValueChanged<bool?> onChanged;
+
+  @override
+  State<_PolicyCheckboxItem> createState() => _PolicyCheckboxItemState();
+}
+
+class _PolicyCheckboxItemState extends State<_PolicyCheckboxItem> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.isSelected;
+  }
+
+  @override
+  void didUpdateWidget(covariant _PolicyCheckboxItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.isSelected != widget.isSelected) {
+      _isSelected = widget.isSelected;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CheckboxListTile(
+      value: _isSelected,
+      dense: true,
+      onChanged: (val) {
+        setState(() {
+          _isSelected = val ?? false;
+        });
+        widget.onChanged(val);
+      },
+      title: Text(
+        widget.policyName,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Color(0xFF191C20),
+        ),
       ),
     );
   }

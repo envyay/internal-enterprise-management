@@ -2,6 +2,7 @@ using Domain.Aggregates;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.UseCases.UserGroups.SetPoliciesInUserGroup;
 
@@ -12,7 +13,10 @@ public class SetPoliciesInUserGroupCommandHandler(
 {
     public async Task<bool> Handle(SetPoliciesInUserGroupCommand request, CancellationToken cancellationToken)
     {
-        var userGroup = await userGroupRepository.GetByIdAsync(request.Id, cancellationToken);
+        var userGroup = await userGroupRepository
+            .Where(x => x.Id == request.Id)
+            .Include(x => x.UserGroupPolicies)
+            .FirstOrDefaultAsync(cancellationToken);
         if (userGroup == null) return false;
 
         var policies = request.Policies.Select(UserGroupPolicy.Create).ToList();
