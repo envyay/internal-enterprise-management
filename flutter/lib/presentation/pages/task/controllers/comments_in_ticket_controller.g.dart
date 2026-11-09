@@ -52,7 +52,7 @@ final class CommentsInTicketControllerProvider
 }
 
 String _$commentsInTicketControllerHash() =>
-    r'fd1899b30124b27ce44c53a645a603fae355c9cb';
+    r'1710a5a9900496efd7f8dd6588c938c0e453430f';
 
 final class CommentsInTicketControllerFamily extends $Family
     with

@@ -5,7 +5,7 @@ class TicketCard extends StatelessWidget {
   const TicketCard({super.key, required this.ticket, required this.onTap, this.onPressed});
 
   final Ticket ticket;
-  final Function() onTap;
+  final Function()? onTap;
   final Function()? onPressed;
 
   @override

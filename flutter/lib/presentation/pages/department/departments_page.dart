@@ -7,10 +7,12 @@ import 'package:enterprise_management/presentation/pages/department/widgets/crea
 import 'package:enterprise_management/presentation/pages/department/widgets/departments_table.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/users_in_department.dart';
 import 'package:enterprise_management/presentation/pages/resources_and_agent/widgets/document_table.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../controllers/policies_controller.dart';
 import '../../widgets/base_page.dart';
 import '../../widgets/overview_container.dart';
 
@@ -26,6 +28,10 @@ class DepartmentPage extends ConsumerWidget {
     );
     final departmentState = ref.watch(usersInDepartmentControllerProvider);
     final department = departmentState.value;
+
+    final policies = ref.watch(
+      policiesControllerProvider.select((x) => x.value ?? []),
+    );
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -42,10 +48,16 @@ class DepartmentPage extends ConsumerWidget {
               children: [
                 StaggeredGridTile.count(
                   crossAxisCellCount: 3,
-                  mainAxisCellCount: (department?.id ?? '').isNotEmpty ? 1 : 2,
+                  mainAxisCellCount:
+                      ((department?.id ?? '').isNotEmpty &&
+                          policies.contains(AppPolicy.getDocumentsByDepartment))
+                      ? 1
+                      : 2,
                   child: OverviewContainer(
                     title: 'Departments',
-                    icon: Assets.lib.infrastructure.assets.icons.create,
+                    icon: policies.contains(AppPolicy.createDepartment)
+                        ? Assets.lib.infrastructure.assets.icons.create
+                        : null,
                     onTap: () {
                       showDialog(
                         context: context,
@@ -133,13 +145,16 @@ class DepartmentPage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                if ((department?.id ?? '').isNotEmpty)
+                if ((department?.id ?? '').isNotEmpty &&
+                    policies.contains(AppPolicy.getDocumentsByDepartment))
                   StaggeredGridTile.count(
                     crossAxisCellCount: 3,
                     mainAxisCellCount: 1,
                     child: OverviewContainer(
                       title: 'Documents In Department',
-                      icon: Assets.lib.infrastructure.assets.icons.plus,
+                      icon: policies.contains(AppPolicy.uploadDocument)
+                          ? Assets.lib.infrastructure.assets.icons.create
+                          : null,
                       onTap: () async {
                         await documentController.uploadDocument(
                           referenceId: department?.id ?? '',
@@ -156,7 +171,11 @@ class DepartmentPage extends ConsumerWidget {
                   mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Users In Department',
-                    icon: (department?.id ?? "").isNotEmpty ? Assets.lib.infrastructure.assets.icons.plus : null,
+                    icon:
+                        ((department?.id ?? "").isNotEmpty &&
+                            policies.contains(AppPolicy.setUsersInDepartment))
+                        ? Assets.lib.infrastructure.assets.icons.create
+                        : null,
                     onTap: () {
                       showDialog(
                         context: context,

@@ -43,9 +43,6 @@ public static class AppPolicy
     // Chat
     public const string Chat = nameof(Chat);
     public const string GetConversations = nameof(GetConversations);
-    public const string GetChatMessagesByConversationId = nameof(GetChatMessagesByConversationId);
-    public const string CreateConversation = nameof(CreateConversation);
-    public const string CreateChatMessage = nameof(CreateChatMessage);
     public const string DeleteConversationById = nameof(DeleteConversationById);
     
     // UserGroupPolicy
@@ -53,26 +50,21 @@ public static class AppPolicy
     
     // User Group
     public const string GetAllUserGroups = nameof(GetAllUserGroups);
-    public const string GetByIdUserGroup = nameof(GetByIdUserGroup);
     public const string GetUsersByUserGroupId = nameof(GetUsersByUserGroupId);
     public const string SetUsersInUserGroup = nameof(SetUsersInUserGroup);
     public const string SetPoliciesInUserGroup = nameof(SetPoliciesInUserGroup);
     public const string CreateUserGroup = nameof(CreateUserGroup);
     public const string UpdateUserGroup = nameof(UpdateUserGroup);
     public const string DeleteUserGroup = nameof(DeleteUserGroup);
-    public const string RemovePolicyFromUserGroup = nameof(RemovePolicyFromUserGroup);
-    public const string RemoveUserFromUserGroup = nameof(RemoveUserFromUserGroup);
 
     // User
     public const string GetAllUsers = nameof(GetAllUsers);
     public const string CreateUser = nameof(CreateUser);
-    public const string GetProjectsByUserId = nameof(GetProjectsByUserId);
     public const string UpdateUser = nameof(UpdateUser);
     public const string DeleteUser = nameof(DeleteUser);
 
     // Department
     public const string GetAllDepartments = nameof(GetAllDepartments);
-    public const string GetByIdDepartment = nameof(GetByIdDepartment);
     public const string CreateDepartment = nameof(CreateDepartment);
     public const string UpdateDepartment = nameof(UpdateDepartment);
     public const string DeleteDepartment = nameof(DeleteDepartment);
@@ -103,28 +95,19 @@ public static class AppPolicy
 
     // Ticket
     public const string GetAllTickets = nameof(GetAllTickets);
-    public const string GetByIdTicket = nameof(GetByIdTicket);
-    public const string GetUsersByTicketId = nameof(GetUsersByTicketId);
     public const string SetUsersInTicket = nameof(SetUsersInTicket);
-    public const string GetCommentsByTicketId = nameof(GetCommentsByTicketId);
     public const string CreateTicket = nameof(CreateTicket);
     public const string UpdateTicket = nameof(UpdateTicket);
-    public const string UpdateTicketByTicketStatus = nameof(UpdateTicketByTicketStatus);
     public const string DeleteTicket = nameof(DeleteTicket);
 
     // Ticket Status
-    public const string GetAllTicketStatuses = nameof(GetAllTicketStatuses);
-    public const string GetByIdTicketStatus = nameof(GetByIdTicketStatus);
     public const string GetTicketsByTicketStatusId = nameof(GetTicketsByTicketStatusId);
     public const string CreateTicketStatus = nameof(CreateTicketStatus);
     public const string UpdateTicketStatus = nameof(UpdateTicketStatus);
     public const string DeleteTicketStatus = nameof(DeleteTicketStatus);
 
     // Comment
-    public const string GetAllComments = nameof(GetAllComments);
-    public const string GetByIdComment = nameof(GetByIdComment);
     public const string CreateComment = nameof(CreateComment);
-    public const string UpdateComment = nameof(UpdateComment);
     public const string DeleteComment = nameof(DeleteComment);
 
     public static readonly string[] Policies =
@@ -132,9 +115,6 @@ public static class AppPolicy
         // Chat
         Chat,
         GetConversations,
-        GetChatMessagesByConversationId,
-        CreateConversation,
-        CreateChatMessage,
         DeleteConversationById,
         
         // UserGroupPolicy
@@ -142,26 +122,21 @@ public static class AppPolicy
         
         // User Group
         GetAllUserGroups,
-        GetByIdUserGroup,
         GetUsersByUserGroupId,
         SetUsersInUserGroup,
         SetPoliciesInUserGroup,
         CreateUserGroup,
         UpdateUserGroup,
         DeleteUserGroup,
-        RemovePolicyFromUserGroup,
-        RemoveUserFromUserGroup,
 
         // User
         GetAllUsers,
         CreateUser,
-        GetProjectsByUserId,
         UpdateUser,
         DeleteUser,
 
         // Department
         GetAllDepartments,
-        GetByIdDepartment,
         CreateDepartment,
         UpdateDepartment,
         DeleteDepartment,
@@ -192,28 +167,19 @@ public static class AppPolicy
 
         // Ticket
         GetAllTickets,
-        GetByIdTicket,
-        GetUsersByTicketId,
         SetUsersInTicket,
-        GetCommentsByTicketId,
         CreateTicket,
         UpdateTicket,
-        UpdateTicketByTicketStatus,
         DeleteTicket,
 
         // Ticket Status
-        GetAllTicketStatuses,
-        GetByIdTicketStatus,
         GetTicketsByTicketStatusId,
         CreateTicketStatus,
         UpdateTicketStatus,
         DeleteTicketStatus,
 
         // Comment
-        GetAllComments,
-        GetByIdComment,
         CreateComment,
-        UpdateComment,
         DeleteComment,
     ];
 }

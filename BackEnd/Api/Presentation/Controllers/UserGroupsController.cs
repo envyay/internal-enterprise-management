@@ -27,7 +27,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(userGroups);
     }
 
-    [Authorize(Policy = AppPolicy.GetByIdUserGroup)]
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -83,7 +83,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize(Policy = AppPolicy.RemoveUserFromUserGroup)]
+    [Authorize]
     [HttpDelete("RemoveUser")]
     public async Task<IActionResult> RemoveUser(RemoveUserFromUserGroupCommand request)
     {
@@ -91,7 +91,7 @@ public class UserGroupsController(ISender sender) : ControllerBase
         return Ok(success);
     }
     
-    [Authorize(Policy = AppPolicy.RemovePolicyFromUserGroup)]
+    [Authorize]
     [HttpDelete("RemovePolicy")]
     public async Task<IActionResult> RemovePolicy(RemovePolicyFromUserGroupCommand request)
     {

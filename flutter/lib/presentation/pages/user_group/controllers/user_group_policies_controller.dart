@@ -4,9 +4,10 @@ import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'policies_controller.g.dart';
+part 'user_group_policies_controller.g.dart';
+
 @Riverpod()
-class PoliciesController extends _$PoliciesController {
+class UserGroupPoliciesController extends _$UserGroupPoliciesController {
   @override
   Future<List<UserGroupPolicy>> build() {
     return getPolicies();

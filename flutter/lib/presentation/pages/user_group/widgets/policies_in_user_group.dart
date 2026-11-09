@@ -1,5 +1,7 @@
 import 'package:enterprise_management/domain/aggregates/user_group_policy/user_group_policy.dart';
-import 'package:enterprise_management/presentation/pages/user_group/controllers/policies_controller.dart';
+import 'package:enterprise_management/presentation/pages/user_group/controllers/user_group_policies_controller.dart';
+import 'package:enterprise_management/presentation/controllers/policies_controller.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +46,9 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final policiesState = ref.watch(policiesControllerProvider);
+    final policiesState = ref.watch(userGroupPoliciesControllerProvider);
+
+    final policies = ref.watch(policiesControllerProvider.select((x) => x.value ?? [] ));
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -88,47 +92,50 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
           const SizedBox(height: 16),
 
           // Action Buttons (Cancel & Save)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                onPressed: _isSaving
-                    ? null
-                    : () async {
-                        final allPolicies = policiesState.value ?? [];
-                        final selectedPolicies = allPolicies
-                            .where((u) => _selectedPolicyIds.contains(u.policy))
-                            .toList();
+          if (policies.contains(AppPolicy.setPoliciesInUserGroup))
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: _isSaving
+                      ? null
+                      : () async {
+                          final allPolicies = policiesState.value ?? [];
+                          final selectedPolicies = allPolicies
+                              .where(
+                                (u) => _selectedPolicyIds.contains(u.policy),
+                              )
+                              .toList();
 
-                        if (widget.onSave != null) {
-                          setState(() => _isSaving = true);
-                          try {
-                            widget.onSave!(selectedPolicies);
-                          } finally {
-                            if (mounted) setState(() => _isSaving = false);
+                          if (widget.onSave != null) {
+                            setState(() => _isSaving = true);
+                            try {
+                              widget.onSave!(selectedPolicies);
+                            } finally {
+                              if (mounted) setState(() => _isSaving = false);
+                            }
                           }
-                        }
-                      },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF005AC1),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
+                        },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF005AC1),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
                   ),
+                  child: _isSaving
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text('Save'),
                 ),
-                child: _isSaving
-                    ? const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                    : const Text('Save'),
-              ),
-            ],
-          ),
+              ],
+            ),
         ],
       ),
     );

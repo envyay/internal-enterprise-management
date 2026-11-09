@@ -1,8 +1,11 @@
 import 'package:enterprise_management/presentation/pages/department/controllers/departments_controller.dart';
 import 'package:enterprise_management/presentation/pages/department/widgets/edit_department_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../controllers/policies_controller.dart';
 
 class DepartmentsTable extends ConsumerWidget {
   const DepartmentsTable({super.key});
@@ -12,6 +15,10 @@ class DepartmentsTable extends ConsumerWidget {
     final state = ref.watch(departmentsControllerProvider);
     final controller = ref.watch(departmentsControllerProvider.notifier);
     final router = ref.read(appRouterProvider);
+
+    final policies = ref.watch(
+      policiesControllerProvider.select((x) => x.value ?? []),
+    );
     return state.when(
       data: (departments) {
         return ListView.builder(
@@ -107,66 +114,72 @@ class DepartmentsTable extends ConsumerWidget {
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.edit_outlined,
-                                      size: 18,
-                                      color: Color(0xff006C49),
+                                  if (policies.contains(
+                                    AppPolicy.updateDepartment,
+                                  ))
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.edit_outlined,
+                                        size: 18,
+                                        color: Color(0xff006C49),
+                                      ),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return EditDepartmentDialog(
+                                              department: item,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      tooltip: 'Edit',
                                     ),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return EditDepartmentDialog(
-                                            department: item,
-                                          );
-                                        },
-                                      );
-                                    },
-                                    tooltip: 'Edit',
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.delete_outline,
-                                      size: 18,
-                                      color: Color(0xffBA1A1A),
-                                    ),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: const Text(
-                                            'Delete Confirmation',
-                                          ),
-                                          content: Text(
-                                            'Are you sure to delete "${item.name}"?',
-                                          ),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () =>
-                                                  router.pop(context),
-                                              child: const Text('Cancel'),
+                                  if (policies.contains(
+                                    AppPolicy.deleteDepartment,
+                                  ))
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete_outline,
+                                        size: 18,
+                                        color: Color(0xffBA1A1A),
+                                      ),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: const Text(
+                                              'Delete Confirmation',
                                             ),
-                                            TextButton(
-                                              onPressed: () async {
-                                                await controller.delete(
-                                                  item.id,
-                                                );
-                                                router.pop();
-                                              },
-                                              child: const Text(
-                                                'Delete',
-                                                style: TextStyle(
-                                                  color: Color(0xffBA1A1A),
+                                            content: Text(
+                                              'Are you sure to delete "${item.name}"?',
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    router.pop(context),
+                                                child: const Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () async {
+                                                  await controller.delete(
+                                                    item.id,
+                                                  );
+                                                  router.pop();
+                                                },
+                                                child: const Text(
+                                                  'Delete',
+                                                  style: TextStyle(
+                                                    color: Color(0xffBA1A1A),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    tooltip: 'Delete',
-                                  ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      tooltip: 'Delete',
+                                    ),
                                 ],
                               ),
                             ),

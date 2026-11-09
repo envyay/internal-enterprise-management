@@ -8,9 +8,9 @@ abstract final class AppPolicy {
   // Chat
   static const String chat = 'Chat';
   static const String getConversations = 'GetConversations';
-  static const String getChatMessagesByConversationId = 'GetChatMessagesByConversationId';
-  static const String createConversation = 'CreateConversation';
-  static const String createChatMessage = 'CreateChatMessage';
+  static const String getChatMessagesByConversationId = 'GetChatMessagesByConversationId'; // xoa
+  static const String createConversation = 'CreateConversation'; // xoa
+  static const String createChatMessage = 'CreateChatMessage'; // xoa
   static const String deleteConversationById = 'DeleteConversationById';
 
   // UserGroupPolicy
@@ -18,26 +18,26 @@ abstract final class AppPolicy {
 
   // User Group
   static const String getAllUserGroups = 'GetAllUserGroups';
-  static const String getByIdUserGroup = 'GetByIdUserGroup';
+  static const String getByIdUserGroup = 'GetByIdUserGroup'; // xoa
   static const String getUsersByUserGroupId = 'GetUsersByUserGroupId';
   static const String setUsersInUserGroup = 'SetUsersInUserGroup';
   static const String setPoliciesInUserGroup = 'SetPoliciesInUserGroup';
   static const String createUserGroup = 'CreateUserGroup';
   static const String updateUserGroup = 'UpdateUserGroup';
   static const String deleteUserGroup = 'DeleteUserGroup';
-  static const String removePolicyFromUserGroup = 'RemovePolicyFromUserGroup';
-  static const String removeUserFromUserGroup = 'RemoveUserFromUserGroup';
+  static const String removePolicyFromUserGroup = 'RemovePolicyFromUserGroup'; // xoa
+  static const String removeUserFromUserGroup = 'RemoveUserFromUserGroup'; // xoa
 
   // User
   static const String getAllUsers = 'GetAllUsers';
   static const String createUser = 'CreateUser';
-  static const String getProjectsByUserId = 'GetProjectsByUserId';
+  static const String getProjectsByUserId = 'GetProjectsByUserId'; // xoa
   static const String updateUser = 'UpdateUser';
   static const String deleteUser = 'DeleteUser';
 
   // Department
   static const String getAllDepartments = 'GetAllDepartments';
-  static const String getByIdDepartment = 'GetByIdDepartment';
+  static const String getByIdDepartment = 'GetByIdDepartment'; // xoa
   static const String createDepartment = 'CreateDepartment';
   static const String updateDepartment = 'UpdateDepartment';
   static const String deleteDepartment = 'DeleteDepartment';
@@ -68,28 +68,28 @@ abstract final class AppPolicy {
 
   // Ticket
   static const String getAllTickets = 'GetAllTickets';
-  static const String getByIdTicket = 'GetByIdTicket';
-  static const String getUsersByTicketId = 'GetUsersByTicketId';
+  static const String getByIdTicket = 'GetByIdTicket'; // xoa
+  static const String getUsersByTicketId = 'GetUsersByTicketId'; // xoa
   static const String setUsersInTicket = 'SetUsersInTicket';
-  static const String getCommentsByTicketId = 'GetCommentsByTicketId';
+  static const String getCommentsByTicketId = 'GetCommentsByTicketId'; // xoa
   static const String createTicket = 'CreateTicket';
   static const String updateTicket = 'UpdateTicket';
-  static const String updateTicketByTicketStatus = 'UpdateTicketByTicketStatus';
+  static const String updateTicketByTicketStatus = 'UpdateTicketByTicketStatus'; // xoa
   static const String deleteTicket = 'DeleteTicket';
 
   // Ticket Status
-  static const String getAllTicketStatuses = 'GetAllTicketStatuses';
-  static const String getByIdTicketStatus = 'GetByIdTicketStatus';
+  static const String getAllTicketStatuses = 'GetAllTicketStatuses'; // xoa
+  static const String getByIdTicketStatus = 'GetByIdTicketStatus'; // xoa
   static const String getTicketsByTicketStatusId = 'GetTicketsByTicketStatusId';
   static const String createTicketStatus = 'CreateTicketStatus';
   static const String updateTicketStatus = 'UpdateTicketStatus';
   static const String deleteTicketStatus = 'DeleteTicketStatus';
 
   // Comment
-  static const String getAllComments = 'GetAllComments';
-  static const String getByIdComment = 'GetByIdComment';
+  static const String getAllComments = 'GetAllComments'; // xoa
+  static const String getByIdComment = 'GetByIdComment'; // xoa
   static const String createComment = 'CreateComment';
-  static const String updateComment = 'UpdateComment';
+  static const String updateComment = 'UpdateComment'; // xoa
   static const String deleteComment = 'DeleteComment';
 
   static const List<String> policies = [

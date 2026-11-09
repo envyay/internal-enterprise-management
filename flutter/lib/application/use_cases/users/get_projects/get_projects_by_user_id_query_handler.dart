@@ -10,7 +10,7 @@ class GetProjectsByUserIdQueryHandler extends IQueryHandler<GetProjectsByUserIdQ
 
   @override
   Future<Result<List<Project>>> handle(GetProjectsByUserIdQuery query) async {
-    final res = await _userRepository.getProjectsByUserId(userId: query.userId);
+    final res = await _userRepository.getProjectsByUserId();
     return Result.success(res);
   }
 }

@@ -2,16 +2,21 @@ import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/widgets/edit_project_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../controllers/policies_controller.dart';
 
 class ProjectItem extends ConsumerWidget {
   const ProjectItem({
     super.key,
     required this.name,
     this.isActive = false,
-    this.onTap, required this.project,
+    this.onTap,
+    required this.project,
   });
+
   final Project project;
   final String name;
   final bool isActive;
@@ -21,6 +26,10 @@ class ProjectItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(projectsControllerProvider.notifier);
     final router = ref.read(appRouterProvider);
+
+    final policies = ref.watch(
+      policiesControllerProvider.select((x) => x.value ?? []),
+    );
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       decoration: BoxDecoration(
@@ -48,7 +57,9 @@ class ProjectItem extends ConsumerWidget {
                           color: isActive
                               ? const Color(0xff001E40)
                               : const Color(0xff43474F),
-                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                          fontWeight: isActive
+                              ? FontWeight.w600
+                              : FontWeight.w500,
                           fontSize: 14,
                         ),
                         maxLines: 1,
@@ -62,7 +73,9 @@ class ProjectItem extends ConsumerWidget {
                           color: isActive
                               ? const Color(0xff001E40)
                               : const Color(0xff43474F),
-                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                          fontWeight: isActive
+                              ? FontWeight.w600
+                              : FontWeight.w500,
                           fontSize: 14,
                         ),
                         maxLines: 1,
@@ -78,60 +91,62 @@ class ProjectItem extends ConsumerWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.edit_outlined,
-                          size: 18,
-                          color: Color(0xff006C49),
+                      if (policies.contains(AppPolicy.updateProject))
+                        IconButton(
+                          icon: const Icon(
+                            Icons.edit_outlined,
+                            size: 18,
+                            color: Color(0xff006C49),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return EditProjectDialog(project: project);
+                              },
+                            );
+                          },
+                          tooltip: 'Edit',
                         ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return EditProjectDialog(project: project,);
-                            },
-                          );
-                        },
-                        tooltip: 'Edit',
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.delete_outline,
-                          size: 18,
-                          color: Color(0xffBA1A1A),
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Delete Confirmation'),
-                              content: Text(
-                                'Are you sure to delete "${project.name}"?',
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => router.pop(context),
-
-                                  child: const Text('Cancel'),
+                      if (policies.contains(AppPolicy.deleteProject))
+                        IconButton(
+                          icon: const Icon(
+                            Icons.delete_outline,
+                            size: 18,
+                            color: Color(0xffBA1A1A),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Delete Confirmation'),
+                                content: Text(
+                                  'Are you sure to delete "${project.name}"?',
                                 ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await controller.delete(project.id);
-                                    router.pop();
-                                  },
-                                  child: const Text(
-                                    'Delete',
-                                    style: TextStyle(
-                                      color: Color(0xffBA1A1A),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => router.pop(context),
+
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await controller.delete(project.id);
+                                      router.pop();
+                                    },
+                                    child: const Text(
+                                      'Delete',
+                                      style: TextStyle(
+                                        color: Color(0xffBA1A1A),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        tooltip: 'Delete',
-                      ),
+                                ],
+                              ),
+                            );
+                          },
+                          tooltip: 'Delete',
+                        ),
                     ],
                   ),
                 ),

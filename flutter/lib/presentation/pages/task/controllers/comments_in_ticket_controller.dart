@@ -30,8 +30,17 @@ class CommentsInTicketController extends _$CommentsInTicketController {
     state = AsyncData(data);
   }
 
-  Future<void> delete(String id) async {
+  Future<bool> delete(String id) async {
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(DeleteCommentCommand(id: id));
+    final res = await mediator.send(DeleteCommentCommand(id: id));
+    return res.when(
+      success: (success) async {
+        await refresh(ticketId);
+        return success;
+      },
+      failure: (failure) {
+        return false;
+      },
+    );
   }
 }

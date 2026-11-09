@@ -9,12 +9,12 @@ part 'projects_controller.g.dart';
 class ProjectsController extends _$ProjectsController {
   @override
   Future<List<Project>> build() async {
-    return [];
+    return getProjectsByUserId();
   }
 
-  Future<List<Project>> getProjectsByUserId({required String userId}) async {
+  Future<List<Project>> getProjectsByUserId() async {
     final mediator = ref.read(mediatorProvider);
-    final res = await mediator.query(GetProjectsByUserIdQuery(userId: userId));
+    final res = await mediator.query(GetProjectsByUserIdQuery());
     return res.when(success: (List<Project> data) {
       state = AsyncData(data);
       return data;

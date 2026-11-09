@@ -1,15 +1,14 @@
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/controllers/policies_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/comments_in_ticket_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/create_comment_form_controller.dart';
-import 'package:enterprise_management/presentation/pages/task/controllers/documents_in_ticket_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/ticket_attachment_controller.dart';
-import 'package:enterprise_management/presentation/pages/task/controllers/users_in_ticket_controller.dart';
-import 'package:enterprise_management/presentation/pages/task/widgets/assign_users_dialog.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/comments_in_ticket.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/document_table_in_ticket.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/users_in_ticket.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -53,44 +52,10 @@ class _TicketDetailsDrawerState extends ConsumerState<TicketDetailsDrawer> {
     });
   }
 
-  Widget _buildIconButton({
-    required String tooltip,
-    required SvgGenImage icon,
-    required VoidCallback onTap,
-  }) {
-    return IconButton(
-      tooltip: tooltip,
-      onPressed: onTap,
-      visualDensity: VisualDensity.compact,
-      padding: const EdgeInsets.all(6),
-      constraints: const BoxConstraints(minWidth: 32, minHeight: 32),
-      style: IconButton.styleFrom(
-        hoverColor: const Color(0xFFF0F4FF),
-        highlightColor: const Color(0xFFD6E4FF),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(6),
-        ),
-      ),
-      icon: icon.svg(
-        width: 16,
-        height: 16,
-        colorFilter: const ColorFilter.mode(
-          Color(0xff001E40),
-          BlendMode.srcIn,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final ticketAttachmentState = ref.watch(
       ticketAttachmentControllerProvider(ticketId: widget.ticket.id),
-    );
-    final ticketAttachmentController = ref.watch(
-      ticketAttachmentControllerProvider(
-        ticketId: widget.ticket.id,
-      ).notifier,
     );
 
     final commentsInTicketController = ref.watch(
@@ -98,6 +63,9 @@ class _TicketDetailsDrawerState extends ConsumerState<TicketDetailsDrawer> {
     );
     final createCommentForm = ref.watch(
       createCommentFormControllerProvider(null).notifier,
+    );
+    final policies = ref.watch(
+      policiesControllerProvider.select((x) => x.value ?? []),
     );
 
     return Container(
@@ -241,46 +209,6 @@ class _TicketDetailsDrawerState extends ConsumerState<TicketDetailsDrawer> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    _buildIconButton(
-                      tooltip: 'Assign User',
-                      icon: Assets.lib.infrastructure.assets.icons.plus,
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Consumer(
-                              builder: (context, ref, child) {
-                                final controller = ref.watch(
-                                  usersInTicketControllerProvider(
-                                    widget.ticket.id,
-                                  ).notifier,
-                                );
-                                final state = ref.watch(
-                                  usersInTicketControllerProvider(
-                                    widget.ticket.id,
-                                  ),
-                                );
-                                final users = state.value ?? [];
-                                return AssignUsersDialog(
-                                  initialSelectedUserIds: users
-                                      .map((item) => item.id)
-                                      .toSet(),
-                                  projectId: widget.projectId,
-                                  onSave: (users) {
-                                    controller.setUsersInTicket(
-                                      ticketId: widget.ticket.id,
-                                      userIds: users
-                                          .map((item) => item.id)
-                                          .toList(),
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -301,30 +229,6 @@ class _TicketDetailsDrawerState extends ConsumerState<TicketDetailsDrawer> {
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                       ),
-                    ),
-                    _buildIconButton(
-                      tooltip: 'Upload File',
-                      icon: Assets.lib.infrastructure.assets.icons.uploadFile,
-                      onTap: () async {
-                        final files =
-                            await ticketAttachmentController.pickAttachment();
-                        final newFiles =
-                            files.where((f) => f.id == '').toList();
-                        if (newFiles.isNotEmpty) {
-                          final documentsInTicketController = ref.watch(
-                            documentsInTicketControllerProvider().notifier,
-                          );
-                          await documentsInTicketController.uploadDocument(
-                            referenceId: widget.ticket.id,
-                            files: newFiles,
-                          );
-                          ref.invalidate(
-                            ticketAttachmentControllerProvider(
-                              ticketId: widget.ticket.id,
-                            ),
-                          );
-                        }
-                      },
                     ),
                   ],
                 ),
@@ -351,8 +255,9 @@ class _TicketDetailsDrawerState extends ConsumerState<TicketDetailsDrawer> {
           ),
 
           // Pinned Bottom Comment Bar
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          if (policies.contains(AppPolicy.createComment))
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: const BoxDecoration(
               color: Colors.white,
               border: Border(

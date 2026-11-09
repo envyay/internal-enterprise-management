@@ -42,11 +42,11 @@ public class UsersController(ISender sender) : ControllerBase
         return Ok(userId);
     }
 
-    [Authorize(Policy = AppPolicy.GetProjectsByUserId)]
-    [HttpGet("{id:guid}/Projects")]
-    public async Task<IActionResult> GetProjectsByUserId(Guid id)
+    [Authorize]
+    [HttpGet("Projects")]
+    public async Task<IActionResult> GetProjectsByUserId()
     {
-        var projects = await sender.Send(new GetProjectsByUserIdQuery { UserId = id });
+        var projects = await sender.Send(new GetProjectsByUserIdQuery());
         return Ok(projects);
     }
 

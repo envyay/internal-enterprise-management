@@ -26,7 +26,7 @@ public class TicketsController(ISender sender) : ControllerBase
         return Ok(tickets);
     }
 
-    [Authorize(Policy = AppPolicy.GetByIdTicket)]
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -34,7 +34,7 @@ public class TicketsController(ISender sender) : ControllerBase
         return Ok(ticket);
     }
 
-    [Authorize(Policy = AppPolicy.GetUsersByTicketId)]
+    [Authorize]
     [HttpGet("{id:guid}/Users")]
     public async Task<IActionResult> GetUsersByTicketId(Guid id)
     {
@@ -50,7 +50,7 @@ public class TicketsController(ISender sender) : ControllerBase
         return Ok(success);       
     }
 
-    [Authorize(Policy = AppPolicy.GetCommentsByTicketId)]
+    [Authorize]
     [HttpGet("{id:guid}/Comments")]
     public async Task<IActionResult> GetCommentsByTicketId(Guid id)
     {
@@ -74,7 +74,7 @@ public class TicketsController(ISender sender) : ControllerBase
         return Ok(success);
     }
 
-    [Authorize(Policy = AppPolicy.UpdateTicketByTicketStatus)]
+    [Authorize]
     [HttpPut("UpdateByTicketStatus")]
     public async Task<IActionResult> UpdateTicketByTicketStatus(UpdateTicketByTicketStatusCommand request)
     {

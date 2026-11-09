@@ -15,7 +15,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class TicketStatusController(ISender sender) : ControllerBase
 {
-    [Authorize(Policy = AppPolicy.GetAllTicketStatuses)]
+    [Authorize]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -23,7 +23,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
         return Ok(ticketStatuses);
     }
 
-    [Authorize(Policy = AppPolicy.GetByIdTicketStatus)]
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {

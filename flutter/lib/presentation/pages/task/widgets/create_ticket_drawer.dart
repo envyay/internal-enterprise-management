@@ -1,5 +1,6 @@
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/controllers/policies_controller.dart';
 import 'package:enterprise_management/presentation/forms/inputs/description_input.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/create_ticket_form_controller.dart';
@@ -9,6 +10,7 @@ import 'package:enterprise_management/presentation/pages/task/controllers/ticket
 import 'package:enterprise_management/presentation/pages/task/widgets/assign_users_dialog.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/document_table_in_ticket.dart';
 import 'package:enterprise_management/presentation/widgets/solid_button.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,8 +26,9 @@ class CreateTicketDrawer extends ConsumerWidget {
 
   Widget _buildIconButton({
     required String tooltip,
-    required SvgGenImage icon,
+    SvgGenImage? icon,
     required VoidCallback onTap,
+    double? iconSize
   }) {
     return IconButton(
       tooltip: tooltip,
@@ -40,14 +43,14 @@ class CreateTicketDrawer extends ConsumerWidget {
           borderRadius: BorderRadius.circular(6),
         ),
       ),
-      icon: icon.svg(
-        width: 16,
-        height: 16,
+      icon: icon?.svg(
+        width: iconSize ?? 16,
+        height: iconSize ?? 16,
         colorFilter: const ColorFilter.mode(
           Color(0xff001E40),
           BlendMode.srcIn,
         ),
-      ),
+      ) ?? Container(),
     );
   }
 
@@ -68,6 +71,8 @@ class CreateTicketDrawer extends ConsumerWidget {
     final state = ref.watch(createTicketFormControllerProvider(null));
     final titleError = state.title.error?.errorMessage;
     final descriptionError = state.description.error?.errorMessage;
+
+    final policies = ref.watch(policiesControllerProvider.select((x) => x.value ?? []));
 
     return Container(
       width: 500,
@@ -256,7 +261,7 @@ class CreateTicketDrawer extends ConsumerWidget {
                     ),
                     _buildIconButton(
                       tooltip: 'Assign User',
-                      icon: Assets.lib.infrastructure.assets.icons.plus,
+                      icon: policies.contains(AppPolicy.setUsersInTicket) ? Assets.lib.infrastructure.assets.icons.create : null,
                       onTap: () {
                         showDialog(
                           context: context,
@@ -357,7 +362,8 @@ class CreateTicketDrawer extends ConsumerWidget {
                     ),
                     _buildIconButton(
                       tooltip: 'Upload File',
-                      icon: Assets.lib.infrastructure.assets.icons.uploadFile,
+                      icon: policies.contains(AppPolicy.uploadDocument) ? Assets.lib.infrastructure.assets.icons.uploadFile : null,
+                      iconSize: 20,
                       onTap: () {
                         ticketAttachmentController.pickAttachment();
                       },

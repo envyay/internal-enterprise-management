@@ -6,5 +6,5 @@ namespace Application.UseCases.Users.GetProjectsByUserId;
 
 public class GetProjectsByUserIdQuery : IRequest<List<ProjectDto>?>
 {
-    public Guid UserId { get; set; }
+    
 }

@@ -15,7 +15,7 @@ abstract interface class IUserRepository {
 
   Future<List<String>> getPolicies();
 
-  Future<List<Project>> getProjectsByUserId({required String userId});
+  Future<List<Project>> getProjectsByUserId();
 
   Future<String> createUser({required String fullName, required String email});
 
@@ -106,8 +106,8 @@ class UsersRepository implements IUserRepository {
   }
 
   @override
-  Future<List<Project>> getProjectsByUserId({required String userId}) async {
-    final res = await _userRemoteDataSource.getProjectsByUserId(userId);
+  Future<List<Project>> getProjectsByUserId() async {
+    final res = await _userRemoteDataSource.getProjectsByUserId();
     return res.data?.map((item) => item.toAggregate()).toList() ?? [];
   }
 

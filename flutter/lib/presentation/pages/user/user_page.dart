@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/controllers/policies_controller.dart';
 import 'package:enterprise_management/presentation/pages/user/widgets/create_user_dialog.dart';
 import 'package:enterprise_management/presentation/pages/user/widgets/users_table.dart';
 import 'package:enterprise_management/presentation/widgets/base_page.dart';
 import 'package:enterprise_management/presentation/widgets/overview_container.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -14,6 +16,9 @@ class UserPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final policies = ref.watch(
+      policiesControllerProvider.select((x) => x.value ?? []),
+    );
     return Scaffold(
       backgroundColor: const Color(0xffF8F9FF),
       body: BasePage(
@@ -32,7 +37,9 @@ class UserPage extends ConsumerWidget {
                   mainAxisCellCount: 2,
                   child: OverviewContainer(
                     title: 'Users',
-                    icon: Assets.lib.infrastructure.assets.icons.create,
+                    icon: policies.contains(AppPolicy.createUser)
+                        ? Assets.lib.infrastructure.assets.icons.create
+                        : null,
                     onTap: () {
                       showDialog(
                         context: context,

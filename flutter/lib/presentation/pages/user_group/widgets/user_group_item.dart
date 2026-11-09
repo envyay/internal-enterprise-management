@@ -2,16 +2,21 @@ import 'package:enterprise_management/domain/aggregates/user_group/user_group.da
 import 'package:enterprise_management/presentation/pages/user_group/controllers/user_groups_controller.dart';
 import 'package:enterprise_management/presentation/pages/user_group/widgets/edit_user_group_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../controllers/policies_controller.dart';
 
 class UserGroupItem extends ConsumerWidget {
   const UserGroupItem({
     super.key,
     required this.name,
     this.isActive = false,
-    this.onTap, required this.userGroup,
+    this.onTap,
+    required this.userGroup,
   });
+
   final UserGroup userGroup;
   final String name;
   final bool isActive;
@@ -21,6 +26,10 @@ class UserGroupItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller = ref.watch(userGroupsControllerProvider.notifier);
     final router = ref.read(appRouterProvider);
+
+    final policies = ref.watch(
+      policiesControllerProvider.select((x) => x.value ?? []),
+    );
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       decoration: BoxDecoration(
@@ -50,7 +59,9 @@ class UserGroupItem extends ConsumerWidget {
                           color: isActive
                               ? const Color(0xff001E40)
                               : const Color(0xff43474F),
-                          fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                          fontWeight: isActive
+                              ? FontWeight.w600
+                              : FontWeight.w500,
                           fontSize: 14,
                         ),
                         maxLines: 1,
@@ -65,7 +76,7 @@ class UserGroupItem extends ConsumerWidget {
                             Icons.group_outlined,
                             size: 18,
                             color: Color(0xff43474F),
-                          )
+                          ),
                         ],
                       ),
                     ],
@@ -78,62 +89,64 @@ class UserGroupItem extends ConsumerWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      IconButton(
-                        icon: const Icon(
-                          Icons.edit_outlined,
-                          size: 18,
-                          color: Color(0xff006C49),
+                      if (policies.contains(AppPolicy.updateUserGroup))
+                        IconButton(
+                          icon: const Icon(
+                            Icons.edit_outlined,
+                            size: 18,
+                            color: Color(0xff006C49),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return EditUserGroupDialog(
+                                  userGroup: userGroup,
+                                );
+                              },
+                            );
+                          },
+                          tooltip: 'Edit',
                         ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return EditUserGroupDialog(userGroup: userGroup,
-                                
-                              );
-                            },
-                          );
-                        },
-                        tooltip: 'Edit',
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.delete_outline,
-                          size: 18,
-                          color: Color(0xffBA1A1A),
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Delete Confirmation'),
-                              content: Text(
-                                'Are you sure to delete "${userGroup.name}"?',
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => router.pop(context),
-
-                                  child: const Text('Cancel'),
+                      if (policies.contains(AppPolicy.deleteUserGroup))
+                        IconButton(
+                          icon: const Icon(
+                            Icons.delete_outline,
+                            size: 18,
+                            color: Color(0xffBA1A1A),
+                          ),
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Delete Confirmation'),
+                                content: Text(
+                                  'Are you sure to delete "${userGroup.name}"?',
                                 ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await controller.delete(userGroup.id);
-                                    router.pop();
-                                  },
-                                  child: const Text(
-                                    'Delete',
-                                    style: TextStyle(
-                                      color: Color(0xffBA1A1A),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => router.pop(context),
+
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await controller.delete(userGroup.id);
+                                      router.pop();
+                                    },
+                                    child: const Text(
+                                      'Delete',
+                                      style: TextStyle(
+                                        color: Color(0xffBA1A1A),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        tooltip: 'Delete',
-                      ),
+                                ],
+                              ),
+                            );
+                          },
+                          tooltip: 'Delete',
+                        ),
                     ],
                   ),
                 ),

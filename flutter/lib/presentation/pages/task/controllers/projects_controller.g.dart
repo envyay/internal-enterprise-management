@@ -34,7 +34,7 @@ final class ProjectsControllerProvider
 }
 
 String _$projectsControllerHash() =>
-    r'cbdc805ba62db25ded67114e996d7397db28a1fd';
+    r'6fb145debf3146416232e0cc9e5b744fdf38cb29';
 
 abstract class _$ProjectsController extends $AsyncNotifier<List<Project>> {
   FutureOr<List<Project>> build();

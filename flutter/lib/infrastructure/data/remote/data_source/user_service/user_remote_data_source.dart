@@ -21,8 +21,8 @@ abstract class UserRemoteDataSource {
   @GET('GetPolicies')
   Future<ApiResponse<List<String>>> getPolicies();
 
-  @GET('{id}/Projects')
-  Future<ApiResponse<List<ProjectDto>?>> getProjectsByUserId(@Path('id') String id);
+  @GET('Projects')
+  Future<ApiResponse<List<ProjectDto>?>> getProjectsByUserId();
 
   @POST('Create')
   Future<ApiResponse<String>> createUser(@Body() CreateUserDto body);

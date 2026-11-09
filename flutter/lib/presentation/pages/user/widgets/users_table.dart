@@ -1,6 +1,8 @@
+import 'package:enterprise_management/presentation/controllers/policies_controller.dart';
 import 'package:enterprise_management/presentation/pages/user/controllers/users_controller.dart';
 import 'package:enterprise_management/presentation/pages/user/widgets/edit_user_dialog.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,6 +14,10 @@ class UsersTable extends ConsumerWidget {
     final state = ref.watch(usersControllerProvider);
     final controller = ref.read(usersControllerProvider.notifier);
     final router = ref.read(appRouterProvider);
+
+    final policies = ref.watch(
+      policiesControllerProvider.select((x) => x.value ?? []),
+    );
     return state.when(
       data: (users) {
         return ListView.builder(
@@ -23,8 +29,8 @@ class UsersTable extends ConsumerWidget {
               child: Table(
                 border: (index < (users.length - 1))
                     ? const TableBorder(
-                  bottom: BorderSide(color: Color(0xffC3C6D1)),
-                )
+                        bottom: BorderSide(color: Color(0xffC3C6D1)),
+                      )
                     : null,
                 columnWidths: const {
                   0: FixedColumnWidth(500),
@@ -45,7 +51,9 @@ class UsersTable extends ConsumerWidget {
                               height: 8,
                               width: 8,
                               decoration: BoxDecoration(
-                                color: item.status == 0 ? const Color(0xffBA1A1A) : const Color(0xff006C49),
+                                color: item.status == 0
+                                    ? const Color(0xffBA1A1A)
+                                    : const Color(0xff006C49),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
@@ -91,62 +99,62 @@ class UsersTable extends ConsumerWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              icon: const Icon(
-                                Icons.edit_outlined,
-                                size: 18,
-                                color: Color(0xff006C49),
+                            if (policies.contains(AppPolicy.updateUser))
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.edit_outlined,
+                                  size: 18,
+                                  color: Color(0xff006C49),
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return EditUserDialog(user: item);
+                                    },
+                                  );
+                                },
+                                tooltip: 'Edit',
                               ),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return EditUserDialog(
-                                      user: item,
-                                    );
-                                  },
-                                );
-                              },
-                              tooltip: 'Edit',
-                            ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.delete_outline,
-                                size: 18,
-                                color: Color(0xffBA1A1A),
-                              ),
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Delete Confirmation'),
-                                    content: Text(
-                                      'Are you sure to delete "${item.fullName}"?',
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => router.pop(context),
-
-                                        child: const Text('Cancel'),
+                            if (policies.contains(AppPolicy.deleteUser))
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  size: 18,
+                                  color: Color(0xffBA1A1A),
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: const Text('Delete Confirmation'),
+                                      content: Text(
+                                        'Are you sure to delete "${item.fullName}"?',
                                       ),
-                                      TextButton(
-                                        onPressed: () async {
-                                          await controller.delete(item.id);
-                                          router.pop();
-                                        },
-                                        child: const Text(
-                                          'Delete',
-                                          style: TextStyle(
-                                            color: Color(0xffBA1A1A),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => router.pop(context),
+
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            await controller.delete(item.id);
+                                            router.pop();
+                                          },
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(
+                                              color: Color(0xffBA1A1A),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              tooltip: 'Delete',
-                            ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                tooltip: 'Delete',
+                              ),
                           ],
                         ),
                       ),

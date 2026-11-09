@@ -46,7 +46,7 @@ public class ChatController(ISender sender) : ControllerBase
         return Ok(conversations);
     }
     
-    [Authorize(Policy = AppPolicy.GetChatMessagesByConversationId)]
+    [Authorize]
     [HttpGet("{id:guid}/ChatMessages")]
     public async Task<IActionResult> GetChatMessagesByConversationId(Guid id)
     {
@@ -54,7 +54,7 @@ public class ChatController(ISender sender) : ControllerBase
         return Ok(comment);
     }
 
-    [Authorize(Policy = AppPolicy.CreateConversation)]
+    [Authorize]
     [HttpPost("CreateConversation")]
     public async Task<IActionResult> CreateConversation(CreateConversationCommand request)
     {
@@ -62,7 +62,7 @@ public class ChatController(ISender sender) : ControllerBase
         return Ok(conversation);
     }
     
-    [Authorize(Policy = AppPolicy.CreateChatMessage)]
+    [Authorize]
     [HttpPost("CreateChatMessage")]
     public async Task<IActionResult> CreateChatMessage(CreateChatMessageCommand request)
     {

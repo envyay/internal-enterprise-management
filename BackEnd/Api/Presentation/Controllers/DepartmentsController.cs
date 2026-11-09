@@ -24,7 +24,7 @@ public class DepartmentsController(ISender sender) : ControllerBase
         return Ok(departments);
     }
 
-    [Authorize(Policy = AppPolicy.GetByIdDepartment)]
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {

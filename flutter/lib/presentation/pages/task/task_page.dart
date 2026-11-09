@@ -1,13 +1,14 @@
 import 'package:auto_route/annotations.dart';
 import 'package:enterprise_management/domain/aggregates/ticket/ticket.dart';
 import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_status.dart';
-import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
+import 'package:enterprise_management/presentation/controllers/policies_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/ticket_statuses_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/tickets_in_ticket_status_controller.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/create_ticket_drawer.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/edit_ticket_drawer.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/ticket_card.dart';
 import 'package:enterprise_management/presentation/pages/task/widgets/ticket_details_drawer.dart';
+import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../infrastructure/assets/gen/assets.gen.dart';
 import '../../widgets/base_page.dart';
 import '../../widgets/overview_container.dart';
+import 'controllers/projects_controller.dart';
 
 @RoutePage()
 class ProjectTrackerPage extends ConsumerStatefulWidget {
@@ -124,6 +126,8 @@ class _ProjectTrackerPageState extends ConsumerState<ProjectTrackerPage> {
     final state = ref.watch(projectsControllerProvider);
     final ticketStatusState = ref.watch(ticketStatusesControllerProvider);
 
+    final policies = ref.watch(policiesControllerProvider.select((x) => x.value ?? []));
+
     ref.listen(projectsControllerProvider, (previous, next) {
       final projects = next.value ?? [];
       if (_selectedProjectId == null && projects.isNotEmpty) {
@@ -218,7 +222,7 @@ class _ProjectTrackerPageState extends ConsumerState<ProjectTrackerPage> {
                         mainAxisCellCount: 4,
                         child: OverviewContainer(
                           title: status.name,
-                          icon: Assets.lib.infrastructure.assets.icons.create,
+                          icon: policies.contains(AppPolicy.createTicket) ? Assets.lib.infrastructure.assets.icons.create : null,
                           onTap: () {
                             _createTicketDrawer(scaffoldContext, status, status.projectId);
                           },
@@ -239,15 +243,15 @@ class _ProjectTrackerPageState extends ConsumerState<ProjectTrackerPage> {
                                   color: isHovering ? Colors.blue.withValues(alpha: 0.08) : Colors.transparent,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: ticketsState.when(
+                                child: policies.contains(AppPolicy.getTicketsByTicketStatusId) ? ticketsState.when(
                                   data: (tickets) => ListView.builder(
                                     itemCount: tickets.length,
                                     itemBuilder: (context, index) {
                                       final ticket = tickets[index];
                                       final card = TicketCard(
                                         ticket: ticket,
-                                        onPressed: () => _editTicketDrawer(scaffoldContext, status, status.projectId, ticket),
-                                        onTap: () => _ticketDetailsDrawer(scaffoldContext, status, status.projectId, ticket),
+                                        onPressed: policies.contains(AppPolicy.updateTicket) ? () => _editTicketDrawer(scaffoldContext, status, status.projectId, ticket) : null,
+                                        onTap: policies.contains(AppPolicy.getByIdTicket) ? () => _ticketDetailsDrawer(scaffoldContext, status, status.projectId, ticket) : null,
                                       );
                                       return Draggable<({Ticket ticket, String fromStatusId})>(
                                         data: (ticket: ticket, fromStatusId: status.id),
@@ -265,7 +269,7 @@ class _ProjectTrackerPageState extends ConsumerState<ProjectTrackerPage> {
                                   ),
                                   error: (e, st) => const Text('Error'),
                                   loading: () => const Text('Loading...'),
-                                ),
+                                ) : null,
                               );
                             },
                           ),

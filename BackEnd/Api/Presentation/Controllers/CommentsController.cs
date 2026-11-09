@@ -14,7 +14,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class CommentsController(ISender sender) : ControllerBase
 {
-    [Authorize(Policy = AppPolicy.GetAllComments)]
+    [Authorize]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -22,7 +22,7 @@ public class CommentsController(ISender sender) : ControllerBase
         return Ok(comments);
     }
 
-    [Authorize(Policy = AppPolicy.GetByIdComment)]
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
@@ -38,7 +38,7 @@ public class CommentsController(ISender sender) : ControllerBase
         return Ok(commentId);
     }
 
-    [Authorize(Policy = AppPolicy.UpdateComment)]
+    [Authorize]
     [HttpPut("Update")]
     public async Task<IActionResult> Update(UpdateCommentCommand request)
     {

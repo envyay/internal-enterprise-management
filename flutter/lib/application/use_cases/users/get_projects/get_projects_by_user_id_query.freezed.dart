@@ -15,61 +15,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$GetProjectsByUserIdQuery {
 
- String get userId;
-/// Create a copy of GetProjectsByUserIdQuery
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$GetProjectsByUserIdQueryCopyWith<GetProjectsByUserIdQuery> get copyWith => _$GetProjectsByUserIdQueryCopyWithImpl<GetProjectsByUserIdQuery>(this as GetProjectsByUserIdQuery, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetProjectsByUserIdQuery&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GetProjectsByUserIdQuery);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userId);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'GetProjectsByUserIdQuery(userId: $userId)';
+  return 'GetProjectsByUserIdQuery()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $GetProjectsByUserIdQueryCopyWith<$Res>  {
-  factory $GetProjectsByUserIdQueryCopyWith(GetProjectsByUserIdQuery value, $Res Function(GetProjectsByUserIdQuery) _then) = _$GetProjectsByUserIdQueryCopyWithImpl;
-@useResult
-$Res call({
- String userId
-});
-
-
-
-
-}
-/// @nodoc
-class _$GetProjectsByUserIdQueryCopyWithImpl<$Res>
-    implements $GetProjectsByUserIdQueryCopyWith<$Res> {
-  _$GetProjectsByUserIdQueryCopyWithImpl(this._self, this._then);
-
-  final GetProjectsByUserIdQuery _self;
-  final $Res Function(GetProjectsByUserIdQuery) _then;
-
-/// Create a copy of GetProjectsByUserIdQuery
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,}) {
-  return _then(GetProjectsByUserIdQuery(
-userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
+class $GetProjectsByUserIdQueryCopyWith<$Res>  {
+$GetProjectsByUserIdQueryCopyWith(GetProjectsByUserIdQuery _, $Res Function(GetProjectsByUserIdQuery) __);
 }
 
 
@@ -151,10 +120,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function()?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GetProjectsByUserIdQuery() when $default != null:
-return $default(_that.userId);case _:
+return $default();case _:
   return orElse();
 
 }
@@ -172,10 +141,10 @@ return $default(_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function()  $default,) {final _that = this;
 switch (_that) {
 case _GetProjectsByUserIdQuery():
-return $default(_that.userId);case _:
+return $default();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +161,10 @@ return $default(_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function()?  $default,) {final _that = this;
 switch (_that) {
 case _GetProjectsByUserIdQuery() when $default != null:
-return $default(_that.userId);case _:
+return $default();case _:
   return null;
 
 }
@@ -207,66 +176,32 @@ return $default(_that.userId);case _:
 
 
 class _GetProjectsByUserIdQuery implements GetProjectsByUserIdQuery {
-  const _GetProjectsByUserIdQuery({required this.userId});
+  const _GetProjectsByUserIdQuery();
   
 
-@override final  String userId;
 
-/// Create a copy of GetProjectsByUserIdQuery
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$GetProjectsByUserIdQueryCopyWith<_GetProjectsByUserIdQuery> get copyWith => __$GetProjectsByUserIdQueryCopyWithImpl<_GetProjectsByUserIdQuery>(this, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetProjectsByUserIdQuery&&(identical(other.userId, userId) || other.userId == userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GetProjectsByUserIdQuery);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userId);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'GetProjectsByUserIdQuery(userId: $userId)';
+  return 'GetProjectsByUserIdQuery()';
 }
 
 
 }
 
-/// @nodoc
-abstract mixin class _$GetProjectsByUserIdQueryCopyWith<$Res> implements $GetProjectsByUserIdQueryCopyWith<$Res> {
-  factory _$GetProjectsByUserIdQueryCopyWith(_GetProjectsByUserIdQuery value, $Res Function(_GetProjectsByUserIdQuery) _then) = __$GetProjectsByUserIdQueryCopyWithImpl;
-@override @useResult
-$Res call({
- String userId
-});
 
 
-
-
-}
-/// @nodoc
-class __$GetProjectsByUserIdQueryCopyWithImpl<$Res>
-    implements _$GetProjectsByUserIdQueryCopyWith<$Res> {
-  __$GetProjectsByUserIdQueryCopyWithImpl(this._self, this._then);
-
-  final _GetProjectsByUserIdQuery _self;
-  final $Res Function(_GetProjectsByUserIdQuery) _then;
-
-/// Create a copy of GetProjectsByUserIdQuery
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,}) {
-  return _then(_GetProjectsByUserIdQuery(
-userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
-
-}
 
 // dart format on

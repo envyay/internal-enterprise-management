@@ -125,6 +125,8 @@ import 'package:enterprise_management/application/use_cases/users/delete_user/de
 import 'package:enterprise_management/application/use_cases/users/delete_user/delete_user_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/get_policies/get_policies_query.dart';
 import 'package:enterprise_management/application/use_cases/users/get_policies/get_policies_query_handler.dart';
+import 'package:enterprise_management/application/use_cases/users/get_projects/get_projects_by_user_id_query.dart';
+import 'package:enterprise_management/application/use_cases/users/get_projects/get_projects_by_user_id_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query.dart';
 import 'package:enterprise_management/application/use_cases/users/get_users/get_user_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/users/update_user/update_user_command.dart';
@@ -186,6 +188,10 @@ extension MediatorRegistrationX on Mediator {
 
     registerQueryHandler<GetPoliciesQuery, List<String>>(
       GetPoliciesQueryHandler(userRepository: ref.read(userRepositoryProvider)),
+    );
+
+    registerQueryHandler<GetProjectsByUserIdQuery, List<Project>>(
+      GetProjectsByUserIdQueryHandler(userRepository: ref.read(userRepositoryProvider)),
     );
 
     registerCommandHandler<CreateUserCommand, String>(
