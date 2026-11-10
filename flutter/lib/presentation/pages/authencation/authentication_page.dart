@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../infrastructure/assets/gen/assets.gen.dart';
 import '../../widgets/otp_verification_dialog.dart';
-import '../../widgets/outline_icon_button.dart';
 import '../../widgets/solid_button.dart';
 
 @RoutePage()
@@ -107,8 +106,7 @@ class AuthenticationPage extends ConsumerWidget {
                         builder: (context, ref, child) {
                           final form = ref.watch(signInFormControllerProvider.notifier);
                           final state = ref.watch(signInFormControllerProvider);
-                          final error = state.email.error?.errorMessage;
-                          final email = state.email.value;
+                          final error = state.email.displayError?.errorMessage;
                           return Column(
                             children: [
                               TextField(
@@ -129,15 +127,18 @@ class AuthenticationPage extends ConsumerWidget {
                                 title: 'Login',
                                 margin: const EdgeInsets.only(bottom: 16, top: 20),
                                 onTap: () {
-                                  if (!state.isValid) return;
+                                  form.validate();
+                                  final latestState = ref.read(signInFormControllerProvider);
+                                  if (!latestState.isValid) return;
 
-                                  controller.login(email);
+                                  final validEmail = latestState.email.value;
+                                  controller.login(validEmail);
                                   showOtpVerificationDialog(
                                     context: context,
-                                    email: email,
+                                    email: validEmail,
                                     length: 6,
                                     onVerify: (otp) {
-                                      controller.loginVerify(email, otp);
+                                      controller.loginVerify(validEmail, otp);
                                       context.router.pop();
                                     },
                                   );
@@ -147,41 +148,6 @@ class AuthenticationPage extends ConsumerWidget {
                           );
                         },
                       ),
-                      Container(
-                        margin: .symmetric(vertical: 32),
-                        child: Row(
-                          spacing: 16,
-                          children: [
-                            _buildLine(),
-                            Text(
-                              'OR CONTINUE WITH',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                            _buildLine(),
-                          ],
-                        ),
-                      ),
-                      OutlineIconButton(
-                        margin: .only(bottom: 12),
-                        title: 'Google',
-                        prefix: Assets.lib.infrastructure.assets.icons.website,
-                        onTap: () {
-                        },
-                      ),
-                      OutlineIconButton(
-                        margin: .only(bottom: 12),
-                        title: 'Microsoft SharePoint',
-                        prefix: Assets.lib.infrastructure.assets.icons.window,
-                        onTap: () {
-                        },
-                      ),
-                      Container(
-                        margin: .only(top: 16),
-                        child: Text(
-                          "Need help? Contact IT Support",
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -189,15 +155,6 @@ class AuthenticationPage extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildLine() {
-    return Expanded(
-      child: Container(
-        height: 1,
-        decoration: BoxDecoration(color: Color(0xffD9D9D9)),
       ),
     );
   }

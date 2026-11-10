@@ -251,7 +251,7 @@ class _ProjectTrackerPageState extends ConsumerState<ProjectTrackerPage> {
                                       final card = TicketCard(
                                         ticket: ticket,
                                         onPressed: policies.contains(AppPolicy.updateTicket) ? () => _editTicketDrawer(scaffoldContext, status, status.projectId, ticket) : null,
-                                        onTap: policies.contains(AppPolicy.getByIdTicket) ? () => _ticketDetailsDrawer(scaffoldContext, status, status.projectId, ticket) : null,
+                                        onTap: () => _ticketDetailsDrawer(scaffoldContext, status, status.projectId, ticket),
                                       );
                                       return Draggable<({Ticket ticket, String fromStatusId})>(
                                         data: (ticket: ticket, fromStatusId: status.id),

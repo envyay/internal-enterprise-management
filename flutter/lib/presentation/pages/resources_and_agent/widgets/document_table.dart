@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class DocumentTable extends StatelessWidget {
-  const DocumentTable({super.key, required this.state});
+  const DocumentTable({super.key, required this.state, required this.onOpenFile});
 
   final AsyncValue<List<Document>> state;
+  final void Function(Document) onOpenFile;
 
   static const _headerStyle = TextStyle(
     color: Color(0xff43474F),
@@ -64,59 +65,67 @@ class DocumentTable extends StatelessWidget {
                       children: [
                         TableRow(
                           children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Row(
-                                spacing: 12,
-                                children: [
-                                  fileIcon(doc.extension).svg(),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          doc.name,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            color: Color(0xff0B1C30),
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        Row(
-                                          spacing: 10,
+                            Material(
+                              type: .transparency,
+                              child: InkWell(
+                                onTap: () {
+                                  onOpenFile.call(doc);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                  child: Row(
+                                    spacing: 12,
+                                    children: [
+                                      fileIcon(doc.extension).svg(),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              _formatSize(doc.size),
+                                              doc.name,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: const TextStyle(
-                                                color: Color(0xff43474F),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400,
+                                                color: Color(0xff0B1C30),
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
                                               ),
                                             ),
-                                            Container(
-                                              height: 5,
-                                              width: 5,
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xff43474F),
-                                                borderRadius: BorderRadius.circular(12),
-                                              ),
-                                            ),
-                                            Text(
-                                              _formatDate(doc.createdAt),
-                                              style: const TextStyle(
-                                                color: Color(0xff43474F),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w400,
-                                              ),
+                                            Row(
+                                              spacing: 10,
+                                              children: [
+                                                Text(
+                                                  _formatSize(doc.size),
+                                                  style: const TextStyle(
+                                                    color: Color(0xff43474F),
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                                Container(
+                                                  height: 5,
+                                                  width: 5,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xff43474F),
+                                                    borderRadius: BorderRadius.circular(12),
+                                                  ),
+                                                ),
+                                                Text(
+                                                  _formatDate(doc.createdAt),
+                                                  style: const TextStyle(
+                                                    color: Color(0xff43474F),
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w400,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ),
                           ],

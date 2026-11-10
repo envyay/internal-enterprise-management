@@ -13,76 +13,61 @@ class UsersInTicket extends ConsumerWidget {
     final state = ref.watch(usersInTicketControllerProvider(ticket.id));
     return state.when(
       data: (users) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: users.length,
-            itemBuilder: (context, index) {
-              final user = users[index];
-              final name = user.fullName;
-              final parts = name.trim().split(' ');
-              final initials = parts.length >= 2
-                  ? '${parts.first[0]}${parts.last[0]}'.toUpperCase()
-                  : (name.isNotEmpty ? name[0].toUpperCase() : '');
+        if (users.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        return Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: users.map((user) {
+            final name = user.fullName;
+            final parts = name.trim().split(' ');
+            final initials = parts.length >= 2
+                ? '${parts.first[0]}${parts.last[0]}'.toUpperCase()
+                : (name.isNotEmpty ? name[0].toUpperCase() : '');
 
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 10,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF8F9FF),
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(
-                    color: const Color(0xFFC3C6D1),
-                    width: 1.0,
+            return Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 6,
+              ),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF0F4FF),
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: const Color(0xFFD6E4FF)),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    radius: 10,
+                    backgroundColor: const Color(0xFF001E40),
+                    child: Text(
+                      initials,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    const SizedBox(width: 12),
-                    Container(
-                      width: 36,
-                      height: 36,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFFD6E4FF),
-                        shape: BoxShape.circle,
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        initials,
-                        style: const TextStyle(
-                          color: Color(0xFF001D4A),
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
-                        ),
-                      ),
+                  const SizedBox(width: 6),
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Color(0xFF0B1C30),
+                      fontWeight: FontWeight.w500,
                     ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        name,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF191C20),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                  ),
+                ],
+              ),
+            );
+          }).toList(),
         );
       },
-      error: (error, stackTrace) {
-        return const Text('Error');
-      },
-      loading: () {
-        return const Text('Loading...');
-      },
+      error: (error, stackTrace) => const SizedBox.shrink(),
+      loading: () => const SizedBox.shrink(),
     );
   }
 }

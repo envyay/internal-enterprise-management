@@ -143,8 +143,14 @@ class Mediator {
     try {
       return await runPipeline(0);
     } on DioException catch (e) {
+      String? message;
+      final data = e.response?.data;
+      if (data is Map) {
+        message = data['message']?.toString() ?? data['Message']?.toString();
+      }
+      message ??= e.message;
       return Result.failure(
-        AppFailure.server(statusCode: e.response?.statusCode ?? 0, message: e.message),
+        AppFailure.server(statusCode: e.response?.statusCode ?? 0, message: message),
       );
     } catch (e) {
       return Result.failure(AppFailure.unexpected(e));
@@ -172,8 +178,14 @@ class Mediator {
     try {
       return await runPipeline(0);
     } on DioException catch (e) {
+      String? message;
+      final data = e.response?.data;
+      if (data is Map) {
+        message = data['message']?.toString() ?? data['Message']?.toString();
+      }
+      message ??= e.message;
       return Result.failure(
-        AppFailure.server(statusCode: e.response?.statusCode ?? 0, message: e.message),
+        AppFailure.server(statusCode: e.response?.statusCode ?? 0, message: message),
       );
     } catch (e) {
       return Result.failure(AppFailure.unexpected(e));

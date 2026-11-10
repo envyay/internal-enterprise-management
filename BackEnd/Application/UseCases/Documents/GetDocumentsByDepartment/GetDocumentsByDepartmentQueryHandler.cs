@@ -1,20 +1,43 @@
 using Application.DTOs.Documents;
 using Domain.Aggregates;
 using Infrastructure.Repository;
+using Infrastructure.Services;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Constants;
 
 namespace Application.UseCases.Documents.GetDocumentsByDepartment;
 
-public class GetDocumentsByDepartmentQueryHandler(IRepository<Document, Guid> documentRepository)
-    : IRequestHandler<GetDocumentsByDepartmentQuery, List<DocumentDto>>
+public class GetDocumentsByDepartmentQueryHandler(
+    IRepository<Document, Guid> documentRepository,
+    IRepository<Department, Guid> departmentRepository,
+    IUserContextService userContextService
+) : IRequestHandler<GetDocumentsByDepartmentQuery, List<DocumentDto>>
 {
-    public async Task<List<DocumentDto>> Handle(GetDocumentsByDepartmentQuery request,
-        CancellationToken cancellationToken)
+    public async Task<List<DocumentDto>> Handle(
+        GetDocumentsByDepartmentQuery request,
+        CancellationToken cancellationToken
+    )
     {
-        var docs = await documentRepository.Where(x =>
-                x.ReferencedId.Equals(request.DepartmentId) && x.ReferenceType == DocumentReferenceType.Department)
+        var userId = userContextService.GetUserId();
+        if (userId == null) throw new UnauthorizedAccessException();
+
+        var department = await departmentRepository
+            .Where(x =>
+                x.Id == request.DepartmentId &&
+                x.Users.Any(u => u.Id == userId))
+            .Include(x => x.Users)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (department == null)
+        {
+            return [];
+        }
+
+        var docs = await documentRepository
+            .Where(x =>
+                x.ReferencedId.Equals(request.DepartmentId) &&
+                x.ReferenceType == DocumentReferenceType.Department)
             .Select(x => new DocumentDto
             {
                 Id = x.Id,

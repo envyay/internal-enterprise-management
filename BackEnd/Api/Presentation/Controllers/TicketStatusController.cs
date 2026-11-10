@@ -35,7 +35,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
     [HttpGet("{id:guid}/Tickets")]
     public async Task<IActionResult> GetTicketsByTicketStatusId(Guid id)
     {
-        var tickets = await sender.Send(new GetTicketsByTicketStatusIdQuery{TicketStatusId = id});
+        var tickets = await sender.Send(new GetTicketsByTicketStatusIdQuery { TicketStatusId = id });
         return Ok(tickets);
     }
 
@@ -59,7 +59,7 @@ public class TicketStatusController(ISender sender) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {
-        var success = await sender.Send(new DeleteTicketStatusCommand{Id = id});
+        var success = await sender.Send(new DeleteTicketStatusCommand { Id = id });
         return Ok(success);
     }
 }

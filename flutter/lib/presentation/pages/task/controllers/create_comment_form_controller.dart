@@ -13,7 +13,7 @@ class CreateCommentFormController extends _$CreateCommentFormController {
   @override
   CreateCommentForm build(Comment? comment) {
     return CreateCommentForm(
-      content: DescriptionInput.dirty(comment?.content ?? "")
+      content: comment != null ? DescriptionInput.dirty(comment.content) : const DescriptionInput.pure(),
     );
   }
 

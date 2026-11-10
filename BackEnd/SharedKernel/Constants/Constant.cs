@@ -81,13 +81,6 @@ public static class AppPolicy
     public const string SetUsersInProject = nameof(SetUsersInProject);
 
     // Document
-    public const string GetAllDocuments = nameof(GetAllDocuments);
-    public const string GetByIdDocument = nameof(GetByIdDocument);
-    public const string GetDocumentsByDepartment = nameof(GetDocumentsByDepartment);
-    public const string GetDocumentsByDepartments = nameof(GetDocumentsByDepartments);
-    public const string GetDocumentsByTicket = nameof(GetDocumentsByTicket);
-    public const string GetDocumentsByTickets = nameof(GetDocumentsByTickets);
-    public const string CreateDocument = nameof(CreateDocument);
     public const string UpdateDocument = nameof(UpdateDocument);
     public const string DeleteDocument = nameof(DeleteDocument);
     public const string DownloadDocument = nameof(DownloadDocument);
@@ -153,13 +146,6 @@ public static class AppPolicy
         SetUsersInProject,
 
         // Document
-        GetAllDocuments,
-        GetByIdDocument,
-        GetDocumentsByDepartment,
-        GetDocumentsByDepartments,
-        GetDocumentsByTicket,
-        GetDocumentsByTickets,
-        CreateDocument,
         UpdateDocument,
         DeleteDocument,
         DownloadDocument,

@@ -1,4 +1,5 @@
 import 'package:enterprise_management/application/use_cases/documents/get_documents/get_documents_query.dart';
+import 'package:enterprise_management/application/use_cases/documents/open_document/open_document_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/upload_document/upload_document_query.dart';
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
@@ -41,5 +42,12 @@ class ResourcesController extends _$ResourcesController {
   void refresh() async {
     final data = await getDocuments();
     state = AsyncValue.data(data);
+  }
+
+  Future<void> openDocument(Document document) async {
+    final mediator = ref.read(mediatorProvider);
+    await mediator.query(
+      OpenDocumentQuery(document: document),
+    );
   }
 }

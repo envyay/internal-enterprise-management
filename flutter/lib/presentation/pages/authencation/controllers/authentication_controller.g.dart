@@ -42,7 +42,7 @@ final class AuthenticationControllerProvider
 }
 
 String _$authenticationControllerHash() =>
-    r'3d6add8dfd65346a05190487f5b8a12548e74c88';
+    r'443f8c2b5943f018352b2e2b1cb97abf1acb9119';
 
 abstract class _$AuthenticationController
     extends $Notifier<AsyncData<dynamic>> {

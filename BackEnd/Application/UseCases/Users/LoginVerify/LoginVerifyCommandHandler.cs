@@ -4,6 +4,8 @@ using Infrastructure.Services;
 using Infrastructure.UnitOfWork;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Constants;
+using SharedKernel.Exceptions;
 
 namespace Application.UseCases.Users.LoginVerify;
 
@@ -28,6 +30,11 @@ public class LoginVerifyCommandHandler(
             user = User.Register(request.Email);
             await userRepository.AddAsync(user, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
+        }
+
+        if (user.Status == UserStatus.InActive)
+        {
+            throw new LockedException("Your account is inactive");
         }
         
         var policies = await GetPolicies(user.Id, cancellationToken);

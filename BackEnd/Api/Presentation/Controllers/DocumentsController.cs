@@ -1,4 +1,3 @@
-using Application.UseCases.Documents;
 using Application.UseCases.Documents.CreateDocument;
 using Application.UseCases.Documents.DeleteDocument;
 using Application.UseCases.Documents.DownloadDocument;
@@ -10,7 +9,6 @@ using Application.UseCases.Documents.GetDocumentsByTicket;
 using Application.UseCases.Documents.GetDocumentsByTickets;
 using Application.UseCases.Documents.UpdateDocument;
 using Application.UseCases.Documents.UploadDocument;
-using Infrastructure.Services;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +20,7 @@ namespace Api.Presentation.Controllers;
 [Route("api/[controller]")]
 public class DocumentsController(ISender sender) : ControllerBase
 {
-    [Authorize(Policy = AppPolicy.GetAllDocuments)]
+    [Authorize]
     [HttpGet("GetAll")]
     public async Task<IActionResult> GetAll()
     {
@@ -30,39 +28,39 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(documents);
     }
 
-    [Authorize(Policy = AppPolicy.GetByIdDocument)]
+    [Authorize]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
-        var document = await sender.Send(new GetDocumentByIdQuery{Id = id});
+        var document = await sender.Send(new GetDocumentByIdQuery { Id = id });
         return Ok(document);
     }
 
-    [Authorize(Policy = AppPolicy.GetDocumentsByDepartment)]
+    [Authorize]
     [HttpGet("GetByDepartment/{id:guid}")]
     public async Task<IActionResult> GetByDepartment(Guid id)
     {
-        var documents = await sender.Send(new GetDocumentsByDepartmentQuery{DepartmentId = id});
+        var documents = await sender.Send(new GetDocumentsByDepartmentQuery { DepartmentId = id });
         return Ok(documents);
     }
 
-    [Authorize(Policy = AppPolicy.GetDocumentsByTicket)]
+    [Authorize]
     [HttpGet("GetByTicket/{id:guid}")]
     public async Task<IActionResult> GetByTicket(Guid id)
     {
-        var documents = await sender.Send(new GetDocumentsByTicketQuery{TicketId = id});
+        var documents = await sender.Send(new GetDocumentsByTicketQuery { TicketId = id });
         return Ok(documents);
     }
 
-    [Authorize(Policy = AppPolicy.GetDocumentsByDepartments)]
+    [Authorize]
     [HttpGet("GetByDepartments")]
     public async Task<IActionResult> GetDocumentsByDepartments()
     {
         var documents = await sender.Send(new GetDocumentsByDepartmentsQuery());
         return Ok(documents);
     }
-    
-    [Authorize(Policy = AppPolicy.GetDocumentsByTickets)]
+
+    [Authorize]
     [HttpGet("GetByTickets")]
     public async Task<IActionResult> GetDocumentsByTickets()
     {
@@ -70,7 +68,7 @@ public class DocumentsController(ISender sender) : ControllerBase
         return Ok(documents);
     }
 
-    [Authorize(Policy = AppPolicy.CreateDocument)]
+    [Authorize(Policy = AppPolicy.UploadDocument)]
     [HttpPost("Create")]
     public async Task<IActionResult> Create(CreateDocumentCommand request)
     {
@@ -90,10 +88,10 @@ public class DocumentsController(ISender sender) : ControllerBase
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteById(Guid id)
     {
-        var success = await sender.Send(new DeleteDocumentByIdCommand{Id = id});
+        var success = await sender.Send(new DeleteDocumentByIdCommand { Id = id });
         return Ok(success);
     }
-    
+
     [Authorize(Policy = AppPolicy.DownloadDocument)]
     [HttpGet("Download")]
     public async Task<IActionResult> Download([FromQuery] DownloadDocumentQuery request)

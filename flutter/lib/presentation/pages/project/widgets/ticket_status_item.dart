@@ -4,7 +4,9 @@ import 'package:enterprise_management/presentation/pages/project/controllers/tic
 import 'package:enterprise_management/presentation/pages/project/widgets/edit_ticket_status_dialog.dart';
 import 'package:enterprise_management/presentation/pages/task/controllers/ticket_statuses_controller.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
+import 'package:enterprise_management/presentation/widgets/error_dialog.dart';
 import 'package:enterprise_management/shared_kernel/constant/constants.dart';
+import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -87,12 +89,19 @@ class TicketStatusItem extends ConsumerWidget {
                       TextButton(
                         onPressed: () async {
                           final project = ticketStatus.projectId;
-                          await controller.delete(ticketStatus.id);
-                          controller.refresh(project);
-                          ref
-                              .read(ticketStatusesControllerProvider.notifier)
-                              .refresh(project);
+                          final res = await controller.delete(ticketStatus.id);
                           router.pop();
+                          switch (res) {
+                            case Success():
+                              controller.refresh(project);
+                              ref
+                                  .read(ticketStatusesControllerProvider.notifier)
+                                  .refresh(project);
+                            case Failure(:final failure):
+                              if (context.mounted) {
+                                showErrorDialog(context, failure: failure);
+                              }
+                          }
                         },
                         child: const Text(
                           'Delete',

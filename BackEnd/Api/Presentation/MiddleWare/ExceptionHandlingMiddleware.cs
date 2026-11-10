@@ -26,10 +26,10 @@ public class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Exception
 
         var statusCode = exception switch
         {
+            HttpException httpException => (int)httpException.StatusCode,
             ValidationException => StatusCodes.Status400BadRequest,
             UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
             ForbiddenException => StatusCodes.Status403Forbidden,
-            NotFoundException => StatusCodes.Status404NotFound,
             _ => StatusCodes.Status500InternalServerError
         };
         

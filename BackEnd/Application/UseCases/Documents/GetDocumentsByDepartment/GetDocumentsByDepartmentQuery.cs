@@ -1,5 +1,4 @@
 ﻿using Application.DTOs.Documents;
-using Domain.Aggregates;
 using MediatR;
 
 namespace Application.UseCases.Documents.GetDocumentsByDepartment;

@@ -40,10 +40,8 @@ class TicketStatusesInProjectController extends _$TicketStatusesInProjectControl
     state = AsyncValue.data(data);
   }
 
-  Future<void> delete(String id) async {
+  Future<Result<bool>> delete(String id) async {
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(DeleteTicketStatusCommand(id: id));
-
-    // refresh(id);
+    return await mediator.send(DeleteTicketStatusCommand(id: id));
   }
 }

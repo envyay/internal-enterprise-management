@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/presentation/controllers/policies_controller.dart';
 import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_controller.dart';
 import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_in_departments_controller.dart';
@@ -67,8 +68,7 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
               crossAxisSpacing: 8,
               children: [
                 StaggeredGridTile.count(
-                  crossAxisCellCount:
-                      policies.contains(AppPolicy.getAllDocuments) ? 5 : 8,
+                  crossAxisCellCount: 5,
                   mainAxisCellCount: 4,
                   child: OverviewContainer(
                     title: 'Agent Chat',
@@ -83,34 +83,46 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
                     child: const AgentChat(),
                   ),
                 ),
-                if (policies.contains(AppPolicy.getAllDocuments))
-                  StaggeredGridTile.count(
-                    crossAxisCellCount: 3,
-                    mainAxisCellCount: 4,
-                    child: OverviewContainer(
-                      title: 'Indexed Data Sources',
-                      icon: policies.contains(AppPolicy.uploadDocument)
-                          ? Assets.lib.infrastructure.assets.icons.uploadFile
-                          : null,
-                      iconSize: 24,
-                      onTap: () async {
-                        final resourcesController = ref.read(
-                          resourcesControllerProvider.notifier,
-                        );
-                        resourcesController.uploadDocument();
-                      },
-                      tabs: [
-                        Tab(text: 'Public'),
-                        if (policies.contains(AppPolicy.getDocumentsByDepartments)) Tab(text: 'Department'),
-                        if (policies.contains(AppPolicy.getDocumentsByTickets)) Tab(text: 'Ticket'),
-                      ],
-                      tabViews: [
-                        DocumentTable(state: documentState),
-                        DocumentTable(state: documentInDepartmentState),
-                        DocumentTable(state: documentInTicketState),
-                      ],
-                    ),
+                StaggeredGridTile.count(
+                  crossAxisCellCount: 3,
+                  mainAxisCellCount: 4,
+                  child: OverviewContainer(
+                    title: 'Indexed Data Sources',
+                    icon: policies.contains(AppPolicy.uploadDocument)
+                        ? Assets.lib.infrastructure.assets.icons.uploadFile
+                        : null,
+                    iconSize: 24,
+                    onTap: () async {
+                      final resourcesController = ref.read(
+                        resourcesControllerProvider.notifier,
+                      );
+                      resourcesController.uploadDocument();
+                    },
+                    tabs: [
+                      Tab(text: 'Public'),
+                      Tab(text: 'Department'),
+                      Tab(text: 'Ticket'),
+                    ],
+                    tabViews: [
+                      DocumentTable(
+                        state: documentState,
+                        onOpenFile: (Document document) {
+                          ref
+                              .read(resourcesControllerProvider.notifier)
+                              .openDocument(document);
+                        },
+                      ),
+                      DocumentTable(
+                        state: documentInDepartmentState,
+                        onOpenFile: (Document document) {},
+                      ),
+                      DocumentTable(
+                        state: documentInTicketState,
+                        onOpenFile: (Document document) {},
+                      ),
+                    ],
                   ),
+                ),
               ],
             ),
           ),

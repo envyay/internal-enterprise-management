@@ -49,8 +49,7 @@ class DepartmentPage extends ConsumerWidget {
                 StaggeredGridTile.count(
                   crossAxisCellCount: 3,
                   mainAxisCellCount:
-                      ((department?.id ?? '').isNotEmpty &&
-                          policies.contains(AppPolicy.getDocumentsByDepartment))
+                      ((department?.id ?? '').isNotEmpty)
                       ? 1
                       : 2,
                   child: OverviewContainer(
@@ -145,8 +144,7 @@ class DepartmentPage extends ConsumerWidget {
                     ),
                   ),
                 ),
-                if ((department?.id ?? '').isNotEmpty &&
-                    policies.contains(AppPolicy.getDocumentsByDepartment))
+                if ((department?.id ?? '').isNotEmpty)
                   StaggeredGridTile.count(
                     crossAxisCellCount: 3,
                     mainAxisCellCount: 1,
@@ -163,7 +161,7 @@ class DepartmentPage extends ConsumerWidget {
                           departmentId: department?.id ?? '',
                         );
                       },
-                      child: DocumentTable(state: documentState),
+                      child: DocumentTable(state: documentState, onOpenFile: (document) {  },),
                     ),
                   ),
                 StaggeredGridTile.count(

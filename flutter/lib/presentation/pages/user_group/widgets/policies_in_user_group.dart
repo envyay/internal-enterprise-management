@@ -41,9 +41,6 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
       policies: [
         AppPolicy.chat,
         AppPolicy.getConversations,
-        AppPolicy.getChatMessagesByConversationId,
-        AppPolicy.createConversation,
-        AppPolicy.createChatMessage,
         AppPolicy.deleteConversationById,
       ],
     ),
@@ -52,7 +49,6 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
       policies: [
         AppPolicy.getAllUsers,
         AppPolicy.createUser,
-        AppPolicy.getProjectsByUserId,
         AppPolicy.updateUser,
         AppPolicy.deleteUser,
       ],
@@ -62,22 +58,18 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
       policies: [
         AppPolicy.getAllUserGroupPolicies,
         AppPolicy.getAllUserGroups,
-        AppPolicy.getByIdUserGroup,
         AppPolicy.getUsersByUserGroupId,
         AppPolicy.setUsersInUserGroup,
         AppPolicy.setPoliciesInUserGroup,
         AppPolicy.createUserGroup,
         AppPolicy.updateUserGroup,
         AppPolicy.deleteUserGroup,
-        AppPolicy.removePolicyFromUserGroup,
-        AppPolicy.removeUserFromUserGroup,
       ],
     ),
     _FeatureGroupDefinition(
       title: 'Department Feature:',
       policies: [
         AppPolicy.getAllDepartments,
-        AppPolicy.getByIdDepartment,
         AppPolicy.createDepartment,
         AppPolicy.updateDepartment,
         AppPolicy.deleteDepartment,
@@ -100,16 +92,7 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
     _FeatureGroupDefinition(
       title: 'Document Feature:',
       policies: [
-        AppPolicy.getAllDocuments,
-        AppPolicy.getByIdDocument,
-        AppPolicy.getDocumentsByDepartment,
-        AppPolicy.getDocumentsByDepartments,
-        AppPolicy.getDocumentsByTicket,
-        AppPolicy.getDocumentsByTickets,
-        AppPolicy.createDocument,
         AppPolicy.updateDocument,
-        AppPolicy.deleteDocument,
-        AppPolicy.downloadDocument,
         AppPolicy.uploadDocument,
       ],
     ),
@@ -117,21 +100,15 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
       title: 'Ticket Feature:',
       policies: [
         AppPolicy.getAllTickets,
-        AppPolicy.getByIdTicket,
-        AppPolicy.getUsersByTicketId,
         AppPolicy.setUsersInTicket,
-        AppPolicy.getCommentsByTicketId,
         AppPolicy.createTicket,
         AppPolicy.updateTicket,
-        AppPolicy.updateTicketByTicketStatus,
         AppPolicy.deleteTicket,
       ],
     ),
     _FeatureGroupDefinition(
       title: 'Ticket Status Feature:',
       policies: [
-        AppPolicy.getAllTicketStatuses,
-        AppPolicy.getByIdTicketStatus,
         AppPolicy.getTicketsByTicketStatusId,
         AppPolicy.createTicketStatus,
         AppPolicy.updateTicketStatus,
@@ -141,10 +118,7 @@ class _PoliciesInUserGroupState extends ConsumerState<PoliciesInUserGroup> {
     _FeatureGroupDefinition(
       title: 'Comment Feature:',
       policies: [
-        AppPolicy.getAllComments,
-        AppPolicy.getByIdComment,
         AppPolicy.createComment,
-        AppPolicy.updateComment,
         AppPolicy.deleteComment,
       ],
     ),

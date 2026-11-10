@@ -34,7 +34,7 @@ final class ResourcesControllerProvider
 }
 
 String _$resourcesControllerHash() =>
-    r'3754c59eeb83154614e635e64fedbcbb48e6e9a1';
+    r'a0e8417f05cb446c67c11bfe6cc115551ef48460';
 
 abstract class _$ResourcesController extends $AsyncNotifier<List<Document>> {
   FutureOr<List<Document>> build();

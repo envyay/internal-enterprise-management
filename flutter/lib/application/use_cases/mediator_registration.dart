@@ -35,8 +35,8 @@ import 'package:enterprise_management/application/use_cases/documents/create_doc
 import 'package:enterprise_management/application/use_cases/documents/create_document/create_document_command_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/delete_document/delete_document_command.dart';
 import 'package:enterprise_management/application/use_cases/documents/delete_document/delete_document_command_handler.dart';
-import 'package:enterprise_management/application/use_cases/documents/download_document/download_document_command_handler.dart';
-import 'package:enterprise_management/application/use_cases/documents/download_document/download_document_query.dart';
+import 'package:enterprise_management/application/use_cases/documents/open_document/open_document_command_handler.dart';
+import 'package:enterprise_management/application/use_cases/documents/open_document/open_document_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/get_documents/get_documents_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/get_documents/get_documents_query_handler.dart';
 import 'package:enterprise_management/application/use_cases/documents/get_documents_by_department/get_documents_by_department_query.dart';
@@ -418,8 +418,8 @@ extension MediatorRegistrationX on Mediator {
       GetDocumentsByTicketsQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
     );
 
-    registerQueryHandler<DownloadDocumentQuery, String>(
-      DownloadDocumentQueryHandler(documentRepository: ref.read(documentRepositoryProvider)),
+    registerQueryHandler<OpenDocumentQuery, bool>(
+      OpenDocumentQueryHandler(documentRepository: ref.read(documentRepositoryProvider), dio: Dio()),
     );
 
     registerQueryHandler<UploadDocumentQuery, bool>(

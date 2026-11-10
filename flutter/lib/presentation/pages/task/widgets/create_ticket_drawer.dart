@@ -69,8 +69,8 @@ class CreateTicketDrawer extends ConsumerWidget {
 
     final form = ref.watch(createTicketFormControllerProvider(null).notifier);
     final state = ref.watch(createTicketFormControllerProvider(null));
-    final titleError = state.title.error?.errorMessage;
-    final descriptionError = state.description.error?.errorMessage;
+    final titleError = state.title.displayError?.errorMessage;
+    final descriptionError = state.description.displayError?.errorMessage;
 
     final policies = ref.watch(policiesControllerProvider.select((x) => x.value ?? []));
 

@@ -17,8 +17,8 @@ class CreateTicketFormController extends _$CreateTicketFormController {
   @override
   CreateTicketForm build(Ticket? ticket) {
     return CreateTicketForm(
-      title: NameInput.dirty(ticket?.title ?? ""),
-      description: DescriptionInput.dirty(ticket?.description ?? ""),
+      title: ticket != null ? NameInput.dirty(ticket.title) : const NameInput.pure(),
+      description: ticket != null ? DescriptionInput.dirty(ticket.description) : const DescriptionInput.pure(),
       users: ticket?.users ?? [],
     );
   }
@@ -36,6 +36,10 @@ class CreateTicketFormController extends _$CreateTicketFormController {
   }
 
   Future<String?> submit(String ticketStatusId) async {
+    state = state.copyWith(
+      title: NameInput.dirty(state.title.value),
+      description: DescriptionInput.dirty(state.description.value),
+    );
     if (state.isNotValid) return null;
     final title = state.title.value;
     final description = state.description.value;
@@ -63,6 +67,10 @@ class CreateTicketFormController extends _$CreateTicketFormController {
   }
 
   Future<void> edit(String ticketStatusId) async {
+    state = state.copyWith(
+      title: NameInput.dirty(state.title.value),
+      description: DescriptionInput.dirty(state.description.value),
+    );
     if (state.isNotValid) return;
     final title = state.title.value;
     final description = state.description.value;

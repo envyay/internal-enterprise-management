@@ -117,8 +117,8 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
       createCommentFormControllerProvider(null).notifier,
     );
     final state = ref.watch(createTicketFormControllerProvider(widget.ticket));
-    final titleError = state.title.error?.errorMessage;
-    final descriptionError = state.description.error?.errorMessage;
+    final titleError = state.title.displayError?.errorMessage;
+    final descriptionError = state.description.displayError?.errorMessage;
     
     final policies = ref.watch(policiesControllerProvider.select((x) => x.value ?? []));
 
@@ -437,13 +437,17 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
                                       .map((item) => item.id)
                                       .toSet(),
                                   projectId: widget.projectId,
-                                  onSave: (users) {
+                                  onSave: (users) async {
                                     createTicketForm.setUsers(users);
-                                    controller.setUsersInTicket(
+                                    await controller.setUsersInTicket(
                                       ticketId: widget.ticket.id,
                                       userIds: users
                                           .map((item) => item.id)
                                           .toList(),
+                                    );
+
+                                    await ticketsInTicketStatusController.refresh(
+                                      widget.ticketStatus.id,
                                     );
                                   },
                                 );
