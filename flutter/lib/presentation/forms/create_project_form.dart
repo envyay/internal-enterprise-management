@@ -7,19 +7,43 @@ class CreateProjectForm with FormzMixin {
   final NameInput name;
   final DescriptionInput description;
   final CodeInput code;
+  final int projectStatus;
+  final DateTime? startDate;
+  final DateTime? endDate;
   final FormzSubmissionStatus status;
 
   const CreateProjectForm({
     this.name = const NameInput.pure(),
     this.description = const DescriptionInput.pure(),
     this.code = const CodeInput.pure(),
+    this.projectStatus = 1,
+    this.startDate,
+    this.endDate,
     this.status = FormzSubmissionStatus.initial,
   });
 
   @override
   List<FormzInput<dynamic, dynamic>> get inputs => [name, description, code];
 
-  CreateProjectForm copyWith({NameInput? name, DescriptionInput? description, CodeInput? code ,FormzSubmissionStatus? status}) {
-    return CreateProjectForm(name: name ?? this.name, description: description ?? this.description, code: code ?? this.code, status: status ?? this.status);
+  CreateProjectForm copyWith({
+    NameInput? name,
+    DescriptionInput? description,
+    CodeInput? code,
+    int? projectStatus,
+    DateTime? startDate,
+    DateTime? endDate,
+    bool clearStartDate = false,
+    bool clearEndDate = false,
+    FormzSubmissionStatus? status,
+  }) {
+    return CreateProjectForm(
+      name: name ?? this.name,
+      description: description ?? this.description,
+      code: code ?? this.code,
+      projectStatus: projectStatus ?? this.projectStatus,
+      startDate: clearStartDate ? null : (startDate ?? this.startDate),
+      endDate: clearEndDate ? null : (endDate ?? this.endDate),
+      status: status ?? this.status,
+    );
   }
 }

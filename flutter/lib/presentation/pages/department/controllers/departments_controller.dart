@@ -10,7 +10,7 @@ import 'documents_in_department_controller.dart';
 
 part 'departments_controller.g.dart';
 
-@Riverpod()
+@Riverpod(keepAlive: true)
 class DepartmentsController extends _$DepartmentsController {
   @override
   Future<List<Department>> build() {
@@ -57,10 +57,10 @@ class DepartmentsController extends _$DepartmentsController {
 
     state = AsyncData(newItems);
 
-    final usersInDepartmentController = ref.watch(usersInDepartmentControllerProvider.notifier);
+    final usersInDepartmentController = ref.read(usersInDepartmentControllerProvider.notifier);
     usersInDepartmentController.getUsersInDepartment(id: id);
 
-    final documentsInDepartmentController = ref.watch(documentsInDepartmentControllerProvider.notifier);
+    final documentsInDepartmentController = ref.read(documentsInDepartmentControllerProvider.notifier);
     documentsInDepartmentController.getDocumentsByDepartment(departmentId: id);
 
   }

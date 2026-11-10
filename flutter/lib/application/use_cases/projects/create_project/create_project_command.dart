@@ -4,6 +4,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'create_project_command.freezed.dart';
 @freezed
 abstract class CreateProjectCommand with _$CreateProjectCommand implements ICommand<String> {
-  const factory CreateProjectCommand({required String name, required String description, required String code}) = _CreateProjectCommand;
+  const factory CreateProjectCommand({
+    required String name,
+    required String description,
+    required String code,
+    int? status,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) = _CreateProjectCommand;
 
 }

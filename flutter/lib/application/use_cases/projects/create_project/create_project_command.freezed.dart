@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateProjectCommand {
 
- String get name; String get description; String get code;
+ String get name; String get description; String get code; int? get status; DateTime? get startDate; DateTime? get endDate;
 /// Create a copy of CreateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CreateProjectCommandCopyWith<CreateProjectCommand> get copyWith => _$CreateProj
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateProjectCommand&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateProjectCommand&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code)&&(identical(other.status, status) || other.status == status)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,description,code);
+int get hashCode => Object.hash(runtimeType,name,description,code,status,startDate,endDate);
 
 @override
 String toString() {
-  return 'CreateProjectCommand(name: $name, description: $description, code: $code)';
+  return 'CreateProjectCommand(name: $name, description: $description, code: $code, status: $status, startDate: $startDate, endDate: $endDate)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CreateProjectCommandCopyWith<$Res>  {
   factory $CreateProjectCommandCopyWith(CreateProjectCommand value, $Res Function(CreateProjectCommand) _then) = _$CreateProjectCommandCopyWithImpl;
 @useResult
 $Res call({
- String name, String description, String code
+ String name, String description, String code, int? status, DateTime? startDate, DateTime? endDate
 });
 
 
@@ -63,12 +63,15 @@ class _$CreateProjectCommandCopyWithImpl<$Res>
 
 /// Create a copy of CreateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? description = null,Object? code = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? description = null,Object? code = null,Object? status = freezed,Object? startDate = freezed,Object? endDate = freezed,}) {
   return _then(CreateProjectCommand(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
-as String,
+as String,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int?,startDate: freezed == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -153,10 +156,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String description,  String code)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String description,  String code,  int? status,  DateTime? startDate,  DateTime? endDate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateProjectCommand() when $default != null:
-return $default(_that.name,_that.description,_that.code);case _:
+return $default(_that.name,_that.description,_that.code,_that.status,_that.startDate,_that.endDate);case _:
   return orElse();
 
 }
@@ -174,10 +177,10 @@ return $default(_that.name,_that.description,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String description,  String code)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String description,  String code,  int? status,  DateTime? startDate,  DateTime? endDate)  $default,) {final _that = this;
 switch (_that) {
 case _CreateProjectCommand():
-return $default(_that.name,_that.description,_that.code);case _:
+return $default(_that.name,_that.description,_that.code,_that.status,_that.startDate,_that.endDate);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +197,10 @@ return $default(_that.name,_that.description,_that.code);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String description,  String code)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String description,  String code,  int? status,  DateTime? startDate,  DateTime? endDate)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateProjectCommand() when $default != null:
-return $default(_that.name,_that.description,_that.code);case _:
+return $default(_that.name,_that.description,_that.code,_that.status,_that.startDate,_that.endDate);case _:
   return null;
 
 }
@@ -209,12 +212,15 @@ return $default(_that.name,_that.description,_that.code);case _:
 
 
 class _CreateProjectCommand implements CreateProjectCommand {
-  const _CreateProjectCommand({required this.name, required this.description, required this.code});
+  const _CreateProjectCommand({required this.name, required this.description, required this.code, this.status, this.startDate, this.endDate});
   
 
 @override final  String name;
 @override final  String description;
 @override final  String code;
+@override final  int? status;
+@override final  DateTime? startDate;
+@override final  DateTime? endDate;
 
 /// Create a copy of CreateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -226,16 +232,16 @@ _$CreateProjectCommandCopyWith<_CreateProjectCommand> get copyWith => __$CreateP
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateProjectCommand&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateProjectCommand&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.code, code) || other.code == code)&&(identical(other.status, status) || other.status == status)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.endDate, endDate) || other.endDate == endDate));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name,description,code);
+int get hashCode => Object.hash(runtimeType,name,description,code,status,startDate,endDate);
 
 @override
 String toString() {
-  return 'CreateProjectCommand(name: $name, description: $description, code: $code)';
+  return 'CreateProjectCommand(name: $name, description: $description, code: $code, status: $status, startDate: $startDate, endDate: $endDate)';
 }
 
 
@@ -246,7 +252,7 @@ abstract mixin class _$CreateProjectCommandCopyWith<$Res> implements $CreateProj
   factory _$CreateProjectCommandCopyWith(_CreateProjectCommand value, $Res Function(_CreateProjectCommand) _then) = __$CreateProjectCommandCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String description, String code
+ String name, String description, String code, int? status, DateTime? startDate, DateTime? endDate
 });
 
 
@@ -263,12 +269,15 @@ class __$CreateProjectCommandCopyWithImpl<$Res>
 
 /// Create a copy of CreateProjectCommand
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? description = null,Object? code = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? description = null,Object? code = null,Object? status = freezed,Object? startDate = freezed,Object? endDate = freezed,}) {
   return _then(_CreateProjectCommand(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,code: null == code ? _self.code : code // ignore: cast_nullable_to_non_nullable
-as String,
+as String,status: freezed == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as int?,startDate: freezed == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,endDate: freezed == endDate ? _self.endDate : endDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

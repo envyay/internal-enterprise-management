@@ -21,15 +21,22 @@ class EditUserGroupFormController extends _$EditUserGroupFormController {
   }
 
   Future<void> edit() async {
+    final name = NameInput.dirty(state.name.value);
+    state = state.copyWith(name: name);
     if (state.isNotValid) return;
 
-    final name = state.name.value;
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(UpdateUserGroupCommand(id: userGroup.id, name: name, userIds: []));
+    await mediator.send(
+      UpdateUserGroupCommand(
+        id: userGroup.id,
+        name: name.value,
+        userIds: userGroup.users.map((u) => u.id).toList(),
+      ),
+    );
 
     ref.invalidate(userGroupsControllerProvider);
     final router = ref.read(appRouterProvider);
     router.pop();
-}
+  }
 
 }

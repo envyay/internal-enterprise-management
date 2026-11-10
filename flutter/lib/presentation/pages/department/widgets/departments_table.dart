@@ -29,7 +29,7 @@ class DepartmentsTable extends ConsumerWidget {
 
             return AnimatedContainer(
               duration: const Duration(milliseconds: 150),
-              margin: const EdgeInsets.symmetric(vertical: 2),
+              margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 15),
               decoration: BoxDecoration(
                 color: isActive ? const Color(0xffEFF4FF) : Colors.transparent,
                 borderRadius: BorderRadius.circular(6),

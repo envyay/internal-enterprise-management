@@ -21,7 +21,7 @@ final class UsersInDepartmentControllerProvider
         argument: null,
         retry: null,
         name: r'usersInDepartmentControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -35,7 +35,7 @@ final class UsersInDepartmentControllerProvider
 }
 
 String _$usersInDepartmentControllerHash() =>
-    r'482d23e270374ff75ba76ba07dc2a64b9cae57cd';
+    r'98f23ce54f20f1f3a51ea30456d3638b143de039';
 
 abstract class _$UsersInDepartmentController
     extends $AsyncNotifier<Department?> {

@@ -48,7 +48,7 @@ final class CreateTicketStatusFormControllerProvider
 }
 
 String _$createTicketStatusFormControllerHash() =>
-    r'b5e6253c3ef794b37f0d8493dcce779293a3c93a';
+    r'a7668cb239bd3f1ef56f95564313f6a2b3df36d8';
 
 abstract class _$CreateTicketStatusFormController
     extends $Notifier<CreateTicketStatusForm> {

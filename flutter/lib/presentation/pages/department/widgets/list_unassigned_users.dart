@@ -10,10 +10,9 @@ class ListUnassignedUsers extends ConsumerWidget {
     final state = ref.watch(usersControllerProvider);
     return state.when(
       data: (users) {
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: ListView.separated(
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          child: ListView.separated(
               itemCount: users.length,
               separatorBuilder: (context, index) => const SizedBox(height: 8),
               itemBuilder: (context, index) {
@@ -78,8 +77,7 @@ class ListUnassignedUsers extends ConsumerWidget {
                 );
               },
             ),
-          ),
-        );
+          );
       },
       error: (error, stackTrace) {
         return const Text('Error');

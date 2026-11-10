@@ -4,6 +4,7 @@ import 'package:enterprise_management/presentation/forms/edit_project_form.dart'
 import 'package:enterprise_management/presentation/forms/inputs/code_input.dart';
 import 'package:enterprise_management/presentation/forms/inputs/description_input.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
+import 'package:enterprise_management/presentation/pages/project/controllers/get_project_details_controller.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
@@ -19,6 +20,9 @@ class EditProjectFormController extends _$EditProjectFormController {
       name: NameInput.dirty(project.name),
       description: DescriptionInput.dirty(project.description),
       code: CodeInput.dirty(project.code),
+      projectStatus: project.status,
+      startDate: project.startDate,
+      endDate: project.endDate,
     );
   }
 
@@ -34,7 +38,23 @@ class EditProjectFormController extends _$EditProjectFormController {
     state = state.copyWith(code: CodeInput.dirty(value));
   }
 
+  void setStatus(int value) {
+    state = state.copyWith(projectStatus: value);
+  }
+
+  void setStartDate(DateTime? value) {
+    state = state.copyWith(startDate: value, clearStartDate: value == null);
+  }
+
+  void setEndDate(DateTime? value) {
+    state = state.copyWith(endDate: value, clearEndDate: value == null);
+  }
+
   Future<void> edit() async {
+    state = state.copyWith(
+      name: NameInput.dirty(state.name.value),
+      code: CodeInput.dirty(state.code.value),
+    );
     if (state.isNotValid) return;
 
     final name = state.name.value;
@@ -42,12 +62,22 @@ class EditProjectFormController extends _$EditProjectFormController {
     final code = state.code.value;
 
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(UpdateProjectCommand(id: project.id, name: name, description: description, code: code));
+    await mediator.send(
+      UpdateProjectCommand(
+        id: project.id,
+        name: name,
+        description: description,
+        code: code,
+        status: state.projectStatus,
+        startDate: state.startDate,
+        endDate: state.endDate,
+      ),
+    );
     
     ref.invalidate(projectsControllerProvider);
+    ref.read(getProjectDetailsControllerProvider.notifier).getProjectDetails(id: project.id);
 
     final router = ref.read(appRouterProvider);
     router.pop();
-
   }
 }

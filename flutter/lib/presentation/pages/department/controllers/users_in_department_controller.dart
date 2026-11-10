@@ -8,7 +8,7 @@ import '../../../../shared_kernel/result/result.dart';
 
 part 'users_in_department_controller.g.dart';
 
-@Riverpod()
+@Riverpod(keepAlive: true)
 class UsersInDepartmentController extends _$UsersInDepartmentController {
   @override
   Future<Department?> build() async {
@@ -16,8 +16,10 @@ class UsersInDepartmentController extends _$UsersInDepartmentController {
   }
 
   Future<void> getUsersInDepartment({required String id}) async {
+    state = const AsyncLoading();
     final mediator = ref.read(mediatorProvider);
     final res = await mediator.query(GetDepartmentQuery(id: id));
+    if (!ref.mounted) return;
 
     res.when(
       success: (department) {

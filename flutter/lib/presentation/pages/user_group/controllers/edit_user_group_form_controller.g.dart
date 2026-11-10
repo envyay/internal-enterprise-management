@@ -61,7 +61,7 @@ final class EditUserGroupFormControllerProvider
 }
 
 String _$editUserGroupFormControllerHash() =>
-    r'f07d4090217ebeaf31008674a37475d54be647a9';
+    r'23b4f180fab0680691468fc50847665af7166f1d';
 
 final class EditUserGroupFormControllerFamily extends $Family
     with

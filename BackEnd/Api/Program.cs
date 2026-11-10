@@ -19,6 +19,8 @@ using SharedKernel.Constants;
 using SharedKernel.Options;
 using StackExchange.Redis;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
@@ -57,7 +59,11 @@ services.AddScoped<IMailService, MailService>();
 
 
 // controllers
-services.AddControllers(options => options.Filters.Add<ApiResponseFilter>());
+services.AddControllers(options => options.Filters.Add<ApiResponseFilter>())
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
 
 // validation
 services.AddFluentValidationAutoValidation();

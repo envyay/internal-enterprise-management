@@ -6,7 +6,7 @@ import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'policies_in_user_group_controller.g.dart';
-@Riverpod()
+@Riverpod(keepAlive: true)
 class PoliciesInUserGroupController extends _$PoliciesInUserGroupController {
   @override
   Future<UserGroup?> build() async {
@@ -17,6 +17,8 @@ class PoliciesInUserGroupController extends _$PoliciesInUserGroupController {
     state = const AsyncLoading();
     final mediator = ref.read(mediatorProvider);
     final res = await mediator.query(GetUserGroupQuery(id: id));
+
+    if (!ref.mounted) return;
 
     res.when(
       success: (userGroup) {

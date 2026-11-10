@@ -3,6 +3,7 @@ import 'package:enterprise_management/domain/aggregates/ticket_status/ticket_sta
 import 'package:enterprise_management/presentation/forms/edit_ticket_status_form.dart';
 import 'package:enterprise_management/presentation/forms/inputs/name_input.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/ticket_statuses_in_project_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/ticket_statuses_controller.dart';
 import 'package:enterprise_management/presentation/router/app_router.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -21,11 +22,15 @@ class EditTicketStatusFormController extends _$EditTicketStatusFormController {
   }
 
   Future<void> edit() async {
+    state = state.copyWith(name: NameInput.dirty(state.name.value));
+    if (state.isNotValid) return;
+
     final name = state.name.value;
     final mediator = ref.read(mediatorProvider);
     await mediator.send(UpdateTicketStatusCommand(id: ticketStatus.id, name: name));
 
     ref.invalidate(ticketStatusesInProjectControllerProvider);
+    ref.read(ticketStatusesControllerProvider.notifier).refresh(ticketStatus.projectId);
 
     final router = ref.read(appRouterProvider);
     router.pop();

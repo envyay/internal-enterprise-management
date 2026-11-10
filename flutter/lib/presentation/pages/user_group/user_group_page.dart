@@ -77,8 +77,28 @@ class UserGroupPage extends ConsumerWidget {
                     },
                     child: state.when(
                       data: (userGroups) {
-                        return ListView.builder(
+                        if (userGroups.isEmpty) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(24.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.group_outlined, size: 36, color: Color(0xFFC3C6D1)),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'No user groups found',
+                                    style: TextStyle(color: Color(0xFF74777F), fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+                        return ListView.separated(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                           itemCount: userGroups.length,
+                          separatorBuilder: (context, index) => const SizedBox(height: 6),
                           itemBuilder: (context, index) {
                             final item = userGroups[index];
                             return UserGroupItem(
@@ -92,12 +112,10 @@ class UserGroupPage extends ConsumerWidget {
                           },
                         );
                       },
-                      error: (error, stackTrace) {
-                        return const Text('Error');
-                      },
-                      loading: () {
-                        return const Text('Loading...');
-                      },
+                      error: (error, stackTrace) => const Center(
+                        child: Text('Error loading user groups', style: TextStyle(color: Color(0xFFBA1A1A))),
+                      ),
+                      loading: () => const Center(child: CircularProgressIndicator()),
                     ),
                   ),
                 ),

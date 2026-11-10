@@ -1,9 +1,9 @@
-﻿using Domain.Aggregates;
+using Application.DTOs.UserGroups;
 using MediatR;
 
 namespace Application.UseCases.UserGroups.GetUserGroups;
 
-public class GetUserGroupsQuery : IRequest<List<UserGroup>>
+public class GetUserGroupsQuery : IRequest<List<UserGroupDto>>
 {
     
 }

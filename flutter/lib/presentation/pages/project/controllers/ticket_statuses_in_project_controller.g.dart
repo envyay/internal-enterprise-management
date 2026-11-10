@@ -25,7 +25,7 @@ final class TicketStatusesInProjectControllerProvider
         argument: null,
         retry: null,
         name: r'ticketStatusesInProjectControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -41,7 +41,7 @@ final class TicketStatusesInProjectControllerProvider
 }
 
 String _$ticketStatusesInProjectControllerHash() =>
-    r'40c2cdadc3e2e2ac77a1a25d6e57e82ca516de66';
+    r'e2c19cfecaacd7a32e950b096685b6907afd7ae2';
 
 abstract class _$TicketStatusesInProjectController
     extends $AsyncNotifier<List<TicketStatus>> {

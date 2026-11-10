@@ -44,7 +44,7 @@ final class CreateUserGroupFormControllerProvider
 }
 
 String _$createUserGroupFormControllerHash() =>
-    r'b0bca1909f7e9622c21e74b4596886f710570716';
+    r'a7747da8b0f1c25250f7f117cf5b7cc96a48bf24';
 
 abstract class _$CreateUserGroupFormController
     extends $Notifier<CreateUserGroupForm> {

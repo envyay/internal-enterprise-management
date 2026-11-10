@@ -21,7 +21,7 @@ final class GetProjectDetailsControllerProvider
         argument: null,
         retry: null,
         name: r'getProjectDetailsControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -35,7 +35,7 @@ final class GetProjectDetailsControllerProvider
 }
 
 String _$getProjectDetailsControllerHash() =>
-    r'afe70039e857a1b96703e30d06eaaebe16a151e0';
+    r'7075461d021cca331102c63853800811482a6089';
 
 abstract class _$GetProjectDetailsController extends $AsyncNotifier<Project?> {
   FutureOr<Project?> build();

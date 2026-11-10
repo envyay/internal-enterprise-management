@@ -60,7 +60,7 @@ final class EditUserFormControllerProvider
 }
 
 String _$editUserFormControllerHash() =>
-    r'8a9476061e43f8deb54b84c4ca1349c08b1ac30f';
+    r'53906eb8cf1e30dd9f173606cb30d08d36ffe7bb';
 
 final class EditUserFormControllerFamily extends $Family
     with

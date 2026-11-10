@@ -18,9 +18,24 @@ abstract class IProjectRepository {
 
   Future<List<User>> getUsersByProjectId({required String projectId});
 
-  Future<String> createProject({required String name, required String description, required String code});
+  Future<String> createProject({
+    required String name,
+    required String description,
+    required String code,
+    int? status,
+    DateTime? startDate,
+    DateTime? endDate,
+  });
 
-  Future<bool> updateProject({required String id, required String name, required String description, required String code});
+  Future<bool> updateProject({
+    required String id,
+    required String name,
+    required String description,
+    required String code,
+    int? status,
+    DateTime? startDate,
+    DateTime? endDate,
+  });
 
   Future<bool> deleteProject({required String id});
 
@@ -31,8 +46,24 @@ class ProjectRepository implements IProjectRepository {
   const ProjectRepository({required this._projectRemoteDataSource});
   final ProjectRemoteDataSource _projectRemoteDataSource;
   @override
-  Future<String> createProject({required String name, required String description, required String code}) async {
-    final res = await _projectRemoteDataSource.createProject(CreateProjectDto(name: name, description: description, code: code));
+  Future<String> createProject({
+    required String name,
+    required String description,
+    required String code,
+    int? status,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
+    final res = await _projectRemoteDataSource.createProject(
+      CreateProjectDto(
+        name: name,
+        description: description,
+        code: code,
+        status: status,
+        startDate: startDate?.toUtc(),
+        endDate: endDate?.toUtc(),
+      ),
+    );
     return res.data;
   }
 
@@ -55,8 +86,26 @@ class ProjectRepository implements IProjectRepository {
   }
 
   @override
-  Future<bool> updateProject({required String id, required String name, required String description, required String code}) async {
-    final res = await _projectRemoteDataSource.updateProject(UpdateProjectDto(id: id, name: name, description: description, code: code));
+  Future<bool> updateProject({
+    required String id,
+    required String name,
+    required String description,
+    required String code,
+    int? status,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) async {
+    final res = await _projectRemoteDataSource.updateProject(
+      UpdateProjectDto(
+        id: id,
+        name: name,
+        description: description,
+        code: code,
+        status: status,
+        startDate: startDate?.toUtc(),
+        endDate: endDate?.toUtc(),
+      ),
+    );
     return res.data;
   }
 

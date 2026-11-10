@@ -23,4 +23,9 @@ class ProjectsController extends _$ProjectsController {
       return [];
     });
   }
+
+  void refresh() async {
+    final data = await getProjectsByUserId();
+    state = AsyncValue.data(data);
+  }
 }

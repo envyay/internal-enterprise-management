@@ -34,6 +34,10 @@ class EditUserFormController extends _$EditUserFormController {
   }
 
   Future<void> edit() async {
+    state = state.copyWith(
+      fullName: NameInput.dirty(state.fullName.value),
+      email: EmailInput.dirty(state.email.value),
+    );
     if (state.isNotValid) return;
 
     final fullName = state.fullName.value;

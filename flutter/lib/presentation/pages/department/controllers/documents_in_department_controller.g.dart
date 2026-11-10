@@ -25,7 +25,7 @@ final class DocumentsInDepartmentControllerProvider
         argument: null,
         retry: null,
         name: r'documentsInDepartmentControllerProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -39,7 +39,7 @@ final class DocumentsInDepartmentControllerProvider
 }
 
 String _$documentsInDepartmentControllerHash() =>
-    r'379af4670c5cd057f0982c6000d364421051da35';
+    r'aff147c541439df35b1d4170f656a9029279ed41';
 
 abstract class _$DocumentsInDepartmentController
     extends $AsyncNotifier<List<Document>> {

@@ -7,7 +7,7 @@ import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'documents_in_department_controller.g.dart';
-@Riverpod()
+@Riverpod(keepAlive: true)
 class DocumentsInDepartmentController extends _$DocumentsInDepartmentController {
   @override
   Future<List<Document>> build() async {
@@ -15,8 +15,10 @@ class DocumentsInDepartmentController extends _$DocumentsInDepartmentController 
   }
 
   Future<List<Document>> getDocumentsByDepartment({required String departmentId}) async{
+    state = const AsyncLoading();
     final mediator = ref.read(mediatorProvider);
     final res = await mediator.query(GetDocumentsByDepartmentQuery(departmentId: departmentId));
+    if (!ref.mounted) return [];
     return res.when(success: (List<Document> data){
       state = AsyncData(data);
       return data;

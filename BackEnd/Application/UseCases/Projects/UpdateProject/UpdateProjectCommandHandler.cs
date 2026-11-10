@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using MediatR;
@@ -11,7 +11,7 @@ public class UpdateProjectCommandHandler(IRepository<Project, Guid> projectRepos
     {
         var project = await projectRepository.GetByIdAsync(request.Id, cancellationToken);
         if (project == null) return false;
-        project.Update(request.Name, request.Description, request.Code, request.StartDate, request.EndDate);
+        project.Update(request.Name, request.Description, request.Code, request.Status, request.StartDate, request.EndDate);
         await projectRepository.UpdateAsync(project);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return true;

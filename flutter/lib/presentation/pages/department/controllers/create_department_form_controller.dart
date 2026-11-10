@@ -20,7 +20,8 @@ class CreateDepartmentFormController extends _$CreateDepartmentFormController {
   }
 
   Future<void> submit() async {
-    if(state.isNotValid) return;
+    state = state.copyWith(name: NameInput.dirty(state.name.value));
+    if (state.isNotValid) return;
 
     final name = state.name.value;
     final mediator = ref.read(mediatorProvider);

@@ -4,6 +4,14 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'update_project_command.freezed.dart';
 @freezed
 abstract class UpdateProjectCommand with _$UpdateProjectCommand implements ICommand<bool> {
-  const factory UpdateProjectCommand({required String id, required String name, required String description, required String code}) = _UpdateProjectCommand;
+  const factory UpdateProjectCommand({
+    required String id,
+    required String name,
+    required String description,
+    required String code,
+    int? status,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) = _UpdateProjectCommand;
 
 }

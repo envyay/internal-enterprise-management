@@ -10,7 +10,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'projects_controller.g.dart';
 
-@Riverpod()
+@Riverpod(keepAlive: true)
 class ProjectsController extends _$ProjectsController {
   @override
   Future<List<Project>> build() {
@@ -56,13 +56,13 @@ class ProjectsController extends _$ProjectsController {
 
     state = AsyncData(newItems);
 
-    final projectDetailsController = ref.watch(getProjectDetailsControllerProvider.notifier);
+    final projectDetailsController = ref.read(getProjectDetailsControllerProvider.notifier);
     projectDetailsController.getProjectDetails(id: id);
 
-    final ticketStatusesInProjectController = ref.watch(ticketStatusesInProjectControllerProvider.notifier);
+    final ticketStatusesInProjectController = ref.read(ticketStatusesInProjectControllerProvider.notifier);
     ticketStatusesInProjectController.getTicketStatusesByProjectId(projectId: id);
 
-    final usersInProjectController = ref.watch(usersInProjectControllerProvider.notifier);
+    final usersInProjectController = ref.read(usersInProjectControllerProvider.notifier);
     usersInProjectController.getUsersByProjectId(id: id);
   }
 

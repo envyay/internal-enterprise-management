@@ -1,4 +1,4 @@
-﻿using Domain.Aggregates;
+using Domain.Aggregates;
 using Infrastructure.Repository;
 using Infrastructure.UnitOfWork;
 using MediatR;
@@ -10,9 +10,12 @@ public class UpdateUserGroupCommandHandler(IRepository<UserGroup, Guid> userGrou
 {
     public async Task<bool> Handle(UpdateUserGroupCommand request, CancellationToken cancellationToken)
     {
-        var users = await userRepository.Where(x => request.UserIds.Contains(x.Id)).ToListAsync(cancellationToken);
         var userGroup = await userGroupRepository.Where(x => x.Id.Equals(request.Id)).Include(x => x.Users).FirstOrDefaultAsync(cancellationToken);
         if (userGroup == null) return false;
+
+        var users = (request.UserIds != null && request.UserIds.Any())
+            ? await userRepository.Where(x => request.UserIds.Contains(x.Id)).ToListAsync(cancellationToken)
+            : userGroup.Users.ToList();
         
         userGroup.Update(request.Name, users);
         await userGroupRepository.UpdateAsync(userGroup);

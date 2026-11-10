@@ -30,125 +30,138 @@ class ProjectItem extends ConsumerWidget {
     final policies = ref.watch(
       policiesControllerProvider.select((x) => x.value ?? []),
     );
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 150),
       decoration: BoxDecoration(
-        color: isActive ? const Color(0xffEFF4FF) : Colors.transparent,
+        color: isActive ? const Color(0xFFEFF4FF) : Colors.white,
         borderRadius: BorderRadius.circular(8),
-        border: isActive
-            ? Border.all(color: const Color(0xff001E40), width: 1)
-            : Border.all(color: const Color(0xffE0E2EC), width: 1),
+        border: Border.all(
+          color: isActive ? const Color(0xFF005AC1) : const Color(0xFFE0E2EC),
+          width: isActive ? 1.5 : 1.0,
+        ),
+        boxShadow: isActive
+            ? [
+                BoxShadow(
+                  color: const Color(0xFF005AC1).withValues(alpha: 0.08),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ]
+            : null,
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
           onTap: onTap,
+          hoverColor: const Color(0xFFF4F7FC),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
             child: Row(
               children: [
+                // Project Name
                 Expanded(
-                  child: Row(
-                    children: [
-                      Text(
-                        project.name,
-                        style: TextStyle(
-                          color: isActive
-                              ? const Color(0xff001E40)
-                              : const Color(0xff43474F),
-                          fontWeight: isActive
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(width: 28),
-
-                      Text(
-                        project.code,
-                        style: TextStyle(
-                          color: isActive
-                              ? const Color(0xff001E40)
-                              : const Color(0xff43474F),
-                          fontWeight: isActive
-                              ? FontWeight.w600
-                              : FontWeight.w500,
-                          fontSize: 14,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
+                  child: Text(
+                    project.name,
+                    style: TextStyle(
+                      color: isActive
+                          ? const Color(0xFF001E40)
+                          : const Color(0xFF191C20),
+                      fontWeight: isActive
+                          ? FontWeight.w600
+                          : FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                const SizedBox(width: 10),
 
+                // Code Badge
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 4),
-                  alignment: Alignment.centerRight,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (policies.contains(AppPolicy.updateProject))
-                        IconButton(
-                          icon: const Icon(
-                            Icons.edit_outlined,
-                            size: 18,
-                            color: Color(0xff006C49),
-                          ),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return EditProjectDialog(project: project);
-                              },
-                            );
-                          },
-                          tooltip: 'Edit',
-                        ),
-                      if (policies.contains(AppPolicy.deleteProject))
-                        IconButton(
-                          icon: const Icon(
-                            Icons.delete_outline,
-                            size: 18,
-                            color: Color(0xffBA1A1A),
-                          ),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                title: const Text('Delete Confirmation'),
-                                content: Text(
-                                  'Are you sure to delete "${project.name}"?',
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => router.pop(context),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: isActive ? const Color(0xFFD6E4FF) : const Color(0xFFF0F4FD),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: isActive ? const Color(0xFF90B9F8) : const Color(0xFFD3E0F3),
+                      width: 0.8,
+                    ),
+                  ),
+                  child: Text(
+                    project.code.isNotEmpty ? project.code : 'N/A',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: isActive ? const Color(0xFF00326D) : const Color(0xFF334B68),
+                      letterSpacing: 0.3,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
 
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      await controller.delete(project.id);
-                                      router.pop();
-                                    },
-                                    child: const Text(
-                                      'Delete',
-                                      style: TextStyle(
-                                        color: Color(0xffBA1A1A),
-                                      ),
+                // Actions: Edit & Delete
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (policies.contains(AppPolicy.updateProject))
+                      IconButton(
+                        icon: const Icon(Icons.edit_outlined, size: 16),
+                        color: const Color(0xFF006C49),
+                        tooltip: 'Edit Project',
+                        splashRadius: 16,
+                        constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+                        padding: const EdgeInsets.all(4),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return EditProjectDialog(project: project);
+                            },
+                          );
+                        },
+                      ),
+                    if (policies.contains(AppPolicy.deleteProject))
+                      IconButton(
+                        icon: const Icon(Icons.delete_outline, size: 16),
+                        color: const Color(0xFFBA1A1A),
+                        tooltip: 'Delete Project',
+                        splashRadius: 16,
+                        constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
+                        padding: const EdgeInsets.all(4),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Delete Confirmation'),
+                              content: Text(
+                                'Are you sure to delete "${project.name}"?',
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => router.pop(context),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    await controller.delete(project.id);
+                                    router.pop();
+                                  },
+                                  child: const Text(
+                                    'Delete',
+                                    style: TextStyle(
+                                      color: Color(0xffBA1A1A),
                                     ),
                                   ),
-                                ],
-                              ),
-                            );
-                          },
-                          tooltip: 'Delete',
-                        ),
-                    ],
-                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                  ],
                 ),
               ],
             ),

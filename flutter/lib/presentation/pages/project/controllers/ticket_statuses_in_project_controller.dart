@@ -7,7 +7,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'ticket_statuses_in_project_controller.g.dart';
 
-@Riverpod()
+@Riverpod(keepAlive: true)
 class TicketStatusesInProjectController extends _$TicketStatusesInProjectController {
   @override
   Future<List<TicketStatus>> build() async {
@@ -17,10 +17,12 @@ class TicketStatusesInProjectController extends _$TicketStatusesInProjectControl
   Future<List<TicketStatus>> getTicketStatusesByProjectId({
     required String projectId,
   }) async {
+    state = const AsyncLoading();
     final mediator = ref.read(mediatorProvider);
     final res = await mediator.query(
       GetTicketStatusesByProjectIdQuery(projectId: projectId),
     );
+    if (!ref.mounted) return [];
     return res.when(
       success: (List<TicketStatus> data) {
         state = AsyncData(data);

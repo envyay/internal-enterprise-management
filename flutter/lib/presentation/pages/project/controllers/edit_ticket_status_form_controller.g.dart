@@ -65,7 +65,7 @@ final class EditTicketStatusFormControllerProvider
 }
 
 String _$editTicketStatusFormControllerHash() =>
-    r'f9b52afb99dc6640bf4e5e8b57a5f5fff2fef4f4';
+    r'7540cb3cb164a2cf5e0cd42f1cc78e55805e0182';
 
 final class EditTicketStatusFormControllerFamily extends $Family
     with

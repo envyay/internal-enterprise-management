@@ -1,5 +1,7 @@
 import 'package:enterprise_management/application/use_cases/user_groups/delete_user_group/delete_user_group_command.dart';
+import 'package:enterprise_management/application/use_cases/user_groups/get_user_group/get_user_group_query.dart';
 import 'package:enterprise_management/application/use_cases/user_groups/get_user_groups/get_user_groups_query.dart';
+import 'package:enterprise_management/domain/aggregates/user/user.dart';
 import 'package:enterprise_management/domain/aggregates/user_group/user_group.dart';
 import 'package:enterprise_management/presentation/pages/user_group/controllers/policies_in_user_group_controller.dart';
 import 'package:enterprise_management/presentation/pages/user_group/controllers/users_in_user_group_controller.dart';
@@ -9,7 +11,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_groups_controller.g.dart';
 
-@Riverpod()
+@Riverpod(keepAlive: true)
 class UserGroupsController extends _$UserGroupsController {
   @override
   Future<List<UserGroup>> build() {
@@ -18,11 +20,30 @@ class UserGroupsController extends _$UserGroupsController {
 
   Future<List<UserGroup>> getUserGroups() async {
     final mediator = ref.read(mediatorProvider);
-    state = AsyncLoading();
+    state = const AsyncLoading();
     final res = await mediator.query(GetUserGroupsQuery());
+    if (!ref.mounted) return [];
     return res.when(
       success: (List<UserGroup> data) {
         state = AsyncData(data);
+
+        // Pre-fetch details for any groups to ensure member counts are available immediately
+        for (final item in data) {
+          if (item.users.isEmpty) {
+            mediator.query(GetUserGroupQuery(id: item.id)).then((detailRes) {
+              if (!ref.mounted) return;
+              detailRes.when(
+                success: (detailedGroup) {
+                  if (ref.mounted && detailedGroup.users.isNotEmpty) {
+                    updateUserGroupUsers(item.id, detailedGroup.users);
+                  }
+                },
+                failure: (_) {},
+              );
+            });
+          }
+        }
+
         return data;
       },
       failure: (AppFailure failure) {
@@ -50,11 +71,22 @@ class UserGroupsController extends _$UserGroupsController {
 
     state = AsyncData(newItems);
 
-    final usersInUserGroupController = ref.watch(usersInUserGroupControllerProvider.notifier);
+    final usersInUserGroupController = ref.read(usersInUserGroupControllerProvider.notifier);
     usersInUserGroupController.getUsersInUserGroup(id: id);
 
-    final policiesInUserGroupController = ref.watch(policiesInUserGroupControllerProvider.notifier);
+    final policiesInUserGroupController = ref.read(policiesInUserGroupControllerProvider.notifier);
     policiesInUserGroupController.getPoliciesInUserGroup(id: id);
+  }
+
+  void updateUserGroupUsers(String id, List<User> users) {
+    final items = state.value;
+    if (items == null) return;
+    state = AsyncData(items.map((item) {
+      if (item.id == id) {
+        return item.copyWith.call(users: users);
+      }
+      return item;
+    }).toList());
   }
 
   Future<void> delete(String id) async {

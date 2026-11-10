@@ -60,7 +60,7 @@ final class EditProjectFormControllerProvider
 }
 
 String _$editProjectFormControllerHash() =>
-    r'47daf7288eff5db167de02c04bc6c8daf56c0eb7';
+    r'e9eb08e8a082d67aa488c0dca8014caebae193b4';
 
 final class EditProjectFormControllerFamily extends $Family
     with
