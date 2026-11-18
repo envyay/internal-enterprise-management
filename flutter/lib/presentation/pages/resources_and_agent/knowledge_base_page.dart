@@ -114,11 +114,19 @@ class _KnowledgeBasePageState extends ConsumerState<KnowledgeBasePage> {
                       ),
                       DocumentTable(
                         state: documentInDepartmentState,
-                        onOpenFile: (Document document) {},
+                        onOpenFile: (Document document) {
+                          ref
+                              .read(resourcesControllerProvider.notifier)
+                              .openDocument(document);
+                        },
                       ),
                       DocumentTable(
                         state: documentInTicketState,
-                        onOpenFile: (Document document) {},
+                        onOpenFile: (Document document) {
+                          ref
+                              .read(resourcesControllerProvider.notifier)
+                              .openDocument(document);
+                        },
                       ),
                     ],
                   ),

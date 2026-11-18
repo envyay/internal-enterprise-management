@@ -13,10 +13,9 @@ class ToolFactory:
     def _search_child_chunks(self, query: str, limit: int = app_config.DEFAULT_RETRIEVAL_K, config: RunnableConfig = None) -> str:
         """Search document excerpts for evidence related to the user question.
 
-        Use this as the first retrieval step. Results include parent IDs, file
-        names, and short child-chunk excerpts. If excerpts are relevant but too
-        fragmented to answer confidently, call retrieve_parent_chunks with the
-        returned parent_id.
+        Use this as the primary retrieval tool. Each result automatically includes
+        the matching child excerpt AND its broader parent context (full section),
+        so you have complete context immediately without needing separate parent queries.
         """
         log_tool_start("search_child_chunks", {"query": query, "limit": limit})
         configurable = config.get("configurable", {}) if config else {}
@@ -50,13 +49,37 @@ class ToolFactory:
                 log_tool_end("search_child_chunks", output)
                 return output
 
-            output = app_config.CHILD_CHUNK_SEPARATOR.join([
-                f"Parent ID: {doc.metadata.get('parent_id', '')}\n"
-                f"File Name: {doc.metadata.get('filename') or doc.metadata.get('source', '')}\n"
-                f"Document ID: {doc.metadata.get('document_id', '')}\n"
-                f"Content: {doc.page_content.strip()}"
-                for doc in results
-            ])
+            # Tự động lookup Parent Chunks trực tiếp bằng ID (không tốn embedding, O(1) lookup)
+            parent_ids = list({str(doc.metadata.get("parent_id")) for doc in results if doc.metadata.get("parent_id")})
+            parent_map = {}
+            if parent_ids:
+                try:
+                    records = self.qdrant_services.retrieve_by_ids(app_config.PARENT_COLLECTION, parent_ids)
+                    for rec in records:
+                        rec_id = str(rec.id)
+                        payload = rec.payload or {}
+                        content = payload.get("page_content") or ""
+                        if content:
+                            parent_map[rec_id] = content
+                except Exception as ex:
+                    log_error("retrieve_parent_context_in_search", ex)
+
+            chunk_blocks = []
+            for doc in results:
+                p_id = str(doc.metadata.get("parent_id", ""))
+                parent_context = parent_map.get(p_id, "").strip()
+
+                block_lines = [
+                    f"File Name: {doc.metadata.get('filename') or doc.metadata.get('source', '')}",
+                    f"Document ID: {doc.metadata.get('document_id', '')}",
+                    f"Parent ID: {p_id}",
+                    f"Child Excerpt: {doc.page_content.strip()}",
+                ]
+                if parent_context:
+                    block_lines.append(f"Parent Context (Full Section):\n{parent_context}")
+                chunk_blocks.append("\n".join(block_lines))
+
+            output = app_config.CHILD_CHUNK_SEPARATOR.join(chunk_blocks)
             log_tool_end("search_child_chunks", output)
             return output
 
@@ -67,11 +90,9 @@ class ToolFactory:
             return output
     
     def _retrieve_parent_chunks(self, parent_id: str, config: RunnableConfig = None) -> str:
-        """Retrieve the full parent chunk for a relevant child search result.
+        """Retrieve the full parent chunk for a given parent_id as a fallback.
 
-        Use this only after search_child_chunks returns a relevant parent_id and
-        the child excerpt needs more surrounding context. Do not call this for
-        parent IDs already available in compressed context.
+        Usually not needed because search_child_chunks already includes the full parent context.
         """
         log_tool_start("retrieve_parent_chunks", {"parent_id": parent_id})
         try:
@@ -83,27 +104,25 @@ class ToolFactory:
                 log_tool_end("retrieve_parent_chunks", output)
                 return output
 
-            must_conditions = [models.HasIdCondition(has_id=[parent_id])]
-            if document_ids:
-                must_conditions.append(
-                    models.FieldCondition(
-                        key="metadata.document_id",
-                        match=models.MatchAny(any=list(document_ids))
-                    )
-                )
-
-            parent_store = self.qdrant_services.get_collection(app_config.PARENT_COLLECTION)
-            results = parent_store.similarity_search(
-                query="",
-                k=1,
-                filter=models.Filter(must=must_conditions)
-            )
-            if not results:
+            # Sử dụng direct lookup theo ID thay vì similarity_search chuỗi rỗng
+            records = self.qdrant_services.retrieve_by_ids(app_config.PARENT_COLLECTION, [parent_id])
+            if not records:
                 output = "NO_PARENT_DOCUMENT"
                 log_tool_end("retrieve_parent_chunks", output)
                 return output
 
-            output = results[0].page_content
+            rec = records[0]
+            payload = rec.payload or {}
+            doc_id = payload.get("metadata", {}).get("document_id")
+            if document_ids is not None and doc_id not in document_ids:
+                output = "NO_PARENT_DOCUMENT: Permission denied."
+                log_tool_end("retrieve_parent_chunks", output)
+                return output
+
+            output = payload.get("page_content", "")
+            if not output:
+                output = "NO_PARENT_DOCUMENT"
+
             log_tool_end("retrieve_parent_chunks", output)
             return output
         except Exception as e:

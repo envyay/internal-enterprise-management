@@ -81,46 +81,6 @@ def _extract_chunk_text(content) -> str:
     return ""
 
 
-@router.post("/")
-async def chat_endpoint(request: ChatRequest):
-    active_thread_id = request.threadId or str(uuid.uuid4())
-
-    # Fast check: Nếu ASP.NET Core truyền danh sách rỗng -> user không có quyền trên bất kỳ tài liệu nào
-    if request.document_ids is not None and len(request.document_ids) == 0:
-        return {
-            "response": "You have not been granted access to any documents for reference.",
-            "thread_id": active_thread_id
-        }
-
-    graph = get_graph()
-    config_dict = {
-        "configurable": {
-            "thread_id": active_thread_id,
-            "document_ids": request.document_ids
-        }
-    }
-
-    try:
-        inputs = {
-            "messages": [HumanMessage(content=request.query)],
-            "document_ids": request.document_ids
-        }
-        final_state = graph.invoke(inputs, config=config_dict)
-
-        messages = final_state.get("messages", [])
-        if messages:
-            last_msg = messages[-1].content
-            if isinstance(last_msg, list):
-                text_parts = [item.get("text", "") if isinstance(item, dict) else str(item) for item in last_msg]
-                last_msg = "".join(text_parts)
-            return {"response": str(last_msg), "thread_id": active_thread_id}
-        else:
-            return {"response": "No response generated.", "thread_id": active_thread_id}
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 class GenerateTitleRequest(BaseModel):
     query: str
 
@@ -171,6 +131,7 @@ async def chat_stream_endpoint(request: ChatRequest):
             "document_ids": request.document_ids
         }
     }
+
     inputs = {
         "messages": [HumanMessage(content=request.query)],
         "document_ids": request.document_ids

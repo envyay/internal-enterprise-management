@@ -9,7 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Constants;
 
-namespace Application.UseCases.Chat;
+namespace Application.UseCases.Chat.Chat;
 
 public class ChatCommandHandler(
     IUserContextService userContextService,

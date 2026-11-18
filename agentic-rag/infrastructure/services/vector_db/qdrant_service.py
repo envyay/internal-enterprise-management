@@ -65,6 +65,17 @@ class QdrantServices:
             return info.points_count or 0
         return 0
 
+    def retrieve_by_ids(self, collection_name: str, ids: list[str]) -> list:
+        """Lấy trực tiếp points theo ID — không cần tính embedding, O(1) lookup."""
+        if not ids:
+            return []
+        return self.__client.retrieve(
+            collection_name=collection_name,
+            ids=ids,
+            with_payload=True,
+            with_vectors=False,
+        )
+
     def clear_collection(self, collection_name: str) -> bool:
         """Xóa toàn bộ dữ liệu (points) trong collection nhưng GIỮ NGUYÊN collection và cấu hình schema."""
         from qdrant_client import models

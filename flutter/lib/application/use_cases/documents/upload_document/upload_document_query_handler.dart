@@ -81,9 +81,6 @@ class UploadDocumentQueryHandler
           extension: extension,
           name: name,
         );
-
-        /// Ingest Python => Tao Vector Database cho LLM
-        /// TODO: // Ingest ben python
       }
     });
   }

@@ -1,5 +1,6 @@
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
 import 'package:enterprise_management/infrastructure/assets/gen/assets.gen.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -82,30 +83,37 @@ class DocumentTableInTicket extends ConsumerWidget {
                     children: [
                       TableRow(
                         children: [
-                          Container(
-                            padding: .symmetric(vertical: 12),
-                            child: Row(
-                              spacing: 12,
-                              children: [
-                                fileIcon(doc.extension).svg(),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: .start,
-                                    children: [
-                                      Text(
-                                        doc.name,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          color: Color(0xff0B1C30),
-                                          fontWeight: .w500,
-                                          fontSize: 14,
+                          InkWell(
+                            onTap: () {
+                              ref
+                                  .read(resourcesControllerProvider.notifier)
+                                  .openDocument(doc);
+                            },
+                            child: Container(
+                              padding: .symmetric(vertical: 12),
+                              child: Row(
+                                spacing: 12,
+                                children: [
+                                  fileIcon(doc.extension).svg(),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: .start,
+                                      children: [
+                                        Text(
+                                          doc.name,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Color(0xff0B1C30),
+                                            fontWeight: .w500,
+                                            fontSize: 14,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                           Text(
