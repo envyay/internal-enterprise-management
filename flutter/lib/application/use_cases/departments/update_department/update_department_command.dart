@@ -4,5 +4,5 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'update_department_command.freezed.dart';
 @freezed
 abstract class UpdateDepartmentCommand with _$UpdateDepartmentCommand implements ICommand<bool> {
-  const factory UpdateDepartmentCommand({required String id, required String name}) = _UpdateDepartmentCommand;
+  const factory UpdateDepartmentCommand({required String id, required String name, String? head}) = _UpdateDepartmentCommand;
 }

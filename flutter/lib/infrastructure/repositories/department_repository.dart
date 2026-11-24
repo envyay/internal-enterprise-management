@@ -10,9 +10,9 @@ abstract interface class IDepartmentRepository {
 
   Future<Department?> getDepartmentById({required String id});
 
-  Future<String> createDepartment({required String name});
+  Future<String> createDepartment({required String name, String? head});
 
-  Future<bool> updateDepartmentById({required String id, required String name});
+  Future<bool> updateDepartmentById({required String id, required String name, String? head});
 
   Future<bool?> deleteDepartmentById({required String id});
 
@@ -38,8 +38,8 @@ class DepartmentRepository implements IDepartmentRepository {
   }
 
   @override
-  Future<String> createDepartment({required String name}) async {
-    final res = await _departmentRemoteDataSource.createDepartment(CreateDepartmentDto(name: name));
+  Future<String> createDepartment({required String name, String? head}) async {
+    final res = await _departmentRemoteDataSource.createDepartment(CreateDepartmentDto(name: name, head: head));
     return res.data;
   }
 
@@ -50,8 +50,8 @@ class DepartmentRepository implements IDepartmentRepository {
   }
 
   @override
-  Future<bool> updateDepartmentById({required String id, required String name}) async {
-    final res = await _departmentRemoteDataSource.updateDepartmentById(UpdateDepartmentDto(id: id, name: name));
+  Future<bool> updateDepartmentById({required String id, required String name, String? head}) async {
+    final res = await _departmentRemoteDataSource.updateDepartmentById(UpdateDepartmentDto(id: id, name: name, head: head));
     return res.data;
   }
 

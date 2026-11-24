@@ -7,4 +7,5 @@ public class UpdateDepartmentCommand : IRequest<bool>
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public string? Head { get; set; }
 }

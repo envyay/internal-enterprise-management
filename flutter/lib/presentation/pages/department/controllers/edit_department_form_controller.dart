@@ -12,11 +12,15 @@ part 'edit_department_form_controller.g.dart';
 class EditDepartmentFormController extends _$EditDepartmentFormController {
   @override
   EditDepartmentForm build(Department department) {
-    return EditDepartmentForm(name: NameInput.dirty(department.name));
+    return EditDepartmentForm(name: NameInput.dirty(department.name), head: department.head ?? '');
   }
 
   void setName(String value) {
     state = state.copyWith(name: NameInput.dirty(value));
+  }
+
+  void setHead(String value) {
+    state = state.copyWith(head: value);
   }
 
   Future<void> edit() async {
@@ -24,7 +28,7 @@ class EditDepartmentFormController extends _$EditDepartmentFormController {
 
     final name = state.name.value;
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(UpdateDepartmentCommand(id: department.id, name: name));
+    await mediator.send(UpdateDepartmentCommand(id: department.id, name: name, head: state.head.trim().isEmpty ? null : state.head.trim()));
 
     ref.invalidate(departmentsControllerProvider);
 

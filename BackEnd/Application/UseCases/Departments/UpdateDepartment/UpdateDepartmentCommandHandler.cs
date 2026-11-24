@@ -12,7 +12,7 @@ public class UpdateDepartmentCommandHandler(IRepository<Department, Guid> depart
         var department = await departmentRepository.GetByIdAsync(request.Id, cancellationToken);
         if (department == null) return false;
         
-        department.Update(request.Name);
+        department.Update(request.Name, string.IsNullOrWhiteSpace(request.Head) ? null : request.Head.Trim());
         await departmentRepository.UpdateAsync(department);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return true;

@@ -9,11 +9,15 @@ class Department extends AggregateRoot<String> with DepartmentMappable {
   Department({
     required super.id,
     required this.name,
+    this.head,
+    this.memberCount = 0,
     this.isActive = false,
     required this.users,
   });
 
   final String name;
+  final String? head;
+  final int memberCount;
   final List<User> users;
   final bool isActive;
 }

@@ -12,5 +12,9 @@ public class CreateDepartmentCommandValidator : AbstractValidator<CreateDepartme
             .WithMessage("Name is required")
             .MaximumLength(255)
             .WithMessage("Name must be less than 255 characters");
+
+        RuleFor(x => x.Head)
+            .MaximumLength(255)
+            .WithMessage("Head must be less than 255 characters");
     }
 }

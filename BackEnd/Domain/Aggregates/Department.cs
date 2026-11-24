@@ -6,14 +6,16 @@ namespace Domain.Aggregates;
 public class Department : AggregateRoot<Guid>
 {
     public string Name { get; set; } = string.Empty;
+    public string? Head { get; set; }
     public ICollection<User> Users { get; set; } = new List<User>();
 
-    public static Department Create(string name)
+    public static Department Create(string name, string? head)
     {
         return new Department
         {
             Id = Guid.CreateVersion7(),
-            Name = name
+            Name = name,
+            Head = head
         };
     }
 
@@ -30,8 +32,9 @@ public class Department : AggregateRoot<Guid>
         });
     }
 
-    public void Update(string name)
+    public void Update(string name, string? head)
     {
         Name = name;
+        Head = head;
     }
 }

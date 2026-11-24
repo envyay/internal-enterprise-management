@@ -7,8 +7,11 @@ part of 'create_department_dto.dart';
 // **************************************************************************
 
 _CreateDepartmentDto _$CreateDepartmentDtoFromJson(Map<String, dynamic> json) =>
-    _CreateDepartmentDto(name: json['name'] as String);
+    _CreateDepartmentDto(
+      name: json['name'] as String,
+      head: json['head'] as String?,
+    );
 
 Map<String, dynamic> _$CreateDepartmentDtoToJson(
   _CreateDepartmentDto instance,
-) => <String, dynamic>{'name': instance.name};
+) => <String, dynamic>{'name': instance.name, 'head': instance.head};

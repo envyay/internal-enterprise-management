@@ -22,6 +22,8 @@ public class GetDepartmentByIdQueryHandler(IRepository<Department, Guid> departm
         {
             Id = department.Id,
             Name = department.Name,
+            Head = department.Head,
+            MemberCount = department.Users.Count,
             Users = department.Users.Select(x => new UserDto
             {
                 Id = x.Id,

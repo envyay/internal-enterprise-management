@@ -62,7 +62,7 @@ final class EditDepartmentFormControllerProvider
 }
 
 String _$editDepartmentFormControllerHash() =>
-    r'5ee262c0d724f2e09be8c12b237c864b3024025c';
+    r'8f67e4161aaff79266699ff19a16d7f25fd5a0f6';
 
 final class EditDepartmentFormControllerFamily extends $Family
     with

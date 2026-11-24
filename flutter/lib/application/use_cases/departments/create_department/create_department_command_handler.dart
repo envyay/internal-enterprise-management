@@ -9,7 +9,7 @@ class CreateDepartmentCommandHandler extends ICommandHandler<CreateDepartmentCom
 
   @override
   Future<Result<String>> handle(CreateDepartmentCommand command) async {
-    final res = await _departmentRepository.createDepartment(name: command.name);
+    final res = await _departmentRepository.createDepartment(name: command.name, head: command.head);
     return Result.success(res);
   }
 

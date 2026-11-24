@@ -101,6 +101,38 @@ class CreateDepartmentDialog extends ConsumerWidget {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Head (optional)',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF191C20),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    onChanged: (value) => form.setHead(value),
+                    decoration: InputDecoration(
+                      hintText: 'Name of the department head',
+                      hintStyle: const TextStyle(color: Color(0xFF90909A), fontSize: 13),
+                      filled: true,
+                      fillColor: const Color(0xFFFBFBFF),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFFC3C6D1)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFF001E40), width: 1.5),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

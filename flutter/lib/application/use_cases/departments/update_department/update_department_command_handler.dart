@@ -9,7 +9,7 @@ class UpdateDepartmentCommandHandler extends ICommandHandler<UpdateDepartmentCom
 
   @override
   Future<Result<bool>> handle(UpdateDepartmentCommand command) async {
-    final res = await _departmentRepository.updateDepartmentById(id: command.id, name: command.name);
+    final res = await _departmentRepository.updateDepartmentById(id: command.id, name: command.name, head: command.head);
     return Result.success(res);
   }
 

@@ -3,14 +3,15 @@ import 'package:formz/formz.dart';
 
 class CreateDepartmentForm with FormzMixin {
   final NameInput name;
+  final String head;
   final FormzSubmissionStatus status;
 
-  const CreateDepartmentForm({this.name = const NameInput.pure(), this.status = FormzSubmissionStatus.initial});
+  const CreateDepartmentForm({this.name = const NameInput.pure(), this.head = '', this.status = FormzSubmissionStatus.initial});
 
   @override
   List<FormzInput<dynamic, dynamic>> get inputs => [name];
 
-  CreateDepartmentForm copyWith({NameInput? name, FormzSubmissionStatus? status}) {
-    return CreateDepartmentForm(name: name ?? this.name, status: status ?? this.status);
+  CreateDepartmentForm copyWith({NameInput? name, String? head, FormzSubmissionStatus? status}) {
+    return CreateDepartmentForm(name: name ?? this.name, head: head ?? this.head, status: status ?? this.status);
   }
 }

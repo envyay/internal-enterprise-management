@@ -19,13 +19,17 @@ class CreateDepartmentFormController extends _$CreateDepartmentFormController {
     state = state.copyWith(name: NameInput.dirty(value));
   }
 
+  void setHead(String value) {
+    state = state.copyWith(head: value);
+  }
+
   Future<void> submit() async {
     state = state.copyWith(name: NameInput.dirty(state.name.value));
     if (state.isNotValid) return;
 
     final name = state.name.value;
     final mediator = ref.read(mediatorProvider);
-    await mediator.send(CreateDepartmentCommand(name: name));
+    await mediator.send(CreateDepartmentCommand(name: name, head: state.head.trim().isEmpty ? null : state.head.trim()));
 
     final router = ref.read(appRouterProvider);
     router.pop();

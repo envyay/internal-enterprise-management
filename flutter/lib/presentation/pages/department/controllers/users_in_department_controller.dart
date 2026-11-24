@@ -1,6 +1,7 @@
 import 'package:enterprise_management/application/use_cases/departments/get_department/get_department_query.dart';
 import 'package:enterprise_management/application/use_cases/departments/set_users_in_department/set_users_in_department_command.dart';
 import 'package:enterprise_management/domain/aggregates/department/department.dart';
+import 'package:enterprise_management/presentation/pages/department/controllers/departments_controller.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -44,6 +45,7 @@ class UsersInDepartmentController extends _$UsersInDepartmentController {
       success: (success) {
         if (success) {
           getUsersInDepartment(id: id);
+          ref.read(departmentsControllerProvider.notifier).reloadKeepSelection();
         }
       },
       failure: (error) {

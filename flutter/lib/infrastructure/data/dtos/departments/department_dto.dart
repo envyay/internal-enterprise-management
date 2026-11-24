@@ -11,6 +11,8 @@ abstract class DepartmentDto with _$DepartmentDto {
   const factory DepartmentDto({
     String? id,
     String? name,
+    String? head,
+    int? memberCount,
     List<UserDto>? users,
   }) = _DepartmentDto;
 
@@ -23,6 +25,8 @@ extension DepartmentDtoX on DepartmentDto {
     return Department(
       id: id ?? '',
       name: name ?? '',
+      head: head,
+      memberCount: memberCount ?? users?.length ?? 0,
       users: users?.map((item) => item.toAggregate()).toList() ?? [],
     );
   }

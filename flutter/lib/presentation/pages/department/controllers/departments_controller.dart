@@ -33,6 +33,20 @@ class DepartmentsController extends _$DepartmentsController {
     );
   }
 
+  /// Reload counts/heads silently, keeping the currently selected department.
+  Future<void> reloadKeepSelection() async {
+    final activeId = state.value?.where((e) => e.isActive).firstOrNull?.id;
+    final mediator = ref.read(mediatorProvider);
+    final res = await mediator.query(GetDepartmentsQuery());
+    if (!ref.mounted) return;
+    res.when(
+      success: (List<Department> data) {
+        state = AsyncData(data.map((e) => e.copyWith(isActive: e.id == activeId)).toList());
+      },
+      failure: (_) {},
+    );
+  }
+
   void refresh() async {
     final data = await getDepartments();
     state = AsyncValue.data(data);

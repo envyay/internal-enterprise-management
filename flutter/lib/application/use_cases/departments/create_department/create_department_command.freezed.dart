@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateDepartmentCommand {
 
- String get name;
+ String get name; String? get head;
 /// Create a copy of CreateDepartmentCommand
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $CreateDepartmentCommandCopyWith<CreateDepartmentCommand> get copyWith => _$Crea
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateDepartmentCommand&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateDepartmentCommand&&(identical(other.name, name) || other.name == name)&&(identical(other.head, head) || other.head == head));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name);
+int get hashCode => Object.hash(runtimeType,name,head);
 
 @override
 String toString() {
-  return 'CreateDepartmentCommand(name: $name)';
+  return 'CreateDepartmentCommand(name: $name, head: $head)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $CreateDepartmentCommandCopyWith<$Res>  {
   factory $CreateDepartmentCommandCopyWith(CreateDepartmentCommand value, $Res Function(CreateDepartmentCommand) _then) = _$CreateDepartmentCommandCopyWithImpl;
 @useResult
 $Res call({
- String name
+ String name, String? head
 });
 
 
@@ -63,10 +63,11 @@ class _$CreateDepartmentCommandCopyWithImpl<$Res>
 
 /// Create a copy of CreateDepartmentCommand
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? head = freezed,}) {
   return _then(CreateDepartmentCommand(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+as String,head: freezed == head ? _self.head : head // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -151,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String? head)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateDepartmentCommand() when $default != null:
-return $default(_that.name);case _:
+return $default(_that.name,_that.head);case _:
   return orElse();
 
 }
@@ -172,10 +173,10 @@ return $default(_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String? head)  $default,) {final _that = this;
 switch (_that) {
 case _CreateDepartmentCommand():
-return $default(_that.name);case _:
+return $default(_that.name,_that.head);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -192,10 +193,10 @@ return $default(_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String? head)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateDepartmentCommand() when $default != null:
-return $default(_that.name);case _:
+return $default(_that.name,_that.head);case _:
   return null;
 
 }
@@ -207,10 +208,11 @@ return $default(_that.name);case _:
 
 
 class _CreateDepartmentCommand implements CreateDepartmentCommand {
-  const _CreateDepartmentCommand({required this.name});
+  const _CreateDepartmentCommand({required this.name, this.head});
   
 
 @override final  String name;
+@override final  String? head;
 
 /// Create a copy of CreateDepartmentCommand
 /// with the given fields replaced by the non-null parameter values.
@@ -222,16 +224,16 @@ _$CreateDepartmentCommandCopyWith<_CreateDepartmentCommand> get copyWith => __$C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateDepartmentCommand&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateDepartmentCommand&&(identical(other.name, name) || other.name == name)&&(identical(other.head, head) || other.head == head));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name);
+int get hashCode => Object.hash(runtimeType,name,head);
 
 @override
 String toString() {
-  return 'CreateDepartmentCommand(name: $name)';
+  return 'CreateDepartmentCommand(name: $name, head: $head)';
 }
 
 
@@ -242,7 +244,7 @@ abstract mixin class _$CreateDepartmentCommandCopyWith<$Res> implements $CreateD
   factory _$CreateDepartmentCommandCopyWith(_CreateDepartmentCommand value, $Res Function(_CreateDepartmentCommand) _then) = __$CreateDepartmentCommandCopyWithImpl;
 @override @useResult
 $Res call({
- String name
+ String name, String? head
 });
 
 
@@ -259,10 +261,11 @@ class __$CreateDepartmentCommandCopyWithImpl<$Res>
 
 /// Create a copy of CreateDepartmentCommand
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? head = freezed,}) {
   return _then(_CreateDepartmentCommand(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+as String,head: freezed == head ? _self.head : head // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

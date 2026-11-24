@@ -6,5 +6,7 @@ public class DepartmentDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public List<UserDto> Users { get; set; }
+    public string? Head { get; set; }
+    public int MemberCount { get; set; }
+    public List<UserDto>? Users { get; set; }
 }

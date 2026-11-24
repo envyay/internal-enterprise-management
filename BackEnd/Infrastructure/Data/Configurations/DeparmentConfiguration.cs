@@ -12,6 +12,7 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedNever();
         builder.Property(x => x.Name).HasMaxLength(255);
+        builder.Property(x => x.Head).HasMaxLength(255);
         builder.HasIndex(x => x.Name);
         builder.HasMany(x => x.Users).WithMany(x => x.Departments).UsingEntity(x => x.ToTable("UserDepartments"));
     }

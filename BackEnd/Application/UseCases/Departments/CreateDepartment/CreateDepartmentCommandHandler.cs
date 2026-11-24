@@ -16,7 +16,7 @@ public class CreateDepartmentCommandHandler(IRepository<Department, Guid> depart
             throw new ValidationException(validateResult.Errors);
         }
         
-        var department = Department.Create(request.Name);
+        var department = Department.Create(request.Name, string.IsNullOrWhiteSpace(request.Head) ? null : request.Head.Trim());
         await departmentRepository.AddAsync(department, cancellationToken);
         department.DepartmentCreated();
         await unitOfWork.SaveChangesAsync(cancellationToken);

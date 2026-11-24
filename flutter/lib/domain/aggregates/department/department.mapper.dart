@@ -27,6 +27,19 @@ class DepartmentMapper extends ClassMapperBase<Department> {
   static const Field<Department, String> _f$id = Field('id', _$id);
   static String _$name(Department v) => v.name;
   static const Field<Department, String> _f$name = Field('name', _$name);
+  static String? _$head(Department v) => v.head;
+  static const Field<Department, String> _f$head = Field(
+    'head',
+    _$head,
+    opt: true,
+  );
+  static int _$memberCount(Department v) => v.memberCount;
+  static const Field<Department, int> _f$memberCount = Field(
+    'memberCount',
+    _$memberCount,
+    opt: true,
+    def: 0,
+  );
   static bool _$isActive(Department v) => v.isActive;
   static const Field<Department, bool> _f$isActive = Field(
     'isActive',
@@ -41,6 +54,8 @@ class DepartmentMapper extends ClassMapperBase<Department> {
   final MappableFields<Department> fields = const {
     #id: _f$id,
     #name: _f$name,
+    #head: _f$head,
+    #memberCount: _f$memberCount,
     #isActive: _f$isActive,
     #users: _f$users,
   };
@@ -49,6 +64,8 @@ class DepartmentMapper extends ClassMapperBase<Department> {
     return Department(
       id: data.dec(_f$id),
       name: data.dec(_f$name),
+      head: data.dec(_f$head),
+      memberCount: data.dec(_f$memberCount),
       isActive: data.dec(_f$isActive),
       users: data.dec(_f$users),
     );
@@ -115,7 +132,14 @@ extension DepartmentValueCopy<$R, $Out>
 abstract class DepartmentCopyWith<$R, $In extends Department, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, User, UserCopyWith<$R, User, User>> get users;
-  $R call({String? id, String? name, bool? isActive, List<User>? users});
+  $R call({
+    String? id,
+    String? name,
+    String? head,
+    int? memberCount,
+    bool? isActive,
+    List<User>? users,
+  });
   DepartmentCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -135,19 +159,29 @@ class _DepartmentCopyWithImpl<$R, $Out>
         (v) => call(users: v),
       );
   @override
-  $R call({String? id, String? name, bool? isActive, List<User>? users}) =>
-      $apply(
-        FieldCopyWithData({
-          if (id != null) #id: id,
-          if (name != null) #name: name,
-          if (isActive != null) #isActive: isActive,
-          if (users != null) #users: users,
-        }),
-      );
+  $R call({
+    String? id,
+    String? name,
+    Object? head = $none,
+    int? memberCount,
+    bool? isActive,
+    List<User>? users,
+  }) => $apply(
+    FieldCopyWithData({
+      if (id != null) #id: id,
+      if (name != null) #name: name,
+      if (head != $none) #head: head,
+      if (memberCount != null) #memberCount: memberCount,
+      if (isActive != null) #isActive: isActive,
+      if (users != null) #users: users,
+    }),
+  );
   @override
   Department $make(CopyWithData data) => Department(
     id: data.get(#id, or: $value.id),
     name: data.get(#name, or: $value.name),
+    head: data.get(#head, or: $value.head),
+    memberCount: data.get(#memberCount, or: $value.memberCount),
     isActive: data.get(#isActive, or: $value.isActive),
     users: data.get(#users, or: $value.users),
   );

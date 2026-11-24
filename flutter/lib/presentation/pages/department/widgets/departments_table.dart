@@ -87,8 +87,8 @@ class DepartmentsTable extends ConsumerWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               alignment: Alignment.centerLeft,
-                              child: const Text(
-                                '-',
+                              child: Text(
+                                (item.head == null || item.head!.isEmpty) ? '-' : item.head!,
                                 style: TextStyle(
                                   color: Color(0xff43474F),
                                   fontSize: 12,
@@ -99,8 +99,8 @@ class DepartmentsTable extends ConsumerWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               alignment: Alignment.centerLeft,
-                              child: const Text(
-                                '-',
+                              child: Text(
+                                '${item.memberCount}',
                                 style: TextStyle(
                                   color: Color(0xff43474F),
                                   fontSize: 12,

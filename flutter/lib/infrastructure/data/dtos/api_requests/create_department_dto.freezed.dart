@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CreateDepartmentDto {
 
- String get name;
+ String get name; String? get head;
 /// Create a copy of CreateDepartmentDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +29,16 @@ $CreateDepartmentDtoCopyWith<CreateDepartmentDto> get copyWith => _$CreateDepart
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateDepartmentDto&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CreateDepartmentDto&&(identical(other.name, name) || other.name == name)&&(identical(other.head, head) || other.head == head));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name);
+int get hashCode => Object.hash(runtimeType,name,head);
 
 @override
 String toString() {
-  return 'CreateDepartmentDto(name: $name)';
+  return 'CreateDepartmentDto(name: $name, head: $head)';
 }
 
 
@@ -49,7 +49,7 @@ abstract mixin class $CreateDepartmentDtoCopyWith<$Res>  {
   factory $CreateDepartmentDtoCopyWith(CreateDepartmentDto value, $Res Function(CreateDepartmentDto) _then) = _$CreateDepartmentDtoCopyWithImpl;
 @useResult
 $Res call({
- String name
+ String name, String? head
 });
 
 
@@ -66,10 +66,11 @@ class _$CreateDepartmentDtoCopyWithImpl<$Res>
 
 /// Create a copy of CreateDepartmentDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? head = freezed,}) {
   return _then(CreateDepartmentDto(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+as String,head: freezed == head ? _self.head : head // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String? head)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CreateDepartmentDto() when $default != null:
-return $default(_that.name);case _:
+return $default(_that.name,_that.head);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String? head)  $default,) {final _that = this;
 switch (_that) {
 case _CreateDepartmentDto():
-return $default(_that.name);case _:
+return $default(_that.name,_that.head);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String? head)?  $default,) {final _that = this;
 switch (_that) {
 case _CreateDepartmentDto() when $default != null:
-return $default(_that.name);case _:
+return $default(_that.name,_that.head);case _:
   return null;
 
 }
@@ -210,10 +211,11 @@ return $default(_that.name);case _:
 @JsonSerializable()
 
 class _CreateDepartmentDto implements CreateDepartmentDto {
-  const _CreateDepartmentDto({required this.name});
+  const _CreateDepartmentDto({required this.name, this.head});
   factory _CreateDepartmentDto.fromJson(Map<String, dynamic> json) => _$CreateDepartmentDtoFromJson(json);
 
 @override final  String name;
+@override final  String? head;
 
 /// Create a copy of CreateDepartmentDto
 /// with the given fields replaced by the non-null parameter values.
@@ -228,16 +230,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateDepartmentDto&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CreateDepartmentDto&&(identical(other.name, name) || other.name == name)&&(identical(other.head, head) || other.head == head));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name);
+int get hashCode => Object.hash(runtimeType,name,head);
 
 @override
 String toString() {
-  return 'CreateDepartmentDto(name: $name)';
+  return 'CreateDepartmentDto(name: $name, head: $head)';
 }
 
 
@@ -248,7 +250,7 @@ abstract mixin class _$CreateDepartmentDtoCopyWith<$Res> implements $CreateDepar
   factory _$CreateDepartmentDtoCopyWith(_CreateDepartmentDto value, $Res Function(_CreateDepartmentDto) _then) = __$CreateDepartmentDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String name
+ String name, String? head
 });
 
 
@@ -265,10 +267,11 @@ class __$CreateDepartmentDtoCopyWithImpl<$Res>
 
 /// Create a copy of CreateDepartmentDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? name = null,Object? head = freezed,}) {
   return _then(_CreateDepartmentDto(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
+as String,head: freezed == head ? _self.head : head // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

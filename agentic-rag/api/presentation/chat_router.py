@@ -108,7 +108,7 @@ async def generate_title_endpoint(request: GenerateTitleRequest):
 async def chat_stream_endpoint(request: ChatRequest):
     active_thread_id = request.threadId or str(uuid.uuid4())
 
-    # Fast check: Nếu danh sách document_ids rỗng -> trả về ngay thông báo không có quyền
+    #Nếu danh sách document_ids rỗng -> trả về ngay thông báo không có quyền
     if request.document_ids is not None and len(request.document_ids) == 0:
         async def empty_perm_generator():
             yield f"data: {json.dumps({'type': 'token', 'content': 'You have not been granted access to any documents for reference.'}, ensure_ascii=False)}\n\n"
