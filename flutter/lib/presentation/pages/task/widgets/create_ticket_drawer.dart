@@ -393,10 +393,10 @@ class CreateTicketDrawer extends ConsumerWidget {
                 if (ticketId == null) return;
                 final files = ticketAttachmentState.value;
                 if (files != null && files.isNotEmpty) {
-                  final documentsInTicketController = ref.watch(
+                  final documentsInTicketController = ref.read(
                     documentsInTicketControllerProvider().notifier,
                   );
-                  documentsInTicketController.uploadDocument(
+                  await documentsInTicketController.uploadDocument(
                     referenceId: ticketId,
                     files: files,
                   );

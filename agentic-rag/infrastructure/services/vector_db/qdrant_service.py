@@ -51,7 +51,7 @@ class QdrantServices:
         )
 
     def delete_collection(self, collection_name: str) -> None:
-        """Xóa hoàn toàn collection (mất cả dữ liệu lẫn cấu hình schema)."""
+        """Completely delete the collection (removes both data and schema configuration)."""
         if self.__client.collection_exists(collection_name=collection_name):
             print(f"Removing collection {collection_name}")
             self.__client.delete_collection(collection_name=collection_name)
@@ -59,14 +59,14 @@ class QdrantServices:
             print(f"Unable to remove collection {collection_name}")
 
     def get_points_count(self, collection_name: str) -> int:
-        """Lấy tổng số points hiện có trong collection."""
+        """Get the total number of points currently in the collection."""
         if self.__client.collection_exists(collection_name=collection_name):
             info = self.__client.get_collection(collection_name)
             return info.points_count or 0
         return 0
 
     def retrieve_by_ids(self, collection_name: str, ids: list[str]) -> list:
-        """Lấy trực tiếp points theo ID — không cần tính embedding, O(1) lookup."""
+        """Retrieve points directly by ID — no embedding calculation needed, O(1) lookup."""
         if not ids:
             return []
         return self.__client.retrieve(
@@ -77,7 +77,7 @@ class QdrantServices:
         )
 
     def clear_collection(self, collection_name: str) -> bool:
-        """Xóa toàn bộ dữ liệu (points) trong collection nhưng GIỮ NGUYÊN collection và cấu hình schema."""
+        """Clear all data (points) in the collection while PRESERVING the collection and schema configuration."""
         from qdrant_client import models
         if self.__client.collection_exists(collection_name=collection_name):
             print(f"Clearing all points in collection {collection_name}...")

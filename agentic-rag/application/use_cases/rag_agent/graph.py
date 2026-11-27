@@ -36,7 +36,7 @@ def create_agent_graph(llm, tools_list, checkpointer=None):
         route_after_orchestrator_call,
         {"tools": "tools", "fallback_response": "fallback_response", "collect_answer": "collect_answer"}
     )
-    # Direct loop: Sau khi tools tìm kiếm xong, quay thẳng về orchestrator để trả lời, loại bỏ bước nén context gây chậm
+    # Direct loop: After search tools finish, return directly to the orchestrator to answer, skipping the slow context compression step
     agent_builder.add_edge("tools", "orchestrator")
     agent_builder.add_edge("fallback_response", "collect_answer")
     agent_builder.add_edge("collect_answer", END)

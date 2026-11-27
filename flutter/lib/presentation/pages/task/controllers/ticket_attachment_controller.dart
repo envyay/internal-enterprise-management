@@ -67,7 +67,7 @@ class TicketAttachmentController extends _$TicketAttachmentController {
     if(doc.id.isEmpty) {
       state = AsyncData((state.value ?? []).where((f) => f != doc).toList());
     } else {
-      /// goi API xoa doc,
+      /// Call API to delete document,
       /// Refresh
     }
   }

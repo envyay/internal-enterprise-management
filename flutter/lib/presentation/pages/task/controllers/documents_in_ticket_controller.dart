@@ -1,6 +1,7 @@
 import 'package:enterprise_management/application/use_cases/documents/get_documents_by_ticket/get_documents_by_ticket_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/upload_file/upload_file_command.dart';
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_in_tickets_controller.dart';
 import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/mediator.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
@@ -29,10 +30,16 @@ class DocumentsInTicketController extends _$DocumentsInTicketController {
   }
 
   Future<void> uploadDocument({required String referenceId, required List<Document> files}) async {
-    final mediator = ref.read(mediatorProvider);
-    await mediator.send(
-      UploadFilesCommand(files: files, referenceId: referenceId, referenceType: DocumentReferenceType.ticket.index)
-    );
+    final link = ref.keepAlive();
+    try {
+      final mediator = ref.read(mediatorProvider);
+      await mediator.send(
+        UploadFilesCommand(files: files, referenceId: referenceId, referenceType: DocumentReferenceType.ticket.index)
+      );
+      ref.invalidate(resourcesInTicketsControllerProvider);
+    } finally {
+      link.close();
+    }
   }
 
   void refresh({required String ticketId}) async {

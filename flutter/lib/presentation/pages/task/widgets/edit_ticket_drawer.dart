@@ -305,13 +305,17 @@ class _EditTicketDrawerState extends ConsumerState<EditTicketDrawer> {
                               }
                             }
                             if (newList.isNotEmpty) {
-                              final documentsInTicketController = ref.watch(
+                              final documentsInTicketController = ref.read(
                                 documentsInTicketControllerProvider().notifier,
                               );
-                              documentsInTicketController.uploadDocument(
+                              await documentsInTicketController.uploadDocument(
                                 referenceId: widget.ticket.id,
                                 files: newList,
                               );
+                              await ticketAttachmentController
+                                  .getDocumentsByTicket(
+                                    ticketId: widget.ticket.id,
+                                  );
                             }
                           }
                           ticketsInTicketStatusController.refresh(

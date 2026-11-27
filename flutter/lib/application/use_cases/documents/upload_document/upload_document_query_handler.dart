@@ -51,13 +51,13 @@ class UploadDocumentQueryHandler
       final length = await file.length();
       final objectName = '${Uuid().v7()}.${doc.extension}';
 
-      /// Lay URL tu BE => MinIO => URL
+      /// Get presigned URL from backend => MinIO => URL
       final url = await _documentRepository.uploadDocument(
         objectName: objectName,
         expiresInSeconds: 300,
       );
 
-      /// Tu URL => Upload File => MinIO
+      /// Upload file to MinIO using the presigned URL
       final res = await _dio.put(
         url,
         data: file.openRead(),
@@ -71,7 +71,7 @@ class UploadDocumentQueryHandler
         ),
       );
 
-      /// UPload THanh cong => Tao Document cho BE
+      /// Upload succeeded => Create document record in backend
       if (res.statusCode == 200) {
         await _documentRepository.createDocument(
           referenceId: query.referenceId,

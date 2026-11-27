@@ -168,7 +168,7 @@ def rewrite_query(state: State, llm):
     if not candidate_questions and query_to_fallback:
         candidate_questions = [query_to_fallback]
 
-    vague_pronouns = {"nó", "đó", "cái đó", "file đó", "tài liệu đó", "it", "that", "this", "them"}
+    vague_pronouns = {"it", "that", "this", "them", "that file", "that document"}
     query_is_vague_pronoun = (
         query_to_fallback.lower() in vague_pronouns and not conversation_summary and not recent_messages
     )
@@ -201,7 +201,7 @@ def rewrite_query(state: State, llm):
     ):
         clarification = raw_clarification
     else:
-        clarification = "Bạn có thể miêu tả chi tiết hơn hoặc cung cấp từ khóa cụ thể về tài liệu cần tra cứu không?"
+        clarification = "Could you provide more details or specific keywords about the document you want to look up?"
 
     return {
         "questionIsClear": False,
@@ -229,9 +229,9 @@ def orchestrator(state: AgentState, llm_with_tools):
     if doc_ids is not None:
         scope_injection = [
             SystemMessage(
-                content=f"RÀNG BUỘC PHÂN QUYỀN TÀI LIỆU: Bạn chỉ được phép tra cứu và trả lời dựa trên các tài liệu được cấp phép có ID: {doc_ids}. "
-                "Hệ thống tìm kiếm đã tự động giới hạn chỉ trong các tài liệu này. Tuyệt đối KHÔNG trả lời thông tin ngoài phạm vi tài liệu được phép. "
-                "Nếu các trích dẫn tìm kiếm không có thông tin hoặc công cụ trả về NO_RELEVANT_CHUNKS, hãy trả lời bằng tiếng Việt rằng không tìm thấy thông tin phù hợp trong các tài liệu được phân quyền."
+                content=f"DOCUMENT ACCESS CONSTRAINT: You are only permitted to search and answer based on the authorized documents with IDs: {doc_ids}. "
+                "The search system has automatically restricted queries to these documents only. Strictly DO NOT answer with information outside the scope of the authorized documents. "
+                "If the retrieved excerpts do not contain the information or the tool returns NO_RELEVANT_CHUNKS, respond that no relevant information was found in the authorized documents."
             )
         ]
 
@@ -248,12 +248,14 @@ def orchestrator(state: AgentState, llm_with_tools):
     return {"messages": [response], "tool_call_count": len(tool_calls) if tool_calls else 0, "iteration_count": 1}
 
 def fallback_response(state: AgentState, llm):
-    seen = set()
-    unique_contents = []
+    seen: set[str] = set()
+    unique_contents: list[str] = []
     for m in state["messages"]:
-        if isinstance(m, ToolMessage) and m.content not in seen:
-            unique_contents.append(m.content)
-            seen.add(m.content)
+        if isinstance(m, ToolMessage):
+            content = _extract_text_content(m.content)
+            if content not in seen:
+                unique_contents.append(content)
+                seen.add(content)
 
     context_summary = state.get("context_summary", "").strip()
 
@@ -379,8 +381,8 @@ def aggregate_answers(state: State, llm):
 
     sorted_answers = sorted(state["agent_answers"], key=lambda x: x["index"])
 
-    # Fast-path: Nếu chỉ có 1 câu hỏi/câu trả lời (chiếm đa số trường hợp),
-    # orchestrator đã sinh câu trả lời hoàn chỉnh kèm nguồn, trả về ngay lập tức để tiết kiệm 10-15s!
+    # Fast-path: When there is only 1 question/answer (the majority of cases),
+    # the orchestrator has already generated a complete answer with sources; return immediately to save 10-15s.
     if len(sorted_answers) == 1:
         return {"messages": removals + [AIMessage(content=sorted_answers[0]["answer"])]}
 

@@ -21,7 +21,7 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      /// TODO: hien thi dialog dang nhap lai
+      /// TODO: show re-login dialog
       final appRouter = ref.read(appRouterProvider);
       appRouter.popUntilRoot();
       appRouter.replace(AuthenticationRoute());

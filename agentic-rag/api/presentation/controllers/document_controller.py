@@ -35,7 +35,7 @@ async def handle_minio_event(
 async def get_collections_status(
         qdrant_service: QdrantServices = Depends(get_qdrant_service),
 ):
-    """Kiểm tra số lượng points hiện tại trong các collection."""
+    """Check the current number of points in each collection."""
     child_count = qdrant_service.get_points_count(config.CHILD_COLLECTION)
     parent_count = qdrant_service.get_points_count(config.PARENT_COLLECTION)
     return {
@@ -52,7 +52,7 @@ async def clear_collection_endpoint(
         collection_name: str,
         qdrant_service: QdrantServices = Depends(get_qdrant_service),
 ):
-    """Xóa toàn bộ dữ liệu (points) trong 1 collection chỉ định nhưng giữ nguyên cấu hình schema."""
+    """Clear all data (points) in a specified collection while preserving its schema configuration."""
     success = qdrant_service.clear_collection(collection_name)
     if not success:
         raise HTTPException(status_code=404, detail=f"Collection '{collection_name}' does not exist")
@@ -67,7 +67,7 @@ async def clear_collection_endpoint(
 async def clear_all_collections_endpoint(
         qdrant_service: QdrantServices = Depends(get_qdrant_service),
 ):
-    """Xóa toàn bộ dữ liệu trong cả 2 collection (CHILD_COLLECTION và PARENT_COLLECTION) để chuẩn bị nạp mới."""
+    """Clear all data in both collections (CHILD_COLLECTION and PARENT_COLLECTION) to prepare for re-ingestion."""
     results = {}
     for col in [config.CHILD_COLLECTION, config.PARENT_COLLECTION]:
         success = qdrant_service.clear_collection(col)

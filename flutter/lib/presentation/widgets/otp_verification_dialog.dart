@@ -35,7 +35,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
 
   @override
   Widget build(BuildContext context) {
-    // 1. Cấu hình Theme mặc định cho từng ô nhập mã Pin
+    // 1. Default theme configuration for each PIN input box
     final defaultPinTheme = PinTheme(
       width: 52,
       height: 56,
@@ -51,7 +51,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
       ),
     );
 
-    // 2. Theme khi ô đang được Focus
+    // 2. Theme when the input box is focused
     final focusedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration!.copyWith(
         border: Border.all(color: const Color(0xff001E40), width: 1.5),
@@ -59,7 +59,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
       ),
     );
 
-    // 3. Theme khi ô đã được điền ký tự
+    // 3. Theme when the input box has a character entered
     final submittedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration!.copyWith(
         color: Colors.white,
@@ -67,7 +67,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
       ),
     );
 
-    // 4. Theme khi có lỗi
+    // 4. Theme on validation error
     final errorPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration!.copyWith(
         border: Border.all(color: Colors.redAccent),
@@ -97,7 +97,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Header & Nút đóng
+              // Header & Close button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -117,7 +117,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
               ),
               const SizedBox(height: 12),
 
-              // Hướng dẫn
+              // Instructions
               Text(
                 'Enter the ${widget.length}-digit verification code sent to:\n${widget.email}',
                 textAlign: TextAlign.center,
@@ -151,7 +151,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
               ),
               const SizedBox(height: 24),
 
-              // Nút xác nhận sử dụng SolidButton của dự án
+              // Confirm button using the project's SolidButton
               SolidButton(
                 title: 'Verify & Continue',
                 onTap: () {
@@ -162,7 +162,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
               ),
               const SizedBox(height: 16),
 
-              // Nút gửi lại mã
+              // Resend code button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -192,7 +192,7 @@ class _OtpVerificationDialogState extends State<OtpVerificationDialog> {
   }
 }
 
-/// Helper function để mở Dialog thuận tiện
+/// Helper function to open the dialog conveniently
 Future<void> showOtpVerificationDialog({
   required BuildContext context,
   required String email,

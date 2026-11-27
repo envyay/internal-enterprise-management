@@ -2,6 +2,8 @@ import 'package:enterprise_management/application/use_cases/projects/get_project
 import 'package:enterprise_management/application/use_cases/projects/set_users_in_project/set_users_in_project_command.dart';
 import 'package:enterprise_management/domain/aggregates/project/project.dart';
 import 'package:enterprise_management/presentation/pages/project/controllers/projects_controller.dart';
+import 'package:enterprise_management/presentation/pages/task/controllers/projects_controller.dart'
+    as task_projects;
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -44,6 +46,7 @@ class UsersInProjectController extends _$UsersInProjectController {
         if (success) {
           getUsersByProjectId(id: id);
           ref.read(projectsControllerProvider.notifier).refresh();
+          ref.invalidate(task_projects.projectsControllerProvider);
         }
       },
       failure: (error) {

@@ -21,7 +21,7 @@ class ToolFactory:
         configurable = config.get("configurable", {}) if config else {}
         document_ids = configurable.get("document_ids")
 
-        # Nếu document_ids được truyền vào nhưng rỗng [] -> Không có quyền trên bất kỳ tài liệu nào
+        # If document_ids is provided as an empty list [], the user has no permission to access any documents
         if document_ids is not None and len(document_ids) == 0:
             output = "NO_RELEVANT_CHUNKS: User has no permission to access any documents (documentIds list is empty)."
             log_tool_end("search_child_chunks", output)
@@ -49,7 +49,7 @@ class ToolFactory:
                 log_tool_end("search_child_chunks", output)
                 return output
 
-            # Tự động lookup Parent Chunks trực tiếp bằng ID (không tốn embedding, O(1) lookup)
+            # Automatically look up Parent Chunks directly by ID (no embedding cost, O(1) lookup)
             parent_ids = list({str(doc.metadata.get("parent_id")) for doc in results if doc.metadata.get("parent_id")})
             parent_map = {}
             if parent_ids:
@@ -104,7 +104,7 @@ class ToolFactory:
                 log_tool_end("retrieve_parent_chunks", output)
                 return output
 
-            # Sử dụng direct lookup theo ID thay vì similarity_search chuỗi rỗng
+            # Use direct lookup by ID instead of similarity_search with an empty string
             records = self.qdrant_services.retrieve_by_ids(app_config.PARENT_COLLECTION, [parent_id])
             if not records:
                 output = "NO_PARENT_DOCUMENT"

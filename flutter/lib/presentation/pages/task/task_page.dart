@@ -130,7 +130,18 @@ class _ProjectTrackerPageState extends ConsumerState<ProjectTrackerPage> {
 
     ref.listen(projectsControllerProvider, (previous, next) {
       final projects = next.value ?? [];
-      if (_selectedProjectId == null && projects.isNotEmpty) {
+      if (projects.isEmpty) {
+        if (_selectedProjectId != null) {
+          setState(() {
+            _selectedProjectId = null;
+          });
+        }
+        return;
+      }
+      final hasSelected =
+          _selectedProjectId != null &&
+          projects.any((p) => p.id == _selectedProjectId);
+      if (!hasSelected) {
         final firstId = projects.first.id;
         setState(() {
           _selectedProjectId = firstId;

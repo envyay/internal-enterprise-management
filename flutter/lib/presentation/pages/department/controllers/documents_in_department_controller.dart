@@ -1,6 +1,7 @@
 import 'package:enterprise_management/application/use_cases/documents/get_documents_by_department/get_documents_by_department_query.dart';
 import 'package:enterprise_management/application/use_cases/documents/upload_document/upload_document_query.dart';
 import 'package:enterprise_management/domain/aggregates/document/document.dart';
+import 'package:enterprise_management/presentation/pages/resources_and_agent/controllers/resources_in_departments_controller.dart';
 import 'package:enterprise_management/shared_kernel/constant/constants.dart';
 import 'package:enterprise_management/shared_kernel/cqrs/cqrs.dart';
 import 'package:enterprise_management/shared_kernel/result/result.dart';
@@ -33,6 +34,7 @@ class DocumentsInDepartmentController extends _$DocumentsInDepartmentController 
     await mediator.query(
       UploadDocumentQuery(referenceId: referenceId, referenceType: DocumentReferenceType.department.index),
     );
+    ref.invalidate(resourcesInDepartmentsControllerProvider);
   }
 
   void refresh({required String departmentId}) async {

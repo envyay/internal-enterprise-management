@@ -18,7 +18,7 @@ class OverviewContainer extends StatelessWidget {
   }) : assert(
   (tabs == null && tabViews == null && child != null) ||
       (tabs != null && tabViews != null && tabs.length == tabViews.length),
-  'Truyền child, HOẶC tabs + tabViews có cùng độ dài',
+  'Provide either child, OR tabs and tabViews with matching lengths',
   );
 
   final String title;
@@ -27,15 +27,15 @@ class OverviewContainer extends StatelessWidget {
   final double? iconSize;
   final void Function()? onTap;
 
-  /// Drawer trượt từ phải sang trái bên trong thẻ OverviewContainer
+  /// Slide-in drawer from right to left inside the OverviewContainer card
   final Widget? endDrawer;
   final bool isEndDrawerOpen;
   final VoidCallback? onCloseEndDrawer;
 
-  /// Tiêu đề các tab (vd: [Tab(text: 'All'), Tab(text: 'PDF')])
+  /// Tab titles (e.g. [Tab(text: 'All'), Tab(text: 'PDF')])
   final List<Widget>? tabs;
 
-  /// Nội dung tương ứng từng tab
+  /// Content corresponding to each tab
   final List<Widget>? tabViews;
 
   final ValueChanged<int>? onTabChanged;
